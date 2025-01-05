@@ -3,7 +3,7 @@
 // Copyright © 2018 Xcore
 // MIT license, see LICENSE file for details
 //
-// swiftlint:disable empty_string
+// swiftlint:disable empty_string empty_enum_arguments
 
 import Testing
 import Foundation
@@ -970,13 +970,14 @@ struct DateTest {
         let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
         // .date(.long) == .monthDayYear(.wide)
+        #expect(date.formatted(style: .date(.full)) == "Saturday, January 1, 2000")
         #expect(date.formatted(style: .date(.long)) == "January 1, 2000")
         #expect(date.formatted(format: .monthDayYear(.wide)) == "January 1, 2000")
 
         // .date(.short) == .monthDayYear(.narrow)
-        #expect(date.formatted(style: .date(.short)) == "1/1/00")
+        #expect(date.formatted(style: .date(.short)) == "1/1/2000")
         #expect(date.formatted(format: .monthDayYear(.narrow)) == "1/1/00")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/00, 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
         #expect(date.formatted(format: .monthDayYear(.narrow, withTime: true)) == "1/1/00 - 9:41 AM")
 
         // .date(.medium) == .monthDayYear(.abbreviated)
@@ -988,7 +989,7 @@ struct DateTest {
         #expect(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)) == "Jan 1, 2000 - 9:41 AM")
 
         #expect(date.formatted(style: .dateTime(.none)) == "")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/00, 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
         #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
         #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
         #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
@@ -1056,24 +1057,24 @@ struct DateTest {
         #expect(year2000.formatted(style: .wide) == "January 1, 2000")
         #expect(year2000.formatted(style: .abbreviated) == "Jan 1, 2000")
         #expect(year2000.formatted(style: .abbreviatedTime) == "Jan 1, 2000 at 9:41 AM")
-        #expect(year2000.formatted(style: .narrow) == "1/1/00")
-        #expect(year2000.formatted(style: .narrowTime) == "1/1/00, 9:41 AM")
+        #expect(year2000.formatted(style: .narrow) == "1/1/2000")
+        #expect(year2000.formatted(style: .narrowTime) == "1/1/2000, 9:41 AM")
         #expect(year2000.formatted(style: .time) == "9:41 AM")
 
         // London
         #expect(year2000.formatted(style: .wide, in: .london) == "1 January 2000")
         #expect(year2000.formatted(style: .abbreviated, in: .london) == "1 Jan 2000")
-        #expect(year2000.formatted(style: .abbreviatedTime, in: .london) == "1 Jan 2000 at 09:41")
+        #expect(year2000.formatted(style: .abbreviatedTime, in: .london) == "1 Jan 2000 at 9:41")
         #expect(year2000.formatted(style: .narrow, in: .london) == "01/01/2000")
-        #expect(year2000.formatted(style: .narrowTime, in: .london) == "01/01/2000, 09:41")
-        #expect(year2000.formatted(style: .time, in: .london) == "09:41")
+        #expect(year2000.formatted(style: .narrowTime, in: .london) == "01/01/2000, 9:41")
+        #expect(year2000.formatted(style: .time, in: .london) == "9:41")
 
         // Spanish
         #expect(year2000.formatted(style: .wide, in: .spanish) == "1 de enero de 2000")
         #expect(year2000.formatted(style: .abbreviated, in: .spanish) == "1 ene 2000")
         #expect(year2000.formatted(style: .abbreviatedTime, in: .spanish) == "1 ene 2000, 9:41")
-        #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/00")
-        #expect(year2000.formatted(style: .narrowTime, in: .spanish) == "1/1/00, 9:41")
+        #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/2000")
+        #expect(year2000.formatted(style: .narrowTime, in: .spanish) == "1/1/2000, 9:41")
         #expect(year2000.formatted(style: .time, in: .spanish) == "9:41")
 
         // Turkey

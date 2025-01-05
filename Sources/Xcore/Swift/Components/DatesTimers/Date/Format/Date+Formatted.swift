@@ -43,12 +43,43 @@ extension Date {
 
         switch style {
             case let .dateTime(dateStyle, timeStyle):
-                formatter = cache.dateFormatter(
-                    dateStyle: dateStyle,
-                    timeStyle: timeStyle,
-                    doesRelativeDateFormatting: doesRelativeDateFormatting,
-                    calendar: calendar
-                )
+                if dateStyle == .none && timeStyle == .none {
+                    return ""
+                } else if doesRelativeDateFormatting {
+                    // Date.FormatStyle does not support "RelativeDateFormatting" with time component.
+                    formatter = cache.dateFormatter(
+                        dateStyle: dateStyle,
+                        timeStyle: timeStyle,
+                        doesRelativeDateFormatting: doesRelativeDateFormatting,
+                        calendar: calendar
+                    )
+                } else {
+                    let dateFormat: Date.FormatStyle.DateStyle
+                    let timeFormat: Date.FormatStyle.TimeStyle
+
+                    switch dateStyle {
+                        case .none: dateFormat = .omitted
+                        case .short: dateFormat = .numeric
+                        case .medium: dateFormat = .abbreviated
+                        case .long:  dateFormat = .long
+                        default: dateFormat = .complete
+                    }
+
+                    switch timeStyle {
+                        case .none: timeFormat = .omitted
+                        case .short:  timeFormat = .shortened
+                        case .medium, .long: timeFormat = .standard
+                        default: timeFormat = .complete
+                    }
+
+                    let formatStyle = FormatStyle(
+                        date: dateFormat,
+                        time: timeFormat
+                    )
+                    .calendarTimeZoneLocale(calendar)
+                    return formatted(formatStyle)
+                }
+
             case let .iso8601(format):
                 return formatted(format.timeZone(calendar.timeZone))
             case let .relative(untilThreshold):
