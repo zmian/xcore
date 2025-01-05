@@ -35,7 +35,7 @@ extension CustomFloatingPointFormatStyle {
 
 /// A structure that creates a locale-appropriate string representation of a
 /// double and decimal instance.
-public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Sendable, Hashable, Codable, MutableAppliable {
+public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Sendable, Hashable, Codable {
     public let type: Kind
     public var locale: Locale = .numbers
     public var sign: SignedNumericSign = .default

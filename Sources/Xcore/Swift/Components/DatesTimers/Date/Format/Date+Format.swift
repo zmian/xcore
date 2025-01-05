@@ -158,24 +158,25 @@ extension Date {
         until threshold: Calendar.Component,
         calendar: Calendar
     ) -> String {
-        if `is`(.next(.hour), in: calendar) {
-            return formatted(
-                .relative
-                .calendar(calendar)
-                .capitalizationContext(.beginningOfSentence)
-            )
+        let isNextHour = `is`(.next(.hour), in: calendar)
+        let isToday = `is`(.today, in: calendar)
+        let isCurrentThreshold = `is`(.current(threshold), in: calendar)
+
+        var formatStyle = RelativeFormatStyle
+            .relative
+            .calendar(calendar)
+            .capitalizationContext(.beginningOfSentence)
+
+        if isToday && !isNextHour {
+            if #available(iOS 18, *) {
+                formatStyle.allowedFields = [.day]
+            } else {
+                return "Today"
+            }
         }
 
-        if `is`(.today, in: calendar) {
-            return "Today"
-        }
-
-        if `is`(.current(threshold), in: calendar) {
-            return formatted(
-                .relative
-                .calendar(calendar)
-                .capitalizationContext(.beginningOfSentence)
-            )
+        if isToday || isCurrentThreshold {
+            return formatted(formatStyle)
         }
 
         return formatted(style: .date(.medium))
