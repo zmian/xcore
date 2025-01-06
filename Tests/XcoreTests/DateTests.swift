@@ -16,9 +16,6 @@ struct DateTest {
     }
 
     private let customStyles: [Date.Style] = [
-        .format(.monthDayYear(.wide)),
-        .format(.monthDayYear(.abbreviated)),
-        .format(.monthDayYear(.narrow)),
         .format(.monthDay(.wide)),
         .format(.monthDay(.abbreviated)),
         .format(.monthDay(.narrow)),
@@ -35,18 +32,6 @@ struct DateTest {
             let stringToTest: String
 
             switch style {
-                case .format(.monthDayYear(.wide)):
-                    stringToTest = "June 4, 2022"
-                    expectedDate = Date(year: 2022, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDayYear(.abbreviated)):
-                    stringToTest = "Jun 4, 2022"
-                    expectedDate = Date(year: 2022, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDayYear(.narrow)):
-                    stringToTest = "6/4/22"
-                    expectedDate = Date(year: 2022, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.wide)):
                     stringToTest = "June 4"
                     expectedDate = Date(year: 2000, month: 6, day: 4)
@@ -91,15 +76,6 @@ struct DateTest {
             let expectedResult: String
 
             switch style {
-                case .format(.monthDayYear(.wide)):
-                    expectedResult = "June 4, 2022"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDayYear(.abbreviated)):
-                    expectedResult = "Jun 4, 2022"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDayYear(.narrow)):
-                    expectedResult = "6/4/22"
-                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.wide)):
                     expectedResult = "June 4"
                     sourceLocation = #_sourceLocation
@@ -131,7 +107,7 @@ struct DateTest {
 
     @Test
     func basics_year() {
-        let string = "2000"
+        let string = "2022"
         let date = Date(year: 2022, month: 1, day: 1)
         let format = Date.FormatStyle
             .dateTime
@@ -196,19 +172,57 @@ struct DateTest {
     }
 
     @Test
-    func date_monthDayYear() {
+    func formatted_style_dateTime_part_1() {
+        let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        // .date(.full)
+        #expect(date.formatted(style: .date(.full)) == "Saturday, January 1, 2000")
+        #expect(date.formatted(style: .dateTime(.full)) == "Saturday, January 1, 2000 at 9:41:00 AM GMT")
+
+        // .date(.long)
+        #expect(date.formatted(style: .date(.long)) == "January 1, 2000")
+        #expect(date.formatted(style: .dateTime(.long)) == "January 1, 2000 at 9:41:00 AM")
+
+        // .date(.medium)
+        #expect(date.formatted(style: .date(.medium)) == "Jan 1, 2000")
+        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
+
+        // .date(.short)
+        #expect(date.formatted(style: .date(.short)) == "1/1/2000")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
+
+        #expect(date.formatted(style: .dateTime(.none)) == "")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
+        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
+    }
+
+    @Test
+    func formatted_style_dateTime_part_2() {
         let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
-        // .wide
-        #expect(date.formatted(format: .monthDayYear(.wide)) == "June 4, 2022")
-        #expect(date.formatted(format: .monthDayYear(.wide, withTime: true)) == "June 4, 2022 - 11:11 AM")
+
+        // .long
+        #expect(date.formatted(Date.FormatStyle(date: .long).calendarTimeZoneLocale(.default)) == "June 4, 2022")
+        #expect(date.formatted(Date.FormatStyle(date: .long, time: .shortened).calendarTimeZoneLocale(.default)) == "June 4, 2022 at 11:11 AM")
+
+        #expect(date.formatted(style: .date(.long)) == "June 4, 2022")
+        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "June 4, 2022 at 11:11 AM")
 
         // .abbreviated
-        #expect(date.formatted(format: .monthDayYear(.abbreviated)) == "Jun 4, 2022")
-        #expect(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)) == "Jun 4, 2022 - 11:11 AM")
+        #expect(date.formatted(Date.FormatStyle(date: .abbreviated).calendarTimeZoneLocale(.default)) == "Jun 4, 2022")
+        #expect(date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).calendarTimeZoneLocale(.default)) == "Jun 4, 2022 at 11:11 AM")
+
+        #expect(date.formatted(style: .date(.medium)) == "Jun 4, 2022")
+        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jun 4, 2022 at 11:11 AM")
 
         // .narrow
-        #expect(date.formatted(format: .monthDayYear(.narrow)) == "6/4/22")
-        #expect(date.formatted(format: .monthDayYear(.narrow, withTime: true)) == "6/4/22 - 11:11 AM")
+        #expect(date.formatted(Date.FormatStyle(date: .numeric).calendarTimeZoneLocale(.default)) == "6/4/2022")
+        #expect(date.formatted(Date.FormatStyle(date: .numeric, time: .shortened).calendarTimeZoneLocale(.default)) == "6/4/2022, 11:11 AM")
+
+        #expect(date.formatted(style: .date(.short)) == "6/4/2022")
+        #expect(date.formatted(style: .dateTime(.short, time: .short)) == "6/4/2022, 11:11 AM")
     }
 
     @Test
@@ -991,37 +1005,6 @@ struct DateTest {
             #expect(now.removingTime() == nowExpectedDate)
             #expect(now.startOf(.day) == now.removingTime())
         }
-    }
-
-    @Test
-    func customFormats() {
-        let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
-
-        // .date(.long) == .monthDayYear(.wide)
-        #expect(date.formatted(style: .date(.full)) == "Saturday, January 1, 2000")
-        #expect(date.formatted(style: .date(.long)) == "January 1, 2000")
-        #expect(date.formatted(format: .monthDayYear(.wide)) == "January 1, 2000")
-
-        // .date(.short) == .monthDayYear(.narrow)
-        #expect(date.formatted(style: .date(.short)) == "1/1/2000")
-        #expect(date.formatted(format: .monthDayYear(.narrow)) == "1/1/00")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
-        #expect(date.formatted(format: .monthDayYear(.narrow, withTime: true)) == "1/1/00 - 9:41 AM")
-
-        // .date(.medium) == .monthDayYear(.abbreviated)
-        #expect(date.formatted(style: .date(.medium)) == "Jan 1, 2000")
-        #expect(date.formatted(format: .monthDayYear(.abbreviated)) == "Jan 1, 2000")
-
-        // .dateTime(.medium) ~= .monthDayYear(.abbreviated, withTime: true)
-        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
-        #expect(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)) == "Jan 1, 2000 - 9:41 AM")
-
-        #expect(date.formatted(style: .dateTime(.none)) == "")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
-        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
     }
 
     @Test

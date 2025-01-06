@@ -170,38 +170,12 @@ extension Date.Style {
 // MARK: - Built-in Style.Format
 
 extension Date.Style.Format {
-    /// `MMMM d, yyyy` (e.g., June 4, 2020) // wide
-    public static var monthDayYear: Self { monthDayYear(.wide) }
 
     /// `MMMM d` (e.g., June 4) // wide
     public static var monthDay: Self { monthDay(.wide) }
 
     /// `MMMM yyyy` (e.g., June 2020) // wide
     public static var monthYear: Self { monthYear(.wide) }
-
-    /// ```swift
-    /// `MMMM d, yyyy` (e.g., June 4, 2020) // wide
-    /// `MMM d, yyyy` (e.g., Jun 4, 2020) // abbreviated
-    /// `M/d/yy` (e.g., 6/4/20) // narrow
-    /// ```
-    public static func monthDayYear(
-        _ width: Date.Style.Width,
-        withTime: Bool = false
-    ) -> Self {
-        let format: String
-        let suffix = withTime ? " - h:mm a" : ""
-
-        switch width {
-            case .wide:
-                format = "MMMM d, yyyy"
-            case .abbreviated:
-                format = "MMM d, yyyy"
-            case .narrow:
-                format = "M/d/yy"
-        }
-
-        return .init(rawValue: "\(format)\(suffix)")
-    }
 
     /// ```swift
     /// `MMMM d` (e.g., June 4) // wide
