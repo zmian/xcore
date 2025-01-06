@@ -9,9 +9,6 @@ import Foundation
 extension Date {
     /// An enumeration representing date and time style of a date object.
     public enum Style: Sendable, Hashable {
-        /// A style that uses ISO 8601 representation.
-        case iso8601(Date.ISO8601FormatStyle)
-
         /// A style that uses the date and time styles.
         case dateTime(DateFormatter.Style, time: DateFormatter.Style)
 
@@ -79,15 +76,10 @@ extension Date {
         /// Date().formatted(style: .monthDayOrdinal(.wide)) // June 4th
         /// Date().formatted(style: .monthDayOrdinal(.abbreviated)) // Jun 4th
         /// Date().formatted(style: .monthDayOrdinal(.narrow)) // J 4th
-        ///
-        /// // With Period
-        /// Date().formatted(style: .monthDayOrdinal(.wide, withPeriod: true)) // June 4th
-        /// Date().formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true)) // Jun. 4th
-        /// Date().formatted(style: .monthDayOrdinal(.narrow, withPeriod: true)) // J. 4th
         /// ```
         ///
         /// - Parameter width: The width of the month name.
-        case monthDayOrdinal(Date.FormatStyle.Symbol.Month, withPeriod: Bool = false)
+        case monthDayOrdinal(Date.FormatStyle.Symbol.Month)
 
         case format(Format)
     }
@@ -178,15 +170,6 @@ extension Date.Style {
 // MARK: - Built-in Style.Format
 
 extension Date.Style.Format {
-    /// `yyyy-MM-dd'T'HH:mm:ss.SSSZ` (e.g., 2020-06-04T00:00:00.000+0000)
-    public static let iso8601: Self = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-
-    /// `yyyy-MM-dd'T'HH:mm:ss` (e.g., 2020-06-04T00:00:00)
-    public static let iso8601Local: Self = "yyyy-MM-dd'T'HH:mm:ss"
-
-    /// `yyyy` (e.g., 2020)
-    public static let year: Self = "yyyy"
-
     /// `MMMM d, yyyy` (e.g., June 4, 2020) // wide
     public static var monthDayYear: Self { monthDayYear(.wide) }
 

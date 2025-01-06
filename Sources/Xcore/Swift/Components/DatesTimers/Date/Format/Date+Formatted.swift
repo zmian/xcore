@@ -80,33 +80,20 @@ extension Date {
                     return formatted(formatStyle)
                 }
 
-            case let .iso8601(format):
-                return formatted(format.timeZone(calendar.timeZone))
             case let .relative(untilThreshold):
                 return formattedRelative(until: untilThreshold, calendar: calendar)
             case let .weekdayName(width):
                 return weekdayName(width, in: calendar)
             case let .monthName(width):
                 return monthName(width, in: calendar)
-            case let .monthDayOrdinal(width, withPeriod):
+            case let .monthDayOrdinal(width):
                 var ordinalDay: String {
                     let day = component(.day, in: calendar)
                     cache.ordinalNumberFormatter.locale = calendar.locale
                     return cache.ordinalNumberFormatter.string(from: day) ?? ""
                 }
 
-                let monthNameString = monthName(width, in: calendar)
-
-                guard withPeriod else {
-                    return "\(monthNameString) \(ordinalDay)"
-                }
-
-                let fullMonthName = monthName(.wide, in: calendar)
-
-                // This ensures we don't append `.` to the month that has same short and long
-                // name (e.g., May 4 shouldn't have period but Jun. 4 should).
-                let separator = fullMonthName == monthNameString ? "" : "."
-                return "\(monthNameString)\(separator) \(ordinalDay)"
+                return "\(monthName(width, in: calendar)) \(ordinalDay)"
 
             case let .format(format):
                 formatter = cache.dateFormatter(

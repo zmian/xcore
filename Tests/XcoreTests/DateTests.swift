@@ -3,7 +3,7 @@
 // Copyright © 2018 Xcore
 // MIT license, see LICENSE file for details
 //
-// swiftlint:disable empty_string empty_enum_arguments
+// swiftlint:disable empty_string
 
 import Testing
 import Foundation
@@ -16,10 +16,6 @@ struct DateTest {
     }
 
     private let customStyles: [Date.Style] = [
-        .format(.iso8601),
-        .format(.iso8601Local),
-        .iso8601(.iso8601.date()),
-        .format(.year),
         .format(.monthDayYear(.wide)),
         .format(.monthDayYear(.abbreviated)),
         .format(.monthDayYear(.narrow)),
@@ -39,22 +35,6 @@ struct DateTest {
             let stringToTest: String
 
             switch style {
-                case .format(.iso8601):
-                    stringToTest = "2022-04-04T11:11:22.000+0000"
-                    expectedDate = Date(year: 2022, month: 4, day: 4, hour: 11, minute: 11, second: 22)
-                    sourceLocation = #_sourceLocation
-                case .format(.iso8601Local):
-                    stringToTest = "2022-06-04T11:11:22"
-                    expectedDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
-                    sourceLocation = #_sourceLocation
-                case .iso8601(.iso8601.date()):
-                    stringToTest = "2022-06-04"
-                    expectedDate = Date(year: 2022, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.year):
-                    stringToTest = "2022"
-                    expectedDate = Date(year: 2022, month: 1, day: 1)
-                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.wide)):
                     stringToTest = "June 4, 2022"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
@@ -111,18 +91,6 @@ struct DateTest {
             let expectedResult: String
 
             switch style {
-                case .format(.iso8601):
-                    expectedResult = "2022-06-04T11:11:22.000+0000"
-                    sourceLocation = #_sourceLocation
-                case .format(.iso8601Local):
-                    expectedResult = "2022-06-04T11:11:22"
-                    sourceLocation = #_sourceLocation
-                case .iso8601(.iso8601.date()):
-                    expectedResult = "2022-06-04"
-                    sourceLocation = #_sourceLocation
-                case .format(.year):
-                    expectedResult = "2022"
-                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.wide)):
                     expectedResult = "June 4, 2022"
                     sourceLocation = #_sourceLocation
@@ -162,6 +130,72 @@ struct DateTest {
     }
 
     @Test
+    func basics_year() {
+        let string = "2000"
+        let date = Date(year: 2022, month: 1, day: 1)
+        let format = Date.FormatStyle
+            .dateTime
+            .year()
+            .calendarTimeZoneLocale(.default)
+
+        let formattedDate = date.formatted(format)
+        #expect(formattedDate == string)
+
+        let parsedDate = try? Date(string, strategy: format)
+        #expect(parsedDate == date)
+    }
+
+    @Test
+    func iso8601_ymd() {
+        let string = "2000-01-01"
+        let date = Date(year: 2000, month: 1, day: 1)
+        let format = Date.ISO8601FormatStyle
+            .iso8601
+            .date()
+            .timeZone(Calendar.default.timeZone)
+
+        let formattedDate = date.formatted(format)
+        #expect(formattedDate == string)
+
+        let parsedDate = try? Date(string, strategy: format)
+        #expect(parsedDate == date)
+    }
+
+    @Test
+    func iso8601_ymd_hms() {
+        let string = "2000-01-01T09:41:00"
+        let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+        let format = Date.ISO8601FormatStyle
+            .iso8601
+            .date()
+            .time(includingFractionalSeconds: false)
+            .timeZone(Calendar.default.timeZone)
+
+        let formattedDate = date.formatted(format)
+        #expect(formattedDate == string)
+
+        let parsedDate = try? Date(string, strategy: format)
+        #expect(parsedDate == date)
+    }
+
+    @Test
+    func iso8601_ymd_hms_sssz() {
+        let string = "2000-01-01T09:41:10.000+0000"
+        let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41, second: 10)
+        let format = Date.ISO8601FormatStyle
+            .iso8601
+            .date()
+            .time(includingFractionalSeconds: true)
+            .timeZone(Calendar.default.timeZone)
+
+        let formattedDate = date.formatted(format)
+        #expect(formattedDate == "2000-01-01T09:41:10.000")
+
+        let parsedDate = try? Date(string, strategy: format)
+        #expect(parsedDate == date)
+    }
+
+    @Test
     func date_monthDayYear() {
         let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         // .wide
@@ -181,26 +215,20 @@ struct DateTest {
     func date_monthDayOrdinal() {
         // Test that May abbreviation should not contain period (e.g., May 3rd).
         let mayDate = Date(year: 2022, month: 5, day: 3, hour: 11, minute: 11, second: 22)
-        let mayExpectedResult = "May 3rd" // Shouldn't contain period after May
-        let mayResult = mayDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true))
+        let mayExpectedResult = "May 3rd"
+        let mayResult = mayDate.formatted(style: .monthDayOrdinal(.abbreviated))
         #expect(mayExpectedResult == mayResult)
 
-        // Test that June abbreviation should contain period (e.g., Jun. 4th).
+        // Test that June abbreviation should not contain period (e.g., Jun 4th).
         let juneDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
-        let juneExpectedResult = "Jun. 4th" // Should contain period after Jun.
-        let juneResult = juneDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true))
+        let juneExpectedResult = "Jun 4th"
+        let juneResult = juneDate.formatted(style: .monthDayOrdinal(.abbreviated))
         #expect(juneExpectedResult == juneResult)
 
-        // WithPeriod: false
         #expect(juneDate.formatted(style: .monthDayOrdinal) == "June 4th")
         #expect(juneDate.formatted(style: .monthDayOrdinal(.wide)) == "June 4th")
         #expect(juneDate.formatted(style: .monthDayOrdinal(.abbreviated)) == "Jun 4th")
         #expect(juneDate.formatted(style: .monthDayOrdinal(.narrow)) == "J 4th")
-
-        // WithPeriod: true
-        #expect(juneDate.formatted(style: .monthDayOrdinal(.wide, withPeriod: true)) == "June 4th")
-        #expect(juneDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true)) == "Jun. 4th")
-        #expect(juneDate.formatted(style: .monthDayOrdinal(.narrow, withPeriod: true)) == "J. 4th")
     }
 
     @Test
@@ -994,8 +1022,6 @@ struct DateTest {
         #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
         #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
         #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
-
-        #expect(date.formatted(style: .iso8601(.iso8601.date())) == "2000-01-01")
     }
 
     @Test

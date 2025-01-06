@@ -83,10 +83,6 @@ extension Date {
         let date: Date?
 
         switch style {
-            case let .iso8601(format):
-                date = try? format
-                    .timeZone(calendar.timeZone)
-                    .parse(string)
             case let .format(format):
                 date = cache
                     .dateFormatter(

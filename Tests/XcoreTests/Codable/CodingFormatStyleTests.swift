@@ -572,7 +572,7 @@ struct CodingFormatStyleTests {
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
 
-                if let format = decoder.userInfo[.dateFormat] as? Date.Style {
+                if let format = decoder.userInfo[.dateFormat] as? DateCodingFormatStyle.Format {
                     value = try container.decode(.value, format: .date(formats: format))
                 } else {
                     value = try container.decode(.value, format: .date())
@@ -598,7 +598,7 @@ struct CodingFormatStyleTests {
 
         // Dynamically passing date format via the decoder
         let jsonDecoder = JSONDecoder().apply {
-            $0.userInfo[.dateFormat] = Date.Style.format("yyyy-MM")
+            $0.userInfo[.dateFormat] = Date.ISO8601FormatStyle.iso8601.year().month()
         }
         let data3 = try #require(#"{"value": "2014-06"}"#.data(using: .utf8))
         let example3 = try jsonDecoder.decode(Example.self, from: data3)
