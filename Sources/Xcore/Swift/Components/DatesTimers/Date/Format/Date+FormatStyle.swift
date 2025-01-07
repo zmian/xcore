@@ -96,7 +96,7 @@ extension Date.FormatStyle {
     ///     .dateTime
     ///     .calendarTimeZoneLocale(calendar)
     /// )
-    /// print(formattedDate) // Output: "01/04/2025" (example output)
+    /// print(formattedDate) // Output: "06/04/2022" (example output)
     /// ```
     ///
     /// - Parameter calendar: The calendar to use for formatting.
@@ -121,7 +121,7 @@ extension Date.ISO8601FormatStyle {
     ///
     /// ```swift
     /// let formattedDate = Date().formatted(.iso8601.date())
-    /// print(formattedDate) // Output: "2025-01-04"
+    /// print(formattedDate) // Output: "2022-06-04"
     /// ```
     ///
     /// - Returns: An ISO 8601 date format style modified to include the date
@@ -140,7 +140,7 @@ extension Date.ISO8601FormatStyle {
     ///
     /// ```swift
     /// let formattedDate = Date().formatted(.iso8601.timeZone(.utc))
-    /// print(formattedDate) // Output: "2025-01-04T00:00:00Z"
+    /// print(formattedDate) // Output: "2022-06-04T00:00:00Z"
     /// ```
     ///
     /// - Parameter timeZone: The time zone to use for formatting and parsing
