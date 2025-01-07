@@ -7,59 +7,64 @@
 import Foundation
 
 extension FormatStyle where Self == Date.LegacyFormatStyle {
-    /// Returns a legacy date format style.
+    /// A legacy date format style.
+    ///
+    /// This static property provides an instance of `LegacyFormatStyle`, enabling
+    /// date and time formatting with legacy behaviors like relative date phrases
+    /// and leniency.
     ///
     /// **Usage**
     ///
     /// ```swift
     /// let formattedDate = Date().formatted(.legacy)
-    /// print(formattedDate) // Output: "Oct 17, 2020" (depending on the date)
+    /// print(formattedDate) // Output: "Jun 4, 2022" (depending on the date)
     /// ```
     ///
-    /// - Returns: A legacy date format style.
+    /// - Returns: A `LegacyFormatStyle` instance.
     static var legacy: Self {
         Date.LegacyFormatStyle()
     }
 }
 
 extension Date {
+    /// A format style that provides legacy date and time formatting capabilities.
+    ///
+    /// This format style extends `Foundation.FormatStyle` and allows customization
+    /// of date and time styles, leniency, relative date formatting, and calendar
+    /// configurations.
     struct LegacyFormatStyle: Foundation.FormatStyle {
         private static let cache = FormatterCache()
 
-        /// The date style of the receiver.
+        /// The date style of the format style.
         var date: Date.FormatStyle.DateStyle
 
-        /// The time style of the receiver.
+        /// The time style of the format style.
         var time: Date.FormatStyle.TimeStyle
 
-        /// A Boolean value that indicates whether the receiver uses heuristics when
-        /// parsing a string.
+        /// Indicates whether the format style uses heuristics when parsing a date string.
         ///
-        /// `true` if the receiver has been set to use heuristics when parsing a string
-        /// to guess at the date which is intended, otherwise `false`.
-        ///
-        /// If a formatter is set to be lenient, when parsing a string it uses
-        /// heuristics to guess at the date which is intended. As with any guessing, it
-        /// may get the result date wrong (that is, a date other than that which was
-        /// intended).
+        /// If set to `true`, the formatter guesses the intended date when parsing
+        /// a string. However, this can lead to incorrect results in some cases.
         var isLenient: Bool
 
-        /// A Boolean value that indicates whether the receiver uses phrases such as
-        /// “today” and “tomorrow” for the date component.
+        /// Indicates whether the format style uses relative date phrases.
         ///
-        /// `true` if the receiver uses relative date formatting, otherwise `false`.
-        ///
-        /// If a date formatter uses relative date formatting, where possible it
-        /// replaces the date component of its output with a phrase—such as “today” or
-        /// “tomorrow”—that indicates a relative date. The available phrases depend on
-        /// the locale for the date formatter; whereas, for dates in the future, English
-        /// may only allow “tomorrow,” French may allow “the day after the day after
-        /// tomorrow,” as illustrated in the following example.
+        /// If set to `true`, the formatter replaces the date component with phrases
+        /// like "today" or "tomorrow" where applicable. Phrases vary by locale.
         var doesRelativeDateFormatting: Bool
 
-        /// The calendar to use for date values.
+        /// The calendar to use for formatting dates.
         var calendar: Calendar
 
+        /// Initializes a `LegacyFormatStyle` with the specified settings.
+        ///
+        /// - Parameters:
+        ///   - date: The date style to use. Defaults to `.abbreviated`.
+        ///   - time: The time style to use. Defaults to `.shortened`.
+        ///   - isLenient: Whether to use lenient parsing. Defaults to `true`.
+        ///   - doesRelativeDateFormatting: Whether to use relative date formatting.
+        ///     Defaults to `false`.
+        ///   - calendar: The calendar to use for formatting. Defaults to `.autoupdatingCurrent`.
         init(
             date: Date.FormatStyle.DateStyle = .abbreviated,
             time: Date.FormatStyle.TimeStyle = .shortened,
@@ -74,47 +79,79 @@ extension Date {
             self.calendar = calendar
         }
 
-        /// The date style of the receiver.
+        /// Updates the date style for the format style.
+        ///
+        /// **Usage**
+        ///
+        /// ```swift
+        /// let formattedDate = Date().formatted(
+        ///     .legacy
+        ///     .date(.abbreviated)
+        /// )
+        /// ```
+        ///
+        /// - Parameter style: The desired date style.
+        /// - Returns: A new `LegacyFormatStyle` instance with the updated date style.
         func date(_ style: Date.FormatStyle.DateStyle) -> Self {
             applying {
                 $0.date = style
             }
         }
 
-        /// The time style of the receiver.
+        /// Updates the time style for the format style.
+        ///
+        /// **Usage**
+        ///
+        /// ```swift
+        /// let formattedDate = Date().formatted(
+        ///     .legacy
+        ///     .time(.shortened)
+        /// )
+        /// ```
+        ///
+        /// - Parameter style: The desired time style.
+        /// - Returns: A new `LegacyFormatStyle` instance with the updated time style.
         func time(_ style: Date.FormatStyle.TimeStyle) -> Self {
             applying {
                 $0.time = style
             }
         }
 
-        /// A Boolean value that indicates whether the receiver uses heuristics when
-        /// parsing a string.
+        /// Configures whether the formatter uses heuristics when parsing dates.
         ///
-        /// `true` if the receiver has been set to use heuristics when parsing a string
-        /// to guess at the date which is intended, otherwise `false`.
+        /// **Usage**
         ///
-        /// If a formatter is set to be lenient, when parsing a string it uses
-        /// heuristics to guess at the date which is intended. As with any guessing, it
-        /// may get the result date wrong (that is, a date other than that which was
-        /// intended).
+        /// **Usage**
+        ///
+        /// ```swift
+        /// let formattedDate = Date().formatted(
+        ///     .legacy
+        ///     .isLenient(true)
+        /// )
+        /// ```
+        ///
+        /// - Parameter isLenient: A Boolean value indicating whether leniency is enabled.
+        /// - Returns: A new `LegacyFormatStyle` instance with the updated leniency setting.
         func isLenient(_ isLenient: Bool) -> Self {
             applying {
                 $0.isLenient = isLenient
             }
         }
 
-        /// A Boolean value that indicates whether the receiver uses phrases such as
-        /// “today” and “tomorrow” for the date component.
+        /// Configures whether the formatter uses relative date phrases such as “today”
+        /// and “tomorrow” for the date component.
         ///
-        /// `true` if the receiver uses relative date formatting, otherwise `false`.
+        /// **Usage**
         ///
-        /// If a date formatter uses relative date formatting, where possible it
-        /// replaces the date component of its output with a phrase—such as “today” or
-        /// “tomorrow”—that indicates a relative date. The available phrases depend on
-        /// the locale for the date formatter; whereas, for dates in the future, English
-        /// may only allow “tomorrow,” French may allow “the day after the day after
-        /// tomorrow,” as illustrated in the following example.
+        /// ```swift
+        /// let formattedDate = Date().formatted(
+        ///     .legacy
+        ///     .doesRelativeDateFormatting(true)
+        /// )
+        /// ```
+        ///
+        /// - Parameter flag: A Boolean value indicating whether relative date formatting is enabled.
+        /// - Returns: A new `LegacyFormatStyle` instance with the updated setting.
         func doesRelativeDateFormatting(_ flag: Bool) -> Self {
             applying {
                 $0.doesRelativeDateFormatting = flag
@@ -131,14 +168,14 @@ extension Date {
         /// ```swift
         /// let calendar = Calendar(identifier: .gregorian)
         /// let formattedDate = Date().formatted(
-        ///     .relative
+        ///     .legacy
         ///     .calendar(calendar)
         /// )
-        /// print(formattedDate) // Output: "June 4, 2022" (depending on the calendar)
+        /// print(formattedDate) // Output: "Jun 4, 2022" (depending on the calendar)
         /// ```
         ///
         /// - Parameter calendar: The calendar to apply to the format style.
-        /// - Returns: A legacy format style with the specified calendar.
+        /// - Returns: A new `LegacyFormatStyle` instance with the updated calendar.
         func calendar(_ calendar: Calendar) -> Self {
             applying {
                 $0.calendar = calendar
