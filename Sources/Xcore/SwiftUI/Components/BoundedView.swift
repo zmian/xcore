@@ -108,7 +108,7 @@ public struct BoundedView<Content: View>: View {
         }
 
         BoundedView(percent: 1, preserveBounds: true) {
-            Text(Date().formatted(style: .narrowTime))
+            Text(Date().formatted(style: .narrowWithTime))
         }
     }
     .foregroundStyle(.white)

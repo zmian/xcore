@@ -14,10 +14,7 @@ extension Calendar: MutableAppliable {
     nonisolated(unsafe) public static var defaultCodable: Self = .iso
 
     /// Returns the `ISO` calendar with `en_US_POSIX` locale and `UTC` time zone.
-    public static let iso = Self(identifier: .gregorian).applying {
-        $0.timeZone = .utc
-        $0.locale = .usPosix
-    }
+    public static let iso = gregorian(timeZone: .utc, locale: .usPosix)
 }
 
 extension Calendar {
@@ -28,8 +25,8 @@ extension Calendar {
     ///   - locale: The locale of the calendar.
     /// - Returns: A `gregorian` calendar with the specified time zone and locale.
     public static func gregorian(
-        timeZone: TimeZone,
-        locale: Locale = .current
+        timeZone: TimeZone = .autoupdatingCurrent,
+        locale: Locale = .autoupdatingCurrent
     ) -> Self {
         Calendar(identifier: .gregorian).applying {
             $0.timeZone = timeZone
