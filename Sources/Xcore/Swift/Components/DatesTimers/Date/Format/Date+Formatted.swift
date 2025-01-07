@@ -6,24 +6,9 @@
 
 import Foundation
 
-#warning("FIXME: Switch to Foundating date formatting styles.")
-
 // MARK: - Formatted
 
 extension Date {
-    /// Creates a locale-aware string representation of date based on the given
-    /// calendar.
-    ///
-    /// - Parameters:
-    ///   - format: The custom format to use when formatting the date.
-    ///   - calendar: The calendar to use when formatting the date.
-    public func formatted(
-        format: Style.Format,
-        in calendar: Calendar = .default
-    ) -> String {
-        formatted(style: .format(format), in: calendar)
-    }
-
     /// Creates a locale-aware string representation of date based on the given
     /// calendar.
     ///
@@ -39,7 +24,6 @@ extension Date {
         in calendar: Calendar = .default
     ) -> String {
         let cache = Self._cache
-        let formatter: DateFormatter
 
         switch style {
             case let .dateTime(dateStyle, timeStyle):
@@ -47,12 +31,12 @@ extension Date {
                     return ""
                 } else if doesRelativeDateFormatting {
                     // Date.FormatStyle does not support "RelativeDateFormatting" with time component.
-                    formatter = cache.dateFormatter(
+                    return cache.dateFormatter(
                         dateStyle: dateStyle,
                         timeStyle: timeStyle,
                         doesRelativeDateFormatting: doesRelativeDateFormatting,
                         calendar: calendar
-                    )
+                    ).string(from: self)
                 } else {
                     let dateFormat: Date.FormatStyle.DateStyle
                     let timeFormat: Date.FormatStyle.TimeStyle
@@ -94,16 +78,7 @@ extension Date {
                 }
 
                 return "\(monthName(width, in: calendar)) \(ordinalDay)"
-
-            case let .format(format):
-                formatter = cache.dateFormatter(
-                    format: format.rawValue,
-                    doesRelativeDateFormatting: doesRelativeDateFormatting,
-                    calendar: calendar
-                )
         }
-
-        return formatter.string(from: self)
     }
 }
 

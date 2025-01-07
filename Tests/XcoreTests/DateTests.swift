@@ -15,96 +15,6 @@ struct DateTest {
         Calendar.default = .iso
     }
 
-    private let customStyles: [Date.Style] = [
-        .format(.monthDay(.wide)),
-        .format(.monthDay(.abbreviated)),
-        .format(.monthDay(.narrow)),
-        .format(.monthYear(.wide)),
-        .format(.monthYear(.abbreviated)),
-        .format(.monthYear(.narrow))
-    ]
-
-    @Test
-    func stringToDate() {
-        for style in customStyles {
-            let sourceLocation: SourceLocation
-            let expectedDate: Date?
-            let stringToTest: String
-
-            switch style {
-                case .format(.monthDay(.wide)):
-                    stringToTest = "June 4"
-                    expectedDate = Date(year: 2000, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDay(.abbreviated)):
-                    stringToTest = "Jun 4"
-                    expectedDate = Date(year: 2000, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDay(.narrow)):
-                    stringToTest = "6/4"
-                    expectedDate = Date(year: 2000, month: 6, day: 4)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.wide)):
-                    stringToTest = "June 2022"
-                    expectedDate = Date(year: 2022, month: 6, day: 1)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.abbreviated)):
-                    stringToTest = "Jun 2022"
-                    expectedDate = Date(year: 2022, month: 6, day: 1)
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.narrow)):
-                    stringToTest = "6/2022"
-                    expectedDate = Date(year: 2022, month: 6, day: 1)
-                    sourceLocation = #_sourceLocation
-                default:
-                    stringToTest = ""
-                    expectedDate = Date()
-                    sourceLocation = #_sourceLocation
-                    Issue.record("Unknown format")
-            }
-            let date = Date(stringToTest, style: style)
-            #expect(expectedDate == date, sourceLocation: sourceLocation)
-        }
-    }
-
-    @Test
-    func dateToCustomStringFormatInDefaultCalendar() {
-        let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
-
-        for style in customStyles {
-            let sourceLocation: SourceLocation
-            let expectedResult: String
-
-            switch style {
-                case .format(.monthDay(.wide)):
-                    expectedResult = "June 4"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDay(.abbreviated)):
-                    expectedResult = "Jun 4"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthDay(.narrow)):
-                    expectedResult = "6/4"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.wide)):
-                    expectedResult = "June 2022"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.abbreviated)):
-                    expectedResult = "Jun 2022"
-                    sourceLocation = #_sourceLocation
-                case .format(.monthYear(.narrow)):
-                    expectedResult = "6/22"
-                    sourceLocation = #_sourceLocation
-                default:
-                    expectedResult = ""
-                    sourceLocation = #_sourceLocation
-                    Issue.record("Unknown format")
-            }
-
-            let dateString = date.formatted(style: style)
-            #expect(expectedResult == dateString, "\(style) format \(dateString) is not equal to \(expectedResult)", sourceLocation: sourceLocation)
-        }
-    }
-
     @Test
     func basics_year() {
         let string = "2022"
@@ -223,6 +133,40 @@ struct DateTest {
 
         #expect(date.formatted(style: .date(.short)) == "6/4/2022")
         #expect(date.formatted(style: .dateTime(.short, time: .short)) == "6/4/2022, 11:11 AM")
+    }
+
+    @Test
+    func formatted_style_dateTime_month_day() {
+        let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
+
+        // .long
+        #expect(date.formatted(.dateTime.month(.wide).day().calendarTimeZoneLocale(.default)) == "June 4")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.wide).day().calendarTimeZoneLocale(.default)) == "June 4 at 11:11 AM")
+
+        // .abbreviated
+        #expect(date.formatted(.dateTime.month().day().calendarTimeZoneLocale(.default)) == "Jun 4")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month().day().calendarTimeZoneLocale(.default)) == "Jun 4 at 11:11 AM")
+
+        // .narrow
+        #expect(date.formatted(.dateTime.month(.defaultDigits).day().calendarTimeZoneLocale(.default)) == "6/4")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.defaultDigits).day().calendarTimeZoneLocale(.default)) == "6/4, 11:11 AM")
+    }
+
+    @Test
+    func formatted_style_dateTime_month_year() {
+        let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
+
+        // .long
+        #expect(date.formatted(.dateTime.month(.wide).year().calendarTimeZoneLocale(.default)) == "June 2022")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.wide).year().calendarTimeZoneLocale(.default)) == "June 2022 at 11:11 AM")
+
+        // .abbreviated
+        #expect(date.formatted(.dateTime.month().year().calendarTimeZoneLocale(.default)) == "Jun 2022")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month().year().calendarTimeZoneLocale(.default)) == "Jun 2022 at 11:11 AM")
+
+        // .narrow
+        #expect(date.formatted(.dateTime.month(.defaultDigits).year().calendarTimeZoneLocale(.default)) == "6/2022")
+        #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.defaultDigits).year().calendarTimeZoneLocale(.default)) == "6/2022, 11:11 AM")
     }
 
     @Test

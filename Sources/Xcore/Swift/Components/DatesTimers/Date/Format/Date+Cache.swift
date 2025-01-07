@@ -34,37 +34,6 @@ extension Date {
         }
 
         func dateFormatter(
-            format: String,
-            doesRelativeDateFormatting: Bool = false,
-            calendar: Calendar = .default,
-            isLenient: Bool = true
-        ) -> DateFormatter {
-            let key = """
-            \(format)
-            \(doesRelativeDateFormatting)
-            \(calendar.identifier)
-            \(calendar.timeZone.identifier)
-            \(calendar.locale?.identifier ?? "")
-            \(isLenient)
-            """.sha256()
-
-            if let formatter = get(key: key) as? DateFormatter {
-                return formatter
-            }
-
-            let formatter = DateFormatter().apply {
-                $0.dateFormat = format
-                $0.calendar = calendar
-                $0.timeZone = calendar.timeZone
-                $0.locale = calendar.locale
-                $0.isLenient = isLenient
-                $0.doesRelativeDateFormatting = doesRelativeDateFormatting
-            }
-            register(formatter: formatter, with: key)
-            return formatter
-        }
-
-        func dateFormatter(
             dateStyle: DateFormatter.Style = .none,
             timeStyle: DateFormatter.Style = .none,
             doesRelativeDateFormatting: Bool = false,
@@ -78,7 +47,7 @@ extension Date {
             \(calendar.identifier)
             \(calendar.timeZone.identifier)
             \(calendar.locale?.identifier ?? "")
-            \(isLenient.hashValue)
+            \(isLenient)
             """.sha256()
 
             if let formatter = get(key: key) as? DateFormatter {
