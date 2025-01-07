@@ -10,21 +10,16 @@ extension Date {
     /// An enumeration representing date and time style of a date object.
     public enum Style: Sendable, Hashable {
         /// A style that uses the date and time styles.
-        case dateTime(DateFormatter.Style, time: DateFormatter.Style)
+        case dateTime(FormatStyle.DateStyle, time: FormatStyle.TimeStyle)
 
-        /// A style that uses the same style for date and time.
-        public static func dateTime(_ style: DateFormatter.Style) -> Self {
-            dateTime(style, time: style)
+        /// A style that omits time and uses the date style.
+        public static func date(_ style: FormatStyle.DateStyle) -> Self {
+            dateTime(style, time: .omitted)
         }
 
-        /// A style that uses the date style.
-        public static func date(_ style: DateFormatter.Style) -> Self {
-            dateTime(style, time: .none)
-        }
-
-        /// A style that uses the time style.
-        public static func time(_ style: DateFormatter.Style) -> Self {
-            dateTime(.none, time: style)
+        /// A style that omits date and uses the time style.
+        public static func time(_ style: FormatStyle.TimeStyle) -> Self {
+            dateTime(.omitted, time: style)
         }
 
         /// A style to use when describing a relative date, for example “1 day ago” or
@@ -63,12 +58,12 @@ extension Date {
         /// A style that uses the weekday in calendar.
         ///
         /// - Parameter width: The width of the weekday name.
-        case weekdayName(Date.FormatStyle.Symbol.Weekday)
+        case weekdayName(FormatStyle.Symbol.Weekday)
 
         /// A style that uses the month in calendar.
         ///
         /// - Parameter width: The width of the month name.
-        case monthName(Date.FormatStyle.Symbol.Month)
+        case monthName(FormatStyle.Symbol.Month)
 
         /// A style that uses the ordinal month day in calendar (e.g., June 4th).
         ///
@@ -79,7 +74,7 @@ extension Date {
         /// ```
         ///
         /// - Parameter width: The width of the month name.
-        case monthDayOrdinal(Date.FormatStyle.Symbol.Month)
+        case monthDayOrdinal(FormatStyle.Symbol.Month)
     }
 }
 
@@ -115,17 +110,17 @@ extension Date.Style {
     public static var wide: Self { date(.long) }
 
     /// For example, `Jun 4, 2020`
-    public static var abbreviated: Self { date(.medium) }
+    public static var medium: Self { date(.abbreviated) }
 
     /// For example, `Jun 4, 2020 at 9:41 AM`
-    public static var abbreviatedTime: Self { dateTime(.medium, time: .short) }
+    public static var mediumWithTime: Self { dateTime(.abbreviated, time: .shortened) }
 
-    /// For example, `6/4/20`
-    public static var narrow: Self { date(.short) }
+    /// For example, `6/4/2020`
+    public static var narrow: Self { date(.numeric) }
 
-    /// For example, `6/4/20, 9:41 AM`
-    public static var narrowTime: Self { dateTime(.short) }
+    /// For example, `6/4/2020, 9:41 AM`
+    public static var narrowWithTime: Self { dateTime(.numeric, time: .shortened) }
 
     /// For example, `9:41 AM`
-    public static var time: Self { time(.short) }
+    public static var time: Self { time(.shortened) }
 }

@@ -86,27 +86,27 @@ struct DateTest {
         let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
         // .date(.full)
-        #expect(date.formatted(style: .date(.full)) == "Saturday, January 1, 2000")
-        #expect(date.formatted(style: .dateTime(.full)) == "Saturday, January 1, 2000 at 9:41:00 AM GMT")
+        #expect(date.formatted(style: .date(.complete)) == "Saturday, January 1, 2000")
+        #expect(date.formatted(style: .dateTime(.complete, time: .complete)) == "Saturday, January 1, 2000 at 9:41:00 AM GMT")
 
         // .date(.long)
         #expect(date.formatted(style: .date(.long)) == "January 1, 2000")
-        #expect(date.formatted(style: .dateTime(.long)) == "January 1, 2000 at 9:41:00 AM")
+        #expect(date.formatted(style: .dateTime(.long, time: .standard)) == "January 1, 2000 at 9:41:00 AM")
 
         // .date(.medium)
-        #expect(date.formatted(style: .date(.medium)) == "Jan 1, 2000")
-        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .date(.abbreviated)) == "Jan 1, 2000")
+        #expect(date.formatted(style: .dateTime(.abbreviated, time: .shortened)) == "Jan 1, 2000 at 9:41 AM")
 
         // .date(.short)
-        #expect(date.formatted(style: .date(.short)) == "1/1/2000")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
+        #expect(date.formatted(style: .date(.numeric)) == "1/1/2000")
+        #expect(date.formatted(style: .dateTime(.numeric, time: .shortened)) == "1/1/2000, 9:41 AM")
 
-        #expect(date.formatted(style: .dateTime(.none)) == "")
-        #expect(date.formatted(style: .dateTime(.short)) == "1/1/2000, 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
-        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
-        #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.omitted, time: .omitted)) == "")
+        #expect(date.formatted(style: .dateTime(.numeric, time: .shortened)) == "1/1/2000, 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.abbreviated, time: .standard)) == "Jan 1, 2000 at 9:41:00 AM")
+        #expect(date.formatted(style: .dateTime(.abbreviated, time: .shortened)) == "Jan 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.long, time: .shortened)) == "January 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.complete, time: .shortened)) == "Saturday, January 1, 2000 at 9:41 AM")
     }
 
     @Test
@@ -118,21 +118,28 @@ struct DateTest {
         #expect(date.formatted(Date.FormatStyle(date: .long, time: .shortened).calendarTimeZoneLocale(.default)) == "June 4, 2022 at 11:11 AM")
 
         #expect(date.formatted(style: .date(.long)) == "June 4, 2022")
-        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "June 4, 2022 at 11:11 AM")
+        #expect(date.formatted(style: .dateTime(.long, time: .shortened)) == "June 4, 2022 at 11:11 AM")
 
         // .abbreviated
         #expect(date.formatted(Date.FormatStyle(date: .abbreviated).calendarTimeZoneLocale(.default)) == "Jun 4, 2022")
         #expect(date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).calendarTimeZoneLocale(.default)) == "Jun 4, 2022 at 11:11 AM")
 
-        #expect(date.formatted(style: .date(.medium)) == "Jun 4, 2022")
-        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jun 4, 2022 at 11:11 AM")
+        #expect(date.formatted(style: .date(.abbreviated)) == "Jun 4, 2022")
+        #expect(date.formatted(style: .dateTime(.abbreviated, time: .shortened)) == "Jun 4, 2022 at 11:11 AM")
 
-        // .narrow
+        // .numeric
         #expect(date.formatted(Date.FormatStyle(date: .numeric).calendarTimeZoneLocale(.default)) == "6/4/2022")
         #expect(date.formatted(Date.FormatStyle(date: .numeric, time: .shortened).calendarTimeZoneLocale(.default)) == "6/4/2022, 11:11 AM")
 
-        #expect(date.formatted(style: .date(.short)) == "6/4/2022")
-        #expect(date.formatted(style: .dateTime(.short, time: .short)) == "6/4/2022, 11:11 AM")
+        #expect(date.formatted(style: .date(.numeric)) == "6/4/2022")
+        #expect(date.formatted(style: .dateTime(.numeric, time: .shortened)) == "6/4/2022, 11:11 AM")
+
+        // .complete
+        #expect(date.formatted(Date.FormatStyle(date: .complete).calendarTimeZoneLocale(.default)) == "Saturday, June 4, 2022")
+        #expect(date.formatted(Date.FormatStyle(date: .complete, time: .shortened).calendarTimeZoneLocale(.default)) == "Saturday, June 4, 2022 at 11:11 AM")
+
+        #expect(date.formatted(style: .date(.complete)) == "Saturday, June 4, 2022")
+        #expect(date.formatted(style: .dateTime(.complete, time: .shortened)) == "Saturday, June 4, 2022 at 11:11 AM")
     }
 
     @Test
@@ -147,7 +154,7 @@ struct DateTest {
         #expect(date.formatted(.dateTime.month().day().calendarTimeZoneLocale(.default)) == "Jun 4")
         #expect(date.formatted(Date.FormatStyle(time: .shortened).month().day().calendarTimeZoneLocale(.default)) == "Jun 4 at 11:11 AM")
 
-        // .narrow
+        // .numeric
         #expect(date.formatted(.dateTime.month(.defaultDigits).day().calendarTimeZoneLocale(.default)) == "6/4")
         #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.defaultDigits).day().calendarTimeZoneLocale(.default)) == "6/4, 11:11 AM")
     }
@@ -164,7 +171,7 @@ struct DateTest {
         #expect(date.formatted(.dateTime.month().year().calendarTimeZoneLocale(.default)) == "Jun 2022")
         #expect(date.formatted(Date.FormatStyle(time: .shortened).month().year().calendarTimeZoneLocale(.default)) == "Jun 2022 at 11:11 AM")
 
-        // .narrow
+        // .numeric
         #expect(date.formatted(.dateTime.month(.defaultDigits).year().calendarTimeZoneLocale(.default)) == "6/2022")
         #expect(date.formatted(Date.FormatStyle(time: .shortened).month(.defaultDigits).year().calendarTimeZoneLocale(.default)) == "6/2022, 11:11 AM")
     }
@@ -192,8 +199,8 @@ struct DateTest {
     @Test
     func relativeCalculation() {
         let date = Date()
-        #expect("Today" == date.formatted(style: .date(.full), doesRelativeDateFormatting: true))
-        #expect("hoy" == date.formatted(style: .date(.full), doesRelativeDateFormatting: true, in: .spanish))
+        #expect("Today" == date.formatted(style: .date(.long), doesRelativeDateFormatting: true))
+        #expect("hoy" == date.formatted(style: .date(.long), doesRelativeDateFormatting: true, in: .spanish))
     }
 
     @Test
@@ -994,8 +1001,8 @@ struct DateTest {
         #expect(twoAgo.formatted(style: relative) == "Today")
         #expect(tomorrow.formatted(style: relative) == "Tomorrow")
 
-        #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.medium)))
-        #expect(twoMonthAgo.formatted(style: relative) == twoMonthAgo.formatted(style: .date(.medium)))
+        #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.abbreviated)))
+        #expect(twoMonthAgo.formatted(style: relative) == twoMonthAgo.formatted(style: .date(.abbreviated)))
         #expect(year2000.formatted(style: relative) == "Jan 1, 2000")
     }
 
@@ -1008,34 +1015,34 @@ struct DateTest {
 
         // Current
         #expect(year2000.formatted(style: .wide) == "January 1, 2000")
-        #expect(year2000.formatted(style: .abbreviated) == "Jan 1, 2000")
-        #expect(year2000.formatted(style: .abbreviatedTime) == "Jan 1, 2000 at 9:41 AM")
+        #expect(year2000.formatted(style: .medium) == "Jan 1, 2000")
+        #expect(year2000.formatted(style: .mediumWithTime) == "Jan 1, 2000 at 9:41 AM")
         #expect(year2000.formatted(style: .narrow) == "1/1/2000")
-        #expect(year2000.formatted(style: .narrowTime) == "1/1/2000, 9:41 AM")
+        #expect(year2000.formatted(style: .narrowWithTime) == "1/1/2000, 9:41 AM")
         #expect(year2000.formatted(style: .time) == "9:41 AM")
 
         // London
         #expect(year2000.formatted(style: .wide, in: .london) == "1 January 2000")
-        #expect(year2000.formatted(style: .abbreviated, in: .london) == "1 Jan 2000")
-        #expect(year2000.formatted(style: .abbreviatedTime, in: .london) == "1 Jan 2000 at 9:41")
+        #expect(year2000.formatted(style: .medium, in: .london) == "1 Jan 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .london) == "1 Jan 2000 at 9:41")
         #expect(year2000.formatted(style: .narrow, in: .london) == "01/01/2000")
-        #expect(year2000.formatted(style: .narrowTime, in: .london) == "01/01/2000, 9:41")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .london) == "01/01/2000, 9:41")
         #expect(year2000.formatted(style: .time, in: .london) == "9:41")
 
         // Spanish
         #expect(year2000.formatted(style: .wide, in: .spanish) == "1 de enero de 2000")
-        #expect(year2000.formatted(style: .abbreviated, in: .spanish) == "1 ene 2000")
-        #expect(year2000.formatted(style: .abbreviatedTime, in: .spanish) == "1 ene 2000, 9:41")
+        #expect(year2000.formatted(style: .medium, in: .spanish) == "1 ene 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .spanish) == "1 ene 2000, 9:41")
         #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/2000")
-        #expect(year2000.formatted(style: .narrowTime, in: .spanish) == "1/1/2000, 9:41")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .spanish) == "1/1/2000, 9:41")
         #expect(year2000.formatted(style: .time, in: .spanish) == "9:41")
 
         // Turkey
         #expect(year2000.formatted(style: .wide, in: .turkey) == "1 Ocak 2000")
-        #expect(year2000.formatted(style: .abbreviated, in: .turkey) == "1 Oca 2000")
-        #expect(year2000.formatted(style: .abbreviatedTime, in: .turkey) == "1 Oca 2000 11:41")
+        #expect(year2000.formatted(style: .medium, in: .turkey) == "1 Oca 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .turkey) == "1 Oca 2000 11:41")
         #expect(year2000.formatted(style: .narrow, in: .turkey) == "1.01.2000")
-        #expect(year2000.formatted(style: .narrowTime, in: .turkey) == "1.01.2000 11:41")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .turkey) == "1.01.2000 11:41")
         #expect(year2000.formatted(style: .time, in: .turkey) == "11:41")
     }
 }

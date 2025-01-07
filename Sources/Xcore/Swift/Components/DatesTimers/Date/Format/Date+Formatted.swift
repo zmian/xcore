@@ -27,38 +27,22 @@ extension Date {
 
         switch style {
             case let .dateTime(dateStyle, timeStyle):
-                if dateStyle == .none && timeStyle == .none {
+                if dateStyle == .omitted && timeStyle == .omitted {
                     return ""
                 } else if doesRelativeDateFormatting {
-                    // Date.FormatStyle does not support "RelativeDateFormatting" with time component.
-                    return cache.dateFormatter(
-                        dateStyle: dateStyle,
-                        timeStyle: timeStyle,
-                        doesRelativeDateFormatting: doesRelativeDateFormatting,
-                        calendar: calendar
-                    ).string(from: self)
+                    // Date.FormatStyle does not support "doesRelativeDateFormatting" with time component.
+                    // e.g., "Today at 9:41 AM" or "Today"
+                    return formatted(
+                        .legacy
+                        .calendar(calendar)
+                        .doesRelativeDateFormatting(doesRelativeDateFormatting)
+                        .date(dateStyle)
+                        .time(timeStyle)
+                    )
                 } else {
-                    let dateFormat: Date.FormatStyle.DateStyle
-                    let timeFormat: Date.FormatStyle.TimeStyle
-
-                    switch dateStyle {
-                        case .none: dateFormat = .omitted
-                        case .short: dateFormat = .numeric
-                        case .medium: dateFormat = .abbreviated
-                        case .long:  dateFormat = .long
-                        default: dateFormat = .complete
-                    }
-
-                    switch timeStyle {
-                        case .none: timeFormat = .omitted
-                        case .short:  timeFormat = .shortened
-                        case .medium, .long: timeFormat = .standard
-                        default: timeFormat = .complete
-                    }
-
                     let formatStyle = FormatStyle(
-                        date: dateFormat,
-                        time: timeFormat
+                        date: dateStyle,
+                        time: timeStyle
                     )
                     .calendarTimeZoneLocale(calendar)
                     return formatted(formatStyle)
@@ -172,6 +156,6 @@ extension Date {
             return formatted(formatStyle)
         }
 
-        return formatted(style: .date(.medium))
+        return formatted(style: .date(.abbreviated))
     }
 }
