@@ -10,9 +10,17 @@ import SwiftUI
 
 extension EnvironmentValues {
     @Entry var popupCornerRadius: CGFloat = 16
-    @Entry var popupPreferredWidth: CGFloat = AppConstants.popupPreferredWidth
     @Entry var popupTextAlignment: TextAlignment = .center
     @Entry var popupDismissAction: PopupDismissAction?
+
+    private enum PopupPreferredWidthKey: @preconcurrency EnvironmentKey {
+        @MainActor static let defaultValue: CGFloat = AppConstants.popupPreferredWidth
+    }
+
+    var popupPreferredWidth: CGFloat {
+        get { self[PopupPreferredWidthKey.self] }
+        set { self[PopupPreferredWidthKey.self] = newValue }
+    }
 }
 
 // MARK: - View Helpers

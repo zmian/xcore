@@ -179,11 +179,9 @@ public enum AppConstants {
         iPhoneXSScreenSize.width
     }
 
-//    @MainActor
+    @MainActor
     static var popupPreferredWidth: CGFloat {
-//        min(300, Device.screen.bounds.size.min * 0.8)
-        #warning("fixme")
-        return 300
+        min(300, Device.screen.bounds.size.min * 0.8)
     }
 }
 
