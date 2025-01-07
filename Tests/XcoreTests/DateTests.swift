@@ -177,7 +177,7 @@ struct DateTest {
     }
 
     @Test
-    func date_monthDayOrdinal() {
+    func formatted_style_monthDayOrdinal() {
         // Test that May abbreviation should not contain period (e.g., May 3rd).
         let mayDate = Date(year: 2022, month: 5, day: 3, hour: 11, minute: 11, second: 22)
         let mayExpectedResult = "May 3rd"
@@ -197,14 +197,14 @@ struct DateTest {
     }
 
     @Test
-    func relativeCalculation() {
+    func formatted_relative_calculation() {
         let date = Date()
         #expect("Today" == date.formatted(style: .date(.long), doesRelativeDateFormatting: true))
         #expect("hoy" == date.formatted(style: .date(.long), doesRelativeDateFormatting: true, in: .spanish))
     }
 
     @Test
-    func relative_until_era() {
+    func formatted_relative_until_era() {
         let relative = Date.Style.relative(until: .era)
 
         let yesterday = Date().adjusting(.day, by: -1)
@@ -227,7 +227,7 @@ struct DateTest {
     }
 
     @Test
-    func relative_until_month() {
+    func formatted_relative_until_month() {
         let relative = Date.Style.relative(until: .month)
 
         let yesterday = Date().adjusting(.day, by: -1)
@@ -252,7 +252,7 @@ struct DateTest {
     }
 
     @Test
-    func convenience_style() {
+    func formatted_convenience_style() {
         let now = Date()
         #expect(now.formatted(style: .relative) == "Today")
 
@@ -292,7 +292,7 @@ struct DateTest {
     }
 
     @Test
-    func monthName() {
+    func formatted_monthName() {
         let jan = Date(year: 2022, month: 1, day: 31, hour: 23, minute: 59, second: 59).formatted(style: .monthName)
         let feb = Date(year: 2022, month: 2, day: 4, hour: 21, minute: 11, second: 22).formatted(style: .monthName)
         let mar = Date(year: 2022, month: 3, day: 4, hour: 21, minute: 11, second: 22).formatted(style: .monthName)
@@ -347,7 +347,7 @@ struct DateTest {
     }
 
     @Test
-    func weekdayName() {
+    func formatted_weekdayName() {
         let mon = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let tue = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let wed = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
@@ -382,7 +382,7 @@ struct DateTest {
     }
 
     @Test
-    func weekdayNameFromIndex() {
+    func formatted_weekdayNameFromIndex() {
         #expect(Date.weekdayName(for: 1) == "Sunday")
         #expect(Date.weekdayName(for: 2) == "Monday")
         #expect(Date.weekdayName(for: 3) == "Tuesday")
@@ -680,7 +680,7 @@ struct DateTest {
     }
 
     @Test
-    func totalDayInMonth() {
+    func totalDaysInMonth() {
         let jan = Date(year: 2020, month: 1, day: 1, hour: 3, minute: 41, second: 22)
         let leapYearFeb = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let nonLeapYearFeb = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
