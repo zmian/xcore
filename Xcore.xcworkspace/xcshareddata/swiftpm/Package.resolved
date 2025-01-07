@@ -1,4 +1,5 @@
 {
+  "originHash" : "3d82051d5c092ebb03e512422474151d5ce6fd1d0863c36961c536bb7adf8376",
   "pins" : [
     {
       "identity" : "anycodable",
@@ -6,7 +7,7 @@
       "location" : "https://github.com/zmian/AnyCodable",
       "state" : {
         "branch" : "master",
-        "revision" : "ca1a7d64fd7584fb0e3d4de521c76e2969b8ded6"
+        "revision" : "1d50ba1c12f743f375068acceb08afa507a72dca"
       }
     },
     {
@@ -100,5 +101,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

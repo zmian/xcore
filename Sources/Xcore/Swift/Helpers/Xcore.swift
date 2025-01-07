@@ -23,7 +23,7 @@ extension Bundle {
 }
 
 extension AnyCodable {
-    public static func from(_ value: Any) -> Self {
+    public static func from(_ value: any Sendable) -> Self {
         self.init(value)
     }
 }
