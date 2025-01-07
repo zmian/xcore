@@ -204,89 +204,91 @@ struct DateTest {
     }
 
     @Test
-    func timeInDifferentCalendar() {
-        let expectedHour = 17
-        let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
-        let receivedHour = date.component(.hour, in: .usEastern)
-        #expect(expectedHour == receivedHour)
+    func relative_until_era() {
+        let relative = Date.Style.relative(until: .era)
+
+        let yesterday = Date().adjusting(.day, by: -1)
+        let now = Date()
+        let hourAgo = Date().adjusting(.hour, by: 1)
+        let twoAgo = Date().adjusting(.hour, by: 2)
+        let tomorrow = Date().adjusting(.day, by: 1)
+        let twoMonthFromNow = Date().adjusting(.month, by: 2)
+        let twoMonthAgo = Date().adjusting(.month, by: -2)
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        #expect(yesterday.formatted(style: relative) == "Yesterday")
+        #expect(now.formatted(style: relative) == "Today")
+        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
+        #expect(twoAgo.formatted(style: relative) == "In 2 hours")
+        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
+        #expect(twoMonthFromNow.formatted(style: relative) == "In 2 months")
+        #expect(twoMonthAgo.formatted(style: relative) == "2 months ago")
+        #expect(year2000.formatted(style: relative) == "25 years ago")
     }
 
     @Test
-    func dateAdjustments() {
-        let expectedDate = Date(year: 2021, month: 9, day: 1, hour: 21, minute: 11, second: 22)
-        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
-        let adjustedDate = dateToAdjust
-            .adjusting(.year, by: -1)
-            .adjusting(.month, by: 4)
-            .adjusting(.day, by: -3)
-        #expect(expectedDate == adjustedDate)
+    func relative_until_month() {
+        let relative = Date.Style.relative(until: .month)
+
+        let yesterday = Date().adjusting(.day, by: -1)
+        let now = Date()
+        let hourAgo = Date().adjusting(.hour, by: 1)
+        let twoAgo = Date().adjusting(.hour, by: 2)
+        let tomorrow = Date().adjusting(.day, by: 1)
+
+        let twoMonthFromNow = Date().adjusting(.month, by: 2)
+        let twoMonthAgo = Date().adjusting(.month, by: -2)
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        #expect(yesterday.formatted(style: relative) == "Yesterday")
+        #expect(now.formatted(style: relative) == "Today")
+        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
+        #expect(twoAgo.formatted(style: relative) == "In 2 hours")
+        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
+
+        #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.abbreviated)))
+        #expect(twoMonthAgo.formatted(style: relative) == twoMonthAgo.formatted(style: .date(.abbreviated)))
+        #expect(year2000.formatted(style: relative) == "Jan 1, 2000")
     }
 
     @Test
-    func startOfDate() {
-        let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
-        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+    func convenience_style() {
+        let now = Date()
+        #expect(now.formatted(style: .relative) == "Today")
 
-        for component in components {
-            let expectedDate: Date
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
-            switch component {
-                case .year:
-                    expectedDate = Date(year: 2022, month: 1, day: 1, hour: 0, minute: 0, second: 0)
-                case .month:
-                    expectedDate = Date(year: 2022, month: 5, day: 1, hour: 0, minute: 0, second: 0)
-                case .day:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 0, minute: 0, second: 0)
-                case .hour:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 0, second: 0)
-                case .minute:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 0)
-                default:
-                    expectedDate = Date()
-                    Issue.record("Unexpected test case")
-            }
+        // Current
+        #expect(year2000.formatted(style: .wide) == "January 1, 2000")
+        #expect(year2000.formatted(style: .medium) == "Jan 1, 2000")
+        #expect(year2000.formatted(style: .mediumWithTime) == "Jan 1, 2000 at 9:41 AM")
+        #expect(year2000.formatted(style: .narrow) == "1/1/2000")
+        #expect(year2000.formatted(style: .narrowWithTime) == "1/1/2000, 9:41 AM")
+        #expect(year2000.formatted(style: .time) == "9:41 AM")
 
-            let startOfDate = dateToAdjust.startOf(component)
-            print("Expected Date = \(expectedDate)")
-            print("Receieved Result = \(startOfDate)")
-            #expect(expectedDate == startOfDate)
-        }
-    }
+        // London
+        #expect(year2000.formatted(style: .wide, in: .london) == "1 January 2000")
+        #expect(year2000.formatted(style: .medium, in: .london) == "1 Jan 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .london) == "1 Jan 2000 at 9:41")
+        #expect(year2000.formatted(style: .narrow, in: .london) == "01/01/2000")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .london) == "01/01/2000, 9:41")
+        #expect(year2000.formatted(style: .time, in: .london) == "9:41")
 
-    @Test
-    func startOfDate_Calendar() {
-        let expectedDate = Date(year: 2022, month: 1, day: 1, calendar: .current)
-        let adjustedDate = expectedDate.startOf(.month, in: .current)
-        #expect(expectedDate == adjustedDate)
-    }
+        // Spanish
+        #expect(year2000.formatted(style: .wide, in: .spanish) == "1 de enero de 2000")
+        #expect(year2000.formatted(style: .medium, in: .spanish) == "1 ene 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .spanish) == "1 ene 2000, 9:41")
+        #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/2000")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .spanish) == "1/1/2000, 9:41")
+        #expect(year2000.formatted(style: .time, in: .spanish) == "9:41")
 
-    @Test
-    func endOfDate() {
-        let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
-        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
-
-        for component in components {
-            let expectedDate: Date
-
-            switch component {
-                case .year:
-                    expectedDate = Date(year: 2022, month: 12, day: 31, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
-                case .month:
-                    expectedDate = Date(year: 2022, month: 5, day: 31, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
-                case .day:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
-                case .hour:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 59, second: 59).addingTimeInterval(0.999)
-                case .minute:
-                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 59).addingTimeInterval(0.999)
-                default:
-                    expectedDate = Date()
-                    Issue.record("Unexpected test case")
-            }
-
-            let endOfDate = dateToAdjust.endOf(component)
-            #expect(expectedDate == endOfDate)
-        }
+        // Turkey
+        #expect(year2000.formatted(style: .wide, in: .turkey) == "1 Ocak 2000")
+        #expect(year2000.formatted(style: .medium, in: .turkey) == "1 Oca 2000")
+        #expect(year2000.formatted(style: .mediumWithTime, in: .turkey) == "1 Oca 2000 11:41")
+        #expect(year2000.formatted(style: .narrow, in: .turkey) == "1.01.2000")
+        #expect(year2000.formatted(style: .narrowWithTime, in: .turkey) == "1.01.2000 11:41")
+        #expect(year2000.formatted(style: .time, in: .turkey) == "11:41")
     }
 
     @Test
@@ -345,7 +347,7 @@ struct DateTest {
     }
 
     @Test
-    func weekName() {
+    func weekdayName() {
         let mon = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let tue = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let wed = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
@@ -380,7 +382,7 @@ struct DateTest {
     }
 
     @Test
-    func weekNameFromIndex() {
+    func weekdayNameFromIndex() {
         #expect(Date.weekdayName(for: 1) == "Sunday")
         #expect(Date.weekdayName(for: 2) == "Monday")
         #expect(Date.weekdayName(for: 3) == "Tuesday")
@@ -592,10 +594,89 @@ struct DateTest {
     }
 
     @Test
-    func timeZone() {
-        #expect(Date.timeZoneOffset(calendar: .usEastern) == -5)
-        #expect(Date.timeZoneOffset(calendar: .iso) == 0)
-        #expect(Date.timeZoneOffset(calendar: .turkey) == 3)
+    func timeInDifferentCalendar() {
+        let expectedHour = 17
+        let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+        let receivedHour = date.component(.hour, in: .usEastern)
+        #expect(expectedHour == receivedHour)
+    }
+
+    @Test
+    func dateAdjustments() {
+        let expectedDate = Date(year: 2021, month: 9, day: 1, hour: 21, minute: 11, second: 22)
+        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+        let adjustedDate = dateToAdjust
+            .adjusting(.year, by: -1)
+            .adjusting(.month, by: 4)
+            .adjusting(.day, by: -3)
+        #expect(expectedDate == adjustedDate)
+    }
+
+    @Test
+    func startOfDate() {
+        let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
+        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+
+        for component in components {
+            let expectedDate: Date
+
+            switch component {
+                case .year:
+                    expectedDate = Date(year: 2022, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+                case .month:
+                    expectedDate = Date(year: 2022, month: 5, day: 1, hour: 0, minute: 0, second: 0)
+                case .day:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 0, minute: 0, second: 0)
+                case .hour:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 0, second: 0)
+                case .minute:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 0)
+                default:
+                    expectedDate = Date()
+                    Issue.record("Unexpected test case")
+            }
+
+            let startOfDate = dateToAdjust.startOf(component)
+            print("Expected Date = \(expectedDate)")
+            print("Receieved Result = \(startOfDate)")
+            #expect(expectedDate == startOfDate)
+        }
+    }
+
+    @Test
+    func startOfDate_Calendar() {
+        let expectedDate = Date(year: 2022, month: 1, day: 1, calendar: .current)
+        let adjustedDate = expectedDate.startOf(.month, in: .current)
+        #expect(expectedDate == adjustedDate)
+    }
+
+    @Test
+    func endOfDate() {
+        let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
+        let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+
+        for component in components {
+            let expectedDate: Date
+
+            switch component {
+                case .year:
+                    expectedDate = Date(year: 2022, month: 12, day: 31, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
+                case .month:
+                    expectedDate = Date(year: 2022, month: 5, day: 31, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
+                case .day:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
+                case .hour:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 59, second: 59).addingTimeInterval(0.999)
+                case .minute:
+                    expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 59).addingTimeInterval(0.999)
+                default:
+                    expectedDate = Date()
+                    Issue.record("Unexpected test case")
+            }
+
+            let endOfDate = dateToAdjust.endOf(component)
+            #expect(expectedDate == endOfDate)
+        }
     }
 
     @Test
@@ -959,91 +1040,10 @@ struct DateTest {
     }
 
     @Test
-    func relative_until_era() {
-        let relative = Date.Style.relative(until: .era)
-
-        let yesterday = Date().adjusting(.day, by: -1)
-        let now = Date()
-        let hourAgo = Date().adjusting(.hour, by: 1)
-        let twoAgo = Date().adjusting(.hour, by: 2)
-        let tomorrow = Date().adjusting(.day, by: 1)
-        let twoMonthFromNow = Date().adjusting(.month, by: 2)
-        let twoMonthAgo = Date().adjusting(.month, by: -2)
-        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
-
-        #expect(yesterday.formatted(style: relative) == "Yesterday")
-        #expect(now.formatted(style: relative) == "Today")
-        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
-        #expect(twoAgo.formatted(style: relative) == "In 2 hour")
-        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
-        #expect(twoMonthFromNow.formatted(style: relative) == "In 2 months")
-        #expect(twoMonthAgo.formatted(style: relative) == "2 months ago")
-        #expect(year2000.formatted(style: relative) == "25 years ago")
-    }
-
-    @Test
-    func relative_until_month() {
-        let relative = Date.Style.relative(until: .month)
-
-        let yesterday = Date().adjusting(.day, by: -1)
-        let now = Date()
-        let hourAgo = Date().adjusting(.hour, by: 1)
-        let twoAgo = Date().adjusting(.hour, by: 2)
-        let tomorrow = Date().adjusting(.day, by: 1)
-
-        let twoMonthFromNow = Date().adjusting(.month, by: 2)
-        let twoMonthAgo = Date().adjusting(.month, by: -2)
-        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
-
-        #expect(yesterday.formatted(style: relative) == "Yesterday")
-        #expect(now.formatted(style: relative) == "Today")
-        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
-        #expect(twoAgo.formatted(style: relative) == "In 2 hour")
-        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
-
-        #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.abbreviated)))
-        #expect(twoMonthAgo.formatted(style: relative) == twoMonthAgo.formatted(style: .date(.abbreviated)))
-        #expect(year2000.formatted(style: relative) == "Jan 1, 2000")
-    }
-
-    @Test
-    func custom_style() {
-        let now = Date()
-        #expect(now.formatted(style: .relative) == "Today")
-
-        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
-
-        // Current
-        #expect(year2000.formatted(style: .wide) == "January 1, 2000")
-        #expect(year2000.formatted(style: .medium) == "Jan 1, 2000")
-        #expect(year2000.formatted(style: .mediumWithTime) == "Jan 1, 2000 at 9:41 AM")
-        #expect(year2000.formatted(style: .narrow) == "1/1/2000")
-        #expect(year2000.formatted(style: .narrowWithTime) == "1/1/2000, 9:41 AM")
-        #expect(year2000.formatted(style: .time) == "9:41 AM")
-
-        // London
-        #expect(year2000.formatted(style: .wide, in: .london) == "1 January 2000")
-        #expect(year2000.formatted(style: .medium, in: .london) == "1 Jan 2000")
-        #expect(year2000.formatted(style: .mediumWithTime, in: .london) == "1 Jan 2000 at 9:41")
-        #expect(year2000.formatted(style: .narrow, in: .london) == "01/01/2000")
-        #expect(year2000.formatted(style: .narrowWithTime, in: .london) == "01/01/2000, 9:41")
-        #expect(year2000.formatted(style: .time, in: .london) == "9:41")
-
-        // Spanish
-        #expect(year2000.formatted(style: .wide, in: .spanish) == "1 de enero de 2000")
-        #expect(year2000.formatted(style: .medium, in: .spanish) == "1 ene 2000")
-        #expect(year2000.formatted(style: .mediumWithTime, in: .spanish) == "1 ene 2000, 9:41")
-        #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/2000")
-        #expect(year2000.formatted(style: .narrowWithTime, in: .spanish) == "1/1/2000, 9:41")
-        #expect(year2000.formatted(style: .time, in: .spanish) == "9:41")
-
-        // Turkey
-        #expect(year2000.formatted(style: .wide, in: .turkey) == "1 Ocak 2000")
-        #expect(year2000.formatted(style: .medium, in: .turkey) == "1 Oca 2000")
-        #expect(year2000.formatted(style: .mediumWithTime, in: .turkey) == "1 Oca 2000 11:41")
-        #expect(year2000.formatted(style: .narrow, in: .turkey) == "1.01.2000")
-        #expect(year2000.formatted(style: .narrowWithTime, in: .turkey) == "1.01.2000 11:41")
-        #expect(year2000.formatted(style: .time, in: .turkey) == "11:41")
+    func timeZone() {
+        #expect(Date.timeZoneOffset(calendar: .usEastern) == -5)
+        #expect(Date.timeZoneOffset(calendar: .iso) == 0)
+        #expect(Date.timeZoneOffset(calendar: .turkey) == 3)
     }
 }
 
