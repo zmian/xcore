@@ -25,8 +25,8 @@ extension Calendar {
     ///   - locale: The locale of the calendar.
     /// - Returns: A `gregorian` calendar with the specified time zone and locale.
     public static func gregorian(
-        timeZone: TimeZone = .current,
-        locale: Locale = .current
+        timeZone: TimeZone = .autoupdatingCurrent,
+        locale: Locale = .autoupdatingCurrent
     ) -> Self {
         Calendar(identifier: .gregorian).applying {
             $0.timeZone = timeZone
