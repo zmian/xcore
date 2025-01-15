@@ -66,22 +66,30 @@ private struct BoundedLayout: Layout {
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         guard let subview = subviews.first else { return }
 
-        // Determine the width of the content.
+        // Determine the size of the content.
         let contentSize = subview.sizeThatFits(proposal)
 
         // Calculate the target position based on the percentage.
         let containerWidth = bounds.width
-        let contentHalfWidth = contentSize.width / 2
+        let contentWidth = contentSize.width
+
+        // Calculate the target x-coordinate.
         let targetX = containerWidth * percent
 
-        // Calculate left offset.
-        let leftSpacerWidth = max(0, targetX - (preserveBounds ? contentHalfWidth : 0))
-        let xOffset = bounds.minX + leftSpacerWidth
+        // Adjust to keep content within bounds if `preserveBounds` is true.
+        let adjustedX: CGFloat
+        if preserveBounds {
+            let minAllowedX = contentWidth / 2
+            let maxAllowedX = containerWidth - contentWidth / 2
+            adjustedX = min(max(targetX, minAllowedX), maxAllowedX)
+        } else {
+            adjustedX = targetX
+        }
 
-        // Place the content view.
+        // Place the content view at the calculated position.
         subview.place(
-            at: CGPoint(x: xOffset, y: bounds.midY - contentSize.height / 2),
-            proposal: ProposedViewSize(width: contentSize.width, height: contentSize.height)
+            at: CGPoint(x: bounds.minX + adjustedX - contentWidth / 2, y: bounds.midY - contentSize.height / 2),
+            proposal: ProposedViewSize(width: contentWidth, height: contentSize.height)
         )
     }
 }
