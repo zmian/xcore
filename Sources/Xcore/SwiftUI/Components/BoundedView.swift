@@ -89,7 +89,7 @@ private struct BoundedLayout: Layout {
         // Place the content view at the calculated position.
         subview.place(
             at: CGPoint(x: bounds.minX + adjustedX - contentWidth / 2, y: bounds.midY - contentSize.height / 2),
-            proposal: ProposedViewSize(width: contentWidth, height: contentSize.height)
+            proposal: ProposedViewSize(width: contentSize.width, height: contentSize.height)
         )
     }
 }
