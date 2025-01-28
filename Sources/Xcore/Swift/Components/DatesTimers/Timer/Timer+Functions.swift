@@ -25,7 +25,7 @@ extension DispatchTime {
     ///   point in time.
     /// - Returns: The time interval, in seconds, between the current time and the
     ///   specified `lastUptime`.
-    public static func seconds(elapsedSince lastUptime: UInt64) -> TimeInterval {
+    static func elapsedSeconds(since lastUptime: UInt64) -> TimeInterval {
         let currentTime = DispatchTime.now().uptimeNanoseconds
         // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
         // overflow due to arithmetic returning signed (-) value for UInt64 type.

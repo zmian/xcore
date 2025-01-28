@@ -72,7 +72,7 @@ public final class SystemUptime: Sendable, Hashable, Identifiable {
     /// Computes the time difference in seconds between the current uptime
     /// and the last saved uptime.
     private var diffInSeconds: TimeInterval {
-        DispatchTime.seconds(elapsedSince: value.value)
+        DispatchTime.elapsedSeconds(since: value.value)
     }
 
     public static func ==(lhs: SystemUptime, rhs: SystemUptime) -> Bool {
