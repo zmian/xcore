@@ -199,22 +199,22 @@ extension LiveAddressSearchClient {
 
 extension PostalAddress {
     init(_ item: MKPlacemark) {
-        /// Extracting the city from the formatted address lines because "sublocality"
-        /// or "locality" are not uniquely identifying the proper city.
+        /// Extracting the city from the "title" because "sublocality" or "locality" are
+        /// not uniquely identifying the proper city.
         ///
         /// For example, Brooklyn comes as a "sublocality" but Miami Beach comes as
         /// "locality", and Long Island City doesn't come in neither of these
         /// properties.
         ///
-        /// However, formatted address lines returns the correct data (e.g., "Brooklyn,
-        /// NY 11217"), we are parsing the string and taking the first component,
-        /// returning "Brooklyn" correctly as the city.
+        /// However, "title" returns the correct data (e.g., "Brooklyn, NY 11217"), we
+        /// are parsing the string and taking the first component, returning "Brooklyn"
+        /// correctly as the city.
         ///
         /// We have to check the number of lines on the address as to know where to
-        /// fetch the city from: when 4 lines (address with apt number) are present the
-        /// city is in position #2. If only 3 lines, then the city is in position #1.
+        /// fetch the city from: when 5 lines (address with apt number) are present the
+        /// city is in position #3. If only 4 lines, then the city is in position #1.
         ///
-        /// If the address has 4 lines then we use position #1 to fill `street2`.
+        /// If the address has 5 lines then we use position #1 to fill `street2`.
         ///
         /// ```swift
         ///
@@ -279,31 +279,34 @@ extension PostalAddress {
         /// }
         /// ```
         /// - SeeAlso: http://www.openradar.appspot.com/35862589
-        let addressLines = item.addressDictionary?["FormattedAddressLines"] as? [String] ?? []
-
-        func getCityField(_ addressLines: [String]) -> String {
+        func getStreet2AndCityFields() -> (String, String) {
             if item.isoCountryCode == "US" {
+                let components = item.title?
+                    .components(separatedBy: ",") ?? []
+
                 // Only one field means we only have the country
-                guard addressLines.count > 1 else {
-                    return ""
+                guard components.count > 1 else {
+                    return (street2: "", city: "")
                 }
 
-                // City field is located on the 2nd to last position
-                return addressLines
-                    .at(addressLines.count - 2)?
-                    .components(separatedBy: ",")
-                    .first ?? ""
+                // City field is located on the 3rd from last position
+                // "222 Jackson St, Unit 5, Brooklyn, NY 11211, United States"
+                let city = components
+                    .at(components.count - 3)?
+                    .trimmed() ?? ""
+
+                let street2 = components.count > 4 ? components[1].trimmed() : ""
+                return (street2: street2, city: city)
             }
 
-            return item.subLocality ?? item.locality ?? ""
+            return (street2: "", city: item.subLocality ?? item.locality ?? "")
         }
 
-        let city = getCityField(addressLines)
-        let street2 = addressLines.count > 3 ? addressLines.at(1) : ""
+        let (street2, city) = getStreet2AndCityFields()
 
         self.init(
             street1: [item.subThoroughfare, item.thoroughfare].joined(separator: " "),
-            street2: street2 ?? "",
+            street2: street2,
             city: city,
             state: item.administrativeArea ?? "",
             postalCode: item.postalCode ?? "",
