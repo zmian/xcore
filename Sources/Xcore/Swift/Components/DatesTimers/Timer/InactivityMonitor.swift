@@ -31,6 +31,8 @@ import UIKit
 ///             ZStack {
 ///                 if inactivityMonitor.isInactive {
 ///                     Text("App Locked")
+///                     // Once unlocked call:
+///                     // "inactivityMonitor.reset()"
 ///                 } else {
 ///                     Text("Welcome to the App!")
 ///                 }
