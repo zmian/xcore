@@ -18,18 +18,17 @@ import Combine
 /// it's considered a new session and all the cached values are removed.
 public final class AnalyticsSessionTracker: @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
-    private var cancellable: AnyCancellable?
-    private var lastActiveTime = DispatchTime.now().uptimeNanoseconds
-    private var values = Set<String>()
+    private let lastActiveUptime = SystemUptime()
     private let sessionExpirationDuration: TimeInterval
+    private var cancellable: AnyCancellable?
+    private var values = Set<String>()
 
     /// Creates an instance of analytics session tracker.
     ///
-    /// - Parameter sessionExpirationDuration: Allowed time in seconds for the user
-    ///   to be considered in the same session when the app enters foreground. The
-    ///   default value is `30` seconds.
-    public init(sessionExpirationDuration: TimeInterval = 30) {
-        self.sessionExpirationDuration = sessionExpirationDuration
+    /// - Parameter duration: The duration for the user to be considered in the same
+    ///   session when the app enters foreground.
+    public init(sessionExpiration duration: Duration = .seconds(30)) {
+        self.sessionExpirationDuration = TimeInterval(duration.components.seconds)
 
         withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
@@ -42,7 +41,8 @@ public final class AnalyticsSessionTracker: @unchecked Sendable {
 
     /// Adds an observer for the app lifecycle.
     ///
-    /// `lastActiveTime` value is updated to reflect the time app was backgrounded.
+    /// `lastActiveUptime` value is updated to reflect the time app was
+    /// backgrounded.
     ///
     /// When app enters foreground, the current time is compared to the last active
     /// time. If the time is greater than the longest allowed time for the user to
@@ -53,13 +53,9 @@ public final class AnalyticsSessionTracker: @unchecked Sendable {
 
             switch appPhase {
                 case .background:
-                    lastActiveTime = DispatchTime.now().uptimeNanoseconds
+                    lastActiveUptime.saveValue()
                 case .willEnterForeground:
-                    // `DispatchTime` was used here instead of `Date.timeIntervalSince(_:)` because
-                    // of an edge case that can happen with `Date` if the user changes their
-                    // timezone. `DispatchTime` is agnostic of any timezone changes, and it works
-                    // consistently.
-                    if DispatchTime.seconds(elapsedSince: lastActiveTime) > sessionExpirationDuration {
+                    if lastActiveUptime.elapsed(sessionExpirationDuration) {
                         // Invalidate cache
                         values.removeAll()
                     }

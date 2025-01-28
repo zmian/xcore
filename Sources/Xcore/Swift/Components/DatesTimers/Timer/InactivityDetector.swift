@@ -24,7 +24,7 @@ import UIKit
 /// ```swift
 /// @main
 /// struct ExampleApp: App {
-///     @State private var inactivityMonitor = InactivityMonitor(timeout: 5 * 60)
+///     @State private var inactivityMonitor = InactivityMonitor(timeout: .seconds(5 * 60))
 ///
 ///     var body: some Scene {
 ///         WindowGroup {
@@ -48,8 +48,7 @@ public final class InactivityMonitor {
     private var notificationToken: NSObjectProtocol?
     private var timer: DispatchSourceTimer?
     private let lastActivityUptime: SystemUptime
-    /// The duration (in seconds) of inactivity after which the app is considered
-    /// inactive.
+    /// The duration of inactivity after which the app is considered inactive.
     private let timeout: TimeInterval
 
     /// Indicates whether the inactivity timeout has been reached.
@@ -60,10 +59,9 @@ public final class InactivityMonitor {
     /// Creates an instance of `InactivityMonitor` with a specified timeout
     /// duration.
     ///
-    /// - Parameter timeout: The time interval (in seconds) after which inactivity
-    ///   is detected.
-    public init(timeout: TimeInterval = 5 * 60) {
-        self.timeout = timeout
+    /// - Parameter timeout: The duration after which inactivity is detected.
+    public init(timeout: Duration = .seconds(5 * 60)) {
+        self.timeout = TimeInterval(timeout.components.seconds)
         self.lastActivityUptime = .init()
 
         setupObservers()
