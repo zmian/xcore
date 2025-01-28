@@ -7,27 +7,29 @@
 import SwiftUI
 import UIKit
 
-/// Monitors user inactivity and toggles `isInactive` property after a specified
-/// timeout.
+/// Monitors user inactivity and toggles the `isInactive` property after a specified
+/// timeout period.
 ///
-/// The `InactivityDetector` monitors user interaction through gesture
-/// recognizers and app lifecycle events. It uses a monotonic clock to track
-/// elapsed time, ensuring accurate tracking even if the system clock changes.
+/// The `InactivityMonitor` observes user interaction through gesture
+/// recognizers and app lifecycle events. It uses a monotonic clock to measure
+/// elapsed time, ensuring accuracy even if the system clock changes (e.g., due
+/// to NTP or daylight savings adjustments).
 ///
-/// Use the `isInactive` property in SwiftUI to reactively display a lock screen
-/// or take any other action when the timeout is reached.
+/// When inactivity is detected, the `isInactive` property is updated. This
+/// property can be observed in SwiftUI to trigger actions such as displaying a
+/// lock screen.
 ///
 /// **Usage**
 ///
 /// ```swift
 /// @main
 /// struct ExampleApp: App {
-///     @State private var inactivityDetector = InactivityDetector(timeout: 5 * 60)
+///     @State private var inactivityMonitor = InactivityMonitor(timeout: 5 * 60)
 ///
 ///     var body: some Scene {
 ///         WindowGroup {
 ///             ZStack {
-///                 if inactivityDetector.isInactive {
+///                 if inactivityMonitor.isInactive {
 ///                     Text("App Locked")
 ///                 } else {
 ///                     Text("Welcome to the App!")
@@ -38,26 +40,29 @@ import UIKit
 /// }
 /// ```
 ///
-/// - Note: Uses monotonic timer source that won't ever jump forward or backward
-///   (due to NTP or Daylight Savings Time updates).
+/// - Note: The timer uses a monotonic time source to ensure it does not jump
+///   forward or backward due to system clock changes.
 @Observable
 @MainActor
-final class InactivityDetector {
+public final class InactivityMonitor {
     private var notificationToken: NSObjectProtocol?
     private var timer: DispatchSourceTimer?
     private let lastActivityUptime: SystemUptime
+    /// The duration (in seconds) of inactivity after which the app is considered
+    /// inactive.
     private let timeout: TimeInterval
 
     /// Indicates whether the inactivity timeout has been reached.
     ///
     /// This property automatically notifies SwiftUI when its value changes.
-    var isInactive: Bool = false
+    public private(set) var isInactive: Bool = false
 
-    /// Creates an instance of `InactivityDetector` with a timeout duration.
+    /// Creates an instance of `InactivityMonitor` with a specified timeout
+    /// duration.
     ///
     /// - Parameter timeout: The time interval (in seconds) after which inactivity
     ///   is detected.
-    init(timeout: TimeInterval = 5 * 60) {
+    public init(timeout: TimeInterval = 5 * 60) {
         self.timeout = timeout
         self.lastActivityUptime = .init()
 
@@ -65,42 +70,47 @@ final class InactivityDetector {
         startTimer()
     }
 
-    /// Sets up observers to detect user activity.
+    /// Configures observers to detect user activity.
     ///
-    /// Observes app lifecycle events and adds gesture recognizers to the app's main
-    /// window to monitor user interaction.
+    /// Observes app lifecycle events and attaches gesture recognizers to the app's
+    /// main window for monitoring user interactions.
     private func setupObservers() {
-        // Observing app lifecycle events.
-        notificationToken = NotificationCenter.observe(UIApplication.willEnterForegroundNotification) { [weak self] _ in
+        // Observe app lifecycle events (e.g., app entering the foreground).
+        notificationToken = NotificationCenter.observe(
+            UIApplication.willEnterForegroundNotification
+        ) { [weak self] _ in
             DispatchQueue.main.async { [weak self] in
                 self?.checkInactivity()
             }
         }
 
-        // Adding gesture recognizers to the main window for detecting touches.
-        // Resets the activity timer when user activity is detected.
+        // Attach gesture recognizers to the main app window for detecting user touches.
         if let window = UIApplication.sharedOrNil?.firstSceneKeyWindow {
-            let tapGesture = UITapGestureRecognizer { [weak self] sender in
-                self?.resetActivityTimer()
+            let tapGesture = UITapGestureRecognizer { [weak self] _ in
+                self?.onActivityDetected()
             }
 
-            let panGesture = UIPanGestureRecognizer { [weak self] sender in
-                self?.resetActivityTimer()
+            let panGesture = UIPanGestureRecognizer { [weak self] _ in
+                self?.onActivityDetected()
             }
 
+            // Ensure touches are passed through to underlying views.
             tapGesture.cancelsTouchesInView = false
             panGesture.cancelsTouchesInView = false
+
             window.addGestureRecognizer(tapGesture)
             window.addGestureRecognizer(panGesture)
         }
     }
 
-    /// Starts the timer to monitor inactivity.
+    /// Starts the inactivity timer.
     ///
-    /// The timer checks for inactivity at 1-second intervals. If the elapsed time
-    /// exceeds the specified timeout, the `isInactive` property is set to `true`.
+    /// The timer checks for inactivity at regular intervals. If the elapsed time
+    /// since the last activity exceeds the specified timeout, the `isInactive`
+    /// property is set to `true`.
     private func startTimer() {
-        stopTimer() // Ensure no duplicate timers are running.
+        // Cancel any existing timer before starting a new one.
+        stopTimer()
 
         timer = DispatchSource.makeTimerSource(queue: .main)
         timer?.schedule(deadline: .now(), repeating: timeout)
@@ -113,7 +123,7 @@ final class InactivityDetector {
 
     /// Stops the inactivity timer.
     ///
-    /// This method cancels the active timer, releasing its resources.
+    /// Cancels the active timer and releases its resources.
     private func stopTimer() {
         timer?.cancel()
         timer = nil
@@ -121,27 +131,35 @@ final class InactivityDetector {
 
     /// Checks whether the inactivity timeout has been reached.
     ///
-    /// If the elapsed time since the last recorded activity exceeds the specified
-    /// timeout, the `isInactive` property is set to `true`.
+    /// If the elapsed time since the last detected activity exceeds the timeout,
+    /// the `isInactive` property is set to `true`.
     private func checkInactivity() {
-        if lastActivityUptime.elapsed(timeout) {
+        if !isInactive, lastActivityUptime.elapsed(timeout) {
             isInactive = true
             stopTimer()
-        } else {
-            isInactive = false
-            startTimer()
         }
+    }
+
+    /// Handles user activity events.
+    ///
+    /// If user activity is detected and the app is not inactive, this method
+    /// updates the last recorded activity time to postpone the timeout.
+    private func onActivityDetected() {
+        guard !isInactive else {
+            return
+        }
+
+        lastActivityUptime.saveValue()
+        startTimer()
     }
 
     /// Resets the inactivity timer.
     ///
-    /// This method updates the last recorded activity time to the current time,
-    /// ensuring that the timeout is postponed.
-    func resetActivityTimer() {
+    /// Updates the last recorded activity time to now and ensures the timer
+    /// continues monitoring from the reset point.
+    public func reset() {
+        isInactive = false
         lastActivityUptime.saveValue()
-        if isInactive {
-            isInactive = false
-            startTimer()
-        }
+        startTimer()
     }
 }
