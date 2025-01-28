@@ -46,7 +46,7 @@ public struct TimerButton<Label: View>: View {
     private typealias L = Localized
     @Environment(\.theme) private var theme
     @State private var state = InternalState.idle
-    @State private var monotonicTimer = MonotonicTimer.Uptime()
+    @State private var systemUptime = SystemUptime()
     @State private var timer = makeTimer()
     private let status: TimerButtonStatus
     private let countdown: Int
@@ -82,7 +82,7 @@ public struct TimerButton<Label: View>: View {
         .animation(.default, value: isButtonHidden)
         .onReceive(timer) { _ in
             if state.remainingSeconds > 0 {
-                state = .ticked(countdown - monotonicTimer.secondsElapsed())
+                state = .ticked(countdown - systemUptime.secondsElapsed())
             } else {
                 state = .active
             }
@@ -128,7 +128,7 @@ public struct TimerButton<Label: View>: View {
     private func restartTimer() {
         state = .ticked(countdown)
         timer = Self.makeTimer()
-        monotonicTimer.saveValue()
+        systemUptime.saveValue()
     }
 
     private func stopTimer() {

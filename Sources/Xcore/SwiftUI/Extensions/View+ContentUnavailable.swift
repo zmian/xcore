@@ -59,7 +59,14 @@ extension View {
     @ViewBuilder
     public func contentUnavailable(_ unavailable: Bool, message: String) -> some View {
         contentUnavailable(unavailable) {
-            CustomContentUnavailableView(message: message)
+            EnvironmentReader(\.theme) { theme in
+                ContentUnavailableView {
+                    Text(message)
+                        .font(.app(.body))
+                        .foregroundStyle(theme.textSecondaryColor)
+                        .multilineTextAlignment(.center)
+                }
+            }
         }
     }
 
@@ -96,28 +103,5 @@ extension View {
                 .hidden(unavailable)
         }
         .animation(.default, value: unavailable)
-    }
-}
-
-// MARK: - Helpers
-
-private struct CustomContentUnavailableView: View {
-    @Environment(\.theme) private var theme
-    let message: String
-
-    var body: some View {
-        if #available(iOS 17.0, *) {
-            ContentUnavailableView {
-                Text(message)
-                    .font(.app(.body))
-                    .foregroundStyle(theme.textSecondaryColor)
-                    .multilineTextAlignment(.center)
-            }
-        } else {
-            Text(message)
-                .foregroundStyle(theme.textSecondaryColor)
-                .multilineTextAlignment(.center)
-                .padding(.defaultSpacing)
-        }
     }
 }

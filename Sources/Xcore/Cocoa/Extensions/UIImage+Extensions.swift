@@ -25,14 +25,11 @@ extension UIImage {
     public func data(using format: EncodingFormat) -> Data? {
         switch format {
             case .png:
-                return pngData()
+                pngData()
             case let .jpeg(quality):
-                return jpegData(compressionQuality: quality)
+                jpegData(compressionQuality: quality)
             case .heic:
-                if #available(iOS 17.0, *) {
-                    return heicData()
-                }
-                return nil
+                heicData()
         }
     }
 }

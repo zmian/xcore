@@ -42,32 +42,20 @@ extension Biometrics {
         /// an empty string.
         public var displayName: String {
             switch self {
-                case .none:
-                    ""
-                case .touchID:
-                    "Touch ID"
-                case .faceID:
-                    "Face ID"
-                case .opticID:
-                    "Optic ID"
+                case .none: ""
+                case .touchID: "Touch ID"
+                case .faceID: "Face ID"
+                case .opticID: "Optic ID"
             }
         }
 
         /// The asset associated with biometry authentication.
         public var assetIdentifier: SystemAssetIdentifier {
             switch self {
-                case .none:
-                    return ""
-                case .touchID:
-                    return .touchid
-                case .faceID:
-                    return .faceid
-                case .opticID:
-                    if #available(iOS 17.0, *) {
-                        return .opticid
-                    } else {
-                        return .faceid
-                    }
+                case .none: ""
+                case .touchID: .touchid
+                case .faceID: .faceid
+                case .opticID: .opticid
             }
         }
     }

@@ -158,9 +158,7 @@ extension WebView {
                 webView.uiDelegate = context.coordinator
                 webView.allowsBackForwardNavigationGestures = true
                 webView.allowsLinkPreview = false
-                if #available(iOS 16.4, *) {
-                    webView.isInspectable = true
-                }
+                webView.isInspectable = true
                 if showRefreshControl {
                     webView.scrollView.refreshControl = UIRefreshControl().apply {
                         $0.addAction(.valueChanged) { sender in

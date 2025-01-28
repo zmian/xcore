@@ -178,13 +178,13 @@ struct DateTest {
 
     @Test
     func formatted_style_monthDayOrdinal() {
-        // Test that May abbreviation should not contain period (e.g., May 3rd).
+        // Test that May abbreviation is full name "May" (e.g., May 3rd).
         let mayDate = Date(year: 2022, month: 5, day: 3, hour: 11, minute: 11, second: 22)
         let mayExpectedResult = "May 3rd"
         let mayResult = mayDate.formatted(style: .monthDayOrdinal(.abbreviated))
         #expect(mayExpectedResult == mayResult)
 
-        // Test that June abbreviation should not contain period (e.g., Jun 4th).
+        // Test that June abbreviation is "Jun" (e.g., Jun 4th).
         let juneDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         let juneExpectedResult = "Jun 4th"
         let juneResult = juneDate.formatted(style: .monthDayOrdinal(.abbreviated))

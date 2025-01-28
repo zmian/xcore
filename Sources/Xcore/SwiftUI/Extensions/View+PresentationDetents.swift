@@ -31,9 +31,12 @@ extension View {
     }
 }
 
+/// A custom detent used to define the presentation behavior of a sheet.
 public enum AppCustomPresentationDetent {
+    /// Specifies the content height of the sheet, optionally with insets.
     case contentHeight(insets: EdgeInsets?)
 
+    /// Convenience property to specify content height without insets.
     public static var contentHeight: Self {
         .contentHeight(insets: nil)
     }
@@ -62,19 +65,13 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                     }
                 }
                 .presentationDetents([.height(detentHeight)])
-                .apply {
-                    if #available(iOS 16.4, *) {
-                        $0.presentationCornerRadius(cornerRadius)
-                            // On iPad adapt the bottom sheet to be a popup.
-                            .unwrap(preferredWidth) { view, preferredWidth in
-                                view.presentationBackground {
-                                    theme.backgroundColor
-                                        .frame(maxWidth: preferredWidth, maxHeight: detentHeight)
-                                        .clipShape(.rect(cornerRadius: cornerRadius))
-                                }
-                            }
-                    } else {
-                        $0
+                .presentationCornerRadius(cornerRadius)
+                // On iPad adapt the bottom sheet to be a popup.
+                .unwrap(preferredWidth) { view, preferredWidth in
+                    view.presentationBackground {
+                        theme.backgroundColor
+                            .frame(maxWidth: preferredWidth, maxHeight: detentHeight)
+                            .clipShape(.rect(cornerRadius: cornerRadius))
                     }
                 }
         }
