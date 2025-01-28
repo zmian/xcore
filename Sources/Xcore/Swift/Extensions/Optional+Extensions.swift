@@ -58,7 +58,7 @@ extension Dictionary where Key == String, Value == Encodable & Sendable {
             return true
         }
 
-        return JSONHelpers.stringify(self).sha256() == JSONHelpers.stringify(other).sha256()
+        return JSONHelpers.encodeToString(self).sha256() == JSONHelpers.encodeToString(other).sha256()
     }
 
     /// Returns nil if the dictionary is empty; otherwise, unmodified `self`.

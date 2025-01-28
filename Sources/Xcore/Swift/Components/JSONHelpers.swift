@@ -114,7 +114,7 @@ extension JSONHelpers {
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
-        guard let keyPath = keyPath, !keyPath.isEmpty else {
+        guard let keyPath, !keyPath.isEmpty else {
             return try JSONSerialization.jsonObject(with: data, options: options)
         }
 
@@ -147,7 +147,7 @@ extension JSONHelpers {
         keyPath: String?,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Data {
-        guard let keyPath = keyPath, !keyPath.isEmpty else {
+        guard let keyPath, !keyPath.isEmpty else {
             // Return `Data` without any transformation.
             return data
         }
@@ -168,7 +168,7 @@ extension JSONHelpers {
     ///   - options: Options for creating the JSON data.
     /// - Returns: JSON data for value, or `nil` if an error occurs. The resulting
     ///   data is encoded in UTF-8.
-    public static func stringify(
+    public static func encodeToString(
         _ value: Any,
         options: JSONSerialization.WritingOptions = [.sortedKeys]
     ) -> String {

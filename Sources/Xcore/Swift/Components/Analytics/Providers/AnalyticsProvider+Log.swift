@@ -28,7 +28,7 @@ struct LogAnalyticsProvider: AnalyticsProvider {
         var propertiesString = ""
 
         if !event.properties.isEmpty {
-            propertiesString = JSONHelpers.stringify(event.properties, options: [.sortedKeys, .prettyPrinted])
+            propertiesString = JSONHelpers.encodeToString(event.properties, options: [.sortedKeys, .prettyPrinted])
             propertiesString = "\nproperties: \(propertiesString)"
         }
 
