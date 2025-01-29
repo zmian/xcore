@@ -6,6 +6,8 @@
 
 import Foundation
 
+#warning("FIXME: Now Pointfree's Shared lib can be used replace Pond")
+
 /// A protocol where the conforming types provide functionality for key value
 /// storage.
 ///
