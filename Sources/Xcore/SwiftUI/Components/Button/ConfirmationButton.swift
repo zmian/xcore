@@ -82,3 +82,15 @@ public struct ConfirmationButton: View {
         }
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    ConfirmationButton(
+        "Log Out",
+        popupTitle: "Log Out",
+        popupMessage: "Are you sure you would like to log out?",
+        popupConfirm: .yesOrNo) {
+            print("Handle log out")
+        }
+}

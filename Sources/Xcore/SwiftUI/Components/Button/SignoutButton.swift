@@ -35,3 +35,11 @@ public struct SignoutButton: View {
         }
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    SignoutButton {
+        print("Handle log out")
+    }
+}

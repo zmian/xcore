@@ -237,3 +237,12 @@ extension TimerButton<Text> {
         )
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    TimerButton.resend(status: .countdown) {
+        print("Resend button tapped")
+    }
+    .buttonStyle(.borderedProminent)
+}
