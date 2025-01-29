@@ -23,8 +23,6 @@ extension Date {
         doesRelativeDateFormatting: Bool = false,
         in calendar: Calendar = .default
     ) -> String {
-        let cache = Self._cache
-
         switch style {
             case let .dateTime(dateStyle, timeStyle):
                 if dateStyle == .omitted && timeStyle == .omitted {
@@ -56,6 +54,7 @@ extension Date {
                 return monthName(width, in: calendar)
             case let .monthDayOrdinal(width):
                 var ordinalDay: String {
+                    let cache = Self._cache
                     let day = component(.day, in: calendar)
                     cache.ordinalNumberFormatter.locale = calendar.locale
                     return cache.ordinalNumberFormatter.string(from: day) ?? ""
@@ -75,12 +74,12 @@ extension Date {
     /// - Parameters:
     ///   - weekday: The weekday number (1 for Sunday, 7 for Saturday in the
     ///     Gregorian calendar).
-    ///   - style: The desired width of the weekday name (e.g., `.short`, `.wide`).
+    ///   - format: The desired width of the weekday name (e.g., `.short`, `.wide`).
     ///   - calendar: The calendar to use for formatting the weekday name.
     /// - Returns: The formatted weekday name as a `String`.
     public static func weekdayName(
         for weekday: Int,
-        style: Date.FormatStyle.Symbol.Weekday = .wide,
+        format: Date.FormatStyle.Symbol.Weekday = .wide,
         in calendar: Calendar = .default
     ) -> String {
         guard
@@ -90,13 +89,13 @@ extension Date {
             fatalError("Invalid weekday: \(weekday). Must be between 1 and 7.")
         }
 
-        return date.weekdayName(style, in: calendar)
+        return date.weekdayName(format, in: calendar)
     }
 
     /// Calculates the weekday name for the receiver date in the specified calendar.
     ///
     /// - Parameters:
-    ///   - style: The desired width of the weekday name (e.g., `.short`, `.wide`).
+    ///   - format: The desired width of the weekday name (e.g., `.short`, `.wide`).
     ///   - calendar: The calendar to use for formatting the weekday name.
     /// - Returns: The formatted weekday name as a `String`.
     private func weekdayName(
@@ -113,7 +112,7 @@ extension Date {
     /// Calculates the month name for the receiver date in the specified calendar.
     ///
     /// - Parameters:
-    ///   - style: The desired width of the month name (e.g., `.short`, `.wide`).
+    ///   - format: The desired width of the month name (e.g., `.short`, `.wide`).
     ///   - calendar: The calendar to use for formatting the month name.
     /// - Returns: The formatted month name as a `String`.
     private func monthName(

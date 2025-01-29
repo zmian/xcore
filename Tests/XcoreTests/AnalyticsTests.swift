@@ -114,7 +114,7 @@ struct AnalyticsTests {
 
     /// nil or empty user id should be the treated the same
     @Test
-    func BlankAndNilUserId() {
+    func blankAndNilUserId() {
         let analytics = AnalyticsClient()
 
         analytics.reset()
