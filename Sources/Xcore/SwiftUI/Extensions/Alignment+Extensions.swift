@@ -12,26 +12,16 @@ extension Alignment {
     /// Returns unit point derived from the built-in alignments; otherwise, nil.
     public var unitPoint: UnitPoint? {
         switch self {
-            case .leading:
-                return .leading
-            case .trailing:
-                return .trailing
-            case .top:
-                return .top
-            case .bottom:
-                return .bottom
-            case .topLeading:
-                return .topLeading
-            case .topTrailing:
-                return .topTrailing
-            case .bottomLeading:
-                return .bottomLeading
-            case .bottomTrailing:
-                return .bottomTrailing
-            case .center:
-                return .center
-            default:
-                return nil
+            case .leading: .leading
+            case .trailing: .trailing
+            case .top: .top
+            case .bottom: .bottom
+            case .topLeading: .topLeading
+            case .topTrailing: .topTrailing
+            case .bottomLeading: .bottomLeading
+            case .bottomTrailing: .bottomTrailing
+            case .center: .center
+            default: nil
         }
     }
 }
@@ -42,12 +32,9 @@ extension TextAlignment {
     /// Returns an alignment position along the horizontal axis.
     public var horizontal: HorizontalAlignment {
         switch self {
-            case .leading:
-                return .leading
-            case .trailing:
-                return .trailing
-            case .center:
-                return .center
+            case .leading: .leading
+            case .trailing: .trailing
+            case .center: .center
         }
     }
 
