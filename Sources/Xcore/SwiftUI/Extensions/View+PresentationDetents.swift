@@ -99,3 +99,31 @@ private struct PresentationDetentsViewModifier: ViewModifier {
         sizeClass == .regular
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    @Previewable @State var showConfirmation = false
+
+    Button("Delete") {
+        showConfirmation = true
+    }
+    .sheet(isPresented: $showConfirmation) {
+        let L = Samples.Strings.deleteMessageAlert
+
+        StandardBottomSheet(L.title, message: L.message) {
+            HStack {
+                Button("Cancel") {
+                    showConfirmation.toggle()
+                }
+                .buttonStyle(.secondary)
+
+                Button("Delete") {
+                    showConfirmation.toggle()
+                }
+                .buttonStyle(.primary)
+            }
+        }
+        .padding(.defaultSpacing)
+    }
+}

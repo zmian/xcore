@@ -215,10 +215,8 @@ extension UIColor {
     ) {
         self.init {
             switch $0.userInterfaceStyle {
-                case .dark:
-                    return dark()
-                default:
-                    return light()
+                case .dark: dark()
+                default: light()
             }
         }
     }
