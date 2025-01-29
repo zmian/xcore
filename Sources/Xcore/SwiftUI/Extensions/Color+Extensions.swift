@@ -116,31 +116,36 @@ extension Color {
     ///   - color: The color to which self should cross fade.
     ///   - percentage: The delta of the cross fade.
     /// - Returns: An instance of cross faded `UIColor`.
+    @available(iOS, deprecated: 18.0, message: "Use 'mix(with:by:in:)' directly.")
     public func crossFade(to color: Color, delta percentage: CGFloat) -> Color {
-        let fromColor = uiColor
-        let toColor = color.uiColor
+        if #available(iOS 18.0, *) {
+            return mix(with: color, by: percentage)
+        } else {
+            let fromColor = uiColor
+            let toColor = color.uiColor
 
-        var fromRed: CGFloat = 0
-        var fromGreen: CGFloat = 0
-        var fromBlue: CGFloat = 0
-        var fromAlpha: CGFloat = 0
+            var fromRed: CGFloat = 0
+            var fromGreen: CGFloat = 0
+            var fromBlue: CGFloat = 0
+            var fromAlpha: CGFloat = 0
 
-        fromColor.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
+            fromColor.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
 
-        var toRed: CGFloat = 0
-        var toGreen: CGFloat = 0
-        var toBlue: CGFloat = 0
-        var toAlpha: CGFloat = 0
+            var toRed: CGFloat = 0
+            var toGreen: CGFloat = 0
+            var toBlue: CGFloat = 0
+            var toAlpha: CGFloat = 0
 
-        toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
+            toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
 
-        // Calculate the actual RGBA values of the fade colour
-        let red = (toRed - fromRed) * percentage + fromRed
-        let green = (toGreen - fromGreen) * percentage + fromGreen
-        let blue = (toBlue - fromBlue) * percentage + fromBlue
-        let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
+            // Calculate the actual RGBA values of the fade colour
+            let red = (toRed - fromRed) * percentage + fromRed
+            let green = (toGreen - fromGreen) * percentage + fromGreen
+            let blue = (toBlue - fromBlue) * percentage + fromBlue
+            let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
 
-        return Color(.default, red: red, green: green, blue: blue, opacity: alpha)
+            return Color(.default, red: red, green: green, blue: blue, opacity: alpha)
+        }
     }
 }
 
