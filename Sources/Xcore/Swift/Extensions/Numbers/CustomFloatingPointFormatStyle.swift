@@ -158,7 +158,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
             // ["2", "30%"] → "30%"
             let fractionalPart = parts.at(1)
 
-            if let fractionalPart = fractionalPart, let whole = parts.first {
+            if let fractionalPart, let whole = parts.first {
                 // "30%" → "30"
                 let fractionalPartDigits = fractionalPart.replacing("\\D", with: "")
                 // "30%" → "%"
@@ -519,7 +519,7 @@ private final class FormatStyleFormatter: Sendable {
                         // Adopted from: http://stackoverflow.com/a/35504720
                         let value = abs(value)
 
-                        if let threshold = threshold, threshold > value {
+                        if let threshold, threshold > value {
                             return abbreviations[0]
                         }
 

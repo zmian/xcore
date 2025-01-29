@@ -27,7 +27,7 @@ public struct FilterButton: View {
 
     @ViewBuilder
     private var badge: some View {
-        if let count = count, count > 0 {
+        if let count, count > 0 {
             Text("\(count)")
                 .font(.app(.footnote))
                 .foregroundStyle(theme.backgroundColor)

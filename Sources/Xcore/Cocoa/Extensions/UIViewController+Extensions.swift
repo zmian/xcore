@@ -79,7 +79,7 @@ extension UIViewController {
             return true
         }
 
-        if let navigationController = navigationController, navigationController.presentingViewController?.presentedViewController == navigationController {
+        if let navigationController, navigationController.presentingViewController?.presentedViewController == navigationController {
             return true
         }
 
