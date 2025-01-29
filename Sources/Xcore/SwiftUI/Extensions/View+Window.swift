@@ -176,7 +176,7 @@ extension Window {
 extension Window {
     fileprivate struct RootView: View {
         var content: Content
-        var context: Window.Context
+        var context: Context
 
         var body: some View {
             content
