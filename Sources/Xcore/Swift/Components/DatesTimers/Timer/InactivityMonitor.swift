@@ -66,7 +66,7 @@ public final class InactivityMonitor {
         self.timeout = TimeInterval(timeout.components.seconds)
         self.lastActivityUptime = .init()
 
-        setupObservers()
+        addObservers()
         startTimer()
     }
 
@@ -74,7 +74,7 @@ public final class InactivityMonitor {
     ///
     /// Observes app lifecycle events and attaches gesture recognizers to the app's
     /// main window for monitoring user interactions.
-    private func setupObservers() {
+    private func addObservers() {
         // Observe app lifecycle events (e.g., app entering the foreground).
         notificationToken = NotificationCenter.observe(
             UIApplication.willEnterForegroundNotification
