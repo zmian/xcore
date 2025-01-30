@@ -35,11 +35,8 @@ public struct PopupAlertContent<Content>: View where Content: View {
 
             // Add dismiss button if the environment dismiss action is set.
             if let dismiss {
-                Button {
+                Button.dismiss {
                     dismiss()
-                } label: {
-                    Image(system: .xMark)
-                        .imageScale(.small)
                 }
                 .padding(.defaultSpacing)
             }

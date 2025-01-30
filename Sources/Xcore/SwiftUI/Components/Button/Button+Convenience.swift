@@ -175,11 +175,12 @@ extension Button<Text> {
 
 // MARK: - Image
 
+@MainActor
 extension Button<Label<Text, Image>> {
     /// A button with `X` label and given action.
     public static func dismiss(action: @escaping () -> Void) -> some View {
         Button("Dismiss", systemImage: "xmark", role: .cancel, action: action)
-            .labelsHidden()
+            .labelStyle(.iconOnly)
             .accessibilityIdentifier("dismissButton")
     }
 }
