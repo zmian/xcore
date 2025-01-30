@@ -47,10 +47,27 @@ open class UIHostingWindow<Content: View>: UIWindow {
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
 
-        if passthroughNonContentTouches {
-            return rootViewController?.viewIfLoaded == hitView ? nil : hitView
-        } else {
+        guard passthroughNonContentTouches else {
             return hitView
+        }
+
+        guard let rootView = rootViewController?.view else {
+            return nil
+        }
+
+        // iOS 18 hit testing functionality differs from iOS 17
+        // - SeeAlso: https://forums.developer.apple.com/forums/thread/762292
+        if #available(iOS 18, *) {
+            for subview in rootView.subviews.reversed() {
+                let convertedPoint = subview.convert(point, from: rootView)
+                if subview.hitTest(convertedPoint, with: event) != nil {
+                    return hitView
+                }
+            }
+
+            return nil
+        } else {
+            return rootView == hitView ? nil : hitView
         }
     }
 
