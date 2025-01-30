@@ -173,6 +173,12 @@ extension View {
 // MARK: - View Modifier
 
 private struct PopupViewModifier<PopupContent: View>: ViewModifier {
+    @State private var dismissTask: Task<Void, Never>?
+    @Binding private var isPresented: Bool
+    private let style: Popup.Style
+    private let dismissMethods: Popup.DismissMethods
+    private let content: () -> PopupContent
+
     init(
         isPresented: Binding<Bool>,
         style: Popup.Style,
@@ -184,21 +190,6 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
         self.dismissMethods = dismissMethods
         self.content = content
     }
-
-    @State private var task: Task<Void, Never>?
-
-    /// A Boolean value indicating whether the popup associated with this
-    /// environment is currently being presented.
-    @Binding private var isPresented: Bool
-
-    /// A property indicating the popup style.
-    private let style: Popup.Style
-
-    /// A closure containing the content of popup.
-    private let content: () -> PopupContent
-
-    /// A property indicating all of the ways popup can be dismissed.
-    private let dismissMethods: Popup.DismissMethods
 
     func body(content: Content) -> some View {
         content
@@ -250,9 +241,9 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
             return
         }
 
-        task?.cancel()
+        dismissTask?.cancel()
 
-        task = Task {
+        dismissTask = Task {
             try? await Task.sleep(for: duration)
             isPresented = false
         }
