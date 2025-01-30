@@ -93,8 +93,13 @@ open class UIHostingWindow<Content: View>: UIWindow {
     }
 
     private func hide() {
-        isHidden = true
-        windowScene = nil
+        UIView.animate(withDuration: .default) {
+            self.alpha = 0
+        } completion: { _ in
+            self.isHidden = true
+            self.windowScene = nil
+            self.alpha = 1
+        }
     }
 }
 
