@@ -25,7 +25,7 @@ public struct StoryProgressIndicator: View {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Group {
         StoryProgressIndicator(progress: 0)
         StoryProgressIndicator(progress: 1.0)

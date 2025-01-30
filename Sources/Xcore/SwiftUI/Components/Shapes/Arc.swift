@@ -59,7 +59,7 @@ public struct Arc: InsettableShape, Sendable {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Arc(startAngle: .degrees(0), endAngle: .degrees(180), clockwise: true)
         .strokeBorder(
             AngularGradient(

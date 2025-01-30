@@ -97,7 +97,7 @@ extension StandardBottomSheetContent where Header == Never {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 

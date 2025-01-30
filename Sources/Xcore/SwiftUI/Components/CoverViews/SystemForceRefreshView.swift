@@ -27,3 +27,12 @@ public struct SystemForceRefreshView: View {
             .background(theme.backgroundColor)
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    SystemForceRefreshView()
+        .theme(.default.applying {
+            $0.backgroundColor = .indigo.opacity(0.5)
+        })
+}

@@ -9,7 +9,7 @@ import SwiftUI
 extension CustomLabeledContentStyle {
     /// An enumeration that defines dimming behavior for the label and content of
     /// the labeled content.
-    public enum Dim: Sendable {
+    public enum Dim: Sendable, Hashable {
         /// No changes to the label nor content text foreground style.
         case none
 

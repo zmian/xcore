@@ -46,7 +46,7 @@ public struct PopupAlertContent<Content>: View where Content: View {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 

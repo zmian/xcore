@@ -40,7 +40,7 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Group {
         ProgressView()
 

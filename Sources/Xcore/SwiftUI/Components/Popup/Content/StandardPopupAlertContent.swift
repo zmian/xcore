@@ -87,7 +87,7 @@ extension StandardPopupAlertContent where Header == Never {
 
 // MARK: - Preview
 
-#Preview(traits: .sizeThatFitsLayout) {
+#Preview {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
@@ -107,6 +107,24 @@ extension StandardPopupAlertContent where Header == Never {
 
         StandardPopupAlertContent(L.title, message: L.message) {
             EmptyView()
+        }
+
+        StandardPopupAlertContent(Text(L.title), message: Text(L.message)) {
+            Image(system: .trashCircleFill)
+                .foregroundStyle(.red)
+                .font(.largeTitle)
+        } footer: {
+            HStack {
+                Button.cancel {
+                    print("Cancel Tapped")
+                }
+                .buttonStyle(.secondary)
+
+                Button.delete {
+                    print("Delete Tapped")
+                }
+                .buttonStyle(.primary)
+            }
         }
     }
     .padding(.defaultSpacing)
