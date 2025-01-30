@@ -5,6 +5,7 @@
 "no" = "No";
 "done" = "Done";
 "cancel" = "Cancel";
+"delete" = "Delete";
 "remove" = "Remove";
 "retry" = "Retry";
 "enable" = "Enable";

@@ -52,12 +52,12 @@ public struct PopupAlertContent<Content>: View where Content: View {
 
         PopupAlertContent {
             HStack {
-                Button("Cancel") {
+                Button.cancel {
                     print("Cancel Tapped")
                 }
                 .buttonStyle(.secondary)
 
-                Button("Delete") {
+                Button.delete {
                     print("Delete Tapped")
                 }
                 .buttonStyle(.primary)
@@ -78,12 +78,12 @@ public struct PopupAlertContent<Content>: View where Content: View {
             Spacer(height: .defaultSpacing)
 
             HStack {
-                Button("Cancel") {
+                Button.cancel {
                     print("Cancel Tapped")
                 }
                 .buttonStyle(.secondary)
 
-                Button("Delete") {
+                Button.delete {
                     print("Delete Tapped")
                 }
                 .buttonStyle(.primary)

@@ -78,15 +78,11 @@ extension ProminentButtonStyle {
         }
 
         private var foregroundContentColor: Color {
-            isEnabled ?
-                theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
-                theme.buttonTextColor(id, .disabled)
+            theme.buttonTextColor(id, buttonState)
         }
 
         private var backgroundColor: Color {
-            isEnabled ?
-                theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
-                theme.buttonBackgroundColor(id, .disabled)
+            theme.buttonBackgroundColor(id, buttonState)
         }
 
         private var borderColor: Color {
@@ -95,6 +91,10 @@ extension ProminentButtonStyle {
             }
 
             return foregroundColor
+        }
+
+        private var buttonState: ButtonState {
+            !isEnabled ? .disabled : configuration.isPressed ? .pressed : .normal
         }
     }
 }

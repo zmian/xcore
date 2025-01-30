@@ -76,6 +76,12 @@ extension Button<Text> {
             .accessibilityIdentifier("hideButton")
     }
 
+    /// A button with `Delete` label and given action.
+    public static func delete(action: @escaping () -> Void) -> some View {
+        Button(L.delete, role: .destructive, action: action)
+            .accessibilityIdentifier("deleteButton")
+    }
+
     /// A button with `Remove` label and given action.
     public static func remove(action: @escaping () -> Void) -> some View {
         Button(L.remove, role: .destructive, action: action)

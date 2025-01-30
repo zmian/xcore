@@ -25,10 +25,8 @@ public enum PressedAnimationEffect: Sendable, Hashable {
     /// position for the scale operation.
     fileprivate var anchor: UnitPoint {
         switch self {
-            case .opacity:
-                return .center
-            case let .scale(anchor):
-                return anchor
+            case .opacity: .center
+            case let .scale(anchor): anchor
         }
     }
 

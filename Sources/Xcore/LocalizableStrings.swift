@@ -16,6 +16,8 @@ internal enum Localized {
   internal static let contactSupport = Localized.tr("Localizable", "contact_support", fallback: "Contact Support")
   /// Continue
   internal static let `continue` = Localized.tr("Localizable", "continue", fallback: "Continue")
+  /// Delete
+  internal static let delete = Localized.tr("Localizable", "delete", fallback: "Delete")
   /// Done
   internal static let done = Localized.tr("Localizable", "done", fallback: "Done")
   /// Enable
