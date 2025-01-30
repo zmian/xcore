@@ -61,7 +61,7 @@ extension Toggle {
         .foregroundStyle(isOn ? .green : .red)
 
     List {
-        Toggle("WiFi", subtitle: "Home Network", isOn: $isOn)
+        Toggle("WiFi", subtitle: label, isOn: $isOn)
 
         Toggle(Text("WiFi"), subtitle: Text("\(icon) \(label)"), isOn: $isOn)
 
