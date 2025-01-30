@@ -20,7 +20,7 @@ struct LabeledContentView: View {
                 }
             }
             .popup(isPresented: $isPresented) {
-                StandardPopupAlert(Text("Hello")) {
+                StandardPopupAlertContent(Text("Hello")) {
                     Button("Dismiss") {
                         isPresented = false
                     }

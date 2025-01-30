@@ -148,7 +148,7 @@ extension View {
             style: .alert,
             dismissMethods: dismissMethods,
             content: {
-                StandardPopupAlert(title, message: message, footer: footer)
+                StandardPopupAlertContent(title, message: message, footer: footer)
             }
         )
     }
@@ -185,7 +185,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
         self.content = content
     }
 
-    @State private var workItem: DispatchWorkItem?
+    @State private var task: Task<Void, Never>?
 
     /// A Boolean value indicating whether the popup associated with this
     /// environment is currently being presented.
@@ -250,14 +250,11 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
             return
         }
 
-        workItem?.cancel()
+        task?.cancel()
 
-        workItem = DispatchWorkItem {
+        task = Task {
+            try? await Task.sleep(for: duration)
             isPresented = false
-        }
-
-        if isPresented, let work = workItem {
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: work)
         }
     }
 }

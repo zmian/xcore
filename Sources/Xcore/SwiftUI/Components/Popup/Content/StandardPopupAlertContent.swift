@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A standard representation of an alert presentation with title, message and
 /// actions.
-public struct StandardPopupAlert<Header, Footer>: View where Header: View, Footer: View {
+public struct StandardPopupAlertContent<Header, Footer>: View where Header: View, Footer: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupTextAlignment) private var textAlignment
     private let title: Text
@@ -29,7 +29,7 @@ public struct StandardPopupAlert<Header, Footer>: View where Header: View, Foote
     }
 
     public var body: some View {
-        PopupAlert {
+        PopupAlertContent {
             VStack(spacing: .defaultSpacing) {
                 if Header.self != Never.self {
                     header()
@@ -58,7 +58,7 @@ public struct StandardPopupAlert<Header, Footer>: View where Header: View, Foote
 
 // MARK: - Inits
 
-extension StandardPopupAlert where Header == Never {
+extension StandardPopupAlertContent where Header == Never {
     public init(
         _ title: Text,
         message: Text? = nil,
@@ -91,7 +91,7 @@ extension StandardPopupAlert where Header == Never {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
-        StandardPopupAlert(L.title, message: L.message) {
+        StandardPopupAlertContent(L.title, message: L.message) {
             HStack {
                 Button("Cancel") {
                     print("Cancel Tapped")
@@ -105,7 +105,7 @@ extension StandardPopupAlert where Header == Never {
             }
         }
 
-        StandardPopupAlert(L.title, message: L.message) {
+        StandardPopupAlertContent(L.title, message: L.message) {
             EmptyView()
         }
     }

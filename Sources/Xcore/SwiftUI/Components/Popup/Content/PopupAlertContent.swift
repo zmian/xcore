@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A representation of an alert presentation.
-public struct PopupAlert<Content>: View where Content: View {
+public struct PopupAlertContent<Content>: View where Content: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupPreferredWidth) private var preferredWidth
     @Environment(\.popupCornerRadius) private var cornerRadius
@@ -53,7 +53,7 @@ public struct PopupAlert<Content>: View where Content: View {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
-        PopupAlert {
+        PopupAlertContent {
             HStack {
                 Button("Cancel") {
                     print("Cancel Tapped")
@@ -67,7 +67,7 @@ public struct PopupAlert<Content>: View where Content: View {
             }
         }
 
-        PopupAlert {
+        PopupAlertContent {
             Text(L.title)
             Text(L.message)
         }

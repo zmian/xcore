@@ -70,7 +70,7 @@ private struct PopupPreviews: View {
             .buttonStyle(.rectFill)
         }
         .popup(isPresented: $showAlertWithHeader) {
-            StandardPopupAlert(Text(L.title), message: Text(L.message)) {
+            StandardPopupAlertContent(Text(L.title), message: Text(L.message)) {
                 Image(system: .locationSlashFill)
                     .resizable()
                     .frame(50)

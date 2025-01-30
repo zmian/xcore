@@ -60,7 +60,7 @@ extension Popup {
 
         /// A property indicating whether to automatically dismiss the popup after given
         /// duration has passed.
-        public let dismissAfter: Double?
+        public let dismissAfter: Duration?
 
         /// Creates a popup style.
         ///
@@ -83,7 +83,7 @@ extension Popup {
             windowStyle: WindowStyle = .init(label: "Popup Window"),
             ignoresSafeAreaEdges: Edge.Set = [],
             allowDimming: Bool = true,
-            dismissAfter: Double? = nil
+            dismissAfter: Duration? = nil
         ) {
             self.alignment = alignment
             self.animation = animation
@@ -141,7 +141,7 @@ extension Popup.Style {
     }
 
     /// A style that moves the popup in from the specified edge of the screen.
-    public static func toast(edge: Edge = .top, dismissAfter duration: Double = 2) -> Self {
+    public static func toast(edge: Edge = .top, dismissAfter duration: Duration = .seconds(2)) -> Self {
         .init(
             alignment: edge == .top ? .top : .bottom,
             animation: .spring(response: 0.6),
