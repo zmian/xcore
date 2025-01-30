@@ -11,7 +11,7 @@ public struct FilterButton: View {
     private let count: Int?
     private let action: () -> Void
 
-    public init(_ count: Int? = nil, action: @escaping () -> Void) {
+    public init(count: Int? = nil, action: @escaping @MainActor () -> Void) {
         self.count = count
         self.action = action
     }
@@ -31,10 +31,21 @@ public struct FilterButton: View {
             Text("\(count)")
                 .font(.app(.footnote))
                 .foregroundStyle(theme.backgroundColor)
-                .offset(y: -1)
                 .padding(.s2)
                 .background(theme.tintColor)
                 .clipShape(.circle)
         }
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    FilterButton {
+        print("Filter button tapped")
+    }
+
+    FilterButton(count: 10) {
+        print("Filter button tapped")
     }
 }
