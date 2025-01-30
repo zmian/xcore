@@ -13,7 +13,7 @@ public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let prominence: ButtonProminence
     private let shape: S
 
-    nonisolated public init(
+    public init(
         id: ButtonIdentifier,
         prominence: ButtonProminence,
         shape: S
@@ -102,7 +102,7 @@ extension ProminentButtonStyle {
 // MARK: - Dot Syntax Support
 
 extension ButtonStyle {
-    nonisolated public static func fill<S: InsettableShape>(shape: S) -> Self where Self == ProminentButtonStyle<S> {
+    public static func fill<S: InsettableShape>(shape: S) -> Self where Self == ProminentButtonStyle<S> {
         .init(
             id: .fill,
             prominence: .fill,
@@ -110,7 +110,7 @@ extension ButtonStyle {
         )
     }
 
-    nonisolated public static func outline<S: InsettableShape>(shape: S) -> Self where Self == ProminentButtonStyle<S> {
+    public static func outline<S: InsettableShape>(shape: S) -> Self where Self == ProminentButtonStyle<S> {
         .init(
             id: .outline,
             prominence: .outline,
@@ -120,26 +120,26 @@ extension ButtonStyle {
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
-    nonisolated public static var rectFill: Self {
+    public static var rectFill: Self {
         .fill(shape: .rect(cornerRadius: AppConstants.cornerRadius))
     }
 
-    nonisolated public static var rectOutline: Self {
+    public static var rectOutline: Self {
         .outline(shape: .rect(cornerRadius: AppConstants.cornerRadius))
     }
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
-    nonisolated public static var capsuleFill: Self {
+    public static var capsuleFill: Self {
         .fill(shape: .capsule)
     }
 
-    nonisolated public static var capsuleOutline: Self {
+    public static var capsuleOutline: Self {
         .outline(shape: .capsule)
     }
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
-    nonisolated static var primary: Self { capsuleFill }
-    nonisolated static var secondary: Self { capsuleOutline }
+    static var primary: Self { capsuleFill }
+    static var secondary: Self { capsuleOutline }
 }

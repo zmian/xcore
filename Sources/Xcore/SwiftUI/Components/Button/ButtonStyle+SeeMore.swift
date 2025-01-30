@@ -11,7 +11,7 @@ public struct SeeMoreButtonStyle: ButtonStyle {
     private let alignment: Alignment
     private let padding: CGFloat?
 
-    nonisolated public init(padding: CGFloat? = nil, alignment: Alignment = .center) {
+    public init(padding: CGFloat? = nil, alignment: Alignment = .center) {
         self.padding = padding
         self.alignment = alignment
     }
@@ -33,11 +33,11 @@ public struct SeeMoreButtonStyle: ButtonStyle {
 // MARK: - Dot Syntax Support
 
 extension ButtonStyle where Self == SeeMoreButtonStyle {
-    nonisolated public static var seeMoreCentered: Self {
+    public static var seeMoreCentered: Self {
         .init()
     }
 
-    nonisolated public static var seeMore: Self {
+    public static var seeMore: Self {
         .init(padding: 0, alignment: .leading)
     }
 }

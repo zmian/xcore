@@ -39,7 +39,7 @@ extension ToggleStyle where Self == LoadingSwitchToggleStyle {
     /// A toggle style that displays a leading label and a trailing switch. It
     /// automatically replaces the switch with progress view when `isLoading` value
     /// is `true`.
-    nonisolated public static var loadingSwitch: Self { .init() }
+    public static var loadingSwitch: Self { .init() }
 }
 
 #if DEBUG

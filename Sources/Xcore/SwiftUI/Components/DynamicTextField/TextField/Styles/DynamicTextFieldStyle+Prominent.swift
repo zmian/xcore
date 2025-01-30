@@ -31,7 +31,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
     private let prominence: Prominence
     private let padding: EdgeInsets?
 
-    nonisolated public init(
+    public init(
         _ prominence: Prominence,
         shape: S,
         padding: EdgeInsets? = nil
@@ -117,11 +117,11 @@ extension ProminentDynamicTextFieldStyle {
 // MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<RoundedRectangle> {
-    nonisolated public static var prominent: Self {
+    public static var prominent: Self {
         prominent()
     }
 
-    nonisolated public static func prominent(
+    public static func prominent(
         _ prominence: Self.Prominence = .fill,
         cornerRadius: CGFloat = AppConstants.tileCornerRadius,
         padding: EdgeInsets? = nil
@@ -135,7 +135,7 @@ extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<Rou
 }
 
 extension DynamicTextFieldStyle {
-    nonisolated public static func prominent<S: InsettableShape>(
+    public static func prominent<S: InsettableShape>(
         _ prominence: Self.Prominence = .fill,
         shape: S,
         padding: EdgeInsets? = nil

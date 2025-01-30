@@ -102,5 +102,5 @@ extension DefaultDynamicTextFieldStyle {
 // MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == DefaultDynamicTextFieldStyle {
-    nonisolated static var `default`: Self { .init() }
+    static var `default`: Self { .init() }
 }
