@@ -108,7 +108,7 @@ extension ButtonsView {
         Section("Labels with Symbols") {
             button {
                 Label("Fill", systemImage: .chevronRight)
-                    .labelStyle(.iconAfter)
+                    .labelStyle(.iconPlacement(.trailing))
             }
             .buttonStyle(.rectFill)
 
@@ -116,13 +116,13 @@ extension ButtonsView {
                 Label("Fill", systemImage: .heartFill)
                     .imageScale(.large)
                     .padding(.vertical)
-                    .labelStyle(.iconBefore(axis: .vertical))
+                    .labelStyle(.iconPlacement(.top))
             }
             .buttonStyle(.rectFill)
 
             button {
                 Label("Capsule", systemImage: .chevronRight)
-                    .labelStyle(.iconAfter)
+                    .labelStyle(.iconPlacement(.trailing))
             }
             .buttonStyle(.capsuleFill)
         }
@@ -176,10 +176,19 @@ extension ButtonsView {
     private var specialBtns: some View {
         Section("Special Buttons") {
             TimerButton.resend {
-                print("Button tapped")
+                print("Resend button tapped")
             }
             .frame(maxWidth: .infinity)
+
+            SignoutButton {
+                print("Handle sign out")
+            }
+
+            FilterButton(count: 10) {
+                print("Filter button tapped")
+            }
         }
+        .listRowSeparator(.hidden)
     }
 
     private func button(@ViewBuilder label: () -> some View) -> some View {
