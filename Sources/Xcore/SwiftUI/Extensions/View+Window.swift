@@ -182,9 +182,7 @@ extension Window {
             content
                 // Propagates all of the parent environment values to the child (window
                 // content).
-                .transformEnvironment(\.self) { values in
-                    values = context.environment
-                }
+                .environment(\.self, context.environment)
         }
     }
 }
