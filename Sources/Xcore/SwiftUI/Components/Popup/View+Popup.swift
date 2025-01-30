@@ -214,7 +214,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
                         .frame(max: .infinity)
                         .ignoresSafeArea()
                         .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
-                            isPresented = false
+                            dismiss()
                         }
                         .zIndex(1)
                         .transition(.opacity)
@@ -224,7 +224,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
                     .frame(max: .infinity, alignment: style.alignment)
                     .ignoresSafeArea(edges: style.ignoresSafeAreaEdges)
                     .onTapGestureIf(dismissMethods.contains(.tapInside)) {
-                        isPresented = false
+                        dismiss()
                     }
                     .zIndex(2)
                     .transition(style.transition)
@@ -232,8 +232,14 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
         }
         .animation(style.animation, value: isPresented)
         .popupDismissAction(
-            dismissMethods.contains(.xmark) ? PopupDismissAction { isPresented = false } : nil
+            dismissMethods.contains(.xmark) ? PopupDismissAction { dismiss() } : nil
         )
+    }
+
+    private func dismiss() {
+        withAnimation {
+            isPresented = false
+        }
     }
 
     private func setupAutomaticDismissalIfNeeded() {
@@ -245,7 +251,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
 
         dismissTask = Task {
             try? await Task.sleep(for: duration)
-            isPresented = false
+            dismiss()
         }
     }
 }
