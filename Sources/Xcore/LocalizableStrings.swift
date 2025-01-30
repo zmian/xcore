@@ -56,6 +56,8 @@ internal enum Localized {
   internal static let seeMore = Localized.tr("Localizable", "see_more", fallback: "See More")
   /// Share
   internal static let share = Localized.tr("Localizable", "share", fallback: "Share")
+  /// Show
+  internal static let show = Localized.tr("Localizable", "show", fallback: "Show")
   /// Log In
   internal static let signin = Localized.tr("Localizable", "signin", fallback: "Log In")
   /// Sign Up

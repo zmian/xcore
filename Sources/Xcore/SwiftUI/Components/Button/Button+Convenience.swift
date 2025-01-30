@@ -64,6 +64,12 @@ extension Button<Text> {
             .accessibilityIdentifier("enableButton")
     }
 
+    /// A button with `Show` label and given action.
+    public static func show(action: @escaping () -> Void) -> some View {
+        Button(L.show, action: action)
+            .accessibilityIdentifier("showButton")
+    }
+
     /// A button with `Hide` label and given action.
     public static func hide(action: @escaping () -> Void) -> some View {
         Button(L.hide, action: action)
