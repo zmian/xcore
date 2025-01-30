@@ -51,3 +51,23 @@ extension Toggle {
         }
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    @Previewable @State var isOn = false
+    let label = isOn ? "Connected" : "Disconnected"
+    let icon = Text("\(Image(system: .circleFill))")
+        .foregroundStyle(isOn ? .green : .red)
+
+    List {
+        Toggle("WiFi", subtitle: "Home Network", isOn: $isOn)
+
+        Toggle(Text("WiFi"), subtitle: Text("\(icon) \(label)"), isOn: $isOn)
+
+        Toggle(isOn: $isOn) {
+            Text("WiFi")
+            Text("\(icon) \(label)")
+        }
+    }
+}
