@@ -68,6 +68,27 @@ public struct PopupAlertContent<Content>: View where Content: View {
             Text(L.title)
             Text(L.message)
         }
+
+        PopupAlertContent {
+            Text(L.title)
+                .font(.headline)
+            Text(L.message)
+                .foregroundStyle(.secondary)
+
+            Spacer(height: .defaultSpacing)
+
+            HStack {
+                Button("Cancel") {
+                    print("Cancel Tapped")
+                }
+                .buttonStyle(.secondary)
+
+                Button("Delete") {
+                    print("Delete Tapped")
+                }
+                .buttonStyle(.primary)
+            }
+        }
     }
     .padding(.defaultSpacing)
     .background(.secondary.opacity(0.15))
