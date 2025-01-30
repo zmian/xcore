@@ -164,10 +164,8 @@ extension Color {
     ) {
         self.init(UIColor {
             switch $0.userInterfaceStyle {
-                case .dark:
-                    return UIColor(dark())
-                default:
-                    return UIColor(light())
+                case .dark: UIColor(dark())
+                default: UIColor(light())
             }
         })
     }
@@ -185,10 +183,8 @@ extension Color {
     ) {
         self.init(UIColor {
             switch $0.userInterfaceStyle {
-                case .dark:
-                    return dark()
-                default:
-                    return light()
+                case .dark: dark()
+                default: light()
             }
         })
     }

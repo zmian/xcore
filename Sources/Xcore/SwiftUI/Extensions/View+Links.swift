@@ -38,3 +38,12 @@ private struct OpenURLInAppViewModifier: ViewModifier {
         }
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    List {
+        Text("Lear more at [apple.com](https://www.apple.com)")
+    }
+    .openUrlInApp()
+}
