@@ -70,6 +70,6 @@ public struct Arc: InsettableShape, Sendable {
             ),
             lineWidth: 50
         )
-        .background(Color.black.opacity(0.5))
+        .background(.secondary)
         .aspectRatio(CGSize(width: 1, height: 0.5), contentMode: .fit)
 }
