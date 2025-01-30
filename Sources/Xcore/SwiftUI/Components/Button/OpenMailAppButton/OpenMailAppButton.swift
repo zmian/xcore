@@ -10,16 +10,16 @@ import SwiftUI
 /// otherwise, it opens Apple Mail app directly.
 public struct OpenMailAppButton: View {
     @State private var openMailApp = false
-    private let onTap: (() -> Void)?
+    private let action: (() -> Void)?
 
-    public init(onTap: (() -> Void)? = nil) {
-        self.onTap = onTap
+    public init(action: (@MainActor () -> Void)? = nil) {
+        self.action = action
     }
 
     public var body: some View {
         Button(Localized.openMailApp) {
             openMailApp = true
-            onTap?()
+            action?()
         }
         .openMailApp($openMailApp)
     }
@@ -64,7 +64,7 @@ private struct MailAppViewModifier: ViewModifier {
                 }
             }
             .sheet(isPresented: isSheetPresented) {
-                CustomBottomSheet(L.open) {
+                CustomBottomSheetContent(L.open) {
                     ForEach(apps) { app in
                         Button(app.name) {
                             openUrl(app.url)

@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A standard representation of a bottom sheet presentation with title, message
 /// and actions.
-public struct StandardBottomSheet<Header, Footer>: View where Header: View, Footer: View {
+public struct StandardBottomSheetContent<Header, Footer>: View where Header: View, Footer: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var multilineTextAlignment
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -68,7 +68,7 @@ public struct StandardBottomSheet<Header, Footer>: View where Header: View, Foot
 
 // MARK: - Inits
 
-extension StandardBottomSheet where Header == Never {
+extension StandardBottomSheetContent where Header == Never {
     public init(
         _ title: Text,
         message: Text? = nil,
@@ -101,7 +101,7 @@ extension StandardBottomSheet where Header == Never {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
-        StandardBottomSheet(L.title, message: L.message) {
+        StandardBottomSheetContent(L.title, message: L.message) {
             HStack {
                 Button("Cancel") {
                     print("Cancel Tapped")
@@ -115,7 +115,7 @@ extension StandardBottomSheet where Header == Never {
             }
         }
 
-        StandardBottomSheet(L.title, message: L.message) {
+        StandardBottomSheetContent(L.title, message: L.message) {
             EmptyView()
         }
     }

@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public struct CustomBottomSheet<Content: View, Header: View>: View {
+public struct CustomBottomSheetContent<Content: View, Header: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var textAlignment
     private let content: () -> Content
@@ -34,7 +34,7 @@ public struct CustomBottomSheet<Content: View, Header: View>: View {
             }
 
             content()
-                .buttonStyle(CustomBottomSheetButtonStyle())
+                .buttonStyle(CustomBottomSheetContentButtonStyle())
                 .separator()
         }
         .clipLastSeparator()
@@ -44,7 +44,7 @@ public struct CustomBottomSheet<Content: View, Header: View>: View {
 
 // MARK: - Inits
 
-extension CustomBottomSheet where Header == Text? {
+extension CustomBottomSheetContent where Header == Text? {
     public init(
         _ title: String? = nil,
         @ViewBuilder content: @escaping () -> Content
@@ -60,7 +60,7 @@ extension CustomBottomSheet where Header == Text? {
 
 // MARK: - ButtonStyle
 
-private struct CustomBottomSheetButtonStyle: ButtonStyle {
+private struct CustomBottomSheetContentButtonStyle: ButtonStyle {
     @Environment(\.multilineTextAlignment) private var textAlignment
     @Environment(\.isEnabled) private var isEnabled
 
@@ -80,7 +80,7 @@ private struct CustomBottomSheetButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 #Preview {
-    CustomBottomSheet {
+    CustomBottomSheetContent {
         Button("Option 1") {}
         Button("Option 2") {}
         Button("Option 3") {}

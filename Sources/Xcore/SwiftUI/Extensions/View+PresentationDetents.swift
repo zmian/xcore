@@ -111,7 +111,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
     .sheet(isPresented: $showConfirmation) {
         let L = Samples.Strings.deleteMessageAlert
 
-        StandardBottomSheet(L.title, message: L.message) {
+        StandardBottomSheetContent(L.title, message: L.message) {
             HStack {
                 Button("Cancel") {
                     showConfirmation.toggle()
