@@ -37,7 +37,6 @@ public enum VisibilityStatus: String, Sendable, CustomAnalyticsValueConvertible 
 
 // MARK: - ViewModifier
 
-@MainActor
 private struct VisibilityModifier: ViewModifier {
     @State private var status: VisibilityStatus = .unknown
     private let action: (VisibilityStatus) -> Void

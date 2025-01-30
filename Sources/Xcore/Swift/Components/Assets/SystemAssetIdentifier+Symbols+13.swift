@@ -1571,11 +1571,11 @@ extension SystemAssetIdentifier {
     /// `skew`
     public static var skew: Self { "skew" }
     /// `grid`
-    public static var Grid: Self { "grid" }
+    public static var grid: Self { "grid" }
     /// `grid.circle`
-    public static var GridCircle: Self { "grid.circle" }
+    public static var gridCircle: Self { "grid.circle" }
     /// `grid.circle.fill`
-    public static var GridCircleFill: Self { "grid.circle.fill" }
+    public static var gridCircleFill: Self { "grid.circle.fill" }
     /// `burn`
     public static var burn: Self { "burn" }
     /// `recordingtape`

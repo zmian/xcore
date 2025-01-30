@@ -88,3 +88,16 @@ private struct SymbolViewModifier: ViewModifier {
             .foregroundStyle(theme.separatorColor)
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    Text("Menu")
+        .symbol(.chevronRight)
+
+    Text("Sports")
+        .symbol(.sportscourt, edge: .leading, scale: .large)
+        .transformEnvironment(\.theme) {
+            $0.separatorColor = .green
+        }
+}
