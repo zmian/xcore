@@ -149,7 +149,7 @@ public final class InactivityMonitor {
             return
         }
 
-        lastActivityUptime.saveValue()
+        lastActivityUptime.updateValue()
         startTimer()
     }
 
@@ -159,7 +159,7 @@ public final class InactivityMonitor {
     /// continues monitoring from the reset point.
     public func reset() {
         isInactive = false
-        lastActivityUptime.saveValue()
+        lastActivityUptime.updateValue()
         startTimer()
     }
 }

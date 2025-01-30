@@ -26,11 +26,11 @@ public final class SystemUptime: Sendable, Hashable, Identifiable {
         self.id = id
     }
 
-    /// Saves the current system uptime.
+    /// Updates to the current system uptime.
     ///
     /// This method updates the stored value with the current monotonic uptime in
     /// nanoseconds, ensuring accurate tracking of time intervals.
-    public func saveValue() {
+    public func updateValue() {
         value.setValue(DispatchTime.now().uptimeNanoseconds)
     }
 

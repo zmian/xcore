@@ -128,7 +128,7 @@ public struct TimerButton<Label: View>: View {
     private func restartTimer() {
         state = .ticked(countdown)
         timer = Self.makeTimer()
-        systemUptime.saveValue()
+        systemUptime.updateValue()
     }
 
     private func stopTimer() {

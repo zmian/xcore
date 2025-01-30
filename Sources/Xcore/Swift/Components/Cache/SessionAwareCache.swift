@@ -68,7 +68,7 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
 
             switch appPhase {
                 case .background:
-                    lastActiveTime.saveValue()
+                    lastActiveTime.updateValue()
                 case .willEnterForeground:
                     if lastActiveTime.elapsed(inactivityDuration) {
                         // Reset the cache for a new session
