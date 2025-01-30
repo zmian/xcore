@@ -12,17 +12,11 @@ public struct IconAfterLabelStyle: LabelStyle {
     var axis: Axis = .horizontal
 
     public func makeBody(configuration: Configuration) -> some View {
-        switch axis {
-            case .horizontal:
-                HStack {
-                    configuration.title
-                    configuration.icon
-                }
-            case .vertical:
-                VStack {
-                    configuration.title
-                    configuration.icon
-                }
+        let layout = axis == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+
+        layout {
+            configuration.title
+            configuration.icon
         }
     }
 }
@@ -33,17 +27,11 @@ public struct IconBeforeLabelStyle: LabelStyle {
     var axis: Axis = .horizontal
 
     public func makeBody(configuration: Configuration) -> some View {
-        switch axis {
-            case .horizontal:
-                HStack {
-                    configuration.icon
-                    configuration.title
-                }
-            case .vertical:
-                VStack {
-                    configuration.icon
-                    configuration.title
-                }
+        let layout = axis == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+
+        layout {
+            configuration.icon
+            configuration.title
         }
     }
 }
@@ -63,5 +51,27 @@ extension LabelStyle where Self == IconAfterLabelStyle {
 
     nonisolated public static func iconAfter(axis: Axis) -> Self {
         .init(axis: axis)
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    List {
+        Section("Horizontal Axis") {
+            Label("Swift", systemImage: .swift)
+                .labelStyle(.iconBefore)
+
+            Label("Swift", systemImage: .swift)
+                .labelStyle(.iconAfter)
+        }
+
+        Section("Vertical Axis") {
+            Label("Swift", systemImage: .swift)
+                .labelStyle(.iconBefore(axis: .vertical))
+
+            Label("Swift", systemImage: .swift)
+                .labelStyle(.iconAfter(axis: .vertical))
+        }
     }
 }
