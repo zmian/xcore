@@ -103,12 +103,12 @@ extension StandardBottomSheetContent where Header == Never {
 
         StandardBottomSheetContent(L.title, message: L.message) {
             HStack {
-                Button("Cancel") {
+                Button.cancel {
                     print("Cancel Tapped")
                 }
                 .buttonStyle(.secondary)
 
-                Button("Delete") {
+                Button.delete {
                     print("Delete Tapped")
                 }
                 .buttonStyle(.primary)

@@ -105,7 +105,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
 #Preview {
     @Previewable @State var showConfirmation = false
 
-    Button("Delete") {
+    Button.delete {
         showConfirmation = true
     }
     .sheet(isPresented: $showConfirmation) {
@@ -113,12 +113,12 @@ private struct PresentationDetentsViewModifier: ViewModifier {
 
         StandardBottomSheetContent(L.title, message: L.message) {
             HStack {
-                Button("Cancel") {
+                Button.cancel {
                     showConfirmation.toggle()
                 }
                 .buttonStyle(.secondary)
 
-                Button("Delete") {
+                Button.delete {
                     showConfirmation.toggle()
                 }
                 .buttonStyle(.primary)
