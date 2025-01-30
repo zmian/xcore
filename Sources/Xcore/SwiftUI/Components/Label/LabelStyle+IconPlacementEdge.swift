@@ -27,6 +27,8 @@ public struct IconPlacementEdgeLabelStyle: LabelStyle {
     }
 }
 
+// MARK: - Dot Syntax Support
+
 extension LabelStyle where Self == IconPlacementEdgeLabelStyle {
     public static func iconPlacement(_ edge: Edge) -> Self {
         .init(edge: edge)
