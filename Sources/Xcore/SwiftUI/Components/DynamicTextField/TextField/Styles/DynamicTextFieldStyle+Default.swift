@@ -56,7 +56,7 @@ extension DefaultDynamicTextFieldStyle {
         private var floatingContent: some View {
             ZStack(alignment: .leading) {
                 placeholderView
-                    .readSize { @MainActor in
+                    .onSizeChange {
                         labelHeight = $0.height
                     }
                     .offset(y: placeholderOffsetY)
@@ -64,7 +64,7 @@ extension DefaultDynamicTextFieldStyle {
                     .animation(.spring(response: .default, dampingFraction: 0.75), value: placeholderOffsetY)
 
                 configuration.textField
-                    .readSize { @MainActor in
+                    .onSizeChange {
                         textFieldHeight = $0.height
                     }
                     .offset(y: textFieldOffsetY)

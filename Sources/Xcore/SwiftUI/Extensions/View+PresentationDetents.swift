@@ -59,7 +59,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                 .deviceSpecificBottomPadding()
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: preferredWidth)
-                .readSize { @MainActor in
+                .onSizeChange {
                     if detentHeight != $0.height {
                         detentHeight = $0.height
                     }
