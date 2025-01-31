@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension View {
-    /// Applies an inverted mask to this view, revealing content outside the
+    /// Applies an inverted mask to this view, revealing content inside the
     /// specified bounds.
     ///
     /// This method creates a cut-out effect by masking everything except the
@@ -27,7 +27,7 @@ extension View {
         maskInvert(size: CGSize(size), cornerRadius: cornerRadius)
     }
 
-    /// Applies an inverted mask to this view, revealing content outside the
+    /// Applies an inverted mask to this view, revealing content inside the
     /// specified bounds.
     ///
     /// This method creates a cut-out effect by masking everything except the
