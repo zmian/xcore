@@ -14,7 +14,7 @@ extension View {
     ///
     /// ```swift
     /// List {
-    ///     Text("Lear more at [apple.com](https://www.apple.com)")
+    ///     Text("Learn more at [apple.com](https://www.apple.com)")
     /// }
     /// .openUrlInApp()
     /// ```
@@ -43,7 +43,7 @@ private struct OpenURLInAppViewModifier: ViewModifier {
 
 #Preview {
     List {
-        Text("Lear more at [apple.com](https://www.apple.com)")
+        Text("Learn more at [apple.com](https://www.apple.com)")
     }
     .openUrlInApp()
 }
