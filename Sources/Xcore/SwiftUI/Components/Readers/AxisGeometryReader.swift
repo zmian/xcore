@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A container view that defines its content as a function of its own size and
 /// coordinate space in single axis.
-public struct AxisGeometryReader<Content>: View where Content: View {
+public struct AxisGeometryReader<Content: View>: View {
     @State private var size: CGFloat = 0
     private let content: (CGFloat) -> Content
     private let axis: Axis

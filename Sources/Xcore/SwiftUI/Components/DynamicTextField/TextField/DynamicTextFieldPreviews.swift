@@ -87,13 +87,13 @@ private struct ShowcaseFieldPreview: View {
         var textFieldStyle: AnyDynamicTextFieldStyle {
             switch self {
                 case .default:
-                    return AnyDynamicTextFieldStyle(.default)
+                    AnyDynamicTextFieldStyle(.default)
                 case .line:
-                    return AnyDynamicTextFieldStyle(.line)
+                    AnyDynamicTextFieldStyle(.line)
                 case .prominent1:
-                    return AnyDynamicTextFieldStyle(.prominent(.fill))
+                    AnyDynamicTextFieldStyle(.prominent(.fill))
                 case .prominent2:
-                    return AnyDynamicTextFieldStyle(.prominent(.outline, shape: .capsule))
+                    AnyDynamicTextFieldStyle(.prominent(.outline, shape: .capsule))
             }
         }
     }

@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-struct MailApp: Hashable, Identifiable {
+struct MailApp: Sendable, Hashable, Identifiable {
     let name: String
     let url: URL
 

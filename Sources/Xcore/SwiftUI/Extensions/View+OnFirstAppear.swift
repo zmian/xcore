@@ -61,7 +61,6 @@ extension View {
 
 // MARK: - ViewModifier
 
-@MainActor
 private struct FirstAppearActionModifier: ViewModifier {
     @State private var didAppear = false
     let action: (() -> Void)?

@@ -37,7 +37,6 @@ extension View {
 
 // MARK: - ViewModifier
 
-@MainActor
 private struct MailAppViewModifier: ViewModifier {
     private typealias L = Localized.MailApp
     @Environment(\.theme) private var theme

@@ -97,7 +97,7 @@ open class HUD: Appliable {
     }
 
     /// A closure to adjust window attributes (e.g., level or make it key) so this
-    /// closure is displayed appropriately.
+    /// window is displayed appropriately.
     ///
     /// For example, you can adjust the window level so this HUD is always shown
     /// behind the passcode screen to ensure that this HUD is not shown before user

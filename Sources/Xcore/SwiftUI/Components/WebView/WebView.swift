@@ -295,7 +295,6 @@ extension WebView {
             loader.isHidden = !show
         }
 
-        @MainActor
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) async -> (Any?, String?) {
             guard let messageHandler = parent.messageHandlers[message.name] else {
                 return (nil, nil)
