@@ -25,25 +25,55 @@ public struct HideableLoadingView<Content: View>: View {
             ProgressView()
                 .hidden(!isLoading)
 
-            switch axis {
-                case .horizontal:
-                    HStack(spacing: .defaultSpacing) {
-                        content
-                            // We don't want buttons to have loading state as the entire container will be
-                            // hidden.
-                            .isLoading(false)
-                    }
-                    .hidden(isLoading)
-                case .vertical:
-                    VStack(spacing: .defaultSpacing) {
-                        content
-                            // We don't want buttons to have loading state as the entire container will be
-                            // hidden.
-                            .isLoading(false)
-                    }
-                    .hidden(isLoading)
+            let layout = axis == .horizontal
+                ? AnyLayout(HStackLayout(spacing: .defaultSpacing))
+                : AnyLayout(VStackLayout(spacing: .defaultSpacing))
+
+            layout {
+                content
+                    // We don't want buttons to have loading state as the entire container will be
+                    // hidden.
+                    .isLoading(false)
             }
+            .hidden(isLoading)
         }
         .animation(.default, value: isLoading)
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    @Previewable @State var isLoading = false
+    let L = Samples.Strings.deleteMessageAlert
+
+    PopupAlertContent {
+        Text(L.title)
+            .font(.headline)
+        Text(L.message)
+            .foregroundStyle(.secondary)
+
+        Spacer(height: .defaultSpacing)
+
+        HideableLoadingView {
+            HStack {
+                Button.cancel {
+                    print("Cancel Tapped")
+                }
+                .buttonStyle(.secondary)
+
+                Button.delete {
+                    print("Delete Tapped")
+
+                    isLoading = true
+
+                    withDelay(.seconds(5)) { @MainActor in
+                        isLoading = false
+                    }
+                }
+                .buttonStyle(.primary)
+            }
+        }
+        .isLoading(isLoading)
     }
 }

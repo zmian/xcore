@@ -10,7 +10,9 @@ public struct IconPlacementEdgeLabelStyle: LabelStyle {
     let edge: Edge
 
     public func makeBody(configuration: Configuration) -> some View {
-        let layout = edge.isHorizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+        let layout = edge.isHorizontal
+            ? AnyLayout(HStackLayout())
+            : AnyLayout(VStackLayout())
 
         switch edge {
             case .leading, .top:
