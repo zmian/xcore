@@ -94,3 +94,19 @@ private struct InvertedShape<S: Shape>: Shape {
         return path
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    Rectangle()
+        .maskInvert(size: 100, cornerRadius: 30)
+
+    Rectangle()
+        .maskInvert(size: CGSize(width: 200, height: 100), cornerRadius: 30)
+
+    Rectangle()
+        .maskInvert(.circle, size: CGSize(100))
+
+    Rectangle()
+        .maskInvert(.circle, lineWidth: 5)
+}

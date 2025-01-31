@@ -43,3 +43,19 @@ extension View {
             .overlayLoader(mask, tint: tint, alignment: alignment)
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    Label("Swift", systemImage: .swift)
+        .labelStyle(.settingsIcon(tint: .orange))
+        .font(.largeTitle)
+        .overlayLoader(true)
+        .background(.secondary)
+
+    Label("Swift", systemImage: .swift)
+        .labelStyle(.settingsIcon(tint: .orange))
+        .font(.largeTitle)
+        .maskWithLoader(true)
+        .background(.secondary)
+}
