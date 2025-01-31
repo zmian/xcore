@@ -237,9 +237,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
     }
 
     private func dismiss() {
-        withAnimation {
-            isPresented = false
-        }
+        isPresented = false
     }
 
     private func setupAutomaticDismissalIfNeeded() {
