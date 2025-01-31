@@ -286,4 +286,12 @@ struct URLTests {
         #expect(url10.maskingSensitiveQueryItems() == URL(string: "https://example.com?token=xxxx"))
         #expect(url11.maskingSensitiveQueryItems() == URL(string: "https://example.com?code=Jn3yk2x3cf23"))
     }
+
+    @Test
+    func resolvingRedirectedLink() async {
+        let shortUrl = URL(string: "https://git.new/swift")!
+        let resolvedUrl = await shortUrl.resolvingRedirectedLink(timeout: .seconds(5))
+        let expandedUrl = "https://github.com/swiftlang/swift"
+        #expect(resolvedUrl?.absoluteString == expandedUrl)
+    }
 }
