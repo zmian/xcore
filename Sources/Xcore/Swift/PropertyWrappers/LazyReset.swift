@@ -17,16 +17,16 @@ import Foundation
 /// ```
 @propertyWrapper
 public struct LazyReset<Value> {
-    private let block: () -> Value
+    private let get: () -> Value
     private var value: Value?
 
-    public init(_ block: @autoclosure @escaping () -> Value) {
-        self.block = block
+    public init(_ get: @autoclosure @escaping () -> Value) {
+        self.get = get
     }
 
     public var wrappedValue: Value {
         mutating get {
-            value = value ?? block()
+            value = value ?? get()
             return value!
         }
         set { value = newValue }

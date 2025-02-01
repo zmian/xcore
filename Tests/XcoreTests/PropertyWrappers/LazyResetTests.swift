@@ -1,9 +1,7 @@
 //
-//  LazyResetTests.swift
-//  UnitTests
-//
-//  Created by Zeeshan Mian on 3/18/20.
-//  Copyright © 2020 Xcore. All rights reserved.
+// Xcore
+// Copyright © 2020 Xcore
+// MIT license, see LICENSE file for details
 //
 
 import Testing
@@ -11,7 +9,7 @@ import Testing
 
 struct LazyResetTests {
     @Test
-    func allCases() {
+    func basics() {
         struct Example {
             @LazyReset(7)
             var x: Int

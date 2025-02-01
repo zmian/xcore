@@ -69,4 +69,11 @@ struct NumbersTests {
         let expected = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
         #expect(values == expected)
     }
+
+    @Test
+    func clamped() {
+        #expect(10 == 30.clamped(to: 0...10))
+        #expect(3.0 == 3.0.clamped(to: 0.0...10.0))
+        #expect("x" == "z".clamped(to: "a"..."x"))
+    }
 }

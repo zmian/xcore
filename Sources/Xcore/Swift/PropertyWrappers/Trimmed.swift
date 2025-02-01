@@ -18,11 +18,14 @@ import Foundation
 ///     @Trimmed var body: String
 /// }
 ///
-/// let quine = Post(title: "  Swift Property Wrappers  ", body: "...")
-/// quine.title // "Swift Property Wrappers" (no leading or trailing spaces!)
+/// var post = Post(title: "  Swift Property Wrappers  ", body: "...")
+/// post.title // "Swift Property Wrappers" (no leading or trailing spaces)
 ///
-/// quine.title = "      @propertyWrapper     "
-/// quine.title // "@propertyWrapper" (still no leading or trailing spaces!)
+/// post.title = "      @propertyWrapper     "
+/// post.title // "@propertyWrapper" (still no leading or trailing spaces)
+///
+/// post.title = "  Swift Property            Wrappers  "
+/// post.title // "Swift Property Wrappers" (no leading, trailing or multiple middle spaces)
 /// ```
 @propertyWrapper
 public struct Trimmed {
@@ -34,6 +37,6 @@ public struct Trimmed {
 
     public var wrappedValue: String {
         get { value }
-        set { value = newValue.trimmingCharacters(in: .whitespacesAndNewlines) }
+        set { value = newValue.trimmed() }
     }
 }

@@ -8,7 +8,7 @@ import Swift
 
 // MARK: - Identifiable Auto Implementation for RawRepresentable
 
-extension Identifiable where Self: RawRepresentable, RawValue == String {
+extension Identifiable where Self: RawRepresentable<String> {
     public var id: RawValue {
         rawValue
     }
