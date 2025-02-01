@@ -6,13 +6,28 @@
 
 import Foundation
 
+// MARK: - Default Locale
+
 extension Locale {
     /// The default locale used in ``CustomFloatingPointFormatStyle``.
+    ///
+    /// This locale determines the formatting behavior for custom number
+    /// formatting styles. It defaults to `.current`, ensuring that numbers
+    /// are formatted based on the user's active locale settings.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let locale = Locale.numbers
+    /// print(locale.identifier) // Example: "en_US"
+    /// ```
     nonisolated(unsafe) public static var numbers: Self = .current
 }
 
+// MARK: - Common Locales
+
 extension Locale {
-    /// Returns `en_US` locale.
+    /// Returns the `en_US` (English, United States) locale.
     ///
     /// **For DateFormatter:**
     ///
@@ -24,10 +39,19 @@ extension Locale {
     /// between machines (`"en_US_POSIX"` works the same on iOS as it does on
     /// mac OS, and as it it does on other platforms).
     ///
-    /// - SeeAlso: https://developer.apple.com/library/archive/qa/qa1480/_index.html
+    /// **Summary:**
+    ///
+    /// - `"en_US"` adapts to US formatting standards and system updates.
+    /// - Use `"en_US_POSIX"` for **fixed** formatting across platforms.
+    ///
+    /// - SeeAlso: [Apple's Locale Best Practices](https://developer.apple.com/library/archive/qa/qa1480/_index.html)
     public static let us = Locale(identifier: "en_US")
 
-    /// Returns `en_US_POSIX` locale.
+    /// Returns the `en_US_POSIX` (POSIX-compliant English, US) locale.
+    ///
+    /// This locale ensures consistent date and number formatting regardless of
+    /// system or regional settings. Ideal for **parsing and serializing** dates
+    /// where exact formatting is required.
     ///
     /// **For DateFormatter:**
     ///
@@ -39,45 +63,66 @@ extension Locale {
     /// between machines (`"en_US_POSIX"` works the same on iOS as it does on
     /// mac OS, and as it it does on other platforms).
     ///
-    /// - SeeAlso: https://developer.apple.com/library/archive/qa/qa1480/_index.html
+    /// **Summary:**
+    ///
+    /// - `"en_US"` adapts to US formatting standards and system updates.
+    /// - Use `"en_US_POSIX"` for **fixed** formatting across platforms.
+    ///
+    /// - SeeAlso: [Apple's Locale Best Practices](https://developer.apple.com/library/archive/qa/qa1480/_index.html)
     public static let usPosix = Locale(identifier: "en_US_POSIX")
 
-    /// Returns `en_GB` (English, United Kingdom) locale.
+    /// Returns the `en_GB` (English, United Kingdom) locale.
     public static let uk = Locale(identifier: "en_GB")
 
-    /// Returns `fr` (French) locale.
+    /// Returns the `fr` (French) locale.
     public static let fr = Locale(identifier: "fr")
 
-    /// Returns `es` (Spanish) locale.
+    /// Returns the `es` (Spanish) locale.
     public static let es = Locale(identifier: "es")
 
-    /// Returns `ar_SA` (Arabic, Saudi Arabia) locale.
+    /// Returns the `ar_SA` (Arabic, Saudi Arabia) locale.
     public static let ar = Locale(identifier: "ar_SA")
 
-    /// Returns `tr` (Turkish) locale.
+    /// Returns the `tr` (Turkish) locale.
     public static let tr = Locale(identifier: "tr")
 
-    /// Returns `de` (German) locale.
+    /// Returns the `de` (German) locale.
     public static let de = Locale(identifier: "de")
 
-    /// Returns `de_DE` (German, Germany) locale.
+    /// Returns the `de_DE` (German, Germany) locale.
     public static let deDE = Locale(identifier: "de_DE")
 
-    /// Returns `pt_PT` (Portuguese, Portugal) locale.
+    /// Returns the `pt_PT` (Portuguese, Portugal) locale.
     public static let ptPT = Locale(identifier: "pt_PT")
 }
 
-// MARK: - Currency
+// MARK: - Currency Codes
 
 extension Locale.Currency {
-    /// United States, US Dollar.
+    /// United States Dollar (`USD`).
     public static let usd = Self("usd")
 
-    /// United Kingdom, Pound Sterling.
+    /// British Pound Sterling (`GBP`).
     public static let gbp = Self("gbp")
 }
 
+// MARK: - Utility Methods
+
 extension Locale {
+    /// Prints all available locale identifiers along with their descriptions.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// Locale.printAvailableIdentifiers()
+    /// ```
+    ///
+    /// Example Output:
+    /// ```
+    /// Identifier,Description
+    /// "en_US","English (United States)"
+    /// "fr_FR","French (France)"
+    /// ```
     public static func printAvailableIdentifiers() {
         print("Identifier,Description")
         availableIdentifiers.forEach {
