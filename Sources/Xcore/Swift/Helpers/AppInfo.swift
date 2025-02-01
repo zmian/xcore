@@ -45,7 +45,7 @@ extension AppInfo {
     ///
     /// **Execution Targets:**
     ///
-    /// | **Environment**      | **Output**      |
+    /// | Environment          | Output          |
     /// |----------------------|-----------------|
     /// | iOS/macOS App        | `.app`          |
     /// | Share/Siri Extension | `.appExtension` |
@@ -77,13 +77,13 @@ extension AppInfo {
     ///
     /// **Execution Targets:**
     ///
-    /// | **Environment**      | **Output**      |
+    /// | Environment          | Output          |
     /// |----------------------|-----------------|
     /// | iOS/macOS App        | `.app`          |
     /// | Share/Siri Extension | `.appExtension` |
     /// | Widget Extension     | `.widget`       |
     ///
-    /// **Example Usage:**
+    /// **Usage**
     ///
     /// ```swift
     /// switch AppInfo.executionTarget {
