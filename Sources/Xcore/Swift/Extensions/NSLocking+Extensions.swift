@@ -7,16 +7,6 @@
 import Foundation
 
 extension NSLocking {
-    /// Invokes a closure after acquiring the lock by blocking a thread's execution
-    /// until the lock can be acquired.
-    ///
-    /// - Parameter closure: The closure to execute after acquiring the lock.
-    public func around(_ closure: () throws -> Void) rethrows {
-        lock()
-        defer { unlock() }
-        try closure()
-    }
-
     /// Invokes a closure returning a value after acquiring the lock by blocking a
     /// thread's execution until the lock can be acquired.
     ///

@@ -114,7 +114,6 @@ extension URL {
 
     /// The URL to deep link to your app’s notification settings in the Settings
     /// app.
-    @MainActor
     public static var notificationSettings: Self {
         URL(string: UIApplication.openNotificationSettingsURLString)!
     }
@@ -137,6 +136,21 @@ extension String {
     /// [Oleb]: https://oleb.net/blog/2015/02/minus-sign
     /// [Wikipedia]: https://en.wikipedia.org/wiki/Plus_and_minus_signs
     public static let minusSign = "\u{2212}"
+}
+
+extension Int {
+    nonisolated(unsafe) public static var maxFractionDigits = 100
+    nonisolated(unsafe) public static var defaultFractionDigits = 2
+    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
+}
+
+extension Double {
+    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
+}
+
+extension ClosedRange<Int> {
+    nonisolated(unsafe) public static var defaultFractionDigits: Self = 0...Int.defaultFractionDigits
+    nonisolated(unsafe) public static var maxFractionDigits: Self = 0...Int.maxFractionDigits
 }
 
 // MARK: - App Constants
@@ -227,19 +241,4 @@ extension AppConstants {
         let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
         return max(0.0, remaining)
     }
-}
-
-extension Int {
-    nonisolated(unsafe) public static var maxFractionDigits = 100
-    nonisolated(unsafe) public static var defaultFractionDigits = 2
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
-}
-
-extension Double {
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
-}
-
-extension ClosedRange<Int> {
-    nonisolated(unsafe) public static var defaultFractionDigits: Self = 0...Int.defaultFractionDigits
-    nonisolated(unsafe) public static var maxFractionDigits: Self = 0...Int.maxFractionDigits
 }

@@ -24,20 +24,16 @@ extension Result {
     /// Returns the value associated with `.success` case.
     public var value: Success? {
         switch self {
-            case let .success(value):
-                return value
-            default:
-                return nil
+            case let .success(value): value
+            default: nil
         }
     }
 
     /// Returns the error associated with `.failure` case.
     public var error: Failure? {
         switch self {
-            case let .failure(error):
-                return error
-            default:
-                return nil
+            case let .failure(error): error
+            default: nil
         }
     }
 }

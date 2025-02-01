@@ -13,24 +13,31 @@ extension Logger {
     /// It's the same value as your app’s bundle identifier to ensure a unique
     /// identifier.
     ///
-    /// The bundle identifier is defined by the `CFBundleIdentifier` key in the
-    /// app's bundle information property list (e.g., `com.example.ios`).
+    /// The bundle identifier is retrieved from the `CFBundleIdentifier` key in the
+    /// app's bundle property list (e.g., `com.example.ios`).
     ///
     /// For more information, see ``CFBundleIdentifier``.
     public static let subsystem = AppInfo.bundleId
 
-    /// All logs related to the app.
+    /// A general-purpose logger for application-wide logging.
+    ///
+    /// **Category:** `"main"`
     public static let main = Logger(subsystem: subsystem, category: "main")
 
-    /// All logs related to Xcore.
+    /// A logger dedicated to Xcore framework-related logs.
+    ///
+    /// **Category:** `"xcore"`
     static let xc = Logger(subsystem: subsystem, category: "xcore")
 
-    /// All logs related to analytics.
+    /// A logger for tracking analytics-related events.
+    ///
+    /// **Category:** `"analytics"`
     static let analytics = Logger(subsystem: subsystem, category: "analytics")
 }
 
-/// Log levels ordered by their severity, with `.debug` being the least severe
-/// and `.critical` being the most severe.
+/// An enumeration representing logging levels ordered by severity.
+///
+/// The least severe level is `.debug`, while the most severe is `.critical`.
 public enum LogLevel: String, Hashable, Codable, Sendable {
     case debug
     case info
