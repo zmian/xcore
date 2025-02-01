@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Bundle Initialization
+
 extension Bundle {
     /// Returns the `Bundle` object with which the specified class name is
     /// associated.
@@ -18,6 +20,8 @@ extension Bundle {
     /// This method creates and returns a new `Bundle` object if there is no
     /// existing bundle associated with `forClassName`; otherwise, the existing
     /// instance is returned.
+    ///
+    /// - Parameter className: The name of the class whose bundle is requested.
     public convenience init?(forClassName className: String) {
         guard let aClass = NSClassFromString(className) else {
             return nil
@@ -26,6 +30,8 @@ extension Bundle {
         self.init(for: aClass)
     }
 }
+
+// MARK: - Bundle Info Retrieval
 
 extension Bundle {
     private func info(forKey key: String) -> String {
@@ -64,7 +70,7 @@ extension Bundle {
         info(forKey: kCFBundleVersionKey)
     }
 
-    /// The version and build number of the bundle (e.g., `"1.0 (300)"`).
+    /// The combined version and build number of the bundle (e.g., `"1.0 (300)"`).
     public var versionBuildNumber: String {
         "\(versionNumber) (\(buildNumber))"
     }
@@ -76,12 +82,12 @@ extension Bundle {
         return "\(name) \(version.semanticDescription)"
     }
 
-    /// The device language.
+    /// The primary language of the device.
     public var deviceLanguage: String {
         preferredLocalizations.first ?? ""
     }
 
-    /// Returns common bundle information.
+    /// Returns a summary of common bundle information.
     ///
     /// **Sample output:**
     ///
@@ -94,7 +100,7 @@ extension Bundle {
         """
         \(osNameVersion)
         \(Device.current.model.name)
-        Version \(versionBuildNumber)"
+        Version \(versionBuildNumber)
         """
     }
 }
@@ -103,17 +109,19 @@ extension Bundle {
 
 extension Bundle {
     /// Returns the first URL for the specified common directory in the user domain.
+    ///
+    /// - Parameter directory: The directory type (e.g., `.documentDirectory`).
+    /// - Returns: A URL representing the specified directory, or `nil` if unavailable.
     public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
         FileManager.default.url(for: directory)
     }
 
-    /// Returns the file URL for the resource identified by the specified name and
-    /// file extension.
+    /// Returns the file URL for the resource identified by the specified file
+    /// name and extension.
     ///
-    /// - Parameter filename: The name of the file with extension
+    /// - Parameter filename: The file name including its extension
     ///   (e.g., `"colors.json"`).
-    /// - Returns: The file URL for the resource file name or `nil` if the file
-    ///   could not be located.
+    /// - Returns: A file URL for the resource, or `nil` if not found.
     public func url(filename: String) -> URL? {
         url(
             forResource: filename.lastPathComponent.deletingPathExtension,
@@ -121,13 +129,12 @@ extension Bundle {
         )
     }
 
-    /// Returns the full pathname for the resource identified by the specified name
-    /// and file extension.
+    /// Returns the full pathname for the resource identified by the specified file
+    /// name and extension.
     ///
-    /// - Parameter filename: The name of the file with extension
+    /// - Parameter filename: The file name including its extension
     ///   (e.g., `"colors.json"`).
-    /// - Returns: The full pathname for the resource file, or `nil` if the file
-    ///   could not be located.
+    /// - Returns: The full pathname for the resource, or `nil` if not found.
     public func path(filename: String) -> String? {
         path(
             forResource: filename.lastPathComponent.deletingPathExtension,
@@ -136,7 +143,13 @@ extension Bundle {
     }
 }
 
+// MARK: - App Bundle
+
 extension Bundle {
+    /// Returns the app's main bundle.
+    ///
+    /// If the execution target is an app extension, this property attempts to
+    /// retrieve the host app's bundle instead of the extension's bundle.
     public static var app: Bundle {
         guard AppInfo.executionTarget == .appExtension else {
             return .main
