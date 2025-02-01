@@ -32,7 +32,7 @@ extension Font {
         typeface: Typeface? = nil
     ) -> Font {
         // Temporary solution while custom fonts aren't supported on Widgets.
-        let isWidgetExtension = AppInfo.isWidgetExtension
+        let isWidgetExtension = AppInfo.executionTarget == .widget
 
         let weight = weight.normalize(style: style)
         let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)
@@ -82,7 +82,7 @@ extension Font {
         typeface: Typeface? = nil
     ) -> Font {
         // Temporary solution while custom fonts aren't supported on Widgets.
-        let isWidgetExtension = AppInfo.isWidgetExtension
+        let isWidgetExtension = AppInfo.executionTarget == .widget
 
         let weight = weight.normalize(style: textStyle)
         let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)

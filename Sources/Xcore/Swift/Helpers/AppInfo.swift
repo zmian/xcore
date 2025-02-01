@@ -33,25 +33,87 @@ extension AppInfo {
 // MARK: - Execution Target
 
 extension AppInfo {
-    /// An enumeration representing the execution target of the application.
-    public enum ExecutionTarget: Sendable {
-        /// The application is running as a normal application (e.g., iOS app).
+    /// An enumeration representing the execution environment of the application.
+    ///
+    /// Identify whether the app is running as a standalone application, an app
+    /// extension (such as a Share or Siri extension), or a WidgetKit extension.
+    ///
+    /// **Use Cases:**
+    /// - Modify behavior based on execution context.
+    /// - Prevent restricted operations in extensions.
+    /// - Apply different UI configurations for widgets.
+    ///
+    /// **Execution Targets:**
+    ///
+    /// | **Environment**      | **Output**      |
+    /// |----------------------|-----------------|
+    /// | iOS/macOS App        | `.app`          |
+    /// | Share/Siri Extension | `.appExtension` |
+    /// | Widget Extension     | `.widget`       |
+    public enum ExecutionTarget: Sendable, Hashable {
+        /// The application is running as a **standard iOS/macOS app**.
         case app
 
-        /// The application is running as a ``WidgetKit`` extension.
+        /// The application is running as an **App Extension**.
+        ///
+        /// - **Examples**: Share Extensions, Siri Extensions, Today Extensions.
+        case appExtension
+
+        /// The application is running as a **WidgetKit extension**.
+        ///
+        /// - **Example**: A home-screen widget built using `WidgetKit`.
         case widget
     }
 
-    /// A property indicating the execution target of the binary.
-    public static var target: ExecutionTarget {
-        isWidgetExtension ? .widget : .app
+    /// A property indicating the **current execution target** of the binary.
+    ///
+    /// Identify whether the app is running as a standalone application, an app
+    /// extension (such as a Share or Siri extension), or a WidgetKit extension.
+    ///
+    /// **Use Cases:**
+    /// - Modify behavior based on execution context.
+    /// - Prevent restricted operations in extensions.
+    /// - Apply different UI configurations for widgets.
+    ///
+    /// **Execution Targets:**
+    ///
+    /// | **Environment**      | **Output**      |
+    /// |----------------------|-----------------|
+    /// | iOS/macOS App        | `.app`          |
+    /// | Share/Siri Extension | `.appExtension` |
+    /// | Widget Extension     | `.widget`       |
+    ///
+    /// **Example Usage:**
+    ///
+    /// ```swift
+    /// switch AppInfo.executionTarget {
+    ///     case .app:
+    ///         print("Running as a full application.")
+    ///     case .appExtension:
+    ///         print("Running as an app extension.")
+    ///     case .widget:
+    ///         print("Running as a WidgetKit extension.")
+    /// }
+    /// ```
+    ///
+    /// - Returns: The current execution target of the binary.
+    public static var executionTarget: ExecutionTarget {
+        if isWidgetExtension {
+            return .widget
+        }
+
+        if isAppExtension {
+            return .appExtension
+        }
+
+        return .app
     }
 
     /// A Boolean property indicating whether the execution target is a
     /// ``WidgetKit`` extension or a normal application target.
     ///
     /// - SeeAlso: https://stackoverflow.com/a/64073922
-    public static var isWidgetExtension: Bool {
+    private static var isWidgetExtension: Bool {
         guard
             let nsExtension = Bundle.main.infoDictionary?["NSExtension"] as? [String: String],
             let widget = nsExtension["NSExtensionPointIdentifier"]
@@ -69,7 +131,7 @@ extension AppInfo {
     /// bundle that ends in `.appex`. See [Creating an App Extension].
     ///
     /// [Creating an App Extension]: https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html
-    public static var isAppExtension: Bool {
+    private static var isAppExtension: Bool {
         #if os(iOS) || os(tvOS) || os(watchOS)
         return Bundle.main.bundlePath.hasSuffix(".appex")
         #elseif os(macOS)

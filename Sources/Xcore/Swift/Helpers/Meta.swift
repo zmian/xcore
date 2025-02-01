@@ -18,15 +18,10 @@ public func name(of value: Any) -> String {
     // a type created inside a function.
     //
     // https://bugs.swift.org/browse/SR-6787
-    let unwantedResult = "(unknown context at "
-
-    guard description.contains(unwantedResult) else {
-        return description
-    }
-
     return description
-        .split(separator: ".")
-        .lazy
-        .filter { !$0.hasPrefix(unwantedResult) }
-        .joined(separator: ".")
+        .replacingOccurrences(
+            of: #"\(unknown context at \$[[:xdigit:]]+\)\."#,
+            with: "",
+            options: .regularExpression
+        )
 }

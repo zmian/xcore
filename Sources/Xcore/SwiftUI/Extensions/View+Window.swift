@@ -20,7 +20,7 @@ extension View {
         @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         // Widgets & Extension does not support UIWindow.
-        applyIf(AppInfo.target == .app) {
+        applyIf(AppInfo.executionTarget == .app) {
             $0.overlay {
                 Color.clear
                     .frame(0)

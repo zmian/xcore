@@ -27,14 +27,15 @@ private struct OpenURLInAppViewModifier: ViewModifier {
     @Dependency(\.openUrl) private var openUrl
 
     func body(content: Content) -> some View {
-        if AppInfo.isAppExtension || AppInfo.isWidgetExtension {
-            content
-        } else {
-            content
-                .environment(\.openURL, .init { url in
-                    openUrl(url)
-                    return .handled
-                })
+        switch AppInfo.executionTarget {
+            case .app:
+                content
+                    .environment(\.openURL, .init { url in
+                        openUrl(url)
+                        return .handled
+                    })
+            case .widget, .appExtension:
+                content
         }
     }
 }

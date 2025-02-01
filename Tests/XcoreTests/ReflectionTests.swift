@@ -22,6 +22,7 @@ struct ReflectionTests {
         #expect(MyProtocolClass.staticTypeName_2 == "XcoreTests.MyProtocolClass")
 
         // Class
+        #expect(typeName(of: UIView()) == "UIView")
         #expect(typeName(of: SpacerView.self) == "Xcore.SpacerView")
         #expect(typeName(of: SpacerView()) == "Xcore.SpacerView")
         // Enum

@@ -55,7 +55,7 @@ extension View {
         @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         // Widgets & Extension does not support UIWindow & DispatchWorkItem.
-        applyIf(AppInfo.target == .app) {
+        applyIf(AppInfo.executionTarget == .app) {
             $0.modifier(PopupViewModifier(
                 isPresented: isPresented,
                 style: style,

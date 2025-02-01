@@ -138,7 +138,7 @@ extension Bundle {
 
 extension Bundle {
     public static var app: Bundle {
-        guard AppInfo.isAppExtension else {
+        guard AppInfo.executionTarget == .appExtension else {
             return .main
         }
 
