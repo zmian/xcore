@@ -8,6 +8,54 @@ import Foundation
 
 /// A container for managing a list of observers, allowing objects to register
 /// for notifications and be automatically cleaned up when they are deallocated.
+///
+/// **Usage**
+///
+/// ```swift
+/// final class ViewModel {
+///     private let observers = Observers()
+///
+///     var count = 0 {
+///         didSet {
+///             observers.notifyIfNeeded(oldValue, newValue: count)
+///         }
+///     }
+///
+///     /// Registers an observer for count changes.
+///     func observeCountChanges(for owner: AnyObject, _ handler: @escaping () -> Void) {
+///         observers.observe(for: owner, handler)
+///     }
+///
+///     /// Simulates an update to the count value.
+///     func incrementCount() {
+///         count += 1
+///     }
+/// }
+///
+/// // MARK: - Usage Example
+///
+/// final class ViewController {
+///     private let viewModel = ViewModel()
+///
+///     override func viewDidLoad() {
+///         super.viewDidLoad()
+///
+///         // Register an observer for count changes.
+///         viewModel.observeCountChanges(for: self) {
+///             print("Count changed to \(self.viewModel.count)")
+///         }
+///
+///         // Simulate updates
+///         viewModel.incrementCount() // Output: "Count changed to 1"
+///         viewModel.incrementCount() // Output: "Count changed to 2"
+///     }
+/// }
+///
+/// // MARK: - Run Example
+///
+/// let viewController = ViewController()
+/// viewController.viewDidLoad() // Trigger the observer example
+/// ```
 open class Observers {
     /// A list of registered observers.
     private var observers = [Observer]()
@@ -27,7 +75,7 @@ open class Observers {
     /// **Usage**
     ///
     /// ```swift
-    /// observers.observe(owner: self) {
+    /// observers.observe(for: self) {
     ///     print("Notified!")
     /// }
     /// ```
@@ -35,7 +83,7 @@ open class Observers {
     /// - Parameters:
     ///   - owner: The observing object.
     ///   - handler: A closure invoked when the observer is notified.
-    open func observe<T>(owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
+    open func observe<T>(for owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
         if let existingObserverIndex = observers.firstIndex(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
@@ -160,27 +208,7 @@ extension Observer: Equatable {
         return lhs.isEqual(rhsOwner)
     }
 
-    static func == <T>(lhs: T, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
-        rhs.isEqual(lhs)
-    }
-
     static func == <T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
         lhs.isEqual(rhs)
     }
-
-    static func == <T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
-        guard let lhs else {
-            return false
-        }
-
-        return rhs.isEqual(lhs)
-    }
-}
-
-private func == <T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equatable {
-    guard let lhs else {
-        return false
-    }
-
-    return lhs.isEqual(rhs)
 }
