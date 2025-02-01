@@ -145,18 +145,37 @@ extension AppInfo {
 extension AppInfo {
     /// An enumeration representing the application distribution channel.
     public enum Distribution: Sendable {
-        /// App was installed from the App Store.
+        /// The app was installed from the **App Store**.
         case appStore
 
-        /// App was installed from TestFlight.
+        /// The app was installed from **TestFlight**.
         case testFlight
 
-        /// App was installed by some other mechanism (Ad-Hoc, Enterprise, etc.)
+        /// The app was installed by some other mechanism (e.g., Ad-Hoc, Enterprise, or
+        /// local development).
         case other
     }
 
-    /// A property indicating the application distribution channel
-    /// (e.g., the App Store, TestFlight or Ad-Hoc, Enterprise).
+    /// A property indicating the application distribution channel.
+    ///
+    /// Determines whether the app is running as a **production App Store release**,
+    /// a **TestFlight beta version**, or via another installation method such as
+    /// **Enterprise or Ad-Hoc deployment**.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// switch AppInfo.distribution {
+    ///     case .appStore:
+    ///         print("Running as an official App Store release.")
+    ///     case .testFlight:
+    ///         print("Running as a TestFlight beta version.")
+    ///     case .other:
+    ///         print("Running via an alternative distribution method.")
+    /// }
+    /// ```
+    ///
+    /// - Returns: The current application distribution channel.
     public static var distribution: Distribution {
         #if targetEnvironment(simulator)
         return .other
@@ -173,6 +192,9 @@ extension AppInfo {
 
     /// A Boolean property indicating whether the app has embedded mobile provision
     /// file.
+    ///
+    /// - Returns: `true` if the app was distributed via **Ad-Hoc, Enterprise, or
+    ///   local build**.
     private static var hasEmbeddedMobileProvision: Bool {
         Bundle.main.path(forResource: "embedded", ofType: "mobileprovision") != nil
     }
