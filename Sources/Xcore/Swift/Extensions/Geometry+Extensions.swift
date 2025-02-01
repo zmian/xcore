@@ -12,14 +12,28 @@ import SwiftUI
 extension CGFloat {
     /// Converts an angle from degrees to radians.
     ///
-    /// - Returns: `self` value in radians.
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let radians = 45.0.degreesToRadians()
+    /// print(radians) // 0.7853981633974483
+    /// ```
+    ///
+    /// - Returns: The angle in radians.
     public func degreesToRadians() -> Self {
-        .pi * self / 180
+        self * .pi / 180
     }
 
     /// Converts an angle from radians to degrees.
     ///
-    /// - Returns: `self` value in degrees.
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let degrees = (0.785).radiansToDegrees()
+    /// print(degrees) // 44.999998
+    /// ```
+    ///
+    /// - Returns: The angle in degrees.
     public func radiansToDegrees() -> Self {
         self * 180 / .pi
     }
@@ -28,6 +42,15 @@ extension CGFloat {
 // MARK: - CGRect
 
 extension CGRect {
+    /// Creates a `CGRect` with `.zero` origin and specified `size`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let rect = CGRect(CGSize(width: 50, height: 100))
+    /// ```
+    ///
+    /// - Parameter size: The size of the rectangle.
     public init(_ size: CGSize) {
         self = CGRect(origin: .zero, size: size)
     }
@@ -46,9 +69,12 @@ extension CGSize {
         Swift.max(width, height)
     }
 
+    /// Creates a square `CGSize` with equal width and height.
     public init(_ value: CGFloat) {
         self = CGSize(width: value, height: value)
     }
+
+    // MARK: - Arithmetic Operators
 
     public static func +=(lhs: inout Self, rhs: Self) {
         lhs.width += rhs.width
@@ -105,10 +131,12 @@ extension CGSize {
 // MARK: - UILayoutPriority
 
 extension UILayoutPriority {
+    /// Returns a new priority by adding `rhs` to `lhs`.
     public static func +(lhs: Self, rhs: Float) -> Self {
         .init(lhs.rawValue + rhs)
     }
 
+    /// Returns a new priority by subtracting `rhs` from `lhs`.
     public static func -(lhs: Self, rhs: Float) -> Self {
         .init(lhs.rawValue - rhs)
     }
@@ -133,6 +161,7 @@ extension Edge.Set {
 // MARK: - EdgeInsets
 
 extension EdgeInsets {
+    /// A zero-value `EdgeInsets` instance.
     public static let zero = Self(0)
 
     public init(_ edges: Edge.Set, _ length: CGFloat) {
@@ -150,50 +179,6 @@ extension EdgeInsets {
 
     public init(_ value: CGFloat) {
         self = .init(top: value, leading: value, bottom: value, trailing: value)
-    }
-
-    public init(top: CGFloat) {
-        self = .init(top: top, leading: 0, bottom: 0, trailing: 0)
-    }
-
-    public init(leading: CGFloat) {
-        self = .init(top: 0, leading: leading, bottom: 0, trailing: 0)
-    }
-
-    public init(bottom: CGFloat) {
-        self = .init(top: 0, leading: 0, bottom: bottom, trailing: 0)
-    }
-
-    public init(trailing: CGFloat) {
-        self = .init(top: 0, leading: 0, bottom: 0, trailing: trailing)
-    }
-
-    public init(horizontal: CGFloat, vertical: CGFloat) {
-        self = .init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
-    }
-
-    public init(horizontal: CGFloat) {
-        self = .init(top: 0, leading: horizontal, bottom: 0, trailing: horizontal)
-    }
-
-    public init(horizontal: CGFloat, top: CGFloat) {
-        self = .init(top: top, leading: horizontal, bottom: 0, trailing: horizontal)
-    }
-
-    public init(horizontal: CGFloat, bottom: CGFloat) {
-        self = .init(top: 0, leading: horizontal, bottom: bottom, trailing: horizontal)
-    }
-
-    public init(vertical: CGFloat) {
-        self = .init(top: vertical, leading: 0, bottom: vertical, trailing: 0)
-    }
-
-    public init(vertical: CGFloat, leading: CGFloat) {
-        self = .init(top: vertical, leading: leading, bottom: vertical, trailing: 0)
-    }
-
-    public init(vertical: CGFloat, trailing: CGFloat) {
-        self = .init(top: vertical, leading: 0, bottom: vertical, trailing: trailing)
     }
 
     public var horizontal: CGFloat {
