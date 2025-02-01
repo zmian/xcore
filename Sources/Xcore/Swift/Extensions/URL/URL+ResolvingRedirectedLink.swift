@@ -110,7 +110,6 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     /// Cancels the resolution process.
     func cancel() {
         isCancelled = true
-        webView.stopLoading()
         completeResolution(with: nil)
     }
 
@@ -131,6 +130,7 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     /// - Parameter resolvedUrl: The final URL after resolution, or `nil` if the
     ///   process failed.
     private func completeResolution(with resolvedUrl: URL?) {
+        // Invoke completion handler with resolved url
         completion(resolvedUrl)
 
         // Cleanup to prevent memory leaks.
