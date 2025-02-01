@@ -156,7 +156,7 @@ extension NSAttributedString {
             return self
         }
 
-        let existingAttributes = attributes(at: 0, effectiveRange: nil)
+        var existingAttributes = attributes(at: 0, effectiveRange: nil)
 
         let bulletedLines = string
             .lines()
@@ -174,9 +174,11 @@ extension NSAttributedString {
             $0.paragraphSpacing = size.height * interlineFactor
         }
 
+        existingAttributes.merge([.paragraphStyle: paragraphStyle])
+
         return NSAttributedString(
             string: bulletedLines,
-            attributes: existingAttributes + [.paragraphStyle: paragraphStyle]
+            attributes: existingAttributes
         )
     }
 }

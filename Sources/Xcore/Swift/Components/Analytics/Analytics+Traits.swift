@@ -13,7 +13,7 @@ extension Analytics {
             "locale": Locale.current.identifier
         ]
 
-        info += FeatureFlag.abtestAnalyticsProperties
+        info.merge(FeatureFlag.abtestAnalyticsProperties)
         return info
     }
 }

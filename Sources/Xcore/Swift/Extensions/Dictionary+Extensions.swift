@@ -6,27 +6,35 @@
 
 import Foundation
 
+// MARK: - Typealiases
+
+/// A dictionary where values conform to both `Encodable` and `Sendable`.
 public typealias EncodableDictionary = [String: Encodable & Sendable]
 
+// MARK: - Merging
+
 extension Dictionary {
-    public enum MergingStrategy {
+    /// Defines strategies for merging dictionaries when encountering duplicate
+    /// keys.
+    public enum DuplicateKeyMergeStrategy {
+        /// Replaces the existing value with the new value from the merging dictionary.
         case replaceExisting
+
+        /// Keeps the existing value and ignores the new value from the merging
+        /// dictionary.
         case keepExisting
     }
 
-    /// Merges the given dictionary into this dictionary, using the given strategy
-    /// to determine the value for any duplicate keys.
-    ///
-    /// Use the given strategy to select a value to use in the updated dictionary,
-    /// or to combine existing and new values. As the key-values pairs in other are
-    /// merged with this dictionary, the strategy is used to handle the duplicate
-    /// keys that are encountered.
+    /// Merges another dictionary into `self`, resolving conflicts using the given
+    /// strategy.
     ///
     /// - Parameters:
-    ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///     default value is `.replaceExisting`.
-    public mutating func merge(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) {
+    ///   - other: A dictionary to merge into this dictionary.
+    ///   - strategy: The merging strategy to handle duplicate keys.
+    public mutating func merge(
+        _ other: Dictionary,
+        strategy: DuplicateKeyMergeStrategy = .replaceExisting
+    ) {
         switch strategy {
             case .replaceExisting:
                 merge(other) { _, new in new }
@@ -35,21 +43,17 @@ extension Dictionary {
         }
     }
 
-    /// Creates a dictionary by merging the given dictionary into this dictionary,
-    /// using the given strategy to determine the value for any duplicate keys.
-    ///
-    /// Use the given strategy to select a value to use in the returned dictionary,
-    /// or to combine existing and new values. As the key-values pairs in other are
-    /// merged with this dictionary, the strategy is used to handle the duplicate
-    /// keys that are encountered.
+    /// Returns a new dictionary by merging another dictionary into `self`,
+    /// resolving conflicts using the given strategy.
     ///
     /// - Parameters:
     ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///     default value is `.replaceExisting`.
-    /// - Returns: A new dictionary with the combined keys and values of this
-    ///   dictionary and other.
-    public func merging(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
+    ///   - strategy: The merging strategy to handle duplicate keys.
+    /// - Returns: A new dictionary containing the merged values.
+    public func merging(
+        _ other: Dictionary,
+        strategy: DuplicateKeyMergeStrategy = .replaceExisting
+    ) -> Dictionary {
         switch strategy {
             case .replaceExisting:
                 return merging(other) { _, new in new }
@@ -57,49 +61,9 @@ extension Dictionary {
                 return merging(other) { current, _ in current }
         }
     }
-
-    /// Merges the given dictionary into this dictionary, using the given strategy
-    /// to determine the value for any duplicate keys.
-    ///
-    /// Use the given strategy to select a value to use in the updated dictionary,
-    /// or to combine existing and new values. As the key-values pairs in other are
-    /// merged with this dictionary, the strategy is used to handle the duplicate
-    /// keys that are encountered.
-    ///
-    /// - Parameters:
-    ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///     default value is `.replaceExisting`.
-    public mutating func merge(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) {
-        guard let other else {
-            return
-        }
-
-        merge(other)
-    }
-
-    /// Creates a dictionary by merging the given dictionary into this dictionary,
-    /// using the given strategy to determine the value for any duplicate keys.
-    ///
-    /// Use the given strategy to select a value to use in the returned dictionary,
-    /// or to combine existing and new values. As the key-values pairs in other are
-    /// merged with this dictionary, the strategy is used to handle the duplicate
-    /// keys that are encountered.
-    ///
-    /// - Parameters:
-    ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///     default value is `.replaceExisting`.
-    /// - Returns: A new dictionary with the combined keys and values of this
-    ///   dictionary and other.
-    public func merging(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
-        guard let other else {
-            return self
-        }
-
-        return merging(other)
-    }
 }
+
+// MARK: - Subscript for RawRepresentable Keys
 
 extension Dictionary {
     /// Accesses the value associated with the given key for reading and writing.
@@ -152,11 +116,19 @@ extension Dictionary {
     }
 }
 
+// MARK: - Finding Keys by Value
+
 extension Dictionary where Value: Equatable {
+    /// Returns an array of keys that map to a given value.
+    ///
+    /// - Parameter value: The value to find in the dictionary.
+    /// - Returns: An array of keys associated with the given value.
     public func keys(forValue value: Value) -> [Key] {
-        filter { $1 == value }.map(\.0)
+        filter { $1 == value }.map(\.key)
     }
 }
+
+// MARK: - Transforming Dictionary Keys
 
 extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
     /// Returns a dictionary containing the results of mapping over the sequence's
@@ -193,6 +165,8 @@ extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
     }
 }
 
+// MARK: - Transform
+
 extension Dictionary {
     /// Returns a dictionary containing the results of mapping the given closure
     /// over the sequence's key value pairs.
@@ -207,7 +181,7 @@ extension Dictionary {
     ///     case language
     /// }
     ///
-    /// var parameter: [Keys: Any] = [
+    /// let parameter: [Keys: Any] = [
     ///     .name: "Vivien",
     ///     .age: 21,
     ///     .language: "English"
@@ -243,17 +217,22 @@ extension Dictionary {
     ///     case language
     /// }
     ///
-    /// var parameter: [Keys: Any] = [
+    /// let parameter: [Keys: String?] = [
     ///     .name: "Vivien",
-    ///     .age: 21,
+    ///     .age: nil,
     ///     .language: "English"
     /// ]
     ///
-    /// let result = parameter.compactMapPairs { ($0.key.rawValue, $0.value) }
+    /// let result: [String: String?] = parameter.compactMapPairs {
+    ///     if $0.value == nil {
+    ///         return nil
+    ///     }
     ///
-    /// //  'result' [String: Any] = [
+    ///     return ($0.key.rawValue, $0.value)
+    /// }
+    ///
+    /// //  'result' [String: String] = [
     /// //     "full_name": "Vivien",
-    /// //     "age": 21,
     /// //     "language": "English"
     /// // ]
     /// ```
@@ -272,13 +251,13 @@ extension Dictionary {
     /// `"age"`.
     ///
     /// ```swift
-    /// var parameter: [String: Any] = [
+    /// let parameter: [String: Any] = [
     ///     "name": "Vivien",
     ///     "age": 21,
     ///     "language": "English"
     /// ]
     ///
-    /// let result = parameter.filterPairs { $0.key == "age" }
+    /// let result = parameter.filterPairs { $0.key != "age" }
     ///
     /// // `result`: [String: Any] = [
     /// //     "name": "Vivien",
@@ -296,22 +275,27 @@ extension Dictionary {
     }
 }
 
-// MARK: - Operators
+// MARK: - Compacted
 
-public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
-    lhs.merging(rhs)
-}
-
-public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
-    guard let rhs else {
-        return lhs
+extension Dictionary where Value: OptionalProtocol {
+    /// Returns a dictionary with non-nil values.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let dict: [String: String?] = ["a": "Hello", "b": nil, "c": "World"]
+    /// let compacted = dict.compacted()
+    /// print(compacted) // ["a": "Hello", "c": "World"]
+    /// ```
+    ///
+    /// - Returns: A dictionary containing only non-nil values.
+    public func compacted() -> [Key: Value.Wrapped] {
+        reduce(into: [Key: Value.Wrapped]()) { result, element in
+            if let value = element.value.wrapped {
+                result[element.key] = value
+            }
+        }
     }
-
-    return lhs + rhs
-}
-
-public func += <Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]) {
-    lhs.merge(rhs)
 }
 
 // MARK: - Equatable
@@ -322,28 +306,4 @@ public func == <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     }
 
     return NSDictionary(dictionary: lhs).isEqual(to: rhs)
-}
-
-public func != <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
-    guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
-        return true
-    }
-
-    return !NSDictionary(dictionary: lhs).isEqual(to: rhs)
-}
-
-// MARK: - Flatten
-
-extension Dictionary where Value: OptionalProtocol {
-    /// Removes `nil` values from `self`.
-    public func compacted() -> [Key: Value.Wrapped] {
-        var result: [Key: Value.Wrapped] = [:]
-        for (key, value) in self {
-            guard let value = value.wrapped else {
-                continue
-            }
-            result[key] = value
-        }
-        return result
-    }
 }

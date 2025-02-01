@@ -20,5 +20,5 @@ extension View {
 
 extension EnvironmentValues {
     @Entry var storyProgressIndicatorColor: Color = .accentColor
-    @Entry var storyProgressIndicatorInsets = EdgeInsets(horizontal: .defaultSpacing)
+    @Entry var storyProgressIndicatorInsets = EdgeInsets(.horizontal, .defaultSpacing)
 }
