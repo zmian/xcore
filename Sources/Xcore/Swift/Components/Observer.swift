@@ -127,7 +127,7 @@ open class Observers {
 
 /// Represents an individual observer.
 private final class Observer {
-    fileprivate let equals: (AnyObject) -> Bool
+    fileprivate let isEqual: (AnyObject) -> Bool
     weak var owner: AnyObject?
     var handler: (() -> Void)?
 
@@ -139,7 +139,7 @@ private final class Observer {
     init<T>(owner: T, handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
         self.owner = owner
         self.handler = handler
-        self.equals = { [weak owner] otherOwner in
+        self.isEqual = { [weak owner] otherOwner in
             guard let owner else {
                 return false
             }
@@ -157,15 +157,15 @@ extension Observer: Equatable {
             return false
         }
 
-        return lhs.equals(rhsOwner)
+        return lhs.isEqual(rhsOwner)
     }
 
     static func == <T>(lhs: T, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
-        rhs.equals(lhs)
+        rhs.isEqual(lhs)
     }
 
     static func == <T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
-        lhs.equals(rhs)
+        lhs.isEqual(rhs)
     }
 
     static func == <T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
@@ -173,7 +173,7 @@ extension Observer: Equatable {
             return false
         }
 
-        return rhs.equals(lhs)
+        return rhs.isEqual(lhs)
     }
 }
 
@@ -182,5 +182,5 @@ private func == <T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equat
         return false
     }
 
-    return lhs.equals(rhs)
+    return lhs.isEqual(rhs)
 }

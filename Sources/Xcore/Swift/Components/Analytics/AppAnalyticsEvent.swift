@@ -75,7 +75,7 @@ extension AppAnalyticsEvent {
         mergingProperties(other.compacted())
     }
 
-    public func mergingUserInfo(_ other: UserInfo, strategy: UserInfo.MergingStrategy = .replaceExisting) -> Self {
+    public func mergingUserInfo(_ other: UserInfo, strategy: UserInfo.DuplicateKeyMergeStrategy = .replaceExisting) -> Self {
         .init(
             name: name,
             properties: properties,
