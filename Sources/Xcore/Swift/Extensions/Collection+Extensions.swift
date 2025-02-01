@@ -6,6 +6,8 @@
 
 import Foundation
 
+// MARK: - Unique
+
 extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
     public func uniqued() -> [Iterator.Element] {
@@ -45,6 +47,8 @@ extension Array where Element: Hashable {
     }
 }
 
+// MARK: - Count
+
 extension Collection {
     /// Returns the number of elements of the sequence that satisfy the given
     /// predicate.
@@ -65,6 +69,8 @@ extension Collection {
         try filter(predicate).count
     }
 }
+
+// MARK: - Removing All
 
 extension RangeReplaceableCollection {
     /// Returns an array by removing all the elements that satisfy the given

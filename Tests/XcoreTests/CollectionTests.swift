@@ -22,4 +22,10 @@ struct CollectionTests {
         let shortNamesCount = cast.count { $0.count < 5 }
         #expect(shortNamesCount == 2)
     }
+
+    @Test
+    func unique() {
+        let numbers = [1, 2, 3, 4, 2]
+        #expect(numbers.uniqued() == [1, 2, 3, 4])
+    }
 }
