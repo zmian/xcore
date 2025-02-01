@@ -13,44 +13,31 @@ public enum JSONHelpers {}
 // MARK: - Decode
 
 extension JSONHelpers {
-    /// Automatically detect and load the JSON from local(main bundle) or a remote
-    /// url.
+    /// Automatically detects and loads JSON from either a local file (main bundle) or a remote URL.
     ///
     /// - Parameters:
-    ///   - named: A JSON `filename` in `main` bundle or a `url` to JSON file.
+    ///   - source: A JSON filename in the `main` bundle or a `URL` string.
     ///   - options: Options for reading the JSON data.
-    ///   - callback: A closure invoked when finished decoding JSON.
+    /// - Returns: A decoded JSON object.
     public static func decode(
-        remoteOrLocalFile named: String,
-        options: JSONSerialization.ReadingOptions = [.mutableContainers],
-        callback: @escaping ((Any?) -> Void)
-    ) {
-        if let url = URL(string: named), url.host != nil {
-            DispatchQueue.global().async {
-                let json = try? decode(url, options: options)
-                DispatchQueue.main.async {
-                    callback(json)
-                }
-            }
+        from source: String,
+        options: JSONSerialization.ReadingOptions = [.mutableContainers]
+    ) throws -> Any {
+        if let url = URL(string: source), url.host != nil {
+            return try decode(url: url, options: options)
         } else {
-            DispatchQueue.global().async {
-                let json = try? decode(filename: named, options: options)
-                DispatchQueue.main.async {
-                    callback(json)
-                }
-            }
+            return try decode(filename: source, options: options)
         }
     }
 
-    /// Returns a Foundation object from given JSON file name.
+    /// Returns a Foundation object from a given JSON filename in the specified bundle.
     ///
     /// - Parameters:
-    ///   - filename: A JSON `filename`.
-    ///   - bundle: The bundle where JSON file is located.
-    ///   - keyPath: The key path to JSON object.
+    ///   - filename: The JSON filename.
+    ///   - bundle: The bundle where the JSON file is located.
+    ///   - keyPath: The key path to extract a nested JSON object.
     ///   - options: Options for reading the JSON data.
-    /// - Returns: A Foundation object from the JSON data in data, or `nil` if an
-    ///   error occurs.
+    /// - Returns: A Foundation object from the JSON file.
     public static func decode(
         filename: String,
         in bundle: Bundle = .main,
@@ -58,77 +45,74 @@ extension JSONHelpers {
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         guard let fileUrl = bundle.url(filename: filename) else {
-            throw Error.notFound
+            throw JSONError.notFound
         }
 
-        return try decode(fileUrl, keyPath: keyPath, options: options)
+        return try decode(url: fileUrl, keyPath: keyPath, options: options)
     }
 
-    /// Returns a Foundation object from given url of JSON file.
+    /// Returns a Foundation object from a given JSON file URL.
     ///
     /// - Parameters:
-    ///   - url: A url containing JSON file.
-    ///   - keyPath: The key path to JSON object.
+    ///   - url: The URL containing JSON data.
+    ///   - keyPath: The key path to extract a nested JSON object.
     ///   - options: Options for reading the JSON data.
-    /// - Returns: A Foundation object from the JSON data in data, or `nil` if an
-    ///   error occurs.
+    /// - Returns: A Foundation object from the JSON file.
     public static func decode(
-        _ url: URL,
+        url: URL,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         let data = try Data(contentsOf: url)
-        return try decode(data, keyPath: keyPath, options: options)
+        return try decode(data: data, keyPath: keyPath, options: options)
     }
 
-    /// Returns a Foundation object from given JSON string.
+    /// Returns a Foundation object from a given JSON string.
     ///
     /// - Parameters:
     ///   - string: A string containing JSON data.
-    ///   - keyPath: The key path to JSON object.
+    ///   - keyPath: The key path to extract a nested JSON object.
     ///   - options: Options for reading the JSON data.
-    /// - Returns: A Foundation object from the JSON data in data, or `nil` if an
-    ///   error occurs.
+    /// - Returns: A Foundation object from the JSON string.
     public static func decode(
-        _ string: String,
+        string: String,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         guard let data = string.data(using: .utf8) else {
-            return Error.invalidData
+            throw JSONError.invalidData
         }
 
-        return try decode(data, keyPath: keyPath, options: options)
+        return try decode(data: data, keyPath: keyPath, options: options)
     }
 
     /// Returns a Foundation object from given JSON data.
     ///
     /// - Parameters:
-    ///   - data: A data object containing JSON data.
-    ///   - keyPath: The key path to JSON object.
+    ///   - data: The `Data` object containing JSON.
+    ///   - keyPath: The key path to extract a nested JSON object.
     ///   - options: Options for reading the JSON data.
-    /// - Returns: A Foundation object from the JSON data in data, or `nil` if an
-    ///   error occurs.
+    /// - Returns: A Foundation object from the JSON data.
     public static func decode(
-        _ data: Data,
+        data: Data,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
-        guard let keyPath, !keyPath.isEmpty else {
-            return try JSONSerialization.jsonObject(with: data, options: options)
-        }
-
         var options = options
         options.insert(.allowFragments)
 
         let json = try JSONSerialization.jsonObject(with: data, options: options)
 
+        guard let keyPath, !keyPath.isEmpty else {
+            return json
+        }
+
         guard let nestedJson = (json as AnyObject).value(forKeyPath: keyPath) else {
-            throw Error.invalidKeyPath
+            throw JSONError.invalidKeyPath
         }
 
         guard JSONSerialization.isValidJSONObject(nestedJson) else {
-            throw Error.invalidJSON
+            throw JSONError.invalidJSON
         }
 
         return nestedJson
@@ -161,13 +145,12 @@ extension JSONHelpers {
 // MARK: - Encode
 
 extension JSONHelpers {
-    /// Returns a JSON-encoded string representation of the `value`.
+    /// Returns a JSON-encoded string representation of the given value.
     ///
     /// - Parameters:
-    ///   - value: The object from which to generate JSON data.
+    ///   - value: The object to encode into JSON.
     ///   - options: Options for creating the JSON data.
-    /// - Returns: JSON data for value, or `nil` if an error occurs. The resulting
-    ///   data is encoded in UTF-8.
+    /// - Returns: A JSON string or `nil` if encoding fails.
     public static func encodeToString(
         _ value: Any,
         options: JSONSerialization.WritingOptions = [.sortedKeys]
@@ -182,10 +165,10 @@ extension JSONHelpers {
         return string
     }
 
-    /// Returns a JSON-encoded representation of the `value`.
+    /// Returns a JSON-encoded representation of the given value.
     ///
     /// - Parameters:
-    ///   - value: The object from which to generate JSON data.
+    ///   - value: The object to encode into JSON.
     ///   - options: Options for creating the JSON data.
     /// - Returns: JSON data for value, or `nil` if an error occurs. The resulting
     ///   data is encoded in UTF-8.
@@ -194,17 +177,18 @@ extension JSONHelpers {
         options: JSONSerialization.WritingOptions = [.sortedKeys]
     ) throws -> Data {
         guard JSONSerialization.isValidJSONObject(value) else {
-            throw Error.invalidJSON
+            throw JSONError.invalidJSON
         }
 
         return try JSONSerialization.data(withJSONObject: value, options: options)
     }
 }
 
-// MARK: - Error
+// MARK: - Error Handling
 
 extension JSONHelpers {
-    private enum Error: Swift.Error {
+    /// Represents possible JSON-related errors.
+    private enum JSONError: Error {
         case notFound
         case invalidData
         case invalidKeyPath
