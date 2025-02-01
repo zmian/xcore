@@ -29,11 +29,11 @@ extension HTTPCookieStorage {
 }
 
 extension HTTPCookie {
-    /// A Boolean property indicating whether the cookie is expired.
+    /// A Boolean property indicating whether the cookie has expired.
     ///
-    /// This value is `false` if there is no specific expiration date, as with
-    /// session-only cookies. The expiration date is compared to the current date to
-    /// determine if the cookie is expired.
+    /// This property returns `true` if the cookie has an expiration date that is in
+    /// the past. If the cookie does not have an expiration date (i.e., it is a
+    /// session-only cookie), this property returns `false`.
     public var isExpired: Bool {
         expiresDate.map { $0 < Date() } ?? false
     }

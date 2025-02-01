@@ -206,7 +206,7 @@ extension AppInfo {
     /// The app's bundle identifier.
     ///
     /// The bundle identifier is defined by the `CFBundleIdentifier` key in the
-    /// app's bundle information property list (e.g., `com.example.ios`).
+    /// app's bundle property list (e.g., `com.example.ios`).
     ///
     /// For more information, see ``CFBundleIdentifier``.
     static var bundleId: String {
