@@ -290,7 +290,7 @@ struct URLTests {
     @Test
     func resolvingRedirectedLink() async {
         let shortUrl = URL(string: "https://git.new/swift")!
-        let resolvedUrl = await shortUrl.resolvingRedirectedLink(timeout: .seconds(5))
+        let resolvedUrl = await shortUrl.resolvingRedirectedLink(timeout: .seconds(10))
         let expandedUrl = "https://github.com/swiftlang/swift"
         #expect(resolvedUrl?.absoluteString == expandedUrl)
     }
