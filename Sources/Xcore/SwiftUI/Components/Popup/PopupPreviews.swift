@@ -59,12 +59,12 @@ private struct PopupPreviews: View {
         }
         .navigationTitle("Popups")
         .alert(L.title, isPresented: $showSystemAlert) {
-            Button("OK") {
+            Button.okay {
                 showSystemAlert = false
             }
         }
         .popup(L.title, message: L.message, isPresented: $showAlert, dismissMethods: [.xmark, .tapOutside]) {
-            Button("OK") {
+            Button.okay {
                 showAlert = false
             }
             .buttonStyle(.rectFill)
@@ -72,18 +72,19 @@ private struct PopupPreviews: View {
         .popup(isPresented: $showAlertWithHeader) {
             StandardPopupAlertContent(Text(L.title), message: Text(L.message)) {
                 Image(system: .locationSlashFill)
-                    .resizable()
-                    .frame(50)
+                    .symbolEffect(.variableColor)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.blue, .blue.opacity(0.5).gradient)
+                    .font(.largeTitle)
             } footer: {
-                Button("OK") {
+                Button.okay {
                     showAlertWithHeader = false
                 }
                 .buttonStyle(.rectFill)
             }
-            .popupPreferredWidth(400)
         }
         .popup(isPresented: $showToast, style: .toast) {
-            CapsuleView("Z’s AirPods", subtitle: "Connected", systemImage: .airpods)
+            CapsuleView("Sam’s AirPods", subtitle: "Connected", systemImage: .airpods)
         }
         .window(isPresented: $showWindow) {
             Button {
