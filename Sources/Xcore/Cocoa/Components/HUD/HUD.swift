@@ -29,7 +29,7 @@ open class HUD: Appliable {
     }
 
     /// The default value is `.normal`.
-    open var duration: Duration = .default
+    open var animationDuration: AnimationDuration = .default
 
     /// The position of the window in the z-axis.
     ///
@@ -88,7 +88,7 @@ open class HUD: Appliable {
             return
         }
 
-        UIView.animate(withDuration: duration.hide) {
+        UIView.animate(withDuration: TimeInterval(animationDuration.hide)) {
             self.view.alpha = 0
         } completion: { _ in
             self.window.windowLevel = level
@@ -200,7 +200,9 @@ open class HUD: Appliable {
             return
         }
 
-        let duration = hide ? self.duration.hide : self.duration.show
+        let duration = TimeInterval(
+            hide ? animationDuration.hide : animationDuration.show
+        )
 
         isHidden = hide
 
@@ -246,22 +248,22 @@ open class HUD: Appliable {
         }
     }
 
-    private func setHidden(_ hide: Bool, delay delayDuration: TimeInterval, animated: Bool, _ completion: (() -> Void)?) {
-        guard delayDuration > 0 else {
+    private func setHidden(_ hide: Bool, delay delayDuration: Duration, animated: Bool, _ completion: (() -> Void)?) {
+        guard delayDuration > .zero else {
             return setHidden(hide, animated: animated, completion)
         }
 
         Task { @MainActor in
-            try await Task.sleep(for: .seconds(delayDuration))
+            try await Task.sleep(for: delayDuration)
             setHidden(hide, animated: animated, completion)
         }
     }
 
-    open func show(delay delayDuration: TimeInterval = 0, animated: Bool = true, _ completion: (() -> Void)? = nil) {
+    open func show(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
         setHidden(false, delay: delayDuration, animated: animated, completion)
     }
 
-    open func hide(delay delayDuration: TimeInterval = 0, animated: Bool = true, _ completion: (() -> Void)? = nil) {
+    open func hide(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
         setHidden(true, delay: delayDuration, animated: animated, completion)
     }
 
@@ -278,33 +280,63 @@ open class HUD: Appliable {
     }
 }
 
-// MARK: - Duration
+// MARK: - AnimationDuration
 
 extension HUD {
-    public struct Duration: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
-        public let show: TimeInterval
-        public let hide: TimeInterval
+    /// A structure representing the duration for showing and hiding the HUD.
+    ///
+    /// This struct allows precise control over animation timings, making it
+    /// configurable for different UX needs. It provides a default duration and
+    /// supports both uniform and distinct durations for show and hide animations.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let duration = HUD.AnimationDuration(show: 0.3, hide: 0.2)
+    /// print(duration.show) // 0.3
+    /// print(duration.hide) // 0.2
+    ///
+    /// let instant = HUD.AnimationDuration(0)
+    /// print(instant.show) // 0
+    /// print(instant.hide) // 0
+    ///
+    /// let defaultDuration = HUD.AnimationDuration.default
+    /// print(defaultDuration.show) // Uses system default timing
+    /// ```
+    public struct AnimationDuration: Sendable, Hashable {
+        /// The duration for the HUD show animation.
+        public let show: Duration
 
-        public init(floatLiteral value: FloatLiteralType) {
-            self.init(TimeInterval(value))
-        }
+        /// The duration for the HUD hide animation.
+        public let hide: Duration
 
-        public init(integerLiteral value: IntegerLiteralType) {
-            self.init(TimeInterval(value))
-        }
-
-        public init(_ duration: TimeInterval) {
+        /// Initializes the duration with the same value for both show and hide
+        /// animations.
+        ///
+        /// - Parameter duration: The duration for both animations.
+        public init(_ duration: Duration) {
             self.show = duration
             self.hide = duration
         }
 
-        public init(show: TimeInterval, hide: TimeInterval) {
+        /// Initializes the duration with separate values for show and hide animations.
+        ///
+        /// - Parameters:
+        ///   - show: The duration for the show animation.
+        ///   - hide: The duration for the hide animation.
+        public init(show: Duration, hide: Duration) {
             self.show = show
             self.hide = hide
         }
 
+        /// Returns the default HUD animation duration.
+        ///
+        /// This value is defined to ensure a smooth user experience while keeping
+        /// animations responsive.
+        ///
+        /// - Returns: A duration instance with system-default values.
         public static var `default`: Self {
-            .init(.default)
+            .init(.seconds(0.25)) // Default animation duration for UIKit elements
         }
     }
 }

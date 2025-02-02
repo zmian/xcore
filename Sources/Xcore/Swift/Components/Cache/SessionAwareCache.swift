@@ -46,7 +46,7 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     /// - Parameter inactivityDuration: The duration after which the session expires
     ///   if the app remains in the background.
     public init(inactivityDuration: Duration = .seconds(30)) {
-        self.inactivityDuration = TimeInterval(inactivityDuration.components.seconds)
+        self.inactivityDuration = TimeInterval(inactivityDuration)
 
         withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
