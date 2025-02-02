@@ -82,20 +82,6 @@ open class HUD: Appliable {
         self?.setDefaultWindowLevel()
     }
 
-    open func setWindowLevel(_ level: UIWindow.Level, animated: Bool) {
-        guard animated, window.windowLevel != level else {
-            window.windowLevel = level
-            return
-        }
-
-        UIView.animate(withDuration: TimeInterval(animationDuration.hide)) {
-            self.view.alpha = 0
-        } completion: { _ in
-            self.window.windowLevel = level
-            self.view.alpha = 1
-        }
-    }
-
     /// A closure to adjust window attributes (e.g., level or make it key) so this
     /// window is displayed appropriately.
     ///
@@ -109,6 +95,20 @@ open class HUD: Appliable {
         adjustWindowAttributes = { [weak self] window in
             self?.setDefaultWindowLevel()
             callback(window)
+        }
+    }
+
+    open func setWindowLevel(_ level: UIWindow.Level, animated: Bool) {
+        guard animated, window.windowLevel != level else {
+            window.windowLevel = level
+            return
+        }
+
+        UIView.animate(withDuration: TimeInterval(animationDuration.hide)) {
+            self.view.alpha = 0
+        } completion: { _ in
+            self.window.windowLevel = level
+            self.view.alpha = 1
         }
     }
 
@@ -253,7 +253,7 @@ open class HUD: Appliable {
             return setHidden(hide, animated: animated, completion)
         }
 
-        Task { @MainActor in
+        Task {
             try await Task.sleep(for: delayDuration)
             setHidden(hide, animated: animated, completion)
         }
@@ -347,11 +347,7 @@ extension HUD {
     private final class ViewController: UIViewController {
         var backgroundColor: UIColor? {
             didSet {
-                guard isViewLoaded else {
-                    return
-                }
-
-                view.backgroundColor = backgroundColor
+                viewIfLoaded?.backgroundColor = backgroundColor
             }
         }
 
