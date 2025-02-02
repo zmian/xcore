@@ -61,7 +61,7 @@ extension Device {
 
     /// The current version of the operating system.
     public var osVersion: OperatingSystemVersion {
-        ProcessInfo.shared.operatingSystemVersion
+        ProcessInfo.processInfo.operatingSystemVersion
     }
 }
 
