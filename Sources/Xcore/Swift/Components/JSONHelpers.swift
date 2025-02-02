@@ -13,7 +13,8 @@ public enum JSONHelpers {}
 // MARK: - Decode
 
 extension JSONHelpers {
-    /// Automatically detects and loads JSON from either a local file (main bundle) or a remote URL.
+    /// Automatically detects and loads JSON from either a local file (main bundle)
+    /// or a remote URL.
     ///
     /// - Parameters:
     ///   - source: A JSON filename in the `main` bundle or a `URL` string.
@@ -24,13 +25,14 @@ extension JSONHelpers {
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         if let url = URL(string: source), url.host != nil {
-            return try decode(url: url, options: options)
+            return try decode(url, options: options)
         } else {
             return try decode(filename: source, options: options)
         }
     }
 
-    /// Returns a Foundation object from a given JSON filename in the specified bundle.
+    /// Returns a Foundation object from a given JSON filename in the specified
+    /// bundle.
     ///
     /// - Parameters:
     ///   - filename: The JSON filename.
@@ -48,7 +50,7 @@ extension JSONHelpers {
             throw JSONError.notFound
         }
 
-        return try decode(url: fileUrl, keyPath: keyPath, options: options)
+        return try decode(fileUrl, keyPath: keyPath, options: options)
     }
 
     /// Returns a Foundation object from a given JSON file URL.
@@ -59,12 +61,12 @@ extension JSONHelpers {
     ///   - options: Options for reading the JSON data.
     /// - Returns: A Foundation object from the JSON file.
     public static func decode(
-        url: URL,
+        _ url: URL,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         let data = try Data(contentsOf: url)
-        return try decode(data: data, keyPath: keyPath, options: options)
+        return try decode(data, keyPath: keyPath, options: options)
     }
 
     /// Returns a Foundation object from a given JSON string.
@@ -75,7 +77,7 @@ extension JSONHelpers {
     ///   - options: Options for reading the JSON data.
     /// - Returns: A Foundation object from the JSON string.
     public static func decode(
-        string: String,
+        _ string: String,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
@@ -83,7 +85,7 @@ extension JSONHelpers {
             throw JSONError.invalidData
         }
 
-        return try decode(data: data, keyPath: keyPath, options: options)
+        return try decode(data, keyPath: keyPath, options: options)
     }
 
     /// Returns a Foundation object from given JSON data.
@@ -94,7 +96,7 @@ extension JSONHelpers {
     ///   - options: Options for reading the JSON data.
     /// - Returns: A Foundation object from the JSON data.
     public static func decode(
-        data: Data,
+        _ data: Data,
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
@@ -137,7 +139,7 @@ extension JSONHelpers {
         }
 
         return try JSONSerialization.data(
-            withJSONObject: try decode(data: data, keyPath: keyPath, options: options)
+            withJSONObject: try decode(data, keyPath: keyPath, options: options)
         )
     }
 }

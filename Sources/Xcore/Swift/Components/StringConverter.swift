@@ -76,7 +76,7 @@ public struct StringConverter: Sendable, Hashable {
             return nil
         }
 
-        return try? JSONHelpers.decode(string: string)
+        return try? JSONHelpers.decode(string)
     }
 
     private var nsNumber: NSNumber? {
