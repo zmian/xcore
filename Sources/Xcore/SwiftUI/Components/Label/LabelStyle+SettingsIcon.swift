@@ -7,7 +7,6 @@
 import SwiftUI
 
 public struct SettingsIconLabelStyle: LabelStyle {
-    @ScaledMetric private var padding = 6
     var tint: Color
     var contentMode: ContentMode
 
@@ -17,12 +16,12 @@ public struct SettingsIconLabelStyle: LabelStyle {
         } icon: {
             configuration.icon
                 .aspectRatio(contentMode: contentMode)
+                .imageScale(.small)
                 .foregroundStyle(.white)
-                .padding(padding)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .fill(tint)
-                        .aspectRatio(contentMode: .fill)
+                        .frame(28)
                 )
         }
     }
@@ -41,5 +40,4 @@ extension LabelStyle where Self == SettingsIconLabelStyle {
 #Preview {
     Label("Swift", systemImage: .swift)
         .labelStyle(.settingsIcon(tint: .orange))
-        .font(.largeTitle)
 }
