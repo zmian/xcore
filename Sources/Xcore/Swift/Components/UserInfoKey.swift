@@ -121,8 +121,8 @@ public protocol UserInfoContainer {
     /// A type-safe key for accessing user info values.
     typealias UserInfoKey = Xcore.UserInfoKey<Self>
 
-    /// A dictionary storing key-value pairs where the key is a `UserInfoKey`
-    /// and the value conforms to `Sendable`.
+    /// A dictionary storing key-value pairs where the key is a `UserInfoKey` and
+    /// the value conforms to `Sendable`.
     typealias UserInfo = [UserInfoKey: any Sendable]
 
     /// A dictionary storing user-defined metadata.
@@ -141,7 +141,8 @@ extension UserInfoContainer {
         set { userInfo[key] = newValue }
     }
 
-    /// Retrieves a value for a given key, returning a default value if the key is not present.
+    /// Retrieves a value for a given key, returning a default value if the key is
+    /// not present.
     ///
     /// - Parameters:
     ///   - key: The `UserInfoKey` identifying the stored value.
