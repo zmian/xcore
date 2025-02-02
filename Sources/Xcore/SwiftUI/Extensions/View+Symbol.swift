@@ -9,8 +9,30 @@ import SwiftUI
 // MARK: - View Extension
 
 extension View {
+    /// Adds a system symbol next to the view.
+    ///
     /// A View modifier that wraps the content in an `HStack` and places the given
-    /// symbol to either left or right of the content.
+    /// symbol on either leading or trailing side of the content.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// Text("See more")
+    ///     .symbol(.chevronRight)
+    ///
+    /// Text("Sports")
+    ///     .symbol(.sportscourt, edge: .leading, scale: .large)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - assetIdentifier: The system symbol to display.
+    ///   - alignment: The vertical alignment of the symbol within the stack.
+    ///   - edge: The edge where the symbol should be placed (`.leading` or `.trailing`).
+    ///   - spacing: The spacing between the symbol and the content. If `nil`, the
+    ///     system default spacing is used.
+    ///   - scale: The scale of the system symbol.
+    ///
+    /// - Returns: A view modified to include the given symbol.
     public func symbol(
         _ assetIdentifier: SystemAssetIdentifier,
         alignment: VerticalAlignment = .center,
@@ -92,7 +114,7 @@ private struct SymbolViewModifier: ViewModifier {
 // MARK: - Preview
 
 #Preview {
-    Text("Menu")
+    Text("See more")
         .symbol(.chevronRight)
 
     Text("Sports")
