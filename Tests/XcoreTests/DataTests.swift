@@ -5,9 +5,18 @@
 //
 
 import Testing
+import Foundation
 @testable import Xcore
 
-struct Base64Tests {
+struct DataTests {
+    @Test
+    func hexEncoding() throws {
+        let hexString = "48656C6C6F"
+        let data = try #require(Data(hexEncoded: hexString))
+        #expect(data.hexEncodedString() == hexString.lowercased())
+        #expect(data.hexEncodedString(options: .uppercase) == hexString)
+    }
+
     @Test
     func base64EncodedString() {
         let string1 = "Hello World"
