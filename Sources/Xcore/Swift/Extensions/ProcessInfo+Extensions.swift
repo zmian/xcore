@@ -7,28 +7,23 @@
 import Foundation
 
 extension ProcessInfo {
-    /// Returns the process information agent for the process.
+    /// Checks if an environment variable or in-memory stored key exists.
     ///
-    /// An `ProcessInfo` object is created the first time this method is invoked,
-    /// and that same object is returned on each subsequent invocation.
-    ///
-    /// - Returns: Shared process information agent for the process.
-    public static var shared: ProcessInfo {
-        processInfo
-    }
-
+    /// - Parameter key: The key to check in the environment variables.
+    /// - Returns: `true` if the key exists, `false` otherwise.
     public func contains(key: String) -> Bool {
         environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
     }
 }
 
-// MARK: - In-memory
+// MARK: - In-Memory Storage
 
 extension ProcessInfo {
     private enum AssociatedKey {
         nonisolated(unsafe) static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
     }
 
+    /// A dictionary storing in-memory environment values.
     private var inMemoryEnvironmentStorage: [String: String] {
         get { associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
@@ -38,6 +33,8 @@ extension ProcessInfo {
 // MARK: - Argument
 
 extension ProcessInfo {
+    /// A representation of a process argument, allowing interaction with environment
+    /// variables.
     public struct Argument: RawRepresentable, ExpressibleByStringLiteral, CustomStringConvertible, Hashable {
         /// The variable name in the environment from which the process was launched.
         public let rawValue: String
@@ -54,38 +51,31 @@ extension ProcessInfo {
             rawValue
         }
 
-        /// A Boolean property to indicate whether the variable exists in the
-        /// environment from which the process was launched.
+        /// A Boolean property indicating whether the argument exists in the process
+        /// environment.
         public var exists: Bool {
-            ProcessInfo.shared.contains(key: rawValue) ||
-                ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
+            ProcessInfo.processInfo.contains(key: rawValue)
         }
 
-        /// The variable value in the environment from which the process was launched.
+        /// Retrieves the stored value of the argument from memory or the environment.
         private var currentValue: String? {
-            var storedValue = ProcessInfo.shared.inMemoryEnvironmentStorage[rawValue]
-
-            if storedValue == nil {
-                storedValue = ProcessInfo.shared.environment[rawValue]
-            }
-
-            guard let value = storedValue, !value.isBlank else {
+            guard
+                let storedValue =
+                    ProcessInfo.processInfo.inMemoryEnvironmentStorage[rawValue]
+                    ?? ProcessInfo.processInfo.environment[rawValue],
+                !storedValue.isBlank
+            else {
                 return nil
             }
 
-            return value
+            return storedValue
         }
 
-        /// Returns the value of the argument.
+        /// Retrieves the value of the argument, automatically converting it to the desired type.
         public func get<T>() -> T? {
             guard let value = currentValue else {
-                switch T.self {
-                    case is Bool.Type, is Optional<Bool>.Type:
-                        if exists {
-                            return true as? T
-                        }
-                    default:
-                        break
+                if T.self == Bool.self || T.self == Optional<Bool>.self, exists {
+                    return true as? T
                 }
 
                 return nil
@@ -94,15 +84,11 @@ extension ProcessInfo {
             return StringConverter(value).get()
         }
 
-        /// Set given value in memory.
+        /// Stores a given value in memory for the argument.
+        ///
+        /// - Parameter value: The value to store in-memory.
         public func set<T>(_ value: T?) {
-            var valueToSave: String?
-
-            if let newValue = value {
-                valueToSave = String(describing: newValue)
-            }
-
-            ProcessInfo.shared.inMemoryEnvironmentStorage[rawValue] = valueToSave
+            ProcessInfo.processInfo.inMemoryEnvironmentStorage[rawValue] = value.map { String(describing: $0) }
         }
     }
 }
@@ -110,23 +96,22 @@ extension ProcessInfo {
 // MARK: - Argument Convenience
 
 extension ProcessInfo.Argument {
-    /// Returns the value of the argument.
+    /// Retrieves the value of the argument as a `Bool`, returning `false` if not set.
     public func get() -> Bool {
         get() ?? false
     }
 
-    /// Returns the value of the argument.
+    /// Retrieves the value of the argument or returns a provided default value.
     ///
-    /// - Parameter defaultValue: The value returned if the value doesn't exists.
+    /// - Parameter defaultValue: The fallback value if the argument is not set.
     public func get<T>(default defaultValue: @autoclosure () -> T) -> T {
         get() ?? defaultValue()
     }
 
-    /// Returns the value of the key from registered list of feature flag providers.
+    /// Retrieves the value of the argument as a `RawRepresentable` enum or returns a default value.
     ///
-    /// - Parameter defaultValue: The value returned if the providers list doesn't
-    ///   contain value.
-    /// - Returns: The value for the key.
+    /// - Parameter defaultValue: The fallback value if conversion fails.
+    /// - Returns: The resolved enum value or the fallback.
     public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         if let rawValue: String = get(), let value = T(rawValue: rawValue) {
             return value
@@ -139,14 +124,19 @@ extension ProcessInfo.Argument {
 // MARK: - Arguments Namespace
 
 extension ProcessInfo {
+    /// A namespace for creating process arguments dynamically.
     public enum Arguments {
+        /// Creates a new process argument.
+        ///
+        /// - Parameter flag: The argument name.
+        /// - Returns: An `Argument` instance representing the flag.
         public static func argument(_ flag: String) -> Argument {
             Argument(rawValue: flag)
         }
     }
 }
 
-// MARK: - Built-in Arguments
+// MARK: - Built-in Process Arguments
 
 extension ProcessInfo.Arguments {
     /// A Boolean property indicating whether the app is running tests.
@@ -164,8 +154,9 @@ extension ProcessInfo.Arguments {
         argument("DEBUG").exists
     }
 
-    /// A Boolean property indicating whether the analytics debug mode is enabled
-    /// and analytics events are logged to the console.
+    /// A Boolean property indicating whether analytics debug mode is enabled.
+    ///
+    /// If enabled, analytics events are logged to the console.
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
         guard AppInfo.isDebuggerAttached else {
             return (false, nil)
@@ -175,6 +166,9 @@ extension ProcessInfo.Arguments {
         return (flag.exists, flag.get())
     }
 
+    /// A Boolean property indicating whether all interstitials are enabled.
+    ///
+    /// - Returns: `true` if enabled in debug mode, otherwise `false`.
     public static var isAllInterstitialsEnabled: Bool {
         get {
             #if DEBUG
