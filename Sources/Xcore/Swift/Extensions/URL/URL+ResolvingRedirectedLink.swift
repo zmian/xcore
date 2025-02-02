@@ -44,19 +44,8 @@ extension URL {
             return self
         }
 
-        return await withCheckedContinuation { continuation in
-            let resolver = URLRedirectResolver(url: self) { resolvedUrl in
-                continuation.resume(returning: resolvedUrl)
-            }
-
-            resolver.start()
-
-            // Cancel if resolution takes too long
-            Task {
-                try? await Task.sleep(for: timeoutDuration)
-                resolver.cancel()
-            }
-        }
+        let resolver = URLRedirectResolver(url: self)
+        return await resolver.resolve(timeout: timeoutDuration)
     }
 }
 
@@ -76,17 +65,13 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     private var isCancelled = false
     private let url: URL
     private let webView = WKWebView()
-    private let completion: (URL?) -> Void
+    private var continuation: CheckedContinuation<URL?, Never>?
 
     /// Initializes the resolver with a URL and a completion handler.
     ///
-    /// - Parameters:
-    ///   - url: The URL to resolve.
-    ///   - completion: A closure that receives the resolved URL once the
-    ///     redirection process completes.
-    init(url: URL, completion: @escaping (URL?) -> Void) {
+    /// - Parameter url: The URL to resolve.
+    init(url: URL) {
         self.url = url
-        self.completion = completion
         super.init(frame: .zero)
         webView.navigationDelegate = self
         addSubview(webView)
@@ -102,15 +87,22 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     /// - The web view is temporarily added to the app’s window hierarchy to
     ///   ensure JavaScript redirects function correctly.
     /// - The page is loaded asynchronously, and navigation events are monitored.
-    func start() {
-        UIApplication.sharedOrNil?.sceneWindows.first?.addSubview(self)
-        webView.load(URLRequest(url: url))
-    }
+    ///
+    /// - Parameter timeout: The maximum duration before cancellation.
+    /// - Returns: The resolved URL or `nil` if resolution fails.
+    func resolve(timeout timeoutDuration: Duration) async -> URL? {
+        await withCheckedContinuation {
+            continuation = $0
 
-    /// Cancels the resolution process.
-    func cancel() {
-        isCancelled = true
-        completeResolution(with: nil)
+            UIApplication.sharedOrNil?.sceneWindows.first?.addSubview(self)
+            webView.load(URLRequest(url: url))
+
+            // Cancel if resolution takes too long
+            Task {
+                try? await Task.sleep(for: timeoutDuration)
+                cancel()
+            }
+        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -124,16 +116,28 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
         completeResolution(with: webView.url)
     }
 
+    /// Cancels the resolution process.
+    private func cancel() {
+        guard !isCancelled else { return }
+        completeResolution(with: nil)
+    }
+
     /// Completes the resolution process, returning the resolved URL and cleaning up
     /// resources.
     ///
     /// - Parameter resolvedUrl: The final URL after resolution, or `nil` if the
     ///   process failed.
     private func completeResolution(with resolvedUrl: URL?) {
-        // Invoke completion handler with resolved url
-        completion(resolvedUrl)
+        // Mark "isCancelled" as true to prevent further events being send to
+        // continuation. This avoids potential crashes due to multiple resumptions of
+        // the continuation.
+        isCancelled = true
 
-        // Cleanup to prevent memory leaks.
+        // Resume the awaiting task with the resolved URL.
+        continuation?.resume(returning: resolvedUrl)
+
+        // Cleanup resources to prevent memory leaks and ensure proper deallocation.
+        continuation = nil
         webView.navigationDelegate = nil
         webView.stopLoading()
         removeFromSuperview()
