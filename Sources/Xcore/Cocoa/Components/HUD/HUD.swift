@@ -214,6 +214,26 @@ open class HUD: Appliable {
         }
     }
 
+    open func show(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
+        setHidden(false, delay: delayDuration, animated: animated, completion)
+    }
+
+    open func hide(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
+        setHidden(true, delay: delayDuration, animated: animated, completion)
+    }
+
+    /// Suppress next call to `show(delay:animated:_:)` method.
+    ///
+    /// Consider a scenario where you have a splash screen that shows up whenever
+    /// app resign active state. Later on, you want to request Push Notifications
+    /// permission, this will cause the splash screen to appear. However, if you
+    /// call `suppressTemporarily()` on the splash screen HUD before asking for
+    /// permission then splash screen is suppressed when system permission dialog
+    /// appears.
+    open func suppressTemporarily() {
+        isTemporarilySuppressed = true
+    }
+
     private func _setHidden(_ hide: Bool, animated: Bool, _ completion: (() -> Void)?) {
         guard isHidden != hide else {
             completion?()
@@ -285,26 +305,6 @@ open class HUD: Appliable {
             try await Task.sleep(for: delayDuration)
             setHidden(hide, animated: animated, completion)
         }
-    }
-
-    open func show(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
-        setHidden(false, delay: delayDuration, animated: animated, completion)
-    }
-
-    open func hide(delay delayDuration: Duration = .zero, animated: Bool = true, _ completion: (() -> Void)? = nil) {
-        setHidden(true, delay: delayDuration, animated: animated, completion)
-    }
-
-    /// Suppress next call to `show(delay:animated:_:)` method.
-    ///
-    /// Consider a scenario where you have a splash screen that shows up whenever
-    /// app resign active state. Later on, you want to request Push Notifications
-    /// permission, this will cause the splash screen to appear. However, if you
-    /// call `suppressTemporarily()` on the splash screen HUD before asking for
-    /// permission then splash screen is suppressed when system permission dialog
-    /// appears.
-    open func suppressTemporarily() {
-        isTemporarilySuppressed = true
     }
 }
 
