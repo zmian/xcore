@@ -6,8 +6,37 @@
 
 import UIKit
 
-/// A base class to create a HUD that sets up blank canvas that can be
-/// customized by subclasses to show anything in a fullscreen window.
+/// A base class for creating a HUD (Heads-Up Display) that presents a customizable
+/// fullscreen window overlay.
+///
+/// This class provides an empty canvas that subclasses can extend to display custom
+/// UI components. The HUD is managed via a dedicated `UIWindow` instance.
+///
+/// **Usage**
+///
+/// ```swift
+/// final class InAppSafariViewController: SFSafariViewController {
+///     private let hud = HUD().apply {
+///         $0.backgroundColor = .clear
+///         $0.windowLabel = "OpenURL Window"
+///         $0.adjustWindowAttributes {
+///             $0.makeKey()
+///         }
+///     }
+///
+///     override func viewDidDisappear(_ animated: Bool) {
+///         super.viewDidDisappear(animated)
+///         hud.hide(animated: false)
+///     }
+///
+///     func show() {
+///         hud.present(self, animated: true)
+///     }
+/// }
+///
+/// let vc = InAppSafariViewController()
+/// vc.show()
+/// ```
 @MainActor
 open class HUD: Appliable {
     public private(set) var isHidden = true
@@ -21,14 +50,14 @@ open class HUD: Appliable {
         viewController.view
     }
 
-    /// The default value is `.white`.
+    /// The background color of the HUD.
     open var backgroundColor: UIColor = .white {
         didSet {
             viewController.backgroundColor = backgroundColor
         }
     }
 
-    /// The default value is `.normal`.
+    /// The duration of show and hide animations.
     open var animationDuration: AnimationDuration = .default
 
     /// The position of the window in the z-axis.
@@ -38,13 +67,13 @@ open class HUD: Appliable {
     /// windows assigned to a different window level. The ordering of windows within
     /// a given window level is not guaranteed.
     ///
-    /// The default value is `.top`.
+    /// By default, the window appears above all other windows (`.top`).
     open var windowLevel: UIWindow.Level {
         get { window.windowLevel }
         set { setWindowLevel(newValue, animated: false) }
     }
 
-    /// A succinct label that identifies the HUD window.
+    /// A succinct label identifying the HUD window.
     open var windowLabel: String? {
         get { window.accessibilityLabel }
         set { window.accessibilityLabel = newValue }
@@ -89,8 +118,7 @@ open class HUD: Appliable {
     /// behind the passcode screen to ensure that this HUD is not shown before user
     /// is fully authorized.
     ///
-    /// - Note: By default, window level is set so it appears on the top of the
-    ///   currently visible window.
+    /// By default, the HUD is shown on top of the currently visible window.
     open func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow) -> Void) {
         adjustWindowAttributes = { [weak self] window in
             self?.setDefaultWindowLevel()
