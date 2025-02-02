@@ -20,7 +20,7 @@ extension JSONHelpers {
     ///   - source: A JSON filename in the `main` bundle or a `URL` string.
     ///   - options: Options for reading the JSON data.
     /// - Returns: A decoded JSON object.
-    public static func decode(
+    static func decode(
         from source: String,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
