@@ -4,22 +4,47 @@
 // MIT license, see LICENSE file for details
 //
 
-/// A structure representing transformation of an input to an output.
+/// A structure representing the transformation of an input to an output.
+///
+/// `Transformer` provides a lightweight, type-safe way to encapsulate
+/// transformations. It enables composable operations, making it easy to build
+/// reusable processing pipelines.
+///
+/// **Usage**
+///
+/// ```swift
+/// let intToString = Transformer<Int, String> { "\($0)" }
+/// print(intToString(42)) // "42"
+///
+/// let stringToDouble = Transformer<String, Double> { Double($0) ?? 0.0 }
+/// print(stringToDouble("3.14")) // 3.14
+///
+/// let combined = intToString.map(stringToDouble)
+/// print(combined(42)) // 42.0
+/// ```
 @frozen
 public struct Transformer<Input, Output>: Sendable {
     private let transform: @Sendable (Input) -> Output
 
-    /// An initializer to transform given input.
+    /// Creates a transformer that applies a function to transform input into
+    /// output.
     ///
-    /// - Parameter transform: A block to transform the input to an output.
+    /// - Parameter transform: A closure that transforms an input into an output.
     public init(_ transform: @escaping @Sendable (Input) -> Output) {
         self.transform = transform
     }
 
-    /// Transforms the input to an output.
+    /// Transforms the given input value into an output value.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let uppercased = Transformer<String, String> { $0.uppercased() }
+    /// print(uppercased("hello")) // "HELLO"
+    /// ```
     ///
     /// - Parameter value: The input to transform.
-    /// - Returns: The transformed input.
+    /// - Returns: The transformed output.
     public func callAsFunction(_ value: Input) -> Output {
         transform(value)
     }
@@ -28,7 +53,16 @@ public struct Transformer<Input, Output>: Sendable {
 // MARK: - Passthrough
 
 extension Transformer where Input == Output {
-    /// Returns the input as output without any transformation.
+    /// A transformer that returns the input as output without modification.
+    ///
+    /// This is useful for providing a default or identity transformation.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let passthrough = Transformer<String, String>.passthrough
+    /// print(passthrough("No Change")) // "No Change"
+    /// ```
     public static var passthrough: Self {
         .init { $0 }
     }
@@ -37,11 +71,23 @@ extension Transformer where Input == Output {
 // MARK: - Map
 
 extension Transformer {
-    /// Returns a new transformer, mapping output value using the given transformer.
+    /// Returns a new transformer that applies another transformation to the output.
     ///
-    /// - Parameter other: A transformer that takes the output of `self` as an input
-    ///   and transforms it to a new value.
-    /// - Returns: A new transformer with the transformation of the output.
+    /// This allows composing multiple transformations together.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let intToString = Transformer<Int, String> { "\($0)" }
+    /// let stringToDouble = Transformer<String, Double> { Double($0) ?? 0.0 }
+    /// let combined = intToString.map(stringToDouble)
+    ///
+    /// print(combined(42)) // 42.0
+    /// ```
+    ///
+    /// - Parameter other: A transformer that takes the output of `self` as input
+    ///   and transforms it into a new value.
+    /// - Returns: A new `Transformer` applying both transformations sequentially.
     public func map<NewOutput>(
         _ other: Transformer<Output, NewOutput>
     ) -> Transformer<Input, NewOutput> {

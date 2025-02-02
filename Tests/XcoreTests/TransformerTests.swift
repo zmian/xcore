@@ -9,7 +9,26 @@ import Testing
 
 struct TransformerTests {
     @Test
+    func basics() {
+        let intToString = Transformer<Int, String> { "\($0)" }
+        #expect(intToString(42) == "42")
+
+        let stringToDouble = Transformer<String, Double> { Double($0) ?? 0.0 }
+        #expect(stringToDouble("3.14") == 3.14)
+
+        let combined = intToString.map(stringToDouble)
+        #expect(combined(42) == 42.0)
+
+        let uppercased = Transformer<String, String> { $0.uppercased() }
+        #expect(uppercased("hello") == "HELLO")
+    }
+
+    @Test
     func passthrough() {
+        let passthrough = Transformer<String, String>.passthrough
+        let result = passthrough("No Change")
+        #expect(result == "No Change")
+
         let transform = AnalyticsEventTransform.passthrough
         let event = AppAnalyticsEvent(name: "app_launched")
         let transformedEvent = transform(event)

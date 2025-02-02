@@ -4,22 +4,50 @@
 // MIT license, see LICENSE file for details
 //
 
-/// A structure representing transformation of an input to an output.
+/// A structure representing an asynchronous transformation of an input to an
+/// output.
+///
+/// `AsyncTransformer` encapsulates an async transformation, allowing input values
+/// to be asynchronously processed into output values. This can be useful for
+/// handling operations such as network requests, async computations, or data
+/// processing.
+///
+/// **Usage**
+///
+/// ```swift
+/// let stringToInt = AsyncTransformer<String, Int> { input in
+///     try? await Task.sleep(for: .seconds(1)) // Simulating async work
+///     return Int(input) ?? 0
+/// }
+///
+/// let result = await stringToInt("42")
+/// print(result) // 42
+/// ```
 @frozen
 public struct AsyncTransformer<Input, Output>: Sendable {
     private let transform: @Sendable (Input) async -> Output
 
-    /// An initializer to transform given input.
+    /// Creates a asynchronous transformer that applies a function to transform
+    /// input into output.
     ///
-    /// - Parameter transform: A block to transform the input to an output.
+    /// - Parameter transform: An async closure that transforms an input into an
+    ///   output.
     public init(_ transform: @escaping @Sendable (Input) async -> Output) {
         self.transform = transform
     }
 
-    /// Transforms the input to an output.
+    /// Asynchronously transforms the given input value into an output value.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let uppercased = AsyncTransformer<String, String> { $0.uppercased() }
+    /// let result = await uppercased("hello")
+    /// print(result) // "HELLO"
+    /// ```
     ///
     /// - Parameter value: The input to transform.
-    /// - Returns: The transformed input.
+    /// - Returns: The asynchronously transformed output.
     public func callAsFunction(_ value: Input) async -> Output {
         await transform(value)
     }
@@ -28,7 +56,17 @@ public struct AsyncTransformer<Input, Output>: Sendable {
 // MARK: - Passthrough
 
 extension AsyncTransformer where Input == Output {
-    /// Returns the input as output without any transformation.
+    /// A transformer that returns the input as output without modification.
+    ///
+    /// This is useful for providing a default or identity transformation.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let passthrough = AsyncTransformer<String, String>.passthrough
+    /// let result = await passthrough("No Change")
+    /// print(result) // "No Change"
+    /// ```
     public static var passthrough: Self {
         .init { $0 }
     }
@@ -37,11 +75,25 @@ extension AsyncTransformer where Input == Output {
 // MARK: - Map
 
 extension AsyncTransformer {
-    /// Returns a new transformer, mapping output value using the given transformer.
+    /// Returns a new transformer that applies another transformation to the output.
     ///
-    /// - Parameter other: A transformer that takes the output of `self` as an input
-    ///   and transforms it to a new value.
-    /// - Returns: A new transformer with the transformation of the output.
+    /// This allows composing multiple transformations together.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let stringToInt = AsyncTransformer<String, Int> { Int($0) ?? 0 }
+    /// let intToDouble = AsyncTransformer<Int, Double> { Double($0) * 1.5 }
+    /// let combined = stringToInt.map(intToDouble)
+    ///
+    /// let result = await combined("10")
+    /// print(result) // 15.0
+    /// ```
+    ///
+    /// - Parameter other: A transformer that takes the output of `self` as input
+    ///   and transforms it into a new value.
+    /// - Returns: A new `AsyncTransformer` applying both transformations
+    ///   sequentially.
     public func map<NewOutput>(
         _ other: AsyncTransformer<Output, NewOutput>
     ) -> AsyncTransformer<Input, NewOutput> {
