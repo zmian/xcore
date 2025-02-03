@@ -129,9 +129,7 @@ extension View {
             style: style,
             dismissMethods: dismissMethods,
             content: {
-                if let item = item.wrappedValue {
-                    content(item)
-                }
+                item.wrappedValue.map(content)
             }
         )
     }

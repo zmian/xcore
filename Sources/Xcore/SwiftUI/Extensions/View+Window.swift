@@ -53,9 +53,7 @@ extension View {
             isPresented: item.isPresented,
             style: style,
             content: {
-                if let item = item.wrappedValue {
-                    content(item)
-                }
+                item.wrappedValue.map(content)
             }
         )
     }

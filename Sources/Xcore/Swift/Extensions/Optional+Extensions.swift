@@ -107,9 +107,7 @@ extension Optional {
     ///
     /// ```swift
     /// .popup(isPresented: item.isPresented) {
-    ///     if let item = item.wrappedValue {
-    ///         content(item)
-    ///     }
+    ///     item.wrappedValue.map(content)
     /// }
     /// ```
     var isPresented: Bool {
