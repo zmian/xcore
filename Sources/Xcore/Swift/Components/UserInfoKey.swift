@@ -148,7 +148,10 @@ extension UserInfoContainer {
     ///   - key: The `UserInfoKey` identifying the stored value.
     ///   - defaultValue: A fallback value to return if the key is not present.
     /// - Returns: The stored value, or `defaultValue` if the key does not exist.
-    public subscript<T: Sendable>(userInfoKey key: UserInfoKey, default defaultValue: @autoclosure () -> T) -> T {
+    public subscript<T: Sendable>(
+        userInfoKey key: UserInfoKey,
+        default defaultValue: @autoclosure () -> T
+    ) -> T {
         self[userInfoKey: key] ?? defaultValue()
     }
 }
