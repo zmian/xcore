@@ -7,22 +7,54 @@
 import Foundation
 import OSLog
 
+/// A utility for converting values to a string and then converting the stored
+/// string back into a target type.
+///
+/// This type encapsulates a string representation of an input value. It
+/// supports common types like String, Bool, Int, Double, Date, URL, and Data.
+/// Use the generic initializer to create an instance and the `get()` method
+/// to convert the stored string to the desired type.
+///
+/// **Usage**
+///
+/// ```swift
+/// // Create a converter from an Int.
+/// if let converter = StringConverter(42) {
+///     // Convert the stored string back to an Int.
+///     let value: Int? = converter.get()
+///     print(value) // Optional(42)
+/// }
+///
+/// // Create a converter from a Date.
+/// if let converter = StringConverter(Date()) {
+///     // Try to decode the stored date string back to a Date.
+///     let value: Date? = converter.get()
+///     print(value)
+/// }
+/// ```
 public struct StringConverter: Sendable, Hashable {
     private let string: String
 
-    public init?(_ value: String?) {
-        guard let value else {
-            return nil
-        }
-
-        self.string = value
-    }
-
+    /// Creates a `StringConverter` from given value.
     public init<T: LosslessStringConvertible>(_ value: T) {
         self.string = value.description
     }
 
-    public init?<T>(_ value: T) {
+    /// Optionally creates a `StringConverter` from an optional value.
+    ///
+    /// The initializer converts the input into a string using various
+    /// strategies depending on the type:
+    /// - For values conforming to `LosslessStringConvertible`, uses `description`.
+    /// - For `Data`, attempts to decode as UTF-8.
+    /// - For `Date`, uses an ISO 8601 representation.
+    /// - For `URL`, uses `absoluteString`.
+    ///
+    /// - Parameter value: The value to convert.
+    public init?<T>(_ value: T?) {
+        guard let value else {
+            return nil
+        }
+
         if let value = value as? LosslessStringConvertible {
             self.string = value.description
             return
@@ -121,7 +153,7 @@ extension StringConverter {
         }
     }
 
-    public func get<T>() -> T? where T: RawRepresentable, T.RawValue == String {
+    public func get<T: RawRepresentable<String>>() -> T? {
         T(rawValue: string)
     }
 }
@@ -136,22 +168,11 @@ extension StringConverter {
     ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func get<T>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+    public func get<T: Decodable>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? {
         guard let data = string.data(using: .utf8) else {
             return nil
         }
 
-        return Self.get(type, from: data, decoder: decoder)
-    }
-
-    /// Returns a value of the type you specify, decoded from an object.
-    ///
-    /// - Parameters:
-    ///   - type: The type of the value to decode from the string.
-    ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
-    ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
-    /// - Returns: A value of the specified type, if the decoder can parse the data.
-    static func get<T>(_ type: T.Type = T.self, from data: Data, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
         let decoder = decoder ?? JSONDecoder().apply {
             $0.keyDecodingStrategy = .convertFromSnakeCase
         }
