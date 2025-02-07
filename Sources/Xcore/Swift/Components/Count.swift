@@ -38,10 +38,8 @@ public enum Count: Hashable, ExpressibleByIntegerLiteral, CustomStringConvertibl
 
     public var description: String {
         switch self {
-            case .infinite:
-                return "infinite"
-            case let .times(count):
-                return "\(count)"
+            case .infinite: "infinite"
+            case let .times(count): "\(count)"
         }
     }
 }

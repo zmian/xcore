@@ -72,10 +72,8 @@ extension Either {
     ///   as the new left value if this instance represents a left value.
     public func mapLeft<NewLeft>(_ transform: (Left) -> NewLeft) -> Either<NewLeft, Right> {
         switch self {
-            case let .left(value):
-                return .left(transform(value))
-            case let .right(value):
-                return .right(value)
+            case let .left(value): .left(transform(value))
+            case let .right(value): .right(value)
         }
     }
 
@@ -101,10 +99,8 @@ extension Either {
     ///   as the new right value if this instance represents a right value.
     public func mapRight<NewRight>(_ transform: (Right) -> NewRight) -> Either<Left, NewRight> {
         switch self {
-            case let .left(value):
-                return .left(value)
-            case let .right(value):
-                return .right(transform(value))
+            case let .left(value): .left(value)
+            case let .right(value): .right(transform(value))
         }
     }
 }
@@ -162,10 +158,8 @@ extension Either: Hashable where Left: Hashable, Right: Hashable {}
 extension Either: CustomStringConvertible where Left: CustomStringConvertible, Right: CustomStringConvertible {
     public var description: String {
         switch self {
-            case let .left(value):
-                return String(describing: value)
-            case let .right(value):
-                return String(describing: value)
+            case let .left(value): String(describing: value)
+            case let .right(value): String(describing: value)
         }
     }
 }
@@ -175,10 +169,8 @@ extension Either: CustomStringConvertible where Left: CustomStringConvertible, R
 extension Either: View where Left: View, Right: View {
     public var body: some View {
         switch self {
-            case let .left(leftView):
-                leftView
-            case let .right(rightView):
-                rightView
+            case let .left(leftView): leftView
+            case let .right(rightView): rightView
         }
     }
 }
