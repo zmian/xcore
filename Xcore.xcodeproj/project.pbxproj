@@ -12,6 +12,11 @@
 		681443B526FFDF5500BB5EE1 /* LabeledContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681443B426FFDF5500BB5EE1 /* LabeledContentView.swift */; };
 		681AE8502895CD520012AC1E /* MoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681AE84F2895CD520012AC1E /* MoneyView.swift */; };
 		6824A98426992A4E000B0289 /* Xcore in Frameworks */ = {isa = PBXBuildFile; productRef = 6824A98326992A4E000B0289 /* Xcore */; };
+		682571662D55C598006F6070 /* AddressFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682571642D55C598006F6070 /* AddressFormView.swift */; };
+		682571672D55C598006F6070 /* AddressFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682571632D55C598006F6070 /* AddressFormReducer.swift */; };
+		6825716A2D55C647006F6070 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 682571692D55C647006F6070 /* ComposableArchitecture */; };
+		6825716C2D56167D006F6070 /* Popup+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825716B2D56167D006F6070 /* Popup+Error.swift */; };
+		6825716E2D56252C006F6070 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825716D2D56252C006F6070 /* Utilities.swift */; };
 		683A671B2B8361C900A71484 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A671A2B8361C900A71484 /* TextView.swift */; };
 		683A671D2B83621100A71484 /* Text+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A671C2B83621100A71484 /* Text+Markdown.swift */; };
 		684E4D0029870EBD009800B3 /* StoryPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E4CFF29870EBD009800B3 /* StoryPreviewView.swift */; };
@@ -36,6 +41,10 @@
 		680D4C9D273B6EC80084C556 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		681443B426FFDF5500BB5EE1 /* LabeledContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledContentView.swift; sourceTree = "<group>"; };
 		681AE84F2895CD520012AC1E /* MoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyView.swift; sourceTree = "<group>"; };
+		682571632D55C598006F6070 /* AddressFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFormReducer.swift; sourceTree = "<group>"; };
+		682571642D55C598006F6070 /* AddressFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFormView.swift; sourceTree = "<group>"; };
+		6825716B2D56167D006F6070 /* Popup+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Popup+Error.swift"; sourceTree = "<group>"; };
+		6825716D2D56252C006F6070 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		683A671A2B8361C900A71484 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		683A671C2B83621100A71484 /* Text+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Text+Markdown.swift"; sourceTree = "<group>"; };
 		684E4CFF29870EBD009800B3 /* StoryPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPreviewView.swift; sourceTree = "<group>"; };
@@ -62,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6825716A2D55C647006F6070 /* ComposableArchitecture in Frameworks */,
 				6824A98426992A4E000B0289 /* Xcore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		682571652D55C598006F6070 /* AddressForm */ = {
+			isa = PBXGroup;
+			children = (
+				682571632D55C598006F6070 /* AddressFormReducer.swift */,
+				682571642D55C598006F6070 /* AddressFormView.swift */,
+			);
+			path = AddressForm;
+			sourceTree = "<group>";
+		};
 		6899D0FC2699216300D26721 = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +158,7 @@
 				681AE84F2895CD520012AC1E /* MoneyView.swift */,
 				6804D2C828B07B8500194A7A /* HapticFeedbackView.swift */,
 				684E4CFF29870EBD009800B3 /* StoryPreviewView.swift */,
+				682571652D55C598006F6070 /* AddressForm */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -151,6 +171,8 @@
 				6899D1262699236600D26721 /* Theme.swift */,
 				68821BAF2B7DFBA9001469A5 /* ImageView.swift */,
 				680D4C9D273B6EC80084C556 /* View+Extensions.swift */,
+				6825716B2D56167D006F6070 /* Popup+Error.swift */,
+				6825716D2D56252C006F6070 /* Utilities.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -181,6 +203,7 @@
 			name = Example;
 			packageProductDependencies = (
 				6824A98326992A4E000B0289 /* Xcore */,
+				682571692D55C647006F6070 /* ComposableArchitecture */,
 			);
 			productName = Xcore;
 			productReference = 6899D1052699216300D26721 /* Example.app */;
@@ -211,6 +234,9 @@
 				Base,
 			);
 			mainGroup = 6899D0FC2699216300D26721;
+			packageReferences = (
+				682571682D55C647006F6070 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 6899D1062699216300D26721 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -262,13 +288,17 @@
 			files = (
 				6899D1272699236600D26721 /* Menu.swift in Sources */,
 				683A671B2B8361C900A71484 /* TextView.swift in Sources */,
+				6825716E2D56252C006F6070 /* Utilities.swift in Sources */,
 				689956622750558A00C1DDF0 /* CryptView.swift in Sources */,
 				6899D12F2699236600D26721 /* Exports.swift in Sources */,
 				6899D1092699216300D26721 /* App.swift in Sources */,
 				6899D1302699236600D26721 /* Theme.swift in Sources */,
 				6868EE9526A76C4700ED7A5F /* ShareView.swift in Sources */,
+				6825716C2D56167D006F6070 /* Popup+Error.swift in Sources */,
 				6804D2C928B07B8500194A7A /* HapticFeedbackView.swift in Sources */,
 				6899D12C2699236600D26721 /* ButtonsView.swift in Sources */,
+				682571662D55C598006F6070 /* AddressFormView.swift in Sources */,
+				682571672D55C598006F6070 /* AddressFormReducer.swift in Sources */,
 				683A671D2B83621100A71484 /* Text+Markdown.swift in Sources */,
 				68821BB02B7DFBA9001469A5 /* ImageView.swift in Sources */,
 				681AE8502895CD520012AC1E /* MoneyView.swift in Sources */,
@@ -491,10 +521,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		682571682D55C647006F6070 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		6824A98326992A4E000B0289 /* Xcore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Xcore;
+		};
+		682571692D55C647006F6070 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 682571682D55C647006F6070 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

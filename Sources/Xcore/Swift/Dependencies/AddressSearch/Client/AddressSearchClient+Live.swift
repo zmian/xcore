@@ -29,29 +29,28 @@ public final class LiveAddressSearchClient: AddressSearchClient {
     private typealias L = Localized.PostalAddress
     private let delegates = LockIsolated([UUID: Delegate]())
 
-    public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
-        AsyncStream { [weak self] continuation in
-            self?.delegates.withValue {
-                $0[id] = Delegate { results in
-                    continuation.yield(results)
-                }
-            }
-
-            continuation.onTermination = { [weak self] _ in
-                self?.delegates.withValue {
-                    $0[id] = nil
-                }
-            }
+    public func query(_ query: String) async throws -> PostalAddress {
+        let request = MKLocalSearch.Request().apply {
+            $0.naturalLanguageQuery = query
+            $0.resultTypes = .address
         }
+
+        let placemark = try await perform(request: request)
+        return PostalAddress(placemark)
     }
 
-    public func update(id: UUID, searchString: String) {
+    public func updateQuery(_ query: String, id: UUID) {
         delegates.withValue {
-            $0[id]?.searchString = searchString
+            $0[id]?.query = query
         }
     }
 
-    public func validate(address: PostalAddress) async throws {
+    public func resolve(_ result: AddressSearchResult) async throws -> PostalAddress {
+        let placemark = try await perform(request: result.request())
+        return PostalAddress(placemark)
+    }
+
+    public func validate(_ address: PostalAddress) async throws {
         // Check the input address doesn't correspond to a P.O. Box.
         if address.isPoBox {
             throw AppError.postalAddressInvalidPoBox
@@ -79,19 +78,20 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         try supportedRegionValidation(placemark.countryCode)
     }
 
-    public func map(result: AddressSearchResult) async throws -> PostalAddress {
-        let placemark = try await perform(request: result.request())
-        return PostalAddress(placemark)
-    }
+    public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
+        AsyncStream { [weak self] continuation in
+            self?.delegates.withValue {
+                $0[id] = Delegate { results in
+                    continuation.yield(results)
+                }
+            }
 
-    public func search(query: String) async throws -> PostalAddress {
-        let request = MKLocalSearch.Request().apply {
-            $0.naturalLanguageQuery = query
-            $0.resultTypes = .address
+            continuation.onTermination = { [weak self] _ in
+                self?.delegates.withValue {
+                    $0[id] = nil
+                }
+            }
         }
-
-        let placemark = try await perform(request: request)
-        return PostalAddress(placemark)
     }
 
     /// Performs a request to the maps API to obtain a placemark.
@@ -184,7 +184,7 @@ extension LiveAddressSearchClient {
             onResults([])
         }
 
-        var searchString: String {
+        var query: String {
             get { searchCompleter.queryFragment }
             set { searchCompleter.queryFragment = newValue }
         }

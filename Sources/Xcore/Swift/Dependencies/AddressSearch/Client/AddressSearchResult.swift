@@ -9,10 +9,10 @@ internal import MapKit
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.
-public final class AddressSearchResult: @unchecked Sendable, Hashable {
+public final class AddressSearchResult: Sendable, Hashable {
     public let title: String
     public let subtitle: String
-    private let completion: MKLocalSearchCompletion?
+    nonisolated(unsafe) private let completion: MKLocalSearchCompletion?
 
     /// Creates an instance of search result from given title and subtitle string.
     ///

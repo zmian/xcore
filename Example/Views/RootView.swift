@@ -5,20 +5,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct RootView: View {
     private let items = Menu.allCases
 
     var body: some View {
-        Form {
+        List {
             Section {
                 ForEach(items) { item in
                     NavigationLink(destination: item.content()) {
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 2) {
                             Text(item.title)
                             if let subtitle = item.subtitle {
-                                Spacer()
-                                    .frame(height: 2)
                                 Text(subtitle)
                                     .foregroundStyle(.secondary)
                                     .font(.footnote)
@@ -30,6 +29,21 @@ struct RootView: View {
                 Text("Components")
             } footer: {
                 Text("A demonstration of components included in Xcore.")
+            }
+
+            Section {
+                NavigationLink("Address Form") {
+                    AddressFormView(store: .init(
+                        initialState: .init(navigationTitle: "Address"),
+                        reducer: {
+                            AddressForm()
+                        }
+                    ))
+                }
+            } header: {
+                Text("Dependencies")
+            } footer: {
+                Text("A demonstration of components using dependencies included in Xcore.")
             }
         }
         .environment(\.defaultMinListRowHeight, 55)

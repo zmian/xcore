@@ -7,8 +7,30 @@
 import SwiftUI
 
 extension View {
-    /// Embed this view in a navigation view.
+    /// Embed this view in a navigation stack.
     func embedInNavigation() -> some View {
-        NavigationView { self }
+        NavigationStack { self }
+    }
+}
+
+extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
+    static var primary: Self { capsuleFill }
+    static var secondary: Self { capsuleOutline }
+}
+
+extension DynamicTextFieldStyle where Self == PrimaryDynamicTextFieldStyle {
+    /// Placeholder placement is inline of the text field.
+    static var primary: Self {
+        .init()
+    }
+}
+
+struct PrimaryDynamicTextFieldStyle: DynamicTextFieldStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ProminentDynamicTextFieldStyle(.outline, shape: .capsule)
+            .makeBody(configuration: configuration)
+            .textFieldAttributes {
+                $0.placeholderBehavior = .inline
+            }
     }
 }

@@ -7,20 +7,20 @@
 import Foundation
 
 public struct NoopAddressSearchClient: AddressSearchClient {
+    public func query(_ query: String) async throws -> PostalAddress {
+        .init()
+    }
+
+    public func updateQuery(_ query: String, id: UUID) {}
+
+    public func resolve(_ result: AddressSearchResult) async throws -> PostalAddress {
+        .init()
+    }
+
+    public func validate(_ address: PostalAddress) async throws {}
+
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
         .finished
-    }
-
-    public func update(id: UUID, searchString: String) {}
-
-    public func validate(address: PostalAddress) async throws {}
-
-    public func map(result: AddressSearchResult) async throws -> PostalAddress {
-        .init()
-    }
-
-    public func search(query: String) async throws -> PostalAddress {
-        .init()
     }
 }
 
