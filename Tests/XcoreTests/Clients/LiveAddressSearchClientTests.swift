@@ -132,7 +132,7 @@ struct LiveAddressSearchClientTests {
             // ============================
 
             do {
-                try await client.validate(address: postalAddress)
+                try await client.validate(postalAddress)
             } catch {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
@@ -150,7 +150,7 @@ struct LiveAddressSearchClientTests {
             LiveAddressSearchClient.supportedRegions = [.unitedStates, .spain]
 
             do {
-                try await client.validate(address: postalAddress)
+                try await client.validate(postalAddress)
             } catch {
                 Issue.record("Spain is a supported region")
             }
@@ -161,7 +161,7 @@ struct LiveAddressSearchClientTests {
             LiveAddressSearchClient.supportedRegions = [.portugal]
 
             do {
-                try await client.validate(address: postalAddress)
+                try await client.validate(postalAddress)
             } catch {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
@@ -179,7 +179,7 @@ struct LiveAddressSearchClientTests {
             LiveAddressSearchClient.supportedRegions = [.unitedStates, .portugal, .unitedKingdom]
 
             do {
-                try await client.validate(address: postalAddress)
+                try await client.validate(postalAddress)
             } catch {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
@@ -197,7 +197,7 @@ struct LiveAddressSearchClientTests {
             LiveAddressSearchClient.supportedRegions = [.unitedStates, .portugal, .unitedKingdom, .australia, .newZealand, .turkey]
 
             do {
-                try await client.validate(address: postalAddress)
+                try await client.validate(postalAddress)
             } catch {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
@@ -264,7 +264,7 @@ extension LiveAddressSearchClientTests {
                 $0.addressSearch = .live
             } operation: {
                 let client = Dependency(\.addressSearch).wrappedValue
-                let postalAddress = try await client.search(query: query)
+                let postalAddress = try await client.query(query)
                 try await callback(postalAddress)
             }
         } catch {
