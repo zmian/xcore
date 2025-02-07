@@ -13,10 +13,14 @@ extension View {
     }
 }
 
+// MARK: - Button Styles
+
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
     static var primary: Self { capsuleFill }
     static var secondary: Self { capsuleOutline }
 }
+
+// MARK: - Text Field Styles
 
 extension DynamicTextFieldStyle where Self == PrimaryDynamicTextFieldStyle {
     /// Placeholder placement is inline of the text field.
