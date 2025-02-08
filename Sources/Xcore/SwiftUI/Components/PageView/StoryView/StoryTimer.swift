@@ -5,82 +5,68 @@
 //
 
 import SwiftUI
-import Combine
 
-/// - SeeAlso: https://trailingclosure.com/swiftui-instagram-story-tutorial
 @MainActor
-final class StoryTimer: ObservableObject {
-    @Published var progress: Double
-    private let tick = 0.1
+@Observable
+final class StoryTimer {
+    private let tick = Duration.seconds(0.01)
+    private var duration: Duration
     private let cycle: Count
-    private var interval: TimeInterval
     private var pagesCount: Int
-    private var cancellable: AnyCancellable?
     private var cyclesCompleted = 0
-    private var paused = false
+    private var isPaused = false
+    private var timerTask: Task<Void, any Error>?
     var onCycleComplete: ((_ remainingCycles: Count) -> Void)?
+    var progress: Double
 
-    init(
-        pagesCount: Int,
-        interval: TimeInterval,
-        cycle: Count
-    ) {
+    init(pagesCount: Int, duration: Duration, cycle: Count) {
         self.pagesCount = pagesCount
-        self.interval = interval
+        self.duration = duration
         self.cycle = cycle
         self.progress = 0
-        start()
     }
 
     func start() {
-        guard cancellable == nil else {
-            return
-        }
-
-        cancellable = Timer
-            .publish(every: tick, on: .main, in: .common)
-            .autoconnect()
-            .merge(with: Just(Date()))
-            .sink { [weak self] _ in
-                self?.updateProgress()
+        timerTask?.cancel()
+        timerTask = Task {
+            while !Task.isCancelled {
+                try await Task.sleep(for: tick)
+                updateProgress()
             }
+        }
     }
 
     func stop() {
-        cancellable?.cancel()
-        cancellable = nil
+        timerTask?.cancel()
+        timerTask = nil
     }
 
     func resume() {
-        paused = false
+        isPaused = false
     }
 
     func pause() {
-        paused = true
+        isPaused = true
     }
 
     func advance(by number: Int) {
         let newProgress = max((Int(progress) + number) % pagesCount, 0)
         progress = Double(newProgress)
-        restartIfNeeded()
+        if timerTask == nil {
+            start()
+        }
     }
 
     func progress(for index: Int) -> CGFloat {
         min(max(progress - CGFloat(index), 0), 1)
     }
 
-    private func restartIfNeeded() {
-        if cancellable == nil {
-            start()
-        }
-    }
-
     private func updateProgress() {
-        guard !paused else {
+        guard !isPaused else {
             return
         }
 
-        var newProgress = progress + (tick / interval)
+        var newProgress = progress + (tick / duration)
 
         // Cycle complete
         if Int(newProgress) >= pagesCount {

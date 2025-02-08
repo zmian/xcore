@@ -6,41 +6,75 @@
 
 import SwiftUI
 
-public struct StoryView<Page, Content, Background>: View where Page: Identifiable, Content: View, Background: View {
-    @Environment(\.storyProgressIndicatorInsets) private var insets
+/// A view that displays Instagram-style stories with a top progress indicator.
+///
+/// This view presents a sequence of story pages that auto-advance after a given
+/// duration. The top progress bar visually indicates the remaining time for the
+/// current story. Users may tap the left or right side of the view to manually
+/// rewind or advance, and accessibility buttons are available for VoiceOver
+/// users.
+///
+/// **Usage**
+///
+/// ```swift
+/// struct Colorful {
+///     let id: Int
+///     let color: Color
+/// }
+///
+/// let data = [
+///     Colorful(id: 1, color: .red),
+///     Colorful(id: 2, color: .white),
+///     Colorful(id: 3, color: .blue)
+/// ]
+///
+/// StoryView(cycle: .once, data: data) { data in
+///     Text("Page #\(data.id)")
+/// } background: { data in
+///     data.color
+/// }
+/// .onCycleComplete { remaining in
+///     print("Cycles remaining: \(remaining)")
+/// }
+/// .storyProgressIndicatorTint(.indigo.gradient)
+/// .storyProgressIndicatorInsets(EdgeInsets(.horizontal, 16))
+/// ```
+public struct StoryView<Data, Content: View, Background: View>: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.theme) private var theme
-    @Dependency(\.appPhase) private var appPhase
-    @StateObject private var storyTimer: StoryTimer
-    private let pages: [Page]
+    @Environment(\.storyProgressIndicatorInsets) private var insets
+    @State private var storyTimer: StoryTimer
     private let pauseWhenInactive: Bool
-    private let content: (Page) -> Content
-    private let background: (Page) -> Background
+    private let data: [Data]
+    private let content: (Data) -> Content
+    private let background: (Data) -> Background
 
     public var body: some View {
         ZStack(alignment: .top) {
-            let page = pages[Int(storyTimer.progress)]
+            // Get the data for current page based on the story timer's progress.
+            let data = data[Int(storyTimer.progress)]
 
-            // Background
+            // Render the background if provided.
             if Background.self != Never.self {
-                background(page)
+                background(data)
                     .frame(maxWidth: .infinity)
                     .ignoresSafeArea()
             }
 
-            // Tap to advance or rewind
+            // Display tap zones for advancing or rewinding stories.
             advanceButtons()
 
-            // Content
-            content(page)
+            // Render the main story content.
+            content(data)
                 .frame(maxWidth: .infinity)
 
-            // Progress Indicator
+            // Display the progress indicator at the top.
             progressIndicator
         }
         .onAppear(perform: storyTimer.start)
         .onDisappear(perform: storyTimer.stop)
         .applyIf(pauseWhenInactive) {
-            $0.onReceive(appPhase.receive) { phase in
+            $0.onChange(of: scenePhase) { _, phase in
                 switch phase {
                     case .active:
                         storyTimer.resume()
@@ -53,10 +87,11 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
         }
     }
 
+    /// A view that displays the horizontal progress indicator.
     private var progressIndicator: some View {
         HStack(spacing: 4) {
-            ForEach(0..<pages.count, id: \.self) { index in
-                StoryProgressIndicator(progress: storyTimer.progress(for: index))
+            ForEach(0..<data.count, id: \.self) { index in
+                StoryProgressIndicator(value: storyTimer.progress(for: index))
             }
         }
         .padding(insets)
@@ -78,7 +113,8 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
 // MARK: - Advancing Page
 
 extension StoryView {
-    /// Tap left and right edges to rewind or advance a page.
+    /// Returns a view that provides tap zones to advance or rewind a page in the
+    /// story.
     @ViewBuilder
     private func advanceButtons() -> some View {
         accessibilityAdvanceButtons()
@@ -90,6 +126,7 @@ extension StoryView {
         .ignoresSafeArea()
     }
 
+    /// Returns a tappable area that advances or rewinds a page in the story.
     private func advanceButton(isLeft: Bool) -> some View {
         Rectangle()
             .foregroundStyle(.clear)
@@ -107,14 +144,9 @@ extension StoryView {
                 }
             }
     }
-}
 
-// MARK: - Accessibility Buttons
-
-extension StoryView {
-    /// Adds left and right buttons to rewind or advance a page when VoiceOver is
-    /// enabled. Following the Instagram approach of navigating stories during
-    /// VoiceOver.
+    /// Provides accessibility buttons for advancing or rewinding a page in the
+    /// story when VoiceOver is enabled.
     @ViewBuilder
     private func accessibilityAdvanceButtons() -> some View {
         if UIAccessibility.isVoiceOverRunning {
@@ -128,6 +160,7 @@ extension StoryView {
         }
     }
 
+    /// Returns an accessibility button for navigation.
     private func accessibilityAdvanceButton(isLeft: Bool) -> some View {
         VStack {
             Spacer()
@@ -149,23 +182,113 @@ extension StoryView {
 // MARK: - Inits
 
 extension StoryView {
+    /// Creates a new `StoryView`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// struct Colorful {
+    ///     let id: Int
+    ///     let color: Color
+    /// }
+    ///
+    /// let data = [
+    ///     Colorful(id: 1, color: .red),
+    ///     Colorful(id: 2, color: .white),
+    ///     Colorful(id: 3, color: .blue)
+    /// ]
+    ///
+    /// StoryView(cycle: .once, data: data) { data in
+    ///     Text("Page #\(data.id)")
+    /// } background: { data in
+    ///     data.color
+    /// }
+    /// .onCycleComplete { remaining in
+    ///     print("Cycles remaining: \(remaining)")
+    /// }
+    /// .storyProgressIndicatorTint(.indigo.gradient)
+    /// .storyProgressIndicatorInsets(EdgeInsets(.horizontal, 16))
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - duration: The duration each page in the story is displayed.
+    ///   - cycle: The number of cycles, or `.infinite` for continuous looping.
+    ///   - data: An array of data that's useed to build content and background
+    ///     views.
+    ///   - pauseWhenInactive: A Boolean property indicating whether the view pauses
+    ///     when the app becomes inactive.
+    ///   - content: A view that describes the page content.
+    ///   - background: A view that describes the page background.
     public init(
-        interval: TimeInterval = 4,
+        duration: Duration = .seconds(4),
         cycle: Count = .infinite,
-        pages: [Page],
-        pauseWhenInactive: Bool = false,
-        @ViewBuilder content: @escaping (Page) -> Content,
-        @ViewBuilder background: @escaping (Page) -> Background
+        data: [Data],
+        pauseWhenInactive: Bool = true,
+        @ViewBuilder content: @escaping (Data) -> Content,
+        @ViewBuilder background: @escaping (Data) -> Background
     ) {
-        self._storyTimer = .init(wrappedValue: .init(
-            pagesCount: pages.count,
-            interval: interval,
+        self.storyTimer = StoryTimer(
+            pagesCount: data.count,
+            duration: duration,
             cycle: cycle
-        ))
-        self.pages = pages
+        )
+        self.data = data
         self.pauseWhenInactive = pauseWhenInactive
         self.content = content
         self.background = background
+    }
+}
+
+extension StoryView where Background == Never {
+    /// Creates a new `StoryView`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// struct Colorful {
+    ///     let id: Int
+    ///     let color: Color
+    /// }
+    ///
+    /// let data = [
+    ///     Colorful(id: 1, color: .red),
+    ///     Colorful(id: 2, color: .white),
+    ///     Colorful(id: 3, color: .blue)
+    /// ]
+    ///
+    /// StoryView(cycle: .once, data: data) { data in
+    ///     Text("Page #\(data.id)")
+    ///         .foregroundStyle(data.color)
+    /// }
+    /// .onCycleComplete { remaining in
+    ///     print("Cycles remaining: \(remaining)")
+    /// }
+    /// .storyProgressIndicatorTint(.indigo.gradient)
+    /// .storyProgressIndicatorInsets(EdgeInsets(.horizontal, 16))
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - duration: The duration each page in the story is displayed.
+    ///   - cycle: The number of cycles, or `.infinite` for continuous looping.
+    ///   - data: An array of data that's useed to build content views.
+    ///   - pauseWhenInactive: A Boolean property indicating whether the view pauses
+    ///     when the app becomes inactive.
+    ///   - content: A view that describes the page content.
+    public init(
+        duration: Duration = .seconds(4),
+        cycle: Count = .infinite,
+        data: [Data],
+        pauseWhenInactive: Bool = true,
+        @ViewBuilder content: @escaping (Data) -> Content
+    ) {
+        self.init(
+            duration: duration,
+            cycle: cycle,
+            data: data,
+            pauseWhenInactive: pauseWhenInactive,
+            content: content,
+            background: { _ in fatalError() }
+        )
     }
 }
 
@@ -177,26 +300,26 @@ extension StoryView {
         let color: Color
     }
 
-    let pages = [
+    let data = [
         Colorful(id: 1, color: .green),
         Colorful(id: 2, color: .blue),
         Colorful(id: 3, color: .purple)
     ]
 
-    return StoryView(cycle: .once, pages: pages) { page in
+    return StoryView(cycle: .once, data: data) { data in
         VStack {
             Text("Page")
             Text("#")
                 .baselineOffset(70)
                 .font(.system(size: 100)) +
-            Text("\(page.id)")
+            Text("\(data.id)")
                 .font(.system(size: 200))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    } background: { page in
-        page.color
+    } background: { data in
+        data.color
     }
-    .onCycleComplete { count in
-        print(count)
+    .onCycleComplete { remaining in
+        print("Cycles remaining: \(remaining)")
     }
 }

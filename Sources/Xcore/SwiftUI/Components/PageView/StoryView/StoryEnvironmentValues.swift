@@ -9,16 +9,54 @@ import SwiftUI
 // MARK: - View Helpers
 
 extension View {
-    public func storyProgressIndicatorColor(_ color: Color) -> some View {
-        environment(\.storyProgressIndicatorColor, color)
+    /// Sets the tint for the story progress indicator.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// StoryView(data: [Color.red, .white, .blue]) { color in
+    ///     color
+    /// }
+    /// .storyProgressIndicatorTint(.indigo.gradient)
+    /// ```
+    ///
+    /// - Parameter tint: A shape style that determines the tint of the progress
+    ///   indicator.
+    /// - Returns: A view modified with the custom story progress indicator tint.
+    public func storyProgressIndicatorTint(_ tint: some ShapeStyle) -> some View {
+        environment(\.storyProgressIndicatorTint, AnyShapeStyle(tint))
     }
 
+    /// Sets the insets for the story progress indicator.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// StoryView(data: [Color.red, .white, .blue]) { color in
+    ///     color
+    /// }
+    /// .storyProgressIndicatorInsets(EdgeInsets(.horizontal, 16))
+    /// ```
+    ///
+    /// - Parameter insets: An `EdgeInsets` value that defines the spacing around
+    ///   the progress indicator.
+    /// - Returns: A view modified with the custom story progress indicator insets.
     public func storyProgressIndicatorInsets(_ insets: EdgeInsets) -> some View {
         environment(\.storyProgressIndicatorInsets, insets)
     }
 }
 
+// MARK: - Environment
+
 extension EnvironmentValues {
-    @Entry var storyProgressIndicatorColor: Color = .accentColor
+    /// A value that represents the tint style for the story progress indicator.
+    ///
+    /// The default value is `Color.accentColor`.
+    @Entry var storyProgressIndicatorTint = AnyShapeStyle(Color.accentColor)
+
+    /// A value that represents the insets for the story progress indicator.
+    ///
+    /// The default value is configured with horizontal spacing set to the system
+    /// default spacing.
     @Entry var storyProgressIndicatorInsets = EdgeInsets(.horizontal, .defaultSpacing)
 }

@@ -10,9 +10,9 @@ import SwiftUI
 /// coordinate space in single axis.
 public struct AxisGeometryReader<Content: View>: View {
     @State private var size: CGFloat = 0
-    private let content: (CGFloat) -> Content
     private let axis: Axis
     private let alignment: Alignment
+    private let content: (CGFloat) -> Content
 
     public init(
         axis: Axis = .horizontal,
