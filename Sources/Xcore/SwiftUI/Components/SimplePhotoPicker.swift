@@ -31,7 +31,7 @@ import PhotosUI
 public struct SimplePhotoPicker<Label: View & Sendable>: View {
     private let label: Label
     @State var selectedItems: [PhotosPickerItem] = []
-    private let callback: (UIImage) -> Void
+    private let selection: (UIImage) -> Void
 
     /// Creates a simple image picker view.
     ///
@@ -43,7 +43,7 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
         selection: @escaping (UIImage) -> Void,
         @ViewBuilder label: () -> Label
     ) {
-        self.callback = selection
+        self.selection = selection
         self.label = label()
     }
 
@@ -60,7 +60,7 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
                 if
                     let data = try await selectedItems.first?.loadTransferable(type: Data.self),
                     let image = UIImage(data: data) {
-                    callback(image)
+                    selection(image)
                 }
             }
         }

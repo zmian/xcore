@@ -58,25 +58,41 @@ public struct Separator: View {
 // MARK: - Shape
 
 extension Separator {
-    /// A line shape when contained in a stack, it extends across the minor axis of
-    /// the stack, or horizontally when not in a stack.
+    /// A shape that renders a separator line based on a given stroke style.
+    ///
+    /// When used in a stack, the separator extends along the minor axis of the
+    /// container, or horizontally when not in a stack.
     private struct SeparatorShape: Shape {
+        /// The stroke style used to draw the separator.
         let style: StrokeStyle
 
+        /// Generates a path for the separator in the given rectangle.
+        ///
+        /// If the line width is 1 or less and there is no dash pattern, a simple
+        /// rectangle is returned to avoid zoom artifacts. Otherwise, the path is
+        /// constructed based on whether the separator is horizontal or vertical.
+        ///
+        /// - Parameter rect: The drawing rectangle.
+        /// - Returns: A stroked path for the separator.
         func path(in rect: CGRect) -> Path {
-            // Early exit for normal separator style
+            // If the stroke is simple, return a rectangle path.
+            //
             // Note: we don't want to `strokedPath` for normal separator to avoid artifacts
             // which is visible when zoomed in.
             if style.lineWidth <= 1, style.dash.isEmpty {
-                return Rectangle()
-                    .path(in: rect)
+                return Rectangle().path(in: rect)
             }
 
-            return Path {
+            return Path { path in
+                // Determine if the separator is horizontal.
                 let isHorizontal = rect.size.max == rect.width
                 let capOffset = style.lineWidth / 2
-                let origin = isHorizontal ? CGPoint(x: capOffset, y: 0) : CGPoint(x: 0, y: capOffset)
+                let origin = isHorizontal
+                    ? CGPoint(x: capOffset, y: 0)
+                    : CGPoint(x: 0, y: capOffset)
 
+                // If the line join is round and the separator is horizontal or has
+                // no dash pattern, adjust the drawing rectangle.
                 if style.lineJoin == .round, isHorizontal || style.dash.isEmpty {
                     var rect = rect
                     rect.origin = origin
@@ -86,15 +102,15 @@ extension Separator {
                     } else {
                         rect.size.height -= style.lineWidth
                     }
-
-                    $0.addPath(Path(rect))
+                    path.addPath(Path(rect))
                 } else {
-                    let end = isHorizontal ?
-                        CGPoint(x: rect.width - capOffset, y: 0) :
-                        CGPoint(x: 0, y: rect.height - capOffset)
+                    // Otherwise, draw a straight line from the origin to the end point.
+                    let end = isHorizontal
+                        ? CGPoint(x: rect.width - capOffset, y: 0)
+                        : CGPoint(x: 0, y: rect.height - capOffset)
 
-                    $0.move(to: origin)
-                    $0.addLine(to: end)
+                    path.move(to: origin)
+                    path.addLine(to: end)
                 }
             }
             .strokedPath(style)
