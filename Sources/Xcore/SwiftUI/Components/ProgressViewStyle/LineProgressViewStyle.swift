@@ -11,8 +11,7 @@ import SwiftUI
 ///
 /// This style draws a capsule-shaped progress bar that fills from left to right
 /// based on the provided fraction. The unfilled portion is rendered with
-/// reduced opacity. If no progress value is provided, the style falls back to
-/// the default `ProgressView` appearance.
+/// reduced opacity.
 ///
 /// **Usage**
 ///
@@ -26,6 +25,9 @@ import SwiftUI
 ///
 /// To customize the height of the progress bar, use the `.line(height:)`
 /// variant.
+///
+/// - Note: If no progress value is provided, the style falls back to the
+///   default `ProgressView` appearance.
 public struct LineProgressViewStyle: ProgressViewStyle {
     private let height: CGFloat?
 
@@ -67,6 +69,10 @@ extension ProgressViewStyle where Self == LineProgressViewStyle {
     /// A progress view that visually indicates its progress using a horizontal
     /// line.
     ///
+    /// This style draws a capsule-shaped progress bar that fills from left to right
+    /// based on the provided fraction. The unfilled portion is rendered with
+    /// reduced opacity.
+    ///
     /// **Usage**
     ///
     /// ```swift
@@ -74,11 +80,21 @@ extension ProgressViewStyle where Self == LineProgressViewStyle {
     ///     Text("Progress Label")
     /// }
     /// .progressViewStyle(.line)
+    /// .tint(.green)
     /// ```
+    ///
+    /// - Returns: A configured line progress view style.
+    ///
+    /// - Note: If no progress value is provided, the style falls back to the
+    ///   default `ProgressView` appearance.
     public static var line: Self { .init() }
 
     /// A progress view that visually indicates its progress using a horizontal
     /// line.
+    ///
+    /// This style draws a capsule-shaped progress bar that fills from left to right
+    /// based on the provided fraction. The unfilled portion is rendered with
+    /// reduced opacity.
     ///
     /// **Usage**
     ///
@@ -87,10 +103,14 @@ extension ProgressViewStyle where Self == LineProgressViewStyle {
     ///     Text("Progress Label")
     /// }
     /// .progressViewStyle(.line(height: 16))
+    /// .tint(.green)
     /// ```
     ///
     /// - Parameter height: The desired height of the progress bar.
     /// - Returns: A configured line progress view style.
+    ///
+    /// - Note: If no progress value is provided, the style falls back to the
+    ///   default `ProgressView` appearance.
     public static func line(height: CGFloat?) -> Self {
         .init(height: height)
     }
