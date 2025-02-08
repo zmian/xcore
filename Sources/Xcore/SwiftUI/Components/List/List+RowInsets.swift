@@ -21,7 +21,7 @@ extension View {
     }
 
     /// Applies an inset to the rows in a list.
-    public func customListRowInsets(_ edges: Edge.Set, _ length: CGFloat) -> some View {
-        customListRowInsets(.init(edges, length))
+    public func customListRowInsets(_ edges: HorizontalEdge.Set, _ length: CGFloat) -> some View {
+        customListRowInsets(.init(.init(edges), length))
     }
 }

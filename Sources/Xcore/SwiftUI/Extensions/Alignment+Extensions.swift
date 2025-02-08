@@ -43,30 +43,3 @@ extension TextAlignment {
         .init(horizontal: horizontal, vertical: .center)
     }
 }
-
-// MARK: - Edge
-
-extension Edge {
-    /// A Boolean property indicating whether the edge is positioned along the
-    /// horizontal axis.
-    ///
-    /// - Returns: `true` if the edge is `.leading` or `.trailing`, otherwise
-    ///   `false`.
-    public var isHorizontal: Bool {
-        switch self {
-            case .top, .bottom: false
-            case .leading, .trailing: true
-        }
-    }
-
-    /// A Boolean property indicating whether the edge is positioned along the
-    /// vertical axis.
-    ///
-    /// - Returns: `true` if the edge is `.top` or `.bottom`, otherwise `false`.
-    public var isVertical: Bool {
-        switch self {
-            case .top, .bottom: true
-            case .leading, .trailing: false
-        }
-    }
-}

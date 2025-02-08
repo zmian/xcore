@@ -218,3 +218,92 @@ extension UIEdgeInsets {
         self = .init(top: value, left: value, bottom: value, right: value)
     }
 }
+
+// MARK: - Edge
+
+extension Edge {
+    /// A Boolean property indicating whether the edge is positioned along the
+    /// horizontal axis.
+    ///
+    /// - Returns: `true` if the edge is `.leading` or `.trailing`, otherwise
+    ///   `false`.
+    public var isHorizontal: Bool {
+        switch self {
+            case .top, .bottom: false
+            case .leading, .trailing: true
+        }
+    }
+
+    /// A Boolean property indicating whether the edge is positioned along the
+    /// vertical axis.
+    ///
+    /// - Returns: `true` if the edge is `.top` or `.bottom`, otherwise `false`.
+    public var isVertical: Bool {
+        switch self {
+            case .top, .bottom: true
+            case .leading, .trailing: false
+        }
+    }
+}
+
+// MARK: - Edge.Set
+
+extension Edge.Set {
+    /// Initializes an `Edge.Set` from a `HorizontalEdge.Set`.
+    ///
+    /// Maps each horizontal edge in the given set to its corresponding `Edge.Set`
+    /// value. For example, if the horizontal set contains `.leading`, the resulting
+    /// `Edge.Set` will include `.leading`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let horizontalSet: HorizontalEdge.Set = [.leading, .trailing]
+    /// let edgeSet = Edge.Set(horizontalSet)
+    /// // edgeSet now contains [.leading, .trailing]
+    /// ```
+    ///
+    /// - Parameter edges: A set containing horizontal edges.
+    public init(_ edges: HorizontalEdge.Set) {
+        var set: Edge.Set = []
+
+        if edges.contains(.leading) {
+            set.insert(.leading)
+        }
+
+        if edges.contains(.trailing) {
+            set.insert(.trailing)
+        }
+
+        self = set
+    }
+
+    /// Initializes an `Edge.Set` from a `VerticalEdge.Set`.
+    ///
+    /// Maps each vertical edge in the given set to its corresponding `Edge.Set`
+    /// value. For example, if the vertical set contains `.top`, the resulting
+    /// `Edge.Set` will include `.top`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let verticalSet: VerticalEdge.Set = [.top, .bottom]
+    /// let edgeSet = Edge.Set(verticalSet)
+    /// // edgeSet now contains [.top, .bottom]
+    /// ```
+    ///
+    /// - Parameter edges: A set containing vertical edges.
+    public init(_ edges: VerticalEdge.Set) {
+        var set: Edge.Set = []
+
+        if edges.contains(.top) {
+            set.insert(.top)
+        }
+
+        if edges.contains(.bottom) {
+            set.insert(.bottom)
+        }
+
+        self = set
+    }
+}

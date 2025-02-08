@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Separator Style
 
-public enum ListRowSeparatorStyle: Equatable {
+public enum ListRowSeparatorStyle: Equatable, Sendable {
     case hidden
     case line(EdgeInsets)
 
@@ -23,9 +23,9 @@ public enum ListRowSeparatorStyle: Equatable {
     var insets: EdgeInsets {
         switch self {
             case .hidden:
-                return .zero
+                .zero
             case let .line(insets):
-                return EdgeInsets(
+                EdgeInsets(
                     top: 0,
                     leading: insets.leading,
                     bottom: 0,
