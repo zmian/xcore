@@ -20,7 +20,7 @@ public struct WebView: View {
     public typealias PolicyDecision = (
         _ webView: WKWebView,
         _ decidePolicyForNavigationAction: WKNavigationAction
-    ) -> WKNavigationActionPolicy
+    ) async -> WKNavigationActionPolicy
 
     /// The URLRequest used to load the web content.
     private let urlRequest: URLRequest
@@ -321,7 +321,7 @@ extension WebView {
         }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-            parent.policyDecision(webView, navigationAction)
+            await parent.policyDecision(webView, navigationAction)
         }
 
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -329,6 +329,7 @@ extension WebView {
                 openUrl(navigationAction.request.url)
                 return nil
             }
+
             return webView
         }
 
