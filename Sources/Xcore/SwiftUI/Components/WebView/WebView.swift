@@ -9,28 +9,44 @@ import WebKit
 import OSLog
 
 /// A view that displays interactive web content, such as for an in-app browser.
+///
+/// This view wraps a WKWebView and provides configuration for message handlers,
+/// cookies, local storage, and policy decisions. It also supports a pull-to-refresh
+/// mechanism and a loader.
 public struct WebView: View {
+    /// A closure to handle JavaScript messages from the web content.
     public typealias MessageHandler = @MainActor (_ body: Any) async throws -> (any Sendable)?
+    /// A closure to decide the navigation policy for a given action.
     public typealias PolicyDecision = (
         _ webView: WKWebView,
         _ decidePolicyForNavigationAction: WKNavigationAction
     ) -> WKNavigationActionPolicy
 
+    /// The URLRequest used to load the web content.
     private let urlRequest: URLRequest
+    /// A dictionary mapping message names to their handlers.
     private var messageHandlers: [String: MessageHandler] = [:]
+    /// Local storage items to inject into the web view.
     private var localStorageItems: [String: String] = [:]
+    /// Cookies to set in the web view's HTTP cookie store.
     private var cookies: [HTTPCookie] = []
+    /// A Boolean property indicating whether a loader is shown.
     private var showLoader = false
+    /// A Boolean property indicating whether the refresh control is enabled.
     private var showRefreshControl = true
+    /// Additional configuration for the WKWebView.
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
+    /// The pull-to-refresh action handler.
     private var pullToRefreshHandler: () -> Void = {}
+    /// A closure that allows creating a new WKWebView for opening new windows.
     private var createWebViewHandler: (URLRequest) -> WKWebView? = { _ in nil }
+    /// A closure that defines the navigation policy decision.
     private var policyDecision: PolicyDecision = { _, action in
         guard let scheme = action.request.url?.schemeType else {
             return .allow
         }
 
-        // Handle email, sms and tel urls natively.
+        // Handle email, SMS, and telephone URLs natively.
         switch scheme {
             case .email, .sms, .tel:
                 @Dependency(\.openUrl) var openUrl
@@ -41,14 +57,17 @@ public struct WebView: View {
         }
     }
 
+    /// Creates a WebView that loads the given URL.
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
     }
 
+    /// Creates a WebView that loads the given URLRequest.
     public init(urlRequest: URLRequest) {
         self.urlRequest = urlRequest
     }
 
+    /// The view's body. It returns a Representable that wraps a WKWebView.
     public var body: some View {
         Representable(
             urlRequest: urlRequest,
@@ -68,64 +87,100 @@ public struct WebView: View {
 // MARK: - Public API
 
 extension WebView {
+    /// Adds a message handler for a given name.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// WebView(url: myURL)
+    ///     .onMessageHandler(name: "xcore") { body in
+    ///         if let body = body as? String {
+    ///             switch body {
+    ///                 case "accessTokenExpired":
+    ///                     // Handle message asynchronously
+    ///                     return try await tokenRenewal.refresh()
+    ///                 default:
+    ///                     return nil
+    ///             }
+    ///         }
+    ///     }
+    /// ```
     public func onMessageHandler(name: String, handler: MessageHandler?) -> Self {
         apply {
             $0.messageHandlers[name] = handler
         }
     }
 
+    /// Sets cookies for the WebView.
     public func cookies(_ cookies: [HTTPCookie]) -> Self {
         apply {
             $0.cookies = cookies
         }
     }
 
+    /// Sets a local storage item for the WebView.
     public func localStorageItem(_ item: String, forKey key: String) -> Self {
         apply {
             $0.localStorageItems[key] = item
         }
     }
 
+    /// Sets a custom policy decision handler.
     public func policyDecision(_ decision: @escaping PolicyDecision) -> Self {
         apply {
             $0.policyDecision = decision
         }
     }
 
+    /// Controls whether a loader is shown.
     public func showLoader(_ value: Bool) -> Self {
         apply {
             $0.showLoader = value
         }
     }
 
+    /// Controls whether the refresh control is visible.
     public func hideRefreshControl(_ value: Bool) -> Self {
         apply {
             $0.showRefreshControl = !value
         }
     }
 
+    /// Adds additional configuration to the WKWebView.
     public func additionalConfiguration(_ configuration: @escaping (WKWebView) -> Void) -> Self {
         apply {
             $0.additionalConfiguration = configuration
         }
     }
 
+    /// Sets the pull-to-refresh action handler.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// WebView(url: myURL)
+    ///     .onPullToRefresh {
+    ///         // Handle refresh
+    ///     }
+    /// ```
     public func onPullToRefresh(_ handler: @escaping () -> Void) -> Self {
         apply {
             $0.pullToRefreshHandler = handler
         }
     }
 
+    /// Sets the handler for creating a new WebView window.
     public func onNewWebViewWindow(_ handler: @escaping (URLRequest) -> WKWebView?) -> Self {
         apply {
             $0.createWebViewHandler = handler
         }
     }
 
+    /// A helper method that applies a configuration closure to a copy of self.
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
-        var object = self
-        try configure(&object)
-        return object
+        var copy = self
+        try configure(&copy)
+        return copy
     }
 }
 
