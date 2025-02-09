@@ -38,7 +38,7 @@ extension Logger {
 /// An enumeration representing logging levels ordered by severity.
 ///
 /// The least severe level is `.debug`, while the most severe is `.critical`.
-public enum LogLevel: String, Hashable, Codable, Sendable {
+public enum LogLevel: String, Sendable, Hashable, Codable {
     case debug
     case info
     case notice
