@@ -7,14 +7,14 @@
 import Foundation
 
 /// A specialized protocol that provides unique id of the error.
-public protocol ErrorIdentifier: Error {
+public protocol IdentifiableError: Error, Identifiable {
     /// A unique id for the error.
     var id: String { get }
 }
 
 /// A specialized error that provides localized messages describing the error
 /// and why it occurred.
-public protocol AppErrorProtocol: ErrorIdentifier, CustomStringConvertible, CustomAnalyticsValueConvertible {
+public protocol AppErrorProtocol: IdentifiableError, CustomStringConvertible, CustomAnalyticsValueConvertible {
     /// A unique id for the error.
     var id: String { get }
 
@@ -73,7 +73,7 @@ extension AppErrorProtocol {
 
 extension Error {
     public var id: String {
-        if let error = self as? ErrorIdentifier {
+        if let error = self as? any IdentifiableError {
             return error.id
         }
 
@@ -96,8 +96,8 @@ extension Error {
         appError.logLevel
     }
 
-    private var appError: AppErrorProtocol {
-        self as? AppErrorProtocol ?? AppError.general
+    private var appError: any AppErrorProtocol {
+        self as? any AppErrorProtocol ?? AppError.general
     }
 }
 

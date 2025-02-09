@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - ImageAssetIdentifier
 
-public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Hashable {
+public struct ImageAssetIdentifier: RawRepresentable, Sendable, Hashable, CustomStringConvertible {
     public let rawValue: String
     public let bundle: Bundle
     public var accessibilityLabel: String?
