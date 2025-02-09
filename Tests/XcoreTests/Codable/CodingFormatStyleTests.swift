@@ -612,7 +612,7 @@ struct CodingFormatStyleTests {
 }
 
 extension CodingFormatStyleTests {
-    private func assertDouble(number: String, file: StaticString = #filePath, line: UInt = #line) throws {
+    private func assertDouble(number: String, sourceLocation: SourceLocation = #_sourceLocation) throws {
         struct Example: Codable, Equatable {
             enum CodingKeys: CodingKey {
                 case value
@@ -638,27 +638,27 @@ extension CodingFormatStyleTests {
         // Decode from string: "number"
         let data1 = try #require("{\"value\": \"\(number)\"}".data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
-        #expect(example1.value == Double(number))
-        #expect(example1.value.description == number)
+        #expect(example1.value == Double(number), sourceLocation: sourceLocation)
+        #expect(example1.value.description == number, sourceLocation: sourceLocation)
         let eth1 = Money(example1.value)
             .currencySymbol("ETH", position: .suffix)
             .fractionLength(.maxFractionDigits)
             .formatted()
-        #expect(eth1 == "\(number) ETH")
+        #expect(eth1 == "\(number) ETH", sourceLocation: sourceLocation)
 
         // Decode from floating point: number
         let data2 = try #require("{\"value\": \(number)}".data(using: .utf8))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
-        #expect(example2.value == Double(number))
-        #expect(example2.value.description == number)
+        #expect(example2.value == Double(number), sourceLocation: sourceLocation)
+        #expect(example2.value.description == number, sourceLocation: sourceLocation)
         let eth2 = Money(example2.value)
             .currencySymbol("ETH", position: .suffix)
             .fractionLength(.maxFractionDigits)
             .formatted()
-        #expect(eth2 == "\(number) ETH")
+        #expect(eth2 == "\(number) ETH", sourceLocation: sourceLocation)
     }
 
-    private func assertDecimal(number: String, file: StaticString = #filePath, line: UInt = #line) throws {
+    private func assertDecimal(number: String, sourceLocation: SourceLocation = #_sourceLocation) throws {
         struct Example: Codable, Equatable {
             enum CodingKeys: CodingKey {
                 case value
@@ -684,24 +684,24 @@ extension CodingFormatStyleTests {
         // Decode from string: "number"
         let data1 = try #require("{\"value\": \"\(number)\"}".data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
-        #expect(example1.value == Decimal(string: number, locale: .us))
-        #expect(example1.value.description == number)
+        #expect(example1.value == Decimal(string: number, locale: .us), sourceLocation: sourceLocation)
+        #expect(example1.value.description == number, sourceLocation: sourceLocation)
         let eth1 = Money(example1.value)
             .currencySymbol("ETH", position: .suffix)
             .fractionLength(.maxFractionDigits)
             .formatted()
-        #expect(eth1 == "\(number) ETH")
+        #expect(eth1 == "\(number) ETH", sourceLocation: sourceLocation)
 
         // Decode from floating point: number
         let data2 = try #require("{\"value\": \(number)}".data(using: .utf8))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
-        #expect(example2.value == Decimal(string: number, locale: .us))
-        #expect(example2.value.description == number)
+        #expect(example2.value == Decimal(string: number, locale: .us), sourceLocation: sourceLocation)
+        #expect(example2.value.description == number, sourceLocation: sourceLocation)
         let eth2 = Money(example2.value)
             .currencySymbol("ETH", position: .suffix)
             .fractionLength(.maxFractionDigits)
             .formatted()
-        #expect(eth2 == "\(number) ETH")
+        #expect(eth2 == "\(number) ETH", sourceLocation: sourceLocation)
     }
 }
 

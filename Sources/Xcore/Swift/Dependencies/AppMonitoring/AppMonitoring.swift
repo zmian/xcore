@@ -71,8 +71,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -82,7 +81,13 @@ extension AppMonitoring {
 
         if let error {
             #if DEBUG
-            reportIssue(error, message ?? errorUrl?.absoluteString, fileID: fileID, filePath: filePath, line: line, column: column)
+            reportIssue(
+                error,
+                message ?? errorUrl?.absoluteString,
+                fileID: file,
+                line: line,
+                column: column
+            )
             #endif
 
             let nsError = error as NSError
@@ -98,14 +103,14 @@ extension AppMonitoring {
                 userInfo: ([
                     NSLocalizedDescriptionKey: error.title,
                     NSDebugDescriptionErrorKey: error.debugMessage,
-                    NSFilePathErrorKey: "\(fileID):\(line)",
+                    NSFilePathErrorKey: "\(file):\(line)",
                     NSURLErrorKey: errorUrl,
                     NSUnderlyingErrorKey: nsError
                 ] as [String: Any?]).compacted()
             )
         } else if let message {
             #if DEBUG
-            debugLog(message, file: fileID, line: line)
+            debugLog(message, file: file, line: line)
             #endif
         }
 
@@ -115,8 +120,7 @@ extension AppMonitoring {
     public func logError(
         _ error: Error,
         url: URL?,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -124,8 +128,7 @@ extension AppMonitoring {
             error.logLevel ?? .debug,
             error: error,
             errorUrl: url,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
@@ -140,8 +143,7 @@ extension AppMonitoring {
         errorUrl: URL? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -152,8 +154,7 @@ extension AppMonitoring {
             id: customErrorId,
             message: message,
             properties: properties,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
@@ -165,8 +166,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -176,8 +176,7 @@ extension AppMonitoring {
             id: customErrorId,
             message: message,
             properties: properties,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
@@ -189,8 +188,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -199,8 +197,7 @@ extension AppMonitoring {
             id: customErrorId,
             message: message,
             properties: properties,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
@@ -212,8 +209,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -223,8 +219,7 @@ extension AppMonitoring {
             id: customErrorId,
             message: message,
             properties: properties,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
@@ -236,8 +231,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        fileID: StaticString = #fileID,
-        filePath: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -246,8 +240,7 @@ extension AppMonitoring {
             id: customErrorId,
             message: message,
             properties: properties,
-            fileID: fileID,
-            filePath: filePath,
+            file: file,
             line: line,
             column: column
         )
