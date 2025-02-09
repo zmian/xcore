@@ -137,11 +137,7 @@ extension StoryView {
             .onLongPressGesture(minimumDuration: 10, maximumDistance: .greatestFiniteMagnitude) {
                 storyTimer.pause()
             } onPressingChanged: { isPressing in
-                if isPressing {
-                    storyTimer.pause()
-                } else {
-                    storyTimer.resume()
-                }
+                isPressing ? storyTimer.pause() : storyTimer.resume()
             }
     }
 
