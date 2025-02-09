@@ -6,7 +6,7 @@
 
 import Foundation
 
-open class Analytics<Event: AnalyticsEventProtocol> {
+open class Analytics<Event: AnalyticsEventProtocol>: @unchecked Sendable {
     private var userId: String?
     private var traits: EncodableDictionary = [:]
 
