@@ -12,15 +12,7 @@ extension EnvironmentValues {
     @Entry var popupCornerRadius: CGFloat = 16
     @Entry var popupTextAlignment: TextAlignment = .center
     @Entry var popupDismissAction: PopupDismissAction?
-
-    private enum PopupPreferredWidthKey: @preconcurrency EnvironmentKey {
-        @MainActor static let defaultValue: CGFloat = AppConstants.popupPreferredWidth
-    }
-
-    var popupPreferredWidth: CGFloat {
-        get { self[PopupPreferredWidthKey.self] }
-        set { self[PopupPreferredWidthKey.self] = newValue }
-    }
+    @Entry var popupPreferredWidth = AppConstants.popupPreferredWidth
 }
 
 // MARK: - View Helpers

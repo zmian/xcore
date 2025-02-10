@@ -87,8 +87,8 @@ extension CGFloat {
     nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
 
     /// Return true `1` pixel relative to the screen scale.
-    @MainActor public static var onePixel: Self {
-        1 / UIScreen.main.scale
+    public static var onePixel: Self {
+        1 / Screen.main.scale
     }
 }
 
@@ -159,20 +159,19 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
-    @MainActor
-    public static let statusBarHeight: CGFloat = UIApplication
-        .sharedOrNil?
-        .firstSceneKeyWindow?
-        .windowScene?
-        .statusBarManager?
-        .statusBarFrame.height ?? 44
+    public static let statusBarHeight = MainActor.performIsolated {
+        UIApplication
+            .sharedOrNil?
+            .firstSceneKeyWindow?
+            .windowScene?
+            .statusBarManager?
+            .statusBarFrame.height ?? 44
+    }
 
-    @MainActor
     public static var statusBarPlusNavBarHeight: CGFloat {
         statusBarHeight + navBarHeight
     }
 
-    @MainActor
     public static var navBarHeight: CGFloat {
         if Device.userInterfaceIdiom == .pad {
             return 50
@@ -188,12 +187,10 @@ public enum AppConstants {
 
     nonisolated(unsafe) public static var cornerRadius: CGFloat = 6
 
-    @MainActor
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width
     }
 
-    @MainActor
     static var popupPreferredWidth: CGFloat {
         min(300, Device.screen.bounds.size.min * 0.8)
     }
@@ -201,7 +198,6 @@ public enum AppConstants {
 
 // MARK: - Device
 
-@MainActor
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
         Device.capability.contains(.homeIndicator)
@@ -228,6 +224,7 @@ extension AppConstants {
     }
 
     /// Returns relative value for the current device based on iPhone 6 width.
+    @MainActor
     public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let screenSize = UIScreen.main.bounds.size
         let reference = iPhoneXSScreenSize
@@ -235,6 +232,7 @@ extension AppConstants {
         return value * relation
     }
 
+    @MainActor
     public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let screenSize = UIScreen.main.bounds.size
         let reference = iPhoneXSScreenSize

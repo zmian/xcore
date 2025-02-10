@@ -50,38 +50,40 @@ public enum UserInterfaceIdiom: Sendable, Hashable, CustomStringConvertible {
 
 extension UserInterfaceIdiom {
     /// The style of interface to use on the current device.
-    @MainActor static var current: Self {
-        #if targetEnvironment(macCatalyst)
-        return .mac
-        #elseif os(iOS) || os(tvOS) || os(visionOS)
-        // swiftformat:disable indent
-        switch UIDevice.current.userInterfaceIdiom {
-            case .carPlay:
-                return .carPlay
-            case .mac:
-                return .mac
-            case .pad:
-                return .pad
-            case .phone:
-                return .phone
-            case .tv:
-                return .tv
-            case .vision:
-                return .vision
-            case .unspecified:
-                return .unspecified
-            @unknown default:
-                #if DEBUG
-                fatalError(because: .unknownCaseDetected(UIDevice.current.userInterfaceIdiom))
-                #else
-                return .unspecified
-                #endif
+    static var current: Self {
+        MainActor.performIsolated {
+            #if targetEnvironment(macCatalyst)
+            return .mac
+            #elseif os(iOS) || os(tvOS) || os(visionOS)
+            // swiftformat:disable indent
+            switch UIDevice.current.userInterfaceIdiom {
+                case .carPlay:
+                    return .carPlay
+                case .mac:
+                    return .mac
+                case .pad:
+                    return .pad
+                case .phone:
+                    return .phone
+                case .tv:
+                    return .tv
+                case .vision:
+                    return .vision
+                case .unspecified:
+                    return .unspecified
+                @unknown default:
+                    #if DEBUG
+                    fatalError(because: .unknownCaseDetected(UIDevice.current.userInterfaceIdiom))
+                    #else
+                    return .unspecified
+                    #endif
+            }
+            // swiftformat:enable indent
+            #elseif os(macOS)
+            return .mac
+            #elseif os(watchOS)
+            return .watch
+            #endif
         }
-        // swiftformat:enable indent
-        #elseif os(macOS)
-        return .mac
-        #elseif os(watchOS)
-        return .watch
-        #endif
     }
 }

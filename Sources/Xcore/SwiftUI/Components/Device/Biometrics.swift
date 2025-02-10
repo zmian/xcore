@@ -78,7 +78,7 @@ public struct Biometrics: Sendable {
     ///   If user denies the permission, then the returned value is still `.faceID`.
     ///   If you need to check if biometrics authentication is available then use
     ///   `Device.biometrics.isAvailable`.
-    @MainActor public var kind: Kind {
+    public var kind: Kind {
         let kind = Kind()
 
         guard kind == .none else {

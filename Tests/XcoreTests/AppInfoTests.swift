@@ -8,7 +8,6 @@ import Testing
 import Foundation
 @testable import Xcore
 
-@MainActor
 struct AppInfoTests {
     @Test
     func traits() {

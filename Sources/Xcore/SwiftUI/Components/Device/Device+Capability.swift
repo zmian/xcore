@@ -8,7 +8,7 @@ import SwiftUI
 
 extension Device {
     /// A structure representing the device’s capabilities.
-    public struct Capability: OptionSet, Sendable {
+    public struct Capability: OptionSet, Sendable, Hashable {
         public let rawValue: Int
 
         public init(rawValue: Int) {
@@ -35,7 +35,7 @@ extension Device {
             capability.update(with: .notch)
         }
 
-        if hasHomeIndicator {
+        if Self.hasHomeIndicator {
             capability.update(with: .homeIndicator)
         }
 
@@ -52,23 +52,23 @@ extension Device {
 
         return capability
     }
-}
 
-extension Device {
     private var hasTopNotch: Bool {
         // Notch: 44 on iPhone X, XS, XS Max, XR.
         // No Notch: 24 on iPad Pro 12.9" 3rd generation, 20 on iPhone 8
         AppConstants.statusBarHeight > 24
     }
 
-    private var hasHomeIndicator: Bool {
-        let safeAreaInsets = UIApplication
-            .sharedOrNil?
-            .firstSceneKeyWindow?
-            .safeAreaInsets
+    private static let hasHomeIndicator: Bool = {
+        MainActor.performIsolated {
+            let safeAreaInsets = UIApplication
+                .sharedOrNil?
+                .firstSceneKeyWindow?
+                .safeAreaInsets
 
-        // Home indicator: 34 on iPhone X, XS, XS Max, XR.
-        // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
-        return safeAreaInsets?.bottom ?? 0 > 0
-    }
+            // Home indicator: 34 on iPhone X, XS, XS Max, XR.
+            // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
+            return safeAreaInsets?.bottom ?? 0 > 0
+        }
+    }()
 }

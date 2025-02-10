@@ -21,7 +21,6 @@ extension Screen {
         case iPhoneXSMax
         case unknown
 
-        @MainActor
         init(screen: Screen) {
             switch screen.size.max {
                 case 480:
@@ -44,19 +43,19 @@ extension Screen {
         public var size: CGSize {
             switch self {
                 case .iPhone4:
-                    return CGSize(width: 320, height: 480)
+                    CGSize(width: 320, height: 480)
                 case .iPhone5:
-                    return CGSize(width: 320, height: 568)
+                    CGSize(width: 320, height: 568)
                 case .iPhone6:
-                    return CGSize(width: 375, height: 667)
+                    CGSize(width: 375, height: 667)
                 case .iPhone6Plus:
-                    return CGSize(width: 414, height: 736)
+                    CGSize(width: 414, height: 736)
                 case .iPhoneX:
-                    return CGSize(width: 375, height: 812)
+                    CGSize(width: 375, height: 812)
                 case .iPhoneXSMax:
-                    return CGSize(width: 414, height: 896)
+                    CGSize(width: 414, height: 896)
                 case .unknown:
-                    return CGSize(width: -1, height: -1)
+                    CGSize(width: -1, height: -1)
             }
         }
 
@@ -65,10 +64,8 @@ extension Screen {
         /// iPhone 11 Pro, iPhone 11 Pro Max).
         var iPhoneXSeries: Bool {
             switch self {
-                case .iPhoneX, .iPhoneXSMax:
-                    return true
-                default:
-                    return false
+                case .iPhoneX, .iPhoneXSMax: true
+                default: false
             }
         }
     }

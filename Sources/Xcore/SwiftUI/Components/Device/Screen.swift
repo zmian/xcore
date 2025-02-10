@@ -8,33 +8,36 @@ import SwiftUI
 import Combine
 
 /// An object representing the device’s screen.
-@MainActor
 @dynamicMemberLookup
-public final class Screen: ObservableObject {
+public final class Screen: ObservableObject, Sendable {
     /// Returns the screen object representing the device’s screen.
-    nonisolated static let main = Screen()
+    static let main = Screen()
 
     /// The bounding rectangle of the screen, measured in points.
     public var bounds: CGRect {
-        #if os(iOS) || os(tvOS)
-        return UIScreen.main.bounds
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().screenBounds
-        #elseif os(macOS)
-        return NSScreen.main?.frame ?? .zero
-        #endif
+        MainActor.performIsolated {
+            #if os(iOS) || os(tvOS)
+            return UIScreen.main.bounds
+            #elseif os(watchOS)
+            return WKInterfaceDevice.current().screenBounds
+            #elseif os(macOS)
+            return NSScreen.main?.frame ?? .zero
+            #endif
+        }
     }
 
     /// The natural scale factor associated with the screen.
-    public var scale: CGFloat {
-        #if os(iOS) || os(tvOS)
-        return UIScreen.main.scale
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().screenScale
-        #elseif os(macOS)
-        return NSScreen.main?.backingScaleFactor ?? 1.0
-        #endif
-    }
+    public let scale: CGFloat = {
+        MainActor.performIsolated {
+            #if os(iOS) || os(tvOS)
+            return UIScreen.main.scale
+            #elseif os(watchOS)
+            return WKInterfaceDevice.current().screenScale
+            #elseif os(macOS)
+            return NSScreen.main?.backingScaleFactor ?? 1.0
+            #endif
+        }
+    }()
 
     /// The size of the screen, measured in points.
     public var size: CGSize {
@@ -55,6 +58,7 @@ public final class Screen: ObservableObject {
     /// locked, regardless of whether the app is closed. The system brightness
     /// (which the user can set in Settings or Control Center) is restored the next
     /// time the display is turned on.
+    @MainActor
     public var brightness: CGFloat {
         get {
             #if os(iOS) || targetEnvironment(macCatalyst)
@@ -76,7 +80,7 @@ public final class Screen: ObservableObject {
 
     nonisolated(unsafe) private var cancellable: AnyCancellable?
 
-    nonisolated private init() {
+    private init() {
         #if os(iOS)
         cancellable = NotificationCenter
             .default

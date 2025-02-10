@@ -390,26 +390,30 @@ extension Device.Model {
     /// The value of this property is an arbitrary alphanumeric string that is
     /// associated with the device as an identifier. For example, you can find the
     /// name of an iOS device in the `General > About` settings.
-    @MainActor public var name: String {
-        #if os(iOS) || os(tvOS)
-        return UIDevice.current.name
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().name
-        #elseif os(macOS)
-        return ProcessInfo.shared.hostName
-        #endif
+    public var name: String {
+        MainActor.performIsolated {
+            #if os(iOS) || os(tvOS)
+            return UIDevice.current.name
+            #elseif os(watchOS)
+            return WKInterfaceDevice.current().name
+            #elseif os(macOS)
+            return ProcessInfo.shared.hostName
+            #endif
+        }
     }
 
     /// The family name of the device model (e.g., "iPhone" or "iPod touch").
-    @MainActor public var family: String {
-        #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
-        return UIDevice.current.model
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().model
-        #elseif os(macOS)
-        #warning("FIXME: Implement")
-        return ""
-        #endif
+    public var family: String {
+        MainActor.performIsolated {
+            #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
+            return UIDevice.current.model
+            #elseif os(watchOS)
+            return WKInterfaceDevice.current().model
+            #elseif os(macOS)
+            #warning("FIXME: Implement")
+            return ""
+            #endif
+        }
     }
 
     /// The model identifier of the device (e.g., "iPhone9,2").

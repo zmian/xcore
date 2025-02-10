@@ -8,14 +8,13 @@ import SwiftUI
 import Combine
 
 /// An object representing the device.
-@MainActor
 @dynamicMemberLookup
-public final class Device: ObservableObject {
+public final class Device: ObservableObject, Sendable {
     /// An object that represents the current device.
-    nonisolated public static let current = Device()
+    public static let current = Device()
 
     /// Returns the screen object representing the device’s screen.
-    nonisolated public var screen: Screen {
+    public var screen: Screen {
         .main
     }
 
@@ -30,7 +29,7 @@ public final class Device: ObservableObject {
 
     nonisolated(unsafe) private var cancellable: AnyCancellable?
 
-    nonisolated private init() {
+    private init() {
         #if os(iOS)
         cancellable = screen
             .objectWillChange
@@ -47,16 +46,18 @@ public final class Device: ObservableObject {
 extension Device {
     /// The name of the operating system running on the device (e.g., iOS).
     public var osName: String {
-        #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
-        return UIDevice.current.systemName
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().systemName
-        #elseif os(macOS)
-        #warning("FIXME: Implement")
-        return "macOS"
-        #else
-        return "Unknown"
-        #endif
+        MainActor.performIsolated {
+            #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
+            return UIDevice.current.systemName
+            #elseif os(watchOS)
+            return WKInterfaceDevice.current().systemName
+            #elseif os(macOS)
+            #warning("FIXME: Implement")
+            return "macOS"
+            #else
+            return "Unknown"
+            #endif
+        }
     }
 
     /// The current version of the operating system.

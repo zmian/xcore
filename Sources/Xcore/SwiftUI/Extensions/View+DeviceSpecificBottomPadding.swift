@@ -30,7 +30,6 @@ private struct NonHomeIndicatorPaddingModifier: ViewModifier {
     }
 }
 
-@MainActor
 extension CGFloat {
     /// Returns default spacing only if this device doesn't support home indicator.
     public static var deviceSpecificSpacing: Self {

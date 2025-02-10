@@ -44,17 +44,17 @@ extension CATransitionType {
 // MARK: - CAMediaTimingFunction
 
 extension CAMediaTimingFunction {
-    @MainActor public static let `default` = CAMediaTimingFunction(name: .default)
-    @MainActor public static let linear = CAMediaTimingFunction(name: .linear)
-    @MainActor public static let easeIn = CAMediaTimingFunction(name: .easeIn)
-    @MainActor public static let easeOut = CAMediaTimingFunction(name: .easeOut)
-    @MainActor public static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
+    nonisolated(unsafe) public static let `default` = CAMediaTimingFunction(name: .default)
+    nonisolated(unsafe) public static let linear = CAMediaTimingFunction(name: .linear)
+    nonisolated(unsafe) public static let easeIn = CAMediaTimingFunction(name: .easeIn)
+    nonisolated(unsafe) public static let easeOut = CAMediaTimingFunction(name: .easeOut)
+    nonisolated(unsafe) public static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
 }
 
 // MARK: - CATransition
 
 extension CATransition {
-    @MainActor public static var fade: CATransition {
+    public static var fade: CATransition {
         CATransition().apply {
             $0.duration = .default
             $0.timingFunction = .easeInEaseOut
