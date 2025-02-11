@@ -28,7 +28,7 @@ import PhotosUI
 ///     }
 /// }
 /// ```
-public struct SimplePhotoPicker<Label: View & Sendable>: View {
+public struct SimplePhotoPicker<Label: View>: View {
     private let label: Label
     @State var selectedItems: [PhotosPickerItem] = []
     private let selection: (UIImage) -> Void
@@ -48,12 +48,14 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
     }
 
     public var body: some View {
+        nonisolated(unsafe) let sendableLabel = label
+
         PhotosPicker(
             selection: $selectedItems,
             maxSelectionCount: 1,
             matching: .images
         ) {
-            label
+            sendableLabel
         }
         .onChange(of: selectedItems) { _, selectedItems in
             Task {

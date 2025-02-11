@@ -23,6 +23,7 @@ extension View {
     /// - Parameters:
     ///   - id: The identifier of a child view to scroll to.
     ///   - anchor: The alignment behavior of the scroll action.
+    @available(iOS, deprecated: 18.0, message: "Use 'scrollPosition(_:)', instead.")
     public func scrollTo(_ id: Binding<some Hashable>, anchor: UnitPoint = .top) -> some View {
         modifier(ScrollToViewModifier(id: id, anchor: anchor))
     }
