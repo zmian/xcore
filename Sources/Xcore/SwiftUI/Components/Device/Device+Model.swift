@@ -32,6 +32,7 @@ extension Device {
         case iPhone13, iPhone13Mini, iPhone13Pro, iPhone13ProMax
         case iPhone14, iPhone14Plus, iPhone14Pro, iPhone14ProMax
         case iPhone15, iPhone15Plus, iPhone15Pro, iPhone15ProMax
+        case iPhone16, iPhone16Plus, iPhone16Pro, iPhone16ProMax
 
         // iPad
         case iPad_1
@@ -150,6 +151,10 @@ extension Device {
                     case "iPhone15,5": return .iPhone15Plus
                     case "iPhone16,1": return .iPhone15Pro
                     case "iPhone16,2": return .iPhone15ProMax
+                    case "iPhone17,3": return .iPhone16
+                    case "iPhone17,4": return .iPhone16Plus
+                    case "iPhone17,1": return .iPhone16Pro
+                    case "iPhone17,2": return .iPhone16ProMax
 
                     // MARK: - iPad
 
@@ -287,6 +292,11 @@ extension Device {
                 case .iPhone15Plus: return "iPhone 15 Plus"
                 case .iPhone15Pro: return "iPhone 15 Pro"
                 case .iPhone15ProMax: return "iPhone 15 Pro Max"
+                // 16
+                case .iPhone16: return "iPhone 16"
+                case .iPhone16Plus: return "iPhone 16 Plus"
+                case .iPhone16Pro: return "iPhone 16 Pro"
+                case .iPhone16ProMax: return "iPhone 16 Pro Max"
 
                 case .iPad_1: return "iPad (1st generation)"
                 case .iPad_2: return "iPad (2nd generation)"
