@@ -78,7 +78,7 @@ public struct AddressForm: Sendable {
     // MARK: - Action
 
     /// The actions that drive the address input flow.
-    public enum Action: Equatable, BindableAction, Sendable {
+    public enum Action: Sendable, Equatable, BindableAction {
         /// Indicates that the view has appeared.
         case onAppear
         /// Indicates that the view has disappeared.
