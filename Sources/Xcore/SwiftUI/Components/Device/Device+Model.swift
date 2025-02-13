@@ -388,7 +388,7 @@ extension Device {
     /// }
     /// ```
     public var model: Model {
-        .init(identifier: Model.internalIdentifier)
+        .init(identifier: Model._identifier)
     }
 }
 
@@ -428,7 +428,7 @@ extension Device.Model {
 
     /// The model identifier of the device (e.g., "iPhone9,2").
     public var identifier: String {
-        let id = Self.internalIdentifier
+        let id = Self._identifier
 
         #if targetEnvironment(simulator)
         return "Simulator (\(id))"
@@ -438,7 +438,7 @@ extension Device.Model {
     }
 
     /// The model identifier of the current device (e.g., "iPhone9,2").
-    fileprivate static var internalIdentifier: String {
+    fileprivate static var _identifier: String {
         if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
             return simulatorModelIdentifier
         }

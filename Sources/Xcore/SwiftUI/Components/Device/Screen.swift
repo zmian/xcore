@@ -8,10 +8,29 @@ import SwiftUI
 import Combine
 
 /// An object representing the device’s screen.
-@dynamicMemberLookup
 public final class Screen: ObservableObject, Sendable {
     /// Returns the screen object representing the device’s screen.
     static let main = Screen()
+
+    /// The natural scale factor associated with the screen.
+    ///
+    /// This value reflects the scale factor needed to convert from the default
+    /// logical coordinate space into the device coordinate space of this screen.
+    /// The default logical coordinate space is measured using points. For Retina
+    /// displays, the scale factor may be `3.0` or `2.0` and one point can
+    /// represented by nine or four pixels, respectively. For standard-resolution
+    /// displays, the scale factor is `1.0` and one point equals one pixel.
+    public let scale = MainActor.performIsolated {
+        #if os(iOS) || os(tvOS)
+        return UIScreen.main.scale
+        #elseif os(watchOS)
+        return WKInterfaceDevice.current().screenScale
+        #elseif os(macOS)
+        return NSScreen.main?.backingScaleFactor ?? 1.0
+        #else
+        return 1.0
+        #endif
+    }
 
     /// The bounding rectangle of the screen, measured in points.
     public var bounds: CGRect {
@@ -25,19 +44,6 @@ public final class Screen: ObservableObject, Sendable {
             #endif
         }
     }
-
-    /// The natural scale factor associated with the screen.
-    public let scale: CGFloat = {
-        MainActor.performIsolated {
-            #if os(iOS) || os(tvOS)
-            return UIScreen.main.scale
-            #elseif os(watchOS)
-            return WKInterfaceDevice.current().screenScale
-            #elseif os(macOS)
-            return NSScreen.main?.backingScaleFactor ?? 1.0
-            #endif
-        }
-    }()
 
     /// The size of the screen, measured in points.
     public var size: CGSize {
@@ -64,7 +70,7 @@ public final class Screen: ObservableObject, Sendable {
             #if os(iOS) || targetEnvironment(macCatalyst)
             return UIScreen.main.brightness
             #else
-            return 1
+            return 1.0
             #endif
         }
         set {
@@ -72,10 +78,6 @@ public final class Screen: ObservableObject, Sendable {
             UIScreen.main.brightness = newValue
             #endif
         }
-    }
-
-    public static subscript<T>(dynamicMember keyPath: KeyPath<Screen, T>) -> T {
-        main[keyPath: keyPath]
     }
 
     nonisolated(unsafe) private var cancellable: AnyCancellable?

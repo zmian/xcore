@@ -159,33 +159,21 @@ extension UIApplication {
 extension UIScene.ActivationState: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
-            case .foregroundActive:
-                return "foregroundActive"
-            case .foregroundInactive:
-                return "foregroundInactive"
-            case .background:
-                return "background"
-            case .unattached:
-                return "unattached"
-            @unknown default:
-                warnUnknown(self)
-                return "unknown"
+            case .foregroundActive: "foregroundActive"
+            case .foregroundInactive: "foregroundInactive"
+            case .background: "background"
+            case .unattached: "unattached"
+            @unknown default: "unknown"
         }
     }
 
     fileprivate var sortOrder: Int {
         switch self {
-            case .foregroundActive:
-                return 0
-            case .foregroundInactive:
-                return 1
-            case .background:
-                return 2
-            case .unattached:
-                return 3
-            @unknown default:
-                warnUnknown(self)
-                return 4
+            case .foregroundActive: 0
+            case .foregroundInactive: 1
+            case .background: 2
+            case .unattached: 3
+            @unknown default: 4
         }
     }
 }

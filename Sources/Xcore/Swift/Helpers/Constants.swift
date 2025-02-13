@@ -226,7 +226,7 @@ extension AppConstants {
     /// Returns relative value for the current device based on iPhone 6 width.
     @MainActor
     public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = UIScreen.main.bounds.size
+        let screenSize = Screen.main.bounds.size
         let reference = iPhoneXSScreenSize
         let relation = axis == .vertical ? screenSize.height / reference.height : screenSize.width / reference.width
         return value * relation
@@ -234,7 +234,7 @@ extension AppConstants {
 
     @MainActor
     public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = UIScreen.main.bounds.size
+        let screenSize = Screen.main.bounds.size
         let reference = iPhoneXSScreenSize
         let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
         return max(0.0, remaining)

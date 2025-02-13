@@ -89,7 +89,7 @@ open class HUD: Appliable {
         } else if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
             window = .init(windowScene: windowScene)
         } else {
-            window = .init(frame: UIScreen.main.bounds)
+            window = .init(frame: Screen.main.bounds)
         }
 
         commonInit()

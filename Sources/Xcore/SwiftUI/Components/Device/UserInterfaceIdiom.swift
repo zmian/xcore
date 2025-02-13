@@ -55,7 +55,6 @@ extension UserInterfaceIdiom {
             #if targetEnvironment(macCatalyst)
             return .mac
             #elseif os(iOS) || os(tvOS) || os(visionOS)
-            // swiftformat:disable indent
             switch UIDevice.current.userInterfaceIdiom {
                 case .carPlay:
                     return .carPlay
@@ -78,7 +77,6 @@ extension UserInterfaceIdiom {
                     return .unspecified
                     #endif
             }
-            // swiftformat:enable indent
             #elseif os(macOS)
             return .mac
             #elseif os(watchOS)

@@ -59,16 +59,14 @@ extension Device {
         AppConstants.statusBarHeight > 24
     }
 
-    private static let hasHomeIndicator: Bool = {
-        MainActor.performIsolated {
-            let safeAreaInsets = UIApplication
-                .sharedOrNil?
-                .firstSceneKeyWindow?
-                .safeAreaInsets
+    private static let hasHomeIndicator = MainActor.performIsolated {
+        let safeAreaInsets = UIApplication
+            .sharedOrNil?
+            .firstSceneKeyWindow?
+            .safeAreaInsets
 
-            // Home indicator: 34 on iPhone X, XS, XS Max, XR.
-            // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
-            return safeAreaInsets?.bottom ?? 0 > 0
-        }
-    }()
+        // Home indicator: 34 on iPhone X, XS, XS Max, XR.
+        // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
+        return safeAreaInsets?.bottom ?? 0 > 0
+    }
 }

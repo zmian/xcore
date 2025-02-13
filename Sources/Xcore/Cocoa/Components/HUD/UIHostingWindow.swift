@@ -31,7 +31,7 @@ open class UIHostingWindow<Content: View>: UIWindow {
         if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
             super.init(windowScene: windowScene)
         } else {
-            super.init(frame: UIScreen.main.bounds)
+            super.init(frame: Screen.main.bounds)
         }
 
         backgroundColor = .clear

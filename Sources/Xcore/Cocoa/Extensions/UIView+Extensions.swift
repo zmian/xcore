@@ -42,7 +42,7 @@ extension UIView {
 @objc
 extension UIView {
     open var sizeFittingScreenWidth: CGSize {
-        sizeFitting(width: UIScreen.main.bounds.width)
+        sizeFitting(width: Screen.main.bounds.width)
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
