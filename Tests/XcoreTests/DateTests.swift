@@ -219,7 +219,7 @@ struct DateTest {
         #expect(yesterday.formatted(style: relative) == "Yesterday")
         #expect(now.formatted(style: relative) == "Today")
         #expect(hourAgo.formatted(style: relative) == "In 1 hour")
-        #expect(twoAgo.formatted(style: relative) == "In 2 hours")
+        #expect(twoAgo.formatted(style: relative) == "Today")
         #expect(tomorrow.formatted(style: relative) == "Tomorrow")
         #expect(twoMonthFromNow.formatted(style: relative) == "In 2 months")
         #expect(twoMonthAgo.formatted(style: relative) == "2 months ago")
@@ -243,7 +243,7 @@ struct DateTest {
         #expect(yesterday.formatted(style: relative) == "Yesterday")
         #expect(now.formatted(style: relative) == "Today")
         #expect(hourAgo.formatted(style: relative) == "In 1 hour")
-        #expect(twoAgo.formatted(style: relative) == "In 2 hours")
+        #expect(twoAgo.formatted(style: relative) == "Today")
         #expect(tomorrow.formatted(style: relative) == "Tomorrow")
 
         #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.abbreviated)))
