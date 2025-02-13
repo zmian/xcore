@@ -81,6 +81,8 @@ open class UIHostingWindow<Content: View>: UIWindow {
     }
 
     private func show() {
+        hideAnimator?.cancel()
+
         if windowScene == nil, let scene = UIApplication.sharedOrNil?.firstWindowScene {
             windowScene = scene
         }
@@ -93,14 +95,17 @@ open class UIHostingWindow<Content: View>: UIWindow {
     }
 
     private func hide() {
-        UIView.animate(withDuration: .default) {
+        hideAnimator?.cancel()
+        hideAnimator = UIAnimator(duration: .default) {
             self.alpha = 0
-        } completion: { _ in
+        } completion: {
             self.isHidden = true
             self.windowScene = nil
             self.alpha = 1
         }
     }
+
+    private var hideAnimator: UIAnimator?
 }
 
 // MARK: - ViewController
