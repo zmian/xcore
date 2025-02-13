@@ -42,16 +42,16 @@ struct UIAnimator {
         animations: @escaping () -> Void,
         completion: @escaping () -> Void
     ) {
-        let animator = UIViewPropertyAnimator(duration: duration, curve: .easeInOut) {
-            animations()
-        }
-
-        animator.addCompletion { _ in
-            completion()
-        }
+        let animator = UIViewPropertyAnimator.runningPropertyAnimator(
+            withDuration: duration,
+            delay: 0,
+            animations: animations,
+            completion: { _ in
+                completion()
+            }
+        )
 
         animator.startAnimation()
-
         self.animator = animator
     }
 
