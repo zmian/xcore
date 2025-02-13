@@ -40,14 +40,14 @@ struct UIAnimator {
     init(
         duration: TimeInterval,
         animations: @escaping () -> Void,
-        completion: @escaping () -> Void
+        completion: (() -> Void)? = nil
     ) {
         let animator = UIViewPropertyAnimator.runningPropertyAnimator(
             withDuration: duration,
             delay: 0,
             animations: animations,
             completion: { _ in
-                completion()
+                completion?()
             }
         )
 
@@ -57,8 +57,20 @@ struct UIAnimator {
 
     /// Cancels the in-flight animation.
     mutating func cancel() {
-        animator?.stopAnimation(false)
-        animator?.finishAnimation(at: .current)
-        animator = nil
+        guard let animator else {
+            return
+        }
+
+        if animator.isInterruptible {
+            if animator.state != .stopped {
+                animator.stopAnimation(true)
+            }
+
+            if animator.state == .stopped {
+                animator.finishAnimation(at: .current)
+            }
+        }
+
+        self.animator = nil
     }
 }
