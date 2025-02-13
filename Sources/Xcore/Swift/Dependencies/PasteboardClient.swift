@@ -58,19 +58,24 @@ extension PasteboardClient {
 
 extension DependencyValues {
     private enum PasteboardClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: PasteboardClient = .live
+        static let liveValue: PasteboardClient = .live
     }
 
     /// Provides functionality for copying a string to pasteboard.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// class ViewModel {
+    ///     @Dependency(\.pasteboard) var pasteboard
+    ///
+    ///     func copy() {
+    ///         pasteboard.copy("hello")
+    ///     }
+    /// }
+    /// ```
     public var pasteboard: PasteboardClient {
         get { self[PasteboardClientKey.self] }
         set { self[PasteboardClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for copying a string to pasteboard.
-    @discardableResult
-    public static func pasteboard(_ value: PasteboardClient) -> Self.Type {
-        PasteboardClientKey.liveValue = value
-        return Self.self
     }
 }

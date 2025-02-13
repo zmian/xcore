@@ -6,18 +6,6 @@
 
 import Foundation
 
-/// Returns the current value for `AppMonitoring` dependency.
-public var am: AppMonitoring {
-    #if DEBUG
-    // We don't want to configure anything here for testing.
-    if ProcessInfo.Arguments.isTesting {
-        return .noop
-    }
-    #endif
-
-    return Dependency(\.appMonitoring).wrappedValue
-}
-
 public struct AppMonitoring: Sendable {
     /// Configure app monitoring service.
     public var configure: @Sendable () -> Void
@@ -261,23 +249,43 @@ extension AppMonitoring {
             trace: { NoopAppTraceReporting(operationName: $0) }
         )
     }
+
+    /// Returns unimplemented variant of `AppMonitoring`.
+    public static var unimplemented: Self {
+        .init(
+            configure: {
+                reportIssue("\(Self.self).configure is unimplemented")
+            },
+            setCollectionEnabled: { _ in
+                reportIssue("\(Self.self).setCollectionEnabled is unimplemented")
+            },
+            signin: { _ in
+                reportIssue("\(Self.self).signin is unimplemented")
+            },
+            signout: {
+                reportIssue("\(Self.self).signout is unimplemented")
+            },
+            log: { _, _, _, _ in
+                reportIssue("\(Self.self).log is unimplemented")
+            },
+            trace: {
+                UnimplementedAppTraceReporting(operationName: $0)
+            }
+        )
+    }
 }
 
 // MARK: - Dependency
 
 extension DependencyValues {
     private enum AppMonitoringKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: AppMonitoring = .noop
+        static let liveValue: AppMonitoring = .unimplemented
+        static let testValue: AppMonitoring = .unimplemented
+        static let previewValue: AppMonitoring = .noop
     }
 
     public var appMonitoring: AppMonitoring {
         get { self[AppMonitoringKey.self] }
         set { self[AppMonitoringKey.self] = newValue }
-    }
-
-    @discardableResult
-    public static func appMonitoring(_ value: AppMonitoring) -> Self.Type {
-        AppMonitoringKey.liveValue = value
-        return Self.self
     }
 }

@@ -81,21 +81,26 @@ extension RequestReviewClient {
 
 extension DependencyValues {
     private enum RequestReviewClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: RequestReviewClient = .live
+        static let liveValue: RequestReviewClient = .live
+        static let testValue: RequestReviewClient = .unimplemented
     }
 
-    /// Provides functionality for requesting App Store ratings and reviews from
-    /// users.
+    /// Provides functionality to request an App Store rating or review from the
+    /// user, if appropriate.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// class ViewModel {
+    ///     @Dependency(\.requestReview) var requestReview
+    ///
+    ///     func askToRateApp() {
+    ///         requestReview()
+    ///     }
+    /// }
+    /// ```
     public var requestReview: RequestReviewClient {
         get { self[RequestReviewClientKey.self] }
         set { self[RequestReviewClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for requesting App Store ratings and reviews from
-    /// users.
-    @discardableResult
-    public static func requestReview(_ value: RequestReviewClient) -> Self.Type {
-        RequestReviewClientKey.liveValue = value
-        return Self.self
     }
 }

@@ -84,19 +84,13 @@ extension Pond {
 
 extension DependencyValues {
     private enum PondKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: Pond = .empty
+        static let liveValue: Pond = .unimplemented
+        static let testValue: Pond = .unimplemented
     }
 
     /// Provide functionality for key value storage.
     public var pond: Pond {
         get { self[PondKey.self] }
         set { self[PondKey.self] = newValue }
-    }
-
-    /// Provide functionality for key value storage.
-    @discardableResult
-    public static func pond(_ value: Pond) -> Self.Type {
-        PondKey.liveValue = value
-        return Self.self
     }
 }

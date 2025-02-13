@@ -9,7 +9,7 @@ import Foundation
 /// Provides functionality for address search completion based on partial search
 /// string.
 ///
-/// This protocol defines methods for performing address searches, resolving
+/// This client defines methods for performing address searches, resolving
 /// search results into complete addresses, validating addresses, and observing
 /// search updates in real time.
 ///
@@ -85,25 +85,34 @@ public protocol AddressSearchClient: Sendable {
 
 extension DependencyValues {
     private enum AddressSearchClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: AddressSearchClient = .live
+        static let liveValue: AddressSearchClient = .live
+        static let testValue: AddressSearchClient = .unimplemented
     }
 
-    /// The address search client for performing lookups and auto-completions.
+    /// Provides functionality for address search completion based on partial search
+    /// string.
+    ///
+    /// This client defines methods for performing address searches, resolving
+    /// search results into complete addresses, validating addresses, and observing
+    /// search updates in real time.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// class ViewModel {
+    ///     @Dependency(\.addressSearch) var addressSearch
+    ///
+    ///     func address() async throws {
+    ///         let address = try await addressSearch.query("One Apple Park Way")
+    ///         print(address)
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// The query parameter should be a **partial** or **full** address string,
+    /// similar to what users would enter in a search field.
     public var addressSearch: AddressSearchClient {
         get { self[AddressSearchClientKey.self] }
         set { self[AddressSearchClientKey.self] = newValue }
-    }
-
-    /// Sets a custom implementation of `AddressSearchClient` for dependency
-    /// injection.
-    ///
-    /// This allows for **mocking, testing, or replacing the live implementation**.
-    ///
-    /// - Parameter value: A new instance of `AddressSearchClient`.
-    /// - Returns: The updated `DependencyValues` type.
-    @discardableResult
-    public static func addressSearch(_ value: AddressSearchClient) -> Self.Type {
-        AddressSearchClientKey.liveValue = value
-        return Self.self
     }
 }

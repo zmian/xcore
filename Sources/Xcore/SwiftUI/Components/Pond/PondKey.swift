@@ -21,19 +21,23 @@ public struct PondKey: Sendable, Hashable, Identifiable, UserInfoContainer {
     /// **For Example:**
     ///
     /// ```swift
-    /// DependencyValues.pond(.composite(accessGroup: "group.com.example"))
+    /// prepareDependencies {
+    ///     $0.pond = .composite(accessGroup: "group.com.example")
+    /// }
     /// ```
     /// If you need more control you can customize the composite pond:
     ///
     /// ```swift
-    /// DependencyValues.pond(.composite { key in
-    ///     switch key.storage {
-    ///         case .userDefaults:
-    ///             // return appropriate pond
-    ///         case let .keychain(policy):
-    ///             // return appropriate pond
+    /// prepareDependencies {
+    ///     $0.pond = .composite(id: "myCustomId") { key in
+    ///         switch key.storage {
+    ///             case .userDefaults:
+    ///                 // return appropriate pond
+    ///             case let .keychain(policy):
+    ///                 // return appropriate pond
+    ///         }
     ///     }
-    /// })
+    /// }
     /// ```
     public let storage: Storage
 

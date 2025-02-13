@@ -78,3 +78,21 @@ public struct NoopAppTraceReporting: AppTraceReporting {
     public func setError(_ error: Error, file: StaticString, line: UInt) {}
     public func finish() {}
 }
+
+public struct UnimplementedAppTraceReporting: AppTraceReporting {
+    public init(operationName: String) {
+        reportIssue("AppTraceReporting.init is unimplemented")
+    }
+
+    public func setTag(_ key: String, value: Encodable) {
+        reportIssue("AppTraceReporting.setTag is unimplemented")
+    }
+
+    public func setError(_ error: Error, file: StaticString, line: UInt) {
+        reportIssue("AppTraceReporting.setError is unimplemented")
+    }
+
+    public func finish() {
+        reportIssue("AppTraceReporting.finish is unimplemented")
+    }
+}

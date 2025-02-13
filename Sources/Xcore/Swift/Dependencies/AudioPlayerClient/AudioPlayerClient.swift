@@ -57,19 +57,13 @@ extension AudioPlayerClient {
 
 extension DependencyValues {
     private enum AudioPlayerClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: AudioPlayerClient = .live
+        static let liveValue: AudioPlayerClient = .live
+        static let testValue: AudioPlayerClient = .unimplemented
     }
 
     /// Provides functionality for playing audio on the device.
     public var audioPlayer: AudioPlayerClient {
         get { self[AudioPlayerClientKey.self] }
         set { self[AudioPlayerClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for playing audio on the device.
-    @discardableResult
-    public static func audioPlayer(_ value: AudioPlayerClient) -> Self.Type {
-        AudioPlayerClientKey.liveValue = value
-        return Self.self
     }
 }

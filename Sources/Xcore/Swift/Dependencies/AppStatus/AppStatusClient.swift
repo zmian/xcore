@@ -132,19 +132,14 @@ extension AppStatusClient {
 
 extension DependencyValues {
     private enum AppStatusClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: AppStatusClient = .noop
+        static let liveValue: AppStatusClient = .unimplemented
+        static let testValue: AppStatusClient = .unimplemented
+        static let previewValue: AppStatusClient = .noop
     }
 
     /// Provides functionality for evaluating and receiving events for app’s state.
     public var appStatus: AppStatusClient {
         get { self[AppStatusClientKey.self] }
         set { self[AppStatusClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for evaluating and receiving events for app’s state.
-    @discardableResult
-    public static func appStatus(_ value: AppStatusClient) -> Self.Type {
-        AppStatusClientKey.liveValue = value
-        return Self.self
     }
 }

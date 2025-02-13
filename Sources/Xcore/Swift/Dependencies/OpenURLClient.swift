@@ -133,20 +133,33 @@ extension OpenURLClient {
 
 extension DependencyValues {
     private enum OpenURLClientKey: DependencyKey {
-        nonisolated(unsafe) static var liveValue: OpenURLClient = .system
+        static let liveValue: OpenURLClient = .system
     }
 
     /// Provides functionality for opening a URL.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// class ViewModel {
+    ///     @Dependency(\.openUrl) var openUrl
+    ///
+    ///     func openMailApp() {
+    ///         openUrl(.mailApp)
+    ///     }
+    ///
+    ///     func openSettingsApp() {
+    ///         openUrl(.settingsApp)
+    ///     }
+    ///
+    ///     func openSomeUrl() {
+    ///         openUrl(URL(string: "https://example.com"))
+    ///     }
+    /// }
+    /// ```
     public var openUrl: OpenURLClient {
         get { self[OpenURLClientKey.self] }
         set { self[OpenURLClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for opening a URL.
-    @discardableResult
-    public static func openUrl(_ value: OpenURLClient) -> Self.Type {
-        OpenURLClientKey.liveValue = value
-        return Self.self
     }
 }
 
