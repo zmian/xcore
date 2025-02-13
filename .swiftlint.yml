@@ -4,6 +4,7 @@ excluded:
   - .build
 
 disabled_rules:
+  - opening_brace
   - blanket_disable_command
   - cyclomatic_complexity
   - file_length

@@ -34,12 +34,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode from Bool
-        let data1 = try #require(#"{"value": true}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": true}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == true)
 
         // Decode from String
-        let data2 = try #require(#"{"value": "true"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "true"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == true)
 
@@ -74,12 +74,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode from Int
-        let data1 = try #require(#"{"value": 123}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": 123}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == 123)
 
         // Decode from String
-        let data2 = try #require(#"{"value": "123"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "123"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == 123)
 
@@ -114,12 +114,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode from Double
-        let data1 = try #require(#"{"value": 123.45}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": 123.45}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == 123.45)
 
         // Decode from String
-        let data2 = try #require(#"{"value": "123.45"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "123.45"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == 123.45)
 
@@ -129,7 +129,7 @@ struct CodingFormatStyleTests {
         #expect(example1 == example3)
 
         // Decode from Int
-        let data4 = try #require(#"{"value": 123}"#.data(using: .utf8))
+        let data4 = Data(#"{"value": 123}"#.utf8)
         let example4 = try JSONDecoder().decode(Example.self, from: data4)
         #expect(example4.value == 123.0)
 
@@ -163,12 +163,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode from Double
-        let data1 = try #require(#"{"value": 123.45}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": 123.45}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == 123.45)
 
         // Decode from String
-        let data2 = try #require(#"{"value": "123.45"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "123.45"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == 123.45)
 
@@ -178,12 +178,12 @@ struct CodingFormatStyleTests {
         #expect(example1 == example3)
 
         // Decode from Int
-        let data4 = try #require(#"{"value": 123}"#.data(using: .utf8))
+        let data4 = Data(#"{"value": 123}"#.utf8)
         let example4 = try JSONDecoder().decode(Example.self, from: data4)
         #expect(example4.value == 123.0)
 
         // Decode from special doubles
-        let data5 = try #require(#"{"value": 40.76}"#.data(using: .utf8))
+        let data5 = Data(#"{"value": 40.76}"#.utf8)
         let example5 = try JSONDecoder().decode(Example.self, from: data5)
         #expect(example5.value == Decimal(string: "40.76", locale: .us))
         #expect(example5.value.description == "40.76")
@@ -191,13 +191,13 @@ struct CodingFormatStyleTests {
         let decimal = try #require(Decimal(string: "40.76", locale: .us))
         #expect(decimal.description == "40.76")
 
-        let data6 = try #require(#"{"value": 2109.12}"#.data(using: .utf8))
+        let data6 = Data(#"{"value": 2109.12}"#.utf8)
         let example6 = try JSONDecoder().decode(Example.self, from: data6)
         #expect(example6.value == Decimal(string: "2109.12", locale: .us))
         #expect(example6.value.description == "2109.12")
 
         // decode
-        let data7 = try #require(#"{"value": 2.12}"#.data(using: .utf8))
+        let data7 = Data(#"{"value": 2.12}"#.utf8)
         let example7 = try JSONDecoder().decode(Example.self, from: data7)
         #expect(example7.value == Decimal(string: "2.12", locale: .us))
         #expect(example7.value.description == "2.12")
@@ -239,7 +239,7 @@ struct CodingFormatStyleTests {
         }
 
         // Decode from Double
-        let data1 = try #require(#"{"value": -123.45}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": -123.45}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == 123.45)
 
@@ -249,7 +249,7 @@ struct CodingFormatStyleTests {
         #expect(example1 == example2)
 
         // Decode from Int
-        let data3 = try #require(#"{"value": -123}"#.data(using: .utf8))
+        let data3 = Data(#"{"value": -123}"#.utf8)
         let example3 = try JSONDecoder().decode(Example.self, from: data3)
         #expect(example3.value == 123.0)
     }
@@ -279,7 +279,7 @@ struct CodingFormatStyleTests {
         }
 
         // Decode valid url
-        let data1 = try #require(#"{"value": "https://example.com"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "https://example.com"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == URL(string: "https://example.com"))
 
@@ -289,7 +289,7 @@ struct CodingFormatStyleTests {
         #expect(example1 == example2)
 
         // Escaped url
-        let data3 = try #require(#"{"value": "https://example.com/_hello.html?DAT=A.B.cd&app=XC≻=ABC456&id=F5"}"#.data(using: .utf8))
+        let data3 = Data(#"{"value": "https://example.com/_hello.html?DAT=A.B.cd&app=XC≻=ABC456&id=F5"}"#.utf8)
         let example3 = try JSONDecoder().decode(Example.self, from: data3)
         // Non-escaped url without any encoding.
         let urlString = "https://example.com/_hello.html?DAT=A.B.cd&app=XC≻=ABC456&id=F5"
@@ -324,12 +324,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode
-        let data1 = try #require(#"{"value": "HELLO"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "HELLO"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == "hello")
 
         // Decode
-        let data2 = try #require(#"{"value": "HeLlO"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "HeLlO"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == "hello")
 
@@ -364,7 +364,7 @@ struct CodingFormatStyleTests {
         }
 
         // Decode
-        let data1 = try #require(#"{"value": "STYLE2"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "STYLE2"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == .style2)
 
@@ -409,7 +409,7 @@ struct CodingFormatStyleTests {
         }
 
         // Decode
-        let data1 = try #require(#"{"isPending": false}"#.data(using: .utf8))
+        let data1 = Data(#"{"isPending": false}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == .scheduled)
 
@@ -454,12 +454,12 @@ struct CodingFormatStyleTests {
         }
 
         // Valid
-        let data1 = try #require(#"{"value": "first"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "first"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == .style1)
 
         // Invalid
-        let data2 = try #require(#"{"value": "foobaz"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "foobaz"}"#.utf8)
         #expect(throws: Error.self) {
             try JSONDecoder().decode(Example.self, from: data2)
         }
@@ -499,13 +499,13 @@ struct CodingFormatStyleTests {
         }
 
         // Valid
-        let data1 = try #require(#"{"value": "0000FF"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "0000FF"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == UIColor(hex: "0000FF"))
         #expect(example1.isBlueColor == true)
 
         // Invalid
-        let data2 = try #require(#"{"value": "foobaz"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "foobaz"}"#.utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == UIColor(hex: "000000"))
         #expect(example2.isBlueColor == false)
@@ -546,7 +546,7 @@ struct CodingFormatStyleTests {
         }
 
         // Decode
-        let data1 = try #require(#"{"value": "11-06-2014"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "11-06-2014"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == Date(year: 2014, month: 6, day: 11))
 
@@ -586,12 +586,12 @@ struct CodingFormatStyleTests {
         }
 
         // Decode
-        let data1 = try #require(#"{"value": "2014-06-11"}"#.data(using: .utf8))
+        let data1 = Data(#"{"value": "2014-06-11"}"#.utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == Date(year: 2014, month: 6, day: 11, calendar: .iso))
 
         // Invalid
-        let data2 = try #require(#"{"value": "2014"}"#.data(using: .utf8))
+        let data2 = Data(#"{"value": "2014"}"#.utf8)
         #expect(throws: Error.self) {
             try JSONDecoder().decode(Example.self, from: data2)
         }
@@ -600,7 +600,7 @@ struct CodingFormatStyleTests {
         let jsonDecoder = JSONDecoder().apply {
             $0.userInfo[.dateFormat] = Date.ISO8601FormatStyle.iso8601.year().month()
         }
-        let data3 = try #require(#"{"value": "2014-06"}"#.data(using: .utf8))
+        let data3 = Data(#"{"value": "2014-06"}"#.utf8)
         let example3 = try jsonDecoder.decode(Example.self, from: data3)
         #expect(example3.value == Date(year: 2014, month: 6, day: 1, calendar: .iso))
 
@@ -636,7 +636,7 @@ extension CodingFormatStyleTests {
         }
 
         // Decode from string: "number"
-        let data1 = try #require("{\"value\": \"\(number)\"}".data(using: .utf8))
+        let data1 = Data("{\"value\": \"\(number)\"}".utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == Double(number), sourceLocation: sourceLocation)
         #expect(example1.value.description == number, sourceLocation: sourceLocation)
@@ -647,7 +647,7 @@ extension CodingFormatStyleTests {
         #expect(eth1 == "\(number) ETH", sourceLocation: sourceLocation)
 
         // Decode from floating point: number
-        let data2 = try #require("{\"value\": \(number)}".data(using: .utf8))
+        let data2 = Data("{\"value\": \(number)}".utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == Double(number), sourceLocation: sourceLocation)
         #expect(example2.value.description == number, sourceLocation: sourceLocation)
@@ -682,7 +682,7 @@ extension CodingFormatStyleTests {
         }
 
         // Decode from string: "number"
-        let data1 = try #require("{\"value\": \"\(number)\"}".data(using: .utf8))
+        let data1 = Data("{\"value\": \"\(number)\"}".utf8)
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         #expect(example1.value == Decimal(string: number, locale: .us), sourceLocation: sourceLocation)
         #expect(example1.value.description == number, sourceLocation: sourceLocation)
@@ -693,7 +693,7 @@ extension CodingFormatStyleTests {
         #expect(eth1 == "\(number) ETH", sourceLocation: sourceLocation)
 
         // Decode from floating point: number
-        let data2 = try #require("{\"value\": \(number)}".data(using: .utf8))
+        let data2 = Data("{\"value\": \(number)}".utf8)
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example2.value == Decimal(string: number, locale: .us), sourceLocation: sourceLocation)
         #expect(example2.value.description == number, sourceLocation: sourceLocation)

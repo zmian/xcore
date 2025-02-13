@@ -59,14 +59,12 @@ private final class MockButton: XCView {
     fileprivate var values: [String] = []
 
     override func commonInit() {
-        // swiftlint:disable:next icc_action_block
         button.addAction(.primaryActionTriggered) { [weak self] _ in
             self?.values.append("hello")
         }
     }
 
     func attachAddAction(withValue value: String) {
-        // swiftlint:disable:next icc_action_block
         button.addAction(.primaryActionTriggered) { [weak self] _ in
             self?.values.append(value)
         }

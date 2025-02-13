@@ -3,7 +3,6 @@
 // Copyright © 2021 Xcore
 // MIT license, see LICENSE file for details
 //
-// swiftlint:disable opening_brace
 
 import Foundation
 

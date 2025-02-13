@@ -20,7 +20,7 @@ extension JSONDecoder {
     ///     let age: Int
     /// }
     ///
-    /// let json = """
+    /// let json = Data("""
     /// {
     ///     "nested": {
     ///         "person": {
@@ -29,7 +29,7 @@ extension JSONDecoder {
     ///         }
     ///     }
     /// }
-    /// """.data(using: .utf8)!
+    /// """.utf8)
     ///
     /// let person = try JSONDecoder().decode(
     ///     Person.self, from: json, keyPath: "nested.person"

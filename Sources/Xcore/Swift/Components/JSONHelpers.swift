@@ -81,11 +81,7 @@ extension JSONHelpers {
         keyPath: String? = nil,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
-        guard let data = string.data(using: .utf8) else {
-            throw JSONError.invalidData
-        }
-
-        return try decode(data, keyPath: keyPath, options: options)
+        try decode(Data(string.utf8), keyPath: keyPath, options: options)
     }
 
     /// Returns a Foundation object from given JSON data.
@@ -192,7 +188,6 @@ extension JSONHelpers {
     /// Represents possible JSON-related errors.
     private enum JSONError: Error {
         case notFound
-        case invalidData
         case invalidKeyPath
         case invalidJSON
     }

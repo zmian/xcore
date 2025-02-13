@@ -139,7 +139,7 @@ extension StringConverter {
             case is NSString.Type, is Optional<NSString>.Type:
                 return string as? T
             case is Data.Type, is Optional<Data>.Type:
-                return string.data(using: .utf8) as? T
+                return Data(string.utf8) as? T
             case is NSURL.Type, is Optional<NSURL>.Type:
                 return NSURL(string: string) as? T
             case is Date.Type, is Optional<Date>.Type:
@@ -169,16 +169,12 @@ extension StringConverter {
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
     public func get<T: Decodable>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? {
-        guard let data = string.data(using: .utf8) else {
-            return nil
-        }
-
         let decoder = decoder ?? JSONDecoder().apply {
             $0.keyDecodingStrategy = .convertFromSnakeCase
         }
 
         do {
-            return try decoder.decode(T.self, from: data)
+            return try decoder.decode(T.self, from: Data(string.utf8))
         } catch {
             #if DEBUG
             if AppInfo.isDebuggerAttached {

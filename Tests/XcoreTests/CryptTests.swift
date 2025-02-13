@@ -41,7 +41,7 @@ struct CryptTests {
     @Test
     func encryptDecrypt_SecretData() throws {
         let secret = Crypt.generateSecureRandom()
-        let message = try #require("Hello World".data(using: .utf8))
+        let message = Data("Hello World".utf8)
 
         let encryptedMessage = try Crypt.encrypt(message, secret: secret)
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)
@@ -61,7 +61,7 @@ struct CryptTests {
     @Test
     func encryptDecrypt_SecretString() throws {
         let secret = Crypt.generateRandomPassword()
-        let message = try #require("Hello World".data(using: .utf8))
+        let message = Data("Hello World".utf8)
 
         let encryptedMessage = try Crypt.encrypt(message, secret: secret)
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)

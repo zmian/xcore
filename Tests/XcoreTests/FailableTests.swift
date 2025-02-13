@@ -53,12 +53,12 @@ struct FailableTests {
 
     // MARK: - Helpers
 
-    private let json = """
+    private let json = Data("""
     [
         {"name": "Zeus", "age": 3},
         {"age": 5}
     ]
-    """.data(using: .utf8)!
+    """.utf8)
 
     private struct Pet: Codable, Hashable {
         let name: String

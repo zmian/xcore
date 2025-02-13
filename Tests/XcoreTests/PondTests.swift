@@ -152,7 +152,7 @@ extension PondTests {
             let value: String
         }
 
-        let data = try #require(#"{"value": "hello world"}"#.data(using: .utf8))
+        let data = Data(#"{"value": "hello world"}"#.utf8)
         try assertCases(for: data, pond: pond())
 
         let model = withDependencies {

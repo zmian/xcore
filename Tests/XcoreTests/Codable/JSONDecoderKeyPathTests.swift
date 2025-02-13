@@ -11,14 +11,14 @@ import Foundation
 struct JSONDecoderKeyPathTests {
     @Test
     func validKeyPath() throws {
-        let json = """
+        let json = Data("""
         {
             "person": {
                 "name": "Sam",
                 "age": 8
             }
         }
-        """.data(using: .utf8)!
+        """.utf8)
 
         let person = try JSONDecoder().decode(Person.self, from: json, keyPath: "person")
         #expect(Person(name: "Sam", age: 8) == person)
@@ -26,14 +26,14 @@ struct JSONDecoderKeyPathTests {
 
     @Test
     func inValidKeyPath() throws {
-        let json = """
+        let json = Data("""
         {
             "person": {
                 "name": "Sam",
                 "age": 8
             }
         }
-        """.data(using: .utf8)!
+        """.utf8)
 
         #expect(throws: Error.self) {
             try JSONDecoder().decode(Person.self, from: json, keyPath: "person.custom")
@@ -42,7 +42,7 @@ struct JSONDecoderKeyPathTests {
 
     @Test
     func validKeyPathNested() throws {
-        let json = """
+        let json = Data("""
         {
             "level_1": {
                 "person": {
@@ -51,7 +51,7 @@ struct JSONDecoderKeyPathTests {
                 }
             }
         }
-        """.data(using: .utf8)!
+        """.utf8)
 
         let person = try JSONDecoder().decode(Person.self, from: json, keyPath: "level_1.person")
         #expect(Person(name: "Sam", age: 8) == person)
@@ -59,7 +59,7 @@ struct JSONDecoderKeyPathTests {
 
     @Test
     func validKeyPathNestedSeparator() throws {
-        let json = """
+        let json = Data("""
         {
             "level_1": {
                 "level_2.person": {
@@ -68,7 +68,7 @@ struct JSONDecoderKeyPathTests {
                 }
             }
         }
-        """.data(using: .utf8)!
+        """.utf8)
 
         let person = try JSONDecoder().decode(
             Person.self,

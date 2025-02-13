@@ -1,12 +1,15 @@
 --swiftversion 5.5
 
 # File Options
---exclude Pods, Generated, .build
+
+--exclude Pods, Generated, .build, LocalizableStrings.swift
 
 # Rules Toggle
---disable sortedImports, sortedSwitchCases, redundantSelf, organizeDeclarations
+
+--disable sortImports, sortSwitchCases, redundantSelf, organizeDeclarations
 
 # Format Options
+
 --minversion 0.48.9
 --allman false
 --assetliterals visual-width
