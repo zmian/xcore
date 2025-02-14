@@ -157,3 +157,14 @@ extension String: ImageRepresentable {
         .url(self)
     }
 }
+
+extension ImageResource: ImageRepresentable {
+    public var imageSource: ImageSourceType {
+        .uiImage(UIImage(resource: self))
+    }
+}
+
+/// A convenience function to get image resource.
+public func r(_ resource: ImageResource) -> ImageResource {
+    resource
+}

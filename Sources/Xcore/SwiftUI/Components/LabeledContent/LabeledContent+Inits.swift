@@ -39,6 +39,18 @@ extension LabeledContent<Text, Money?> {
 
 extension LabeledContent<Text, Image?> {
     /// Creates a labeled content with a title generated from a string and a value
+    /// with an image resource.
+    ///
+    /// ```swift
+    /// LabeledContent("Favorite", image: .disclosureIndicator)
+    /// ```
+    public init(_ title: some StringProtocol, image: ImageResource?) {
+        self.init(title) {
+            image.map(Image.init)
+        }
+    }
+
+    /// Creates a labeled content with a title generated from a string and a value
     /// with a system image.
     ///
     /// ```swift
@@ -47,18 +59,6 @@ extension LabeledContent<Text, Image?> {
     public init(_ title: some StringProtocol, systemImage: SystemAssetIdentifier?) {
         self.init(title) {
             systemImage.map(Image.init(system:))
-        }
-    }
-
-    /// Creates a labeled content with a title generated from a string and a value
-    /// with an image.
-    ///
-    /// ```swift
-    /// LabeledContent("Favorite", image: .disclosureIndicator)
-    /// ```
-    public init(_ title: some StringProtocol, image: ImageAssetIdentifier?) {
-        self.init(title) {
-            image.map(Image.init(assetIdentifier:))
         }
     }
 }
@@ -152,6 +152,21 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
     }
 
     /// Creates a labeled content with a title and subtitle generated from string
+    /// and a value with an image resource.
+    ///
+    /// ```swift
+    /// LabeledContent("Apple", subtitle: "AAPL", image: .disclosureIndicator)
+    /// ```
+    public init(
+        _ title: some StringProtocol,
+        subtitle: (some StringProtocol)?,
+        image: ImageResource,
+        spacing: CGFloat? = nil
+    ) where Content == Image {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(image))
+    }
+
+    /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with a system image.
     ///
     /// ```swift
@@ -164,21 +179,6 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
         spacing: CGFloat? = nil
     ) where Content == Image {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(system: systemImage))
-    }
-
-    /// Creates a labeled content with a title and subtitle generated from string
-    /// and a value with an image.
-    ///
-    /// ```swift
-    /// LabeledContent("Apple", subtitle: "AAPL", image: .disclosureIndicator)
-    /// ```
-    public init(
-        _ title: some StringProtocol,
-        subtitle: (some StringProtocol)?,
-        image: ImageAssetIdentifier,
-        spacing: CGFloat? = nil
-    ) where Content == Image {
-        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
     }
 }
 
@@ -239,6 +239,27 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
     }
 
     /// Creates a labeled content with a title and subtitle generated from string
+    /// and a value with an image resource.
+    ///
+    /// ```swift
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundStyle(.green)
+    /// }
+    ///
+    /// LabeledContent(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        image: ImageResource,
+        spacing: CGFloat? = nil
+    ) where Content == Image {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(image))
+    }
+
+    /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with a system image.
     ///
     /// ```swift
@@ -257,27 +278,6 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
         spacing: CGFloat? = nil
     ) where Content == Image {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(system: systemImage))
-    }
-
-    /// Creates a labeled content with a title and subtitle generated from string
-    /// and a value with an image.
-    ///
-    /// ```swift
-    /// var subtitle: Text {
-    ///     Text("AAPL")
-    ///         .font(.caption)
-    ///         .foregroundStyle(.green)
-    /// }
-    ///
-    /// LabeledContent(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
-    /// ```
-    public init(
-        _ title: Text,
-        subtitle: Text?,
-        image: ImageAssetIdentifier,
-        spacing: CGFloat? = nil
-    ) where Content == Image {
-        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
     }
 }
 
