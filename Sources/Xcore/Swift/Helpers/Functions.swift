@@ -10,7 +10,7 @@ import Foundation
 @inline(__always)
 public func whenNotRunningTests(_ work: () -> Void) {
     #if DEBUG
-    if !ProcessInfo.Arguments.isTesting {
+    if !isTesting {
         return work()
     }
     #else
