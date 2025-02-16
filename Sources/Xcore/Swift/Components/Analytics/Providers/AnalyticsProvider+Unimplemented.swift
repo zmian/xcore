@@ -8,7 +8,7 @@ import Foundation
 
 /// An unimplemented analytics provider that is suitable for tests.
 ///
-/// It verifies that no endpoints are invoked; if any event is triggered, the
+/// It verifies that no endpoints are invoked; if any endpoint is triggered, the
 /// test will fail.
 public struct UnimplementedAnalyticsProvider: AnalyticsProvider {
     public init() {}
