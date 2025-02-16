@@ -14,7 +14,7 @@ struct RootView: View {
         List {
             Section {
                 ForEach(items) { item in
-                    NavigationLink(destination: item.content()) {
+                    NavigationLink(destination: item.content) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.title)
                             if let subtitle = item.subtitle {
