@@ -78,9 +78,9 @@ struct AnalyticsTests {
     func track() {
         let analytics = AnalyticsClient()
 
-        #expect(analytics.event == nil)
+        #expect(analytics.lastEvent == nil)
         analytics.track(AppAnalyticsEvent(name: "sign up"))
-        #expect(analytics.event == AppAnalyticsEvent(name: "sign up"))
+        #expect(analytics.lastEvent == AppAnalyticsEvent(name: "sign up"))
     }
 
     @Test
@@ -140,69 +140,23 @@ struct AnalyticsTests {
     }
 }
 
+@dynamicMemberLookup
 private final class AnalyticsClient: Analytics<AppAnalyticsEvent>, @unchecked Sendable {
-    var event: AppAnalyticsEvent?
-    var userId: String?
-    var traits: [String: String] = [:]
-    var didCallReset = false
-    var didCallSetEnabled = false
-    var didCallIdentify = false
+    var mock: MockAnalyticsProvider
 
     init() {
+        mock = MockAnalyticsProvider()
         super.init(providers: [])
-
-        let provider = BlockAnalyticsProvider {
-            self.event = $0 as? AppAnalyticsEvent
-        } identify: {
-            self.didCallIdentify = true
-            self.userId = $0
-            self.traits = $1.compactMapValues { $0 as? String }
-        } setEnabled: {
-            self.didCallSetEnabled = $0
-        } reset: {
-            self.userId = nil
-            self.traits = [:]
-            self.didCallIdentify = false
-            self.didCallReset = true
-        }
-
-        register(provider)
-    }
-}
-
-// MARK: - BlockAnalyticsProvider
-
-private struct BlockAnalyticsProvider: AnalyticsProvider {
-    private let _track: @Sendable (_ event: AnalyticsEventProtocol) -> Void
-    private let _identify: @Sendable (_ userId: String?, _ traits: EncodableDictionary) -> Void
-    private let _setEnabled: @Sendable (_ enable: Bool) -> Void
-    private let _reset: @Sendable () -> Void
-
-    init(
-        track: @escaping @Sendable (_ event: AnalyticsEventProtocol) -> Void,
-        identify: @escaping @Sendable (_ userId: String?, _ traits: EncodableDictionary) -> Void,
-        setEnabled: @escaping @Sendable (_ enable: Bool) -> Void,
-        reset: @escaping @Sendable () -> Void
-    ) {
-        self._track = track
-        self._identify = identify
-        self._setEnabled = setEnabled
-        self._reset = reset
+        // NB: `register` is used intentionally to ensure the code path is tested.
+        register(mock)
     }
 
-    func track(_ event: AnalyticsEventProtocol) {
-        _track(event)
+    subscript<T>(dynamicMember keyPath: KeyPath<MockAnalyticsProvider, T>) -> T {
+        mock[keyPath: keyPath]
     }
 
-    func identify(userId: String?, traits: EncodableDictionary) {
-        _identify(userId, traits)
-    }
-
-    func setEnabled(_ enable: Bool) {
-        _setEnabled(enable)
-    }
-
-    func reset() {
-        _reset()
+    subscript<T>(dynamicMember keyPath: WritableKeyPath<MockAnalyticsProvider, T>) -> T {
+        get { mock[keyPath: keyPath] }
+        set { mock[keyPath: keyPath] = newValue }
     }
 }
