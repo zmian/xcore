@@ -19,6 +19,8 @@ public final class MockAnalyticsProvider: AnalyticsProvider {
     nonisolated(unsafe) public var didCallSetEnabled = false
     nonisolated(unsafe) public var didCallReset = false
 
+    public init() {}
+
     /// Returns the last triggered event.
     public var lastEvent: AppAnalyticsEvent? {
         events.last
