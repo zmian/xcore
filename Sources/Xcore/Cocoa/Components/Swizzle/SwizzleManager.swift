@@ -59,7 +59,7 @@ public enum SwizzleManager {
 
 extension SwizzleManager {
     /// A list of features available to swizzle.
-    public struct SwizzleOptions: OptionSet, Sendable {
+    public struct SwizzleOptions: OptionSet, Sendable, Hashable {
         public let rawValue: Int
 
         public init(rawValue: Int) {

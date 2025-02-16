@@ -11,38 +11,34 @@ struct Menu: Identifiable {
     let id: UUID
     let title: String
     let subtitle: String?
-    let content: () -> AnyView
+    let content: AnyView
 
     init(
         id: UUID = UUID(),
         title: String,
         subtitle: String? = nil,
-        content: @autoclosure @escaping () -> some View
+        content: @autoclosure () -> some View
     ) {
         self.id = id
         self.title = title
         self.subtitle = subtitle
-        self.content = {
-            content()
-                .navigationTitle(title)
-                .eraseToAnyView()
-        }
+        self.content = content()
+            .navigationTitle(title)
+            .eraseToAnyView()
     }
 
     init(
         id: UUID = UUID(),
         title: String,
         subtitle: String? = nil,
-        @ViewBuilder content: @escaping () -> some View
+        @ViewBuilder content: () -> some View
     ) {
         self.id = id
         self.title = title
         self.subtitle = subtitle
-        self.content = {
-            content()
-                .navigationTitle(title)
-                .eraseToAnyView()
-        }
+        self.content = content()
+            .navigationTitle(title)
+            .eraseToAnyView()
     }
 }
 
