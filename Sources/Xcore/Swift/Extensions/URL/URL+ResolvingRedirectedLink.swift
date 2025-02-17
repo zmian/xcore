@@ -66,6 +66,7 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     private let url: URL
     private let webView = WKWebView()
     private var continuation: CheckedContinuation<URL?, Never>?
+    private var timeoutTask: Task<(), any Error>?
 
     /// Initializes the resolver with a URL and a completion handler.
     ///
@@ -98,8 +99,8 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
             webView.load(URLRequest(url: url))
 
             // Cancel if resolution takes too long
-            Task {
-                try? await Task.sleep(for: timeoutDuration)
+            timeoutTask = Task {
+                try await Task.sleep(for: timeoutDuration)
                 cancel()
             }
         }
@@ -128,6 +129,7 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     /// - Parameter resolvedUrl: The final URL after resolution, or `nil` if the
     ///   process failed.
     private func completeResolution(with resolvedUrl: URL?) {
+        timeoutTask?.cancel()
         // Mark "isCancelled" as true to prevent further events being send to
         // continuation. This avoids potential crashes due to multiple resumptions of
         // the continuation.
