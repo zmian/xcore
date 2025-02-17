@@ -29,18 +29,18 @@ private import SafariServices
 /// }
 /// ```
 public struct OpenURLClient: Sendable {
-    private let handler: @Sendable (AdaptiveURL) async -> Bool
+    private let handler: @Sendable (URLDescriptor) async -> Bool
 
     /// Creates a client that opens a URL.
     ///
     /// - Parameter open: The closure to run for the given URL.
-    public init(handler: @escaping @Sendable (AdaptiveURL) async -> Bool) {
+    public init(handler: @escaping @Sendable (URLDescriptor) async -> Bool) {
         self.handler = handler
     }
 
     /// Attempts to asynchronously open the resource at the specified URL.
     @discardableResult
-    public func callAsFunction(_ url: AdaptiveURL) async -> Bool {
+    public func callAsFunction(_ url: URLDescriptor) async -> Bool {
         await handler(url)
     }
 
@@ -55,7 +55,7 @@ public struct OpenURLClient: Sendable {
     }
 
     /// Attempts to asynchronously open the resource at the specified URL.
-    public func callAsFunction(_ url: AdaptiveURL) {
+    public func callAsFunction(_ url: URLDescriptor) {
         Task {
             await callAsFunction(url)
         }
@@ -87,8 +87,8 @@ extension OpenURLClient {
 
     /// Returns system variant of `OpenURLClient`.
     public static var system: Self {
-        .init { @MainActor adaptiveUrl in
-            let url = adaptiveUrl.url
+        .init { @MainActor urlDescriptor in
+            let url = urlDescriptor.url
             let environment = EnvironmentValues()
 
             // Attempt to open standard urls using in-app Safari.

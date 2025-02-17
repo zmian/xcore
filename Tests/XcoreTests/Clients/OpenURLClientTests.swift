@@ -14,8 +14,8 @@ struct OpenURLClientTests {
         let openedUrl = LockIsolated<URL?>(nil)
 
         let viewModel = withDependencies {
-            $0.openUrl = .init { adaptiveUrl in
-                openedUrl.setValue(adaptiveUrl.url)
+            $0.openUrl = .init { urlDescriptor in
+                openedUrl.setValue(urlDescriptor.url)
                 return true
             }
         } operation: {
