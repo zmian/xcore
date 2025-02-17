@@ -107,7 +107,7 @@ extension View {
 
 extension View {
     nonisolated func floatingShadow() -> some View {
-        shadow(color: Color(white: 0, opacity: 0.08), radius: 8, x: 0, y: 4)
+        shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
     }
 }
 
