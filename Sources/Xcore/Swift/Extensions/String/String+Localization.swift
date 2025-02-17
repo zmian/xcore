@@ -7,33 +7,41 @@
 import Foundation
 
 /// A structure representing a strings file.
-public struct StringsFile: RawRepresentable, Hashable {
+///
+/// **Usage**
+///
+/// ```swift
+/// let stringsFile = StringsFile(name: "Localizable", fallback: .module)
+/// let greeting = "greetings".localized(file: stringsFile)
+/// ```
+public struct StringsFile: Sendable, Hashable {
     /// The name of the strings file.
-    public let rawValue: String
+    public let name: String
 
-    /// The bundle of the strings file.
+    /// The bundle containing the strings file.
     public let bundle: Bundle
 
     /// Creates a reference to the `.strings` file in the `.main` bundle.
     ///
-    /// - Parameter rawValue: The name of the `.strings` file.
-    public init(rawValue: String) {
-        self.rawValue = rawValue
+    /// - Parameter name: The name of the `.strings` file.
+    public init(name: String) {
+        self.name = name
         self.bundle = .main
     }
 
-    /// Creates a reference to the `.strings` file in the `.main` bundle, if the
-    /// given `.strings` file is not found in the `.main` bundle then the fall-back
-    /// bundle is used instead.
+    /// Creates a reference to the `.strings` file in the `.main` bundle.
+    ///
+    /// If the given `.strings` file is not found in the `.main` bundle, the
+    /// specified fallback bundle is used.
     ///
     /// - Parameters:
-    ///   - rawValue: The name of the `.strings` file.
-    ///   - fallbackBundle: The bundle to use if the given `.strings` file isn't
+    ///   - name: The name of the `.strings` file.
+    ///   - fallbackBundle: The bundle to use if the given `.strings` file is not
     ///     found in the `.main` bundle.
-    public init(rawValue: String, fallback fallbackBundle: Bundle) {
-        self.rawValue = rawValue
+    public init(name: String, fallback fallbackBundle: Bundle) {
+        self.name = name
 
-        if Bundle.main.path(forResource: rawValue, ofType: "strings") != nil {
+        if Bundle.main.path(forResource: name, ofType: "strings") != nil {
             bundle = .main
         } else {
             bundle = fallbackBundle
@@ -45,42 +53,55 @@ public struct StringsFile: RawRepresentable, Hashable {
 
 extension StringsFile: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        self.init(rawValue: value)
+        self.init(name: value)
     }
 }
 
 // MARK: - String
 
 extension String {
-    /// Returns a localized string, from a specific file without arguments.
+    /// Returns a localized string from the specific strings file without arguments.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let stringsFile = StringsFile(name: "Localizable", fallback: .module)
+    /// let greeting = "greetings".localized(file: stringsFile)
+    /// ```
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
     ///   - comment: The comment to place above the key-value pair in the strings
-    ///     file.
+    ///     file. This parameter provides the translator with some context about the
+    ///     localized string’s presentation to the user.
+    ///
     /// - Returns: It returns the translation found in the provided `.strings` file.
     ///   If the translation cannot be found it will return its own value.
-    public func localized(file: StringsFile? = nil, comment: String = "") -> String {
-        NSLocalizedString(
-            self,
-            tableName: file?.rawValue,
-            bundle: file?.bundle ?? .main,
-            comment: comment
-        )
+    public func localized(file: StringsFile? = nil, comment: StaticString? = "") -> String {
+        String(localized: .init(self), table: file?.name, bundle: file?.bundle)
     }
 
-    /// Returns a localized string, from a specific file with arguments.
+    /// Returns a localized string from the specific strings file with arguments.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let stringsFile = StringsFile(name: "Localizable", fallback: .module)
+    /// let greeting = "greetings".localized(file: stringsFile, "Sam")
+    /// ```
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
     ///   - comment: The comment to place above the key-value pair in the strings
-    ///     file.
+    ///     file. This parameter provides the translator with some context about the
+    ///     localized string’s presentation to the user.
     ///   - arguments: Pass the arguments you want to replace your strings
     ///     placeholders with.
+    ///
     /// - Returns: It returns the translation found in the provided `.strings` file
     ///   with the arguments inserted. If the translation cannot be found it will
     ///   return its own value.
-    public func localized(file: StringsFile? = nil, comment: String = "", _ arguments: CVarArg...) -> String {
+    public func localized(file: StringsFile? = nil, comment: StaticString? = nil, _ arguments: CVarArg...) -> String {
         String(
             format: localized(file: file, comment: comment),
             arguments: arguments
