@@ -139,16 +139,6 @@ extension ProcessInfo {
 // MARK: - Built-in Process Arguments
 
 extension ProcessInfo.Arguments {
-    /// A Boolean property indicating whether the app is running in previews.
-    public static var isRunningPreviews: Bool {
-        argument("XCODE_RUNNING_FOR_PREVIEWS").exists
-    }
-
-    /// A Boolean property indicating whether the app is running in debug mode.
-    public static var isDebug: Bool {
-        argument("DEBUG").exists
-    }
-
     /// A Boolean property indicating whether analytics debug mode is enabled.
     ///
     /// If enabled, analytics events are logged to the console.
@@ -159,19 +149,5 @@ extension ProcessInfo.Arguments {
 
         let flag = argument("XCAnalyticsDebugEnabled")
         return (flag.exists, flag.get())
-    }
-
-    /// A Boolean property indicating whether all interstitials are enabled.
-    ///
-    /// - Returns: `true` if enabled in debug mode, otherwise `false`.
-    public static var isAllInterstitialsEnabled: Bool {
-        get {
-            #if DEBUG
-            return argument("XCAllInterstitialsEnabled").exists
-            #else
-            return false
-            #endif
-        }
-        set { argument("XCAllInterstitialsEnabled").set(newValue) }
     }
 }

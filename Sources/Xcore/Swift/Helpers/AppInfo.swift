@@ -28,6 +28,11 @@ extension AppInfo {
         assert(junk == 0, "sysctl failed")
         return (info.kp_proc.p_flag & P_TRACED) != 0
     }
+
+    /// A Boolean property indicating whether the app is running for previews.
+    public static var isRunningForPreviews: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    }
 }
 
 // MARK: - Execution Target
