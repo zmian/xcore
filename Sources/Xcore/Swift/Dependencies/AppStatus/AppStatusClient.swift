@@ -15,7 +15,7 @@ public struct AppStatusClient: Sendable {
     public let sessionState: ValuePublisher<AppStatus.SessionState, Never>
 
     /// Asks the app status client to evaluate the status.
-    private let _evaluate: @Sendable () -> Void
+    public let evaluate: @Sendable () -> Void
 
     /// Transition the app to given session state.
     private let _changeSessionTo: @Sendable (AppStatus.SessionState) -> Void
@@ -24,7 +24,7 @@ public struct AppStatusClient: Sendable {
     /// the app state.
     ///
     /// - Warning: Do not purge any data that would force the user to sign in again.
-    private let _systemForceRefresh: @Sendable () -> Void
+    public let systemForceRefresh: @Sendable () -> Void
 
     /// Creates an app status client.
     ///
@@ -45,27 +45,14 @@ public struct AppStatusClient: Sendable {
     ) {
         self.receive = receive
         self.sessionState = sessionState
-        self._evaluate = evaluate
+        self.evaluate = evaluate
         self._changeSessionTo = changeSessionTo
-        self._systemForceRefresh = systemForceRefresh
-    }
-
-    /// Asks the app status client to evaluate the status.
-    public func evaluate() {
-        _evaluate()
+        self.systemForceRefresh = systemForceRefresh
     }
 
     /// Transition the app to given session state.
     public func changeSession(to state: AppStatus.SessionState) {
         _changeSessionTo(state)
-    }
-
-    /// A method to purge cache (e.g., remote images), save the hash and re-evaluate
-    /// the app state.
-    ///
-    /// - Warning: Do not purge any data that would force the user to sign in again.
-    public func systemForceRefresh() {
-        _systemForceRefresh()
     }
 }
 
