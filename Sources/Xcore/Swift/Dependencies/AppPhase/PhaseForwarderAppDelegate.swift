@@ -147,48 +147,22 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Phase Using Notifications
 
 extension PhaseForwarderAppDelegate {
-    private enum ListenerEvent {
-        case willEnterForeground
-        case active
-        case inactive
-        case background
-        case memoryWarning
-        case significantTimeChange
-    }
-
     private func addObservers() {
         cancellable = Publishers.MergeMany(
             NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-                .map { _ in ListenerEvent.willEnterForeground },
+                .map { _ in AppPhase.willEnterForeground },
             NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
-                .map { _ in ListenerEvent.active },
+                .map { _ in AppPhase.active },
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
-                .map { _ in ListenerEvent.inactive },
+                .map { _ in AppPhase.inactive },
             NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-                .map { _ in ListenerEvent.background },
+                .map { _ in AppPhase.background },
             NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)
-                .map { _ in ListenerEvent.memoryWarning },
+                .map { _ in AppPhase.memoryWarning },
             NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)
-                .map { _ in ListenerEvent.significantTimeChange }
+                .map { _ in AppPhase.significantTimeChange }
         ).sink { [weak self] event in
-            self?.onListenerEvent(event)
-        }
-    }
-
-    private func onListenerEvent(_ event: ListenerEvent) {
-        switch event {
-            case .willEnterForeground:
-                send(.willEnterForeground)
-            case .active:
-                send(.active)
-            case .inactive:
-                send(.inactive)
-            case .background:
-                send(.background)
-            case .memoryWarning:
-                send(.memoryWarning)
-            case .significantTimeChange:
-                send(.significantTimeChange)
+            self?.send(event)
         }
     }
 }
