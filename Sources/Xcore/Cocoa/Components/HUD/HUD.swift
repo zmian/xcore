@@ -132,7 +132,7 @@ open class HUD: Appliable {
             return
         }
 
-        UIView.animate(withDuration: TimeInterval(animationDuration.hide)) {
+        UIView.animate(withDuration: animationDuration.hide.seconds) {
             self.view.alpha = 0
         } completion: { _ in
             self.window.windowLevel = level
@@ -248,9 +248,7 @@ open class HUD: Appliable {
             return
         }
 
-        let duration = TimeInterval(
-            hide ? animationDuration.hide : animationDuration.show
-        )
+        let duration = (hide ? animationDuration.hide : animationDuration.show).seconds
 
         isHidden = hide
 

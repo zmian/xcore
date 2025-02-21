@@ -21,6 +21,8 @@ public final class Weak<Value: AnyObject> {
     }
 }
 
+extension Weak: @unchecked Sendable where Value: Sendable {}
+
 // MARK: - Equatable
 
 extension Weak: Equatable {
@@ -57,7 +59,7 @@ extension Weak: Comparable where Value: Comparable {
     }
 }
 
-// MARK: - Flatten
+// MARK: - Compacted
 
 extension RangeReplaceableCollection where Index == Int {
     /// Removes all elements where the `value` is deallocated.

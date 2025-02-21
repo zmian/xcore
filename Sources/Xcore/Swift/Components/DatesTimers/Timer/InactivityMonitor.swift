@@ -63,7 +63,7 @@ public final class InactivityMonitor {
     ///
     /// - Parameter timeout: The duration after which inactivity is detected.
     public init(timeout: Duration = .seconds(5 * 60)) {
-        self.timeout = TimeInterval(timeout)
+        self.timeout = timeout.seconds
         self.lastActivityUptime = .init()
 
         addObservers()

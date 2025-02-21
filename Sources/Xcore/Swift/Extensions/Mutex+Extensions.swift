@@ -42,9 +42,9 @@ extension Mutex {
     /// > between reading and writing the value.
     ///
     /// - Parameter newValue: The new value to replace the current protected value.
-    public func setValue(_ newValue: @autoclosure () throws -> Value) rethrows {
-        try withLock {
-            $0 = try newValue()
+    public borrowing func setValue<E: Error>(_ newValue: @autoclosure () throws(E) -> sending Value) throws(E) {
+        try withLock { value throws(E) in
+            value = try newValue()
         }
     }
 }

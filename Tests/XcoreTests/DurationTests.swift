@@ -10,9 +10,18 @@ import Foundation
 
 struct DurationTests {
     @Test
-    func timeIntervalInit() {
+    func seconds() {
         let duration = Duration.seconds(2.5)
-        let timeInterval = TimeInterval(duration)
+        let timeInterval = duration.seconds
         #expect(timeInterval == 2.5)
+    }
+
+    @Test
+    func nanoseconds() {
+        let ns1 = Duration.seconds(2.5).nanoseconds
+        #expect(ns1 == 2500000000)
+
+        let ns2 = Duration.nanoseconds(1929).nanoseconds
+        #expect(ns2 == 1929)
     }
 }
