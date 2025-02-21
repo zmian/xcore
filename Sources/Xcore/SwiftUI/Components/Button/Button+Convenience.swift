@@ -172,7 +172,7 @@ extension Button<Text> {
             .accessibilityIdentifier("signupButton")
     }
 
-    /// A button with `Log In` label and given action.
+    /// A button with `Sign In` label and given action.
     public static func signin(action: @escaping @MainActor () -> Void) -> some View {
         Button(L.signin, action: action)
             .accessibilityIdentifier("signinButton")

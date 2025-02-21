@@ -168,7 +168,7 @@ extension AppError {
     ///
     /// ```
     /// // Session Expired
-    /// // Your session has expired. Please log in again.
+    /// // Your session has expired. Please sign in again.
     /// ```
 
     /// Returns a new instance with updated `id` and all other properties are same

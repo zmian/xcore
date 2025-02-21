@@ -60,8 +60,8 @@ internal enum Localized {
   internal static let share = Localized.tr("Localizable", "share", fallback: "Share")
   /// Show
   internal static let show = Localized.tr("Localizable", "show", fallback: "Show")
-  /// Log In
-  internal static let signin = Localized.tr("Localizable", "signin", fallback: "Log In")
+  /// Sign In
+  internal static let signin = Localized.tr("Localizable", "signin", fallback: "Sign In")
   /// Sign Up
   internal static let signup = Localized.tr("Localizable", "signup", fallback: "Sign Up")
   /// Start
@@ -107,8 +107,8 @@ internal enum Localized {
     internal static let noInternetTitle = Localized.tr("Localizable", "error.no_internet_title", fallback: "No Internet Connection")
     /// We can’t process this at the moment. Please try again later.
     internal static let routeUnavailableMessage = Localized.tr("Localizable", "error.route_unavailable_message", fallback: "We can’t process this at the moment. Please try again later.")
-    /// Your session has expired. Please log in again to continue.
-    internal static let sessionExpiredMessage = Localized.tr("Localizable", "error.session_expired_message", fallback: "Your session has expired. Please log in again to continue.")
+    /// Your session has expired. Please sign in again to continue.
+    internal static let sessionExpiredMessage = Localized.tr("Localizable", "error.session_expired_message", fallback: "Your session has expired. Please sign in again to continue.")
     /// Session Expired
     internal static let sessionExpiredTitle = Localized.tr("Localizable", "error.session_expired_title", fallback: "Session Expired")
   }

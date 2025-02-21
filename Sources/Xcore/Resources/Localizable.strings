@@ -29,7 +29,7 @@
 "start" = "Start";
 "share" = "Share";
 "signup" = "Sign Up";
-"signin" = "Log In";
+"signin" = "Sign In";
 // Toggle
 "toggle_see_less" = "See Less";
 "toggle_see_more" = "See More";
@@ -68,7 +68,7 @@
 
 // Session Expired
 "error.session_expired_title" = "Session Expired";
-"error.session_expired_message" = "Your session has expired. Please log in again to continue.";
+"error.session_expired_message" = "Your session has expired. Please sign in again to continue.";
 
 // Camera Unavailable
 "error.camera_unavailable_title" = "Camera Unavailable";
