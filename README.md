@@ -1,11 +1,8 @@
 <p align="center">
-<img src="Resources/xcore_logo.svg" alt="Xcore logo" height=80>
-</p>
-<p align="center">
-    <a href="https://travis-ci.org/zmian/xcore"><img src="https://travis-ci.org/zmian/xcore.svg?branch=main" alt="Main Branch Build Status"></a>
-  <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/v/Xcore.svg?style=flat" alt="CocoaPods Version Number"></a>
-  <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/p/Xcore.svg?style=flat" alt="Supported Platform"></a>
-    <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/l/Xcore.svg?style=flat" alt="License"></a>
+<picture>
+  <source srcset="Resources/xcore_logo_dark.svg" media="(prefers-color-scheme: dark)"/>
+  <img src="Resources/xcore_logo.svg" alt="Xcore logo" height=80>
+</picture>
 </p>
 <h1></h1>
 
