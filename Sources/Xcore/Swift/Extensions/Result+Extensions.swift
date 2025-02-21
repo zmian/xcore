@@ -7,14 +7,14 @@
 import Foundation
 
 extension Result where Success == Void {
-    /// A success, storing a `Success` value.
+    /// A success, storing a void `Success` value.
     public static var success: Self {
         .success(())
     }
 }
 
 extension Result where Success == Empty {
-    /// A success, storing a `Success` value.
+    /// A success, storing an empty `Success` value.
     public static var success: Self {
         .success(Empty())
     }
@@ -35,5 +35,13 @@ extension Result {
             case let .failure(error): error
             default: nil
         }
+    }
+}
+
+extension Result where Failure: Error {
+    /// A Boolean value indicating whether the result is a `.failure` case with
+    /// `CancellationError` as its error type.
+    public var isCancelled: Bool {
+        error is CancellationError
     }
 }
