@@ -78,7 +78,7 @@ struct DoubleTests {
     }
 
     @Test
-    func integerAndFractionalParts() throws {
+    func integralAndFractionalParts() throws {
         let amount1 = 1200.30
         #expect(amount1.integralPart == 1200)
         #expect(amount1.fractionalPart == 0.2999999999999545)

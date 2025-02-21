@@ -79,7 +79,7 @@ struct DecimalTests {
     }
 
     @Test
-    func integerAndFractionalParts() throws {
+    func integralAndFractionalParts() throws {
         let amount1 = Decimal(1200.30)
         #expect(amount1.integralPart == 1200)
         #expect(amount1.fractionalPart == 0.3)
