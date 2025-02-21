@@ -35,7 +35,7 @@ extension MainActor {
     ///     /// Return true `1` pixel relative to the screen scale.
     ///     var onePixel: CGFloat {
     ///         // ✅ No longer requires @MainActor attribute as the body has been isolated to MainActor directly.
-    ///         MainActor.performIsolated {
+    ///         MainActor.runImmediately {
     ///             1 / UIScreen.main.scale
     ///         }
     ///     }
@@ -50,7 +50,7 @@ extension MainActor {
     /// - Returns: The return value of the `operation`.
     /// - Throws: Rethrows the `Error` thrown by the operation.
     @_spi(Internal)
-    public static func performIsolated<T: Sendable>(
+    public static func runImmediately<T: Sendable>(
         _ operation: @MainActor () throws -> T,
         file: StaticString = #fileID,
         line: UInt = #line

@@ -51,7 +51,7 @@ public enum UserInterfaceIdiom: Sendable, Hashable, CustomStringConvertible {
 extension UserInterfaceIdiom {
     /// The style of interface to use on the current device.
     static var current: Self {
-        MainActor.performIsolated {
+        MainActor.runImmediately {
             #if targetEnvironment(macCatalyst)
             return .mac
             #elseif os(iOS) || os(tvOS) || os(visionOS)

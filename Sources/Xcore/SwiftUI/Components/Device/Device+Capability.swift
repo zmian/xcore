@@ -59,7 +59,7 @@ extension Device {
         AppConstants.statusBarHeight > 24
     }
 
-    private static let hasHomeIndicator = MainActor.performIsolated {
+    private static let hasHomeIndicator = MainActor.runImmediately {
         let safeAreaInsets = UIApplication
             .sharedOrNil?
             .firstSceneKeyWindow?

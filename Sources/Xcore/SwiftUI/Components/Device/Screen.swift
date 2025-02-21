@@ -20,7 +20,7 @@ public final class Screen: ObservableObject, Sendable {
     /// displays, the scale factor may be `3.0` or `2.0` and one point can
     /// represented by nine or four pixels, respectively. For standard-resolution
     /// displays, the scale factor is `1.0` and one point equals one pixel.
-    public let scale = MainActor.performIsolated {
+    public let scale = MainActor.runImmediately {
         #if os(iOS) || os(tvOS)
         return UIScreen.main.scale
         #elseif os(watchOS)
@@ -34,7 +34,7 @@ public final class Screen: ObservableObject, Sendable {
 
     /// The bounding rectangle of the screen, measured in points.
     public var bounds: CGRect {
-        MainActor.performIsolated {
+        MainActor.runImmediately {
             #if os(iOS) || os(tvOS)
             return UIScreen.main.bounds
             #elseif os(watchOS)

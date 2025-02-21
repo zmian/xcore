@@ -159,7 +159,7 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
-    public static let statusBarHeight = MainActor.performIsolated {
+    public static let statusBarHeight = MainActor.runImmediately {
         UIApplication
             .sharedOrNil?
             .firstSceneKeyWindow?

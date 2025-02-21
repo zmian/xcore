@@ -46,7 +46,7 @@ public final class Device: ObservableObject, Sendable {
 extension Device {
     /// The name of the operating system running on the device (e.g., iOS).
     public var osName: String {
-        MainActor.performIsolated {
+        MainActor.runImmediately {
             #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
             return UIDevice.current.systemName
             #elseif os(watchOS)
