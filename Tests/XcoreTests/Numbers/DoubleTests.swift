@@ -80,21 +80,21 @@ struct DoubleTests {
     @Test
     func integerAndFractionalParts() throws {
         let amount1 = 1200.30
-        #expect(amount1.integerPart == 1200)
+        #expect(amount1.integralPart == 1200)
         #expect(amount1.fractionalPart == 0.2999999999999545)
 
         let amount2 = 1200.00
-        #expect(amount2.integerPart == 1200)
+        #expect(amount2.integralPart == 1200)
         #expect(amount2.fractionalPart == 0)
 
         let amount3 = try #require(Double("1200.3000000012"))
         #expect(String(describing: amount3) == "1200.3000000012")
-        #expect(amount3.integerPart == 1200)
+        #expect(amount3.integralPart == 1200)
         #expect(amount3.fractionalPart == Double("0.3000000012000328"))
         #expect(amount3.fractionalPart.stringValue == "0.3000000012000328")
 
         let amount4 = 1200.000000000000000000
-        #expect(amount4.integerPart == 1200)
+        #expect(amount4.integralPart == 1200)
         #expect(amount4.fractionalPart == 0)
     }
 

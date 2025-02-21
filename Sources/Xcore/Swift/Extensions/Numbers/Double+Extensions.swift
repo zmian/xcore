@@ -50,22 +50,22 @@ extension Double {
     ///
     /// ```swift
     /// let amount = 120.30
-    /// // 120 - integer part
+    /// // 120 - integral part
     /// // 30 - fractional part
     /// ```
-    var integerPart: Double {
-        rounded(sign == .minus ? .up : .down)
+    var integralPart: Double {
+        rounded(.towardZero)
     }
 
     /// The fractional part of the floating point.
     ///
     /// ```swift
     /// let amount = 120.30
-    /// // 120 - integer part
+    /// // 120 - integral part
     /// // 30 - fractional part
     /// ```
     var fractionalPart: Double {
-        self - integerPart
+        self - integralPart
     }
 
     /// A Boolean property indicating whether the fractional part of the floating
@@ -184,7 +184,7 @@ extension Array<Double> {
                     $0.remainder > $1.remainder
                 }
 
-        /// 2. Calculate sum of the integer part of each value and the delta
+        /// 2. Calculate sum of the integral part of each value and the delta
         /// to 100.
         let delta = 100 - Int(result.sum(\.floor))
 

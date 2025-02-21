@@ -81,21 +81,21 @@ struct DecimalTests {
     @Test
     func integerAndFractionalParts() throws {
         let amount1 = Decimal(1200.30)
-        #expect(amount1.integerPart == 1200)
+        #expect(amount1.integralPart == 1200)
         #expect(amount1.fractionalPart == 0.3)
 
         let amount2 = Decimal(1200.00)
-        #expect(amount2.integerPart == 1200)
+        #expect(amount2.integralPart == 1200)
         #expect(amount2.fractionalPart == 0)
 
         let amount3 = try #require(Decimal(string: "1200.3000000012"))
         #expect(String(describing: amount3) == "1200.3000000012")
-        #expect(amount3.integerPart == 1200)
+        #expect(amount3.integralPart == 1200)
         #expect(amount3.fractionalPart == Decimal(string: "0.3000000012"))
         #expect(amount3.fractionalPart.stringValue == "0.3000000012")
 
         let amount4 = Decimal(1200.000000000000000000)
-        #expect(amount4.integerPart == 1200)
+        #expect(amount4.integralPart == 1200)
         #expect(amount4.fractionalPart == 0)
     }
 

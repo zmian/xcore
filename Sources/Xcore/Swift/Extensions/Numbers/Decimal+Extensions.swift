@@ -192,22 +192,22 @@ extension Decimal {
     ///
     /// ```swift
     /// let amount = Decimal(120.30)
-    /// // 120 - integer part
+    /// // 120 - integral part
     /// // 30 - fractional part
     /// ```
-    var integerPart: Decimal {
-        rounded(sign == .minus ? .up : .down)
+    var integralPart: Decimal {
+        rounded(.towardZero)
     }
 
     /// The fractional part of the decimal.
     ///
     /// ```swift
     /// let amount = Decimal(120.30)
-    /// // 120 - integer part
+    /// // 120 - integral part
     /// // 30 - fractional part
     /// ```
     var fractionalPart: Decimal {
-        self - integerPart
+        self - integralPart
     }
 
     /// A Boolean property indicating whether the fractional part of the decimal is
