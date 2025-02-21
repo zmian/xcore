@@ -202,11 +202,11 @@ extension Date {
 
     final class FormatterCache: Sendable {
         private let lock = DispatchQueue(label: #function, attributes: .concurrent)
-        nonisolated(unsafe) private let cache = NSCache<NSString, DateFormatter>()
+        private let cache = Cache<String, DateFormatter>()
 
         private func formatter(forKey key: String, _ makeFormatter: () -> DateFormatter) -> DateFormatter {
             let formatter = lock.sync {
-                cache.object(forKey: key as NSString)
+                cache[key]
             }
 
             if let formatter {
@@ -216,7 +216,7 @@ extension Date {
             let newFormatter = makeFormatter()
 
             lock.async(flags: .barrier) { [unowned self] in
-                self.cache.setObject(newFormatter, forKey: key as NSString)
+                self.cache[key] = newFormatter
             }
 
             return newFormatter

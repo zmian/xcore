@@ -6,15 +6,40 @@
 
 import Foundation
 
-/// A mutable collection you use to temporarily store transient key-value pairs
-/// that are subject to eviction when resources are low.
-actor Cache<Key: Sendable & Hashable, Value> {
-    /// The keys of the cache.
-    public private(set) var keys = Set<Key>()
-    private let cache = NSCache<KeyWrapper<Key>, Box<Value>>()
-    private let delegate = DelegateWrapper<Value>()
+/// A thread-safe collection for temporarily storing transient key-value pairs.
+///
+/// This cache wraps an NSCache to provide a lightweight, in-memory storage that
+/// automatically evicts values when resources are low. It is designed for
+/// non-persistent, ephemeral data that can be safely recreated if needed.
+///
+/// **Usage**
+///
+/// ```swift
+/// let cache = Cache<String, Data>()
+/// cache["imageData"] = someData
+/// if let data = cache["imageData"] {
+///     print("Data retrieved from cache")
+/// }
+/// cache["imageData"] = nil // removes cached entry
+/// ```
+public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
+    /// The underlying NSCache instance.
+    ///
+    /// `nonisolated(unsafe)` is valid here as add, remove, and query operations are
+    /// documented as [thread safe]:
+    ///
+    /// [thread safe]: https://developer.apple.com/documentation/foundation/nscache
+    nonisolated(unsafe) private let cache = NSCache<Box<Key>, Box<Value>>()
 
-    public init() {
+    /// A delegate wrapper that handles eviction callbacks.
+    private let delegate: DelegateWrapper<Value>
+
+    /// Creates an instance of `Cache`.
+    ///
+    /// - Parameter willEvictValue: The action to perform when an value is about to
+    ///   be evicted or removed from the cache.
+    public init(willEvictValue: (@Sendable (Value) -> Void)? = nil) {
+        self.delegate = .init(willEvictValue: willEvictValue)
         cache.delegate = delegate
     }
 
@@ -26,78 +51,36 @@ actor Cache<Key: Sendable & Hashable, Value> {
         set { cache.name = newValue }
     }
 
-    /// Adds an action to perform when an value is about to be evicted or removed
-    /// from the cache.
-    ///
-    /// - Parameter action: The action to perform.
-    public func willEvictValue(_ action: ((Value) -> Void)?) {
-        delegate.willEvictValue = action
-    }
-
     /// Returns a Boolean value indicating whether the cache contains the value for
     /// the given key.
-    ///
+    /// 
     /// - Parameter key: The key to look up in the cache.
-    /// - Returns: The value associated with key, or `nil` if no value is associated
-    ///   with key.
-    public func contains(forKey key: Key) -> Bool {
-        value(forKey: key) != nil
+    /// - Returns: `true` if a value is associated with the key; otherwise, `false`.
+    public func contains(_ key: Key) -> Bool {
+        self[key] != nil
     }
 
-    /// Returns the value associated with a given key.
-    ///
-    /// - Parameter key: An object identifying the value.
-    /// - Returns: The value associated with key, or `nil` if no value is associated
-    ///   with key.
-    public func value(forKey key: Key) -> Value? {
-        cache.object(forKey: KeyWrapper(key))?.value as? Value
-    }
+    public subscript(_ key: Key, cost cost: Int? = nil) -> Value? {
+        get { cache.object(forKey: Box(key))?.value }
+        set {
+            let key = Box(key)
 
-    /// Sets the value of the specified key in the cache, and associates the
-    /// key-value pair with the specified cost.
-    ///
-    /// The cost value is used to compute a sum encompassing the costs of all the
-    /// values in the cache. When memory is limited or when the total cost of the
-    /// cache eclipses the maximum allowed total cost, the cache could begin an
-    /// eviction process to remove some of its elements. However, this eviction
-    /// process is not in a guaranteed order. As a consequence, if you try to
-    /// manipulate the cost values to achieve some specific behavior, the
-    /// consequences could be detrimental to your program. Typically, the obvious
-    /// cost is the size of the value in bytes. If that information is not readily
-    /// available, you should not go through the trouble of trying to compute it,
-    /// as doing so will drive up the cost of using the cache. Pass in `0` for the
-    /// cost value if you otherwise have nothing useful to pass, or simply use the
-    /// ``setValue:forKey:`` method, which does not require a cost value to be
-    /// passed in.
-    ///
-    /// Unlike an ``NSMutableDictionary`` value, a cache does not copy the key
-    /// values that are put into it.
-    ///
-    /// - Parameters:
-    ///   - value: The value to store in the cache.
-    ///   - key: The key with which to associate the value.
-    ///   - cost: The cost with which to associate the key-value pair.
-    public func setValue(_ value: Value, forKey key: Key, cost: Int? = nil) {
-        keys.insert(key)
+            if let newValue {
+                let newValue = Box(newValue)
 
-        if let cost {
-            cache.setObject(Box(value), forKey: KeyWrapper(key), cost: cost)
-        } else {
-            cache.setObject(Box(value), forKey: KeyWrapper(key))
+                if let cost {
+                    cache.setObject(newValue, forKey: key, cost: cost)
+                } else {
+                    cache.setObject(newValue, forKey: key)
+                }
+            } else {
+                cache.removeObject(forKey: key)
+            }
         }
-    }
-
-    /// Removes the value of the specified key in the cache.
-    ///
-    /// - Parameter key: The key identifying the value to be removed.
-    public func remove(_ key: Key) {
-        keys.remove(key)
-        cache.removeObject(forKey: KeyWrapper(key))
     }
 
     /// Empties the cache.
     public func removeAll() {
-        keys.removeAll()
         cache.removeAllObjects()
     }
 
@@ -133,38 +116,22 @@ actor Cache<Key: Sendable & Hashable, Value> {
         set { cache.countLimit = newValue }
     }
 
-    /// Whether the cache will automatically evict discardable-content values whose
-    /// content has been discarded.
+    /// A Boolean property indicating whether the cache evicts values with discarded
+    /// content.
     public var evictsValuesWithDiscardedContent: Bool {
         get { cache.evictsObjectsWithDiscardedContent }
         set { cache.evictsObjectsWithDiscardedContent = newValue }
     }
 }
 
-// MARK: - Wrappers
+// MARK: - DelegateWrapper
 
-private final class KeyWrapper<Key: Sendable & Hashable>: NSObject, Sendable {
-    let key: Key
+private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, Sendable {
+    let willEvictValue: (@Sendable (Value) -> Void)?
 
-    init(_ key: Key) {
-        self.key = key
+    init(willEvictValue: (@Sendable (Value) -> Void)?) {
+        self.willEvictValue = willEvictValue
     }
-
-    override var hash: Int {
-        key.hashValue
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? KeyWrapper<Key> else {
-            return false
-        }
-
-        return key == other.key
-    }
-}
-
-private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate {
-    var willEvictValue: ((Value) -> Void)?
 
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
         guard

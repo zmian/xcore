@@ -9,25 +9,25 @@ import Testing
 
 struct CacheTests {
     @Test
-    func cache() async {
+    func basics() {
         let cache = Cache<String, Int>()
-        await cache.setValue(10, forKey: "hello")
-        await cache.setValue(20, forKey: "world")
+        cache["hello"] = 10
+        cache["world"] = 20
 
-        let v1 = await cache.value(forKey: "hello")
-        let v2 = await cache.value(forKey: "world")
+        let v1 = cache["hello"]
+        let v2 = cache["world"]
 
         #expect(v1 == 10)
         #expect(v2 == 20)
 
-        await cache.remove("world")
-        let v3 = await cache.value(forKey: "world")
+        cache["world"] = nil
+        let v3 = cache["world"]
         #expect(v3 == nil)
 
-        await cache.removeAll()
+        cache.removeAll()
 
-        let v4 = await cache.value(forKey: "hello")
-        let v5 = await cache.value(forKey: "world")
+        let v4 = cache["hello"]
+        let v5 = cache["world"]
         #expect(v4 == nil)
         #expect(v5 == nil)
     }
