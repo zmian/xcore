@@ -78,7 +78,7 @@ extension String {
     /// - Returns: It returns the translation found in the provided `.strings` file.
     ///   If the translation cannot be found it will return its own value.
     public func localized(file: StringsFile? = nil, comment: StaticString? = "") -> String {
-        String(localized: .init(self), table: file?.name, bundle: file?.bundle)
+        String(localized: .init(self), table: file?.name, bundle: file?.bundle, comment: comment)
     }
 
     /// Returns a localized string from the specific strings file with arguments.
