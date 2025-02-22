@@ -36,6 +36,8 @@ extension Empty: Sendable {}
 extension Empty: Hashable {}
 extension Empty: Codable {}
 
+// MARK: - Identifiable
+
 extension Empty: Identifiable {
     /// A unique identifier for this instance.
     ///
@@ -43,6 +45,8 @@ extension Empty: Identifiable {
     /// value.
     public var id: String { "" }
 }
+
+// MARK: - Comparable
 
 extension Empty: Comparable {
     /// Compares two `Empty` instances.
@@ -55,6 +59,8 @@ extension Empty: Comparable {
     /// Always returns `false` as there is no meaningful ordering.
     public static func >(lhs: Self, rhs: Self) -> Bool { false }
 }
+
+// MARK: - View
 
 extension Empty: View {
     /// The view representation of an `Empty` instance.
