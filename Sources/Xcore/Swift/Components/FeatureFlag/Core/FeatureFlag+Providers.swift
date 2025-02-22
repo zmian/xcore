@@ -70,7 +70,7 @@ extension FeatureFlag.Key {
     /// - Parameter defaultValue: The value returned if the providers list doesn't
     ///   contain value.
     /// - Returns: The value for the key.
-    public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+    public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
         currentValue?.get() ?? defaultValue()
     }
 

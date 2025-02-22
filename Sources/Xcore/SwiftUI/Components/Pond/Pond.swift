@@ -39,7 +39,7 @@ public protocol Pond: Sendable {
 // MARK: - Helpers
 
 extension Pond {
-    public func set<T>(_ key: Key, value: T?) throws where T: RawRepresentable, T.RawValue == String {
+    public func set<T>(_ key: Key, value: T?) throws where T: RawRepresentable<String> {
         try set(key, value: value?.rawValue)
     }
 
@@ -71,7 +71,7 @@ extension Pond {
         }
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
         do {
             return try value(key)?.get() ?? defaultValue()
         } catch {

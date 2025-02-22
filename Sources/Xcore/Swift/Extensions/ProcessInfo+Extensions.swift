@@ -11,7 +11,7 @@ extension ProcessInfo {
     ///
     /// - Parameter key: The key to check in the environment variables.
     /// - Returns: `true` if the key exists, `false` otherwise.
-    public func contains(key: String) -> Bool {
+    public func contains(_ key: String) -> Bool {
         environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
     }
 }
@@ -35,7 +35,7 @@ extension ProcessInfo {
 extension ProcessInfo {
     /// A representation of a process argument, allowing interaction with environment
     /// variables.
-    public struct Argument: RawRepresentable, ExpressibleByStringLiteral, CustomStringConvertible, Hashable {
+    public struct Argument: RawRepresentable, Sendable, Hashable, CustomStringConvertible, ExpressibleByStringLiteral {
         /// The variable name in the environment from which the process was launched.
         public let rawValue: String
 
@@ -54,7 +54,7 @@ extension ProcessInfo {
         /// A Boolean property indicating whether the argument exists in the process
         /// environment.
         public var exists: Bool {
-            ProcessInfo.processInfo.contains(key: rawValue)
+            ProcessInfo.processInfo.contains(rawValue)
         }
 
         /// Retrieves the stored value of the argument from memory or the environment.
@@ -112,7 +112,7 @@ extension ProcessInfo.Argument {
     ///
     /// - Parameter defaultValue: The fallback value if conversion fails.
     /// - Returns: The resolved enum value or the fallback.
-    public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+    public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
         if let rawValue: String = get(), let value = T(rawValue: rawValue) {
             return value
         }

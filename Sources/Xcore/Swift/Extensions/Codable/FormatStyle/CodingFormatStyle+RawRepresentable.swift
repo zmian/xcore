@@ -10,7 +10,7 @@ import Foundation
 
 /// A structure to decode string to output using block based format style.
 public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable
-    where Output: RawRepresentable, Output.RawValue == String
+    where Output: RawRepresentable<String>
 {
     public typealias Options = StringCodingFormatStyle.Options
 

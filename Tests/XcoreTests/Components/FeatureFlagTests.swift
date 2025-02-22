@@ -153,7 +153,7 @@ extension FeatureFlag.Key {
         storageValue?.get() ?? defaultValue()
     }
 
-    fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+    fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
         storageValue?.get() ?? defaultValue()
     }
 }

@@ -110,7 +110,7 @@ extension Dictionary {
     /// - Parameter key: The key to find in the dictionary.
     /// - Returns: The value associated with `key` if `key` is in the dictionary;
     ///   otherwise, `nil`.
-    public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == Key {
+    public subscript<T: RawRepresentable<Key>>(key: T) -> Value? {
         get { self[key.rawValue] }
         set { self[key.rawValue] = newValue }
     }
