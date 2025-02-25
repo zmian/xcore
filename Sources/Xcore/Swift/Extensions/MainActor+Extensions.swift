@@ -52,7 +52,7 @@ extension MainActor {
     @_spi(Internal)
     public static func runImmediately<T: Sendable>(
         _ operation: @MainActor () throws -> T,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) rethrows -> T {
         if Thread.isMainThread {

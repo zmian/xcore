@@ -59,7 +59,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -108,7 +108,7 @@ extension AppMonitoring {
     public func logError(
         _ error: Error,
         url: URL?,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -131,7 +131,7 @@ extension AppMonitoring {
         errorUrl: URL? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -154,7 +154,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -176,7 +176,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -197,7 +197,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -219,7 +219,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line,
         column: UInt = #column
     ) {

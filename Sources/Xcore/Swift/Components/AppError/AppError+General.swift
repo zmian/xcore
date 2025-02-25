@@ -145,7 +145,7 @@ extension AppError {
     /// // Something went wrong
     /// // We can’t process this at the moment. Please try again later.
     /// ```
-    public static func decodingFailedInvalidData(file: StaticString = #fileID, line: UInt = #line) -> Self {
+    public static func decodingFailedInvalidData(file: StaticString = #file, line: UInt = #line) -> Self {
         .init(
             id: "decoding_failed",
             title: L.generalErrorTitle,

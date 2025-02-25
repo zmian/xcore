@@ -9,7 +9,7 @@ import Foundation
 struct PondError: Error, CustomStringConvertible {
     let description: String
 
-    init(_ description: String, file: StaticString = #fileID, line: UInt = #line) {
+    init(_ description: String, file: StaticString = #file, line: UInt = #line) {
         self.description = "\(file):\(line) \(description)"
     }
 }
@@ -18,7 +18,7 @@ extension PondError {
     static func saveFailure(
         id: @autoclosure () -> String,
         value: @autoclosure () -> Any?,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) -> Self {
         #if DEBUG

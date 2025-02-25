@@ -45,7 +45,7 @@ extension KeyedDecodingContainer {
     public func decode<F: DecodingFormatStyle>(
         _ key: Key,
         format: F,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) throws -> F.Output where F.Input: Decodable {
         let value = try decode(F.Input.self, forKey: key)
@@ -70,7 +70,7 @@ extension KeyedDecodingContainer {
     public func decodeIfPresent<F: DecodingFormatStyle>(
         _ key: Key,
         format: F,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) throws -> F.Output? where F.Input: Decodable {
         guard let value = try decodeIfPresent(F.Input.self, forKey: key) else {
@@ -99,7 +99,7 @@ extension KeyedEncodingContainer {
         _ value: F.Output,
         forKey key: Key,
         format: F,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) throws where F.Input: Encodable {
         let formattedValue: F.Input
@@ -125,7 +125,7 @@ extension KeyedEncodingContainer {
         _ value: F.Output?,
         forKey key: Key,
         format: F,
-        file: StaticString = #fileID,
+        file: StaticString = #file,
         line: UInt = #line
     ) throws where F.Input: Encodable {
         guard let value else {

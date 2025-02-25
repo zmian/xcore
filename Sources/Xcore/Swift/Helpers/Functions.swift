@@ -32,7 +32,7 @@ public func debugLog(
     _ items: Any...,
     info: String? = nil,
     compact: Bool = false,
-    file: StaticString = #fileID,
+    file: StaticString = #file,
     line: UInt = #line
 ) {
     #if DEBUG

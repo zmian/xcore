@@ -65,7 +65,7 @@ public protocol AppTraceReporting: Sendable {
 }
 
 extension AppTraceReporting {
-    public func setError(_ error: Error, file: StaticString = #fileID, line: UInt = #line) {
+    public func setError(_ error: Error, file: StaticString = #file, line: UInt = #line) {
         setError(error, file: file, line: line)
     }
 }

@@ -57,7 +57,7 @@ extension FatalReason {
 public func fatalError(
     because reason: FatalReason,
     function: StaticString = #function,
-    file: StaticString = #fileID,
+    file: StaticString = #file,
     line: UInt = #line
 ) -> Never {
     fatalError("\(function): \(reason)", file: file, line: line)
