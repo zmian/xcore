@@ -36,8 +36,8 @@ import Combine
 /// ```
 public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
-    private let lastActiveTime = SystemUptime()
-    private let inactivityDuration: TimeInterval
+    private var lastActiveTime = ElapsedTime()
+    private let inactivityDuration: Duration
     private let storage = LockIsolated<Set<Value>>([])
     nonisolated(unsafe) private var cancellable: AnyCancellable?
 
@@ -46,7 +46,7 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     /// - Parameter inactivityDuration: The duration after which the session expires
     ///   if the app remains in the background.
     public init(inactivityDuration: Duration = .seconds(30)) {
-        self.inactivityDuration = inactivityDuration.seconds
+        self.inactivityDuration = inactivityDuration
 
         withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
@@ -68,9 +68,9 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
 
             switch appPhase {
                 case .background:
-                    lastActiveTime.updateValue()
+                    lastActiveTime.reset()
                 case .willEnterForeground:
-                    if lastActiveTime.elapsed(inactivityDuration) {
+                    if lastActiveTime.hasElapsed(inactivityDuration) {
                         // Reset the cache for a new session
                         storage.withValue { $0.removeAll() }
                     }

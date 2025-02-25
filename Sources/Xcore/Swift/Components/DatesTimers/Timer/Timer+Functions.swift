@@ -11,27 +11,19 @@ import Combine
 extension DispatchTime {
     /// Returns a `DispatchTime` calculated from the given time interval in seconds.
     ///
-    /// - Parameter interval: The time interval, in seconds.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let futureTime = DispatchTime.seconds(2.5)
+    /// print(futureTime)
+    /// ```
+    ///
+    /// - Parameter interval: The time interval in seconds.
     /// - Returns: A new `DispatchTime` instance calculated from the given time
     ///  interval in seconds.
     public static func seconds(_ interval: TimeInterval) -> Self {
-        .now() + DispatchTimeInterval.nanoseconds(Int(interval * nanosecondsPerSecond))
-    }
-
-    /// Calculates the time interval in seconds elapsed since the specified
-    /// `DispatchTime`.
-    ///
-    /// - Parameter lastUptime: The `DispatchTime` value representing a reference
-    ///   point in time.
-    /// - Returns: The time interval, in seconds, between the current time and the
-    ///   specified `lastUptime`.
-    static func elapsedSeconds(since lastUptime: UInt64) -> TimeInterval {
-        let currentTime = DispatchTime.now().uptimeNanoseconds
-        // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
-        // overflow due to arithmetic returning signed (-) value for UInt64 type.
-        let diffInNanoseconds = Int64(currentTime) - Int64(lastUptime)
-        let secondsElapsed = TimeInterval(diffInNanoseconds) / nanosecondsPerSecond
-        return secondsElapsed
+        .now() + .nanoseconds(Int(interval * nanosecondsPerSecond))
     }
 
     /// The number of nanoseconds in one second.
@@ -51,7 +43,7 @@ public func withDelay(
 ) -> Task<Void, Never> {
     Task(priority: priority) {
         do {
-            try await Task.sleep(for: duration, tolerance: tolerance, clock: ContinuousClock())
+            try await Task.sleep(for: duration, tolerance: tolerance, clock: .continuous)
             await operation()
         } catch {
             // If the task is cancelled before the time ends, this function throws

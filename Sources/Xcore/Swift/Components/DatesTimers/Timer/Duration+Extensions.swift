@@ -38,3 +38,37 @@ extension Duration {
         return (components.seconds * scale) + (components.attoseconds / scale)
     }
 }
+
+// MARK: - Minutes
+
+extension Duration {
+    /// Construct a `Duration` given a number of minutes represented as a
+    /// `BinaryInteger`.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let d: Duration = .minutes(5)
+    /// ```
+    ///
+    /// - Returns: A `Duration` representing a given number of minutes.
+    @inlinable
+    public static func minutes(_ minutes: some BinaryInteger) -> Self {
+        .seconds(60 * minutes)
+    }
+
+    /// Construct a `Duration` given a number of minutes represented as a `Double`
+    /// by converting the value into the closest attosecond scale value.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let d: Duration = .minutes(2.5)
+    /// ```
+    ///
+    /// - Returns: A `Duration` representing a given number of minutes.
+    @inlinable
+    public static func minutes(_ minutes: Double) -> Self {
+        .seconds(60 * minutes)
+    }
+}

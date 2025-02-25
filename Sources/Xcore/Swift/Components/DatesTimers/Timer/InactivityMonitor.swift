@@ -24,7 +24,7 @@ import UIKit
 /// ```swift
 /// @main
 /// struct ExampleApp: App {
-///     @State private var inactivityMonitor = InactivityMonitor(timeout: .seconds(5 * 60))
+///     @State private var inactivityMonitor = InactivityMonitor(timeout: .minutes(5))
 ///
 ///     var body: some Scene {
 ///         WindowGroup {
@@ -49,9 +49,9 @@ import UIKit
 public final class InactivityMonitor {
     private var notificationToken: NSObjectProtocol?
     private var timer: DispatchSourceTimer?
-    private let lastActivityUptime: SystemUptime
+    private var lastActivityTime: ElapsedTime
     /// The duration of inactivity after which the app is considered inactive.
-    private let timeout: TimeInterval
+    private let timeout: Duration
 
     /// Indicates whether the inactivity timeout has been reached.
     ///
@@ -62,9 +62,9 @@ public final class InactivityMonitor {
     /// duration.
     ///
     /// - Parameter timeout: The duration after which inactivity is detected.
-    public init(timeout: Duration = .seconds(5 * 60)) {
-        self.timeout = timeout.seconds
-        self.lastActivityUptime = .init()
+    public init(timeout: Duration = .minutes(5)) {
+        self.timeout = timeout
+        self.lastActivityTime = .init()
 
         addObservers()
         startTimer()
@@ -113,7 +113,7 @@ public final class InactivityMonitor {
         stopTimer()
 
         timer = DispatchSource.makeTimerSource(queue: .main)
-        timer?.schedule(deadline: .now(), repeating: timeout)
+        timer?.schedule(deadline: .now(), repeating: timeout.seconds)
         timer?.setEventHandler { [weak self] in
             self?.checkInactivity()
         }
@@ -134,7 +134,7 @@ public final class InactivityMonitor {
     /// If the elapsed time since the last detected activity exceeds the timeout,
     /// the `isInactive` property is set to `true`.
     private func checkInactivity() {
-        if !isInactive, lastActivityUptime.elapsed(timeout) {
+        if !isInactive, lastActivityTime.hasElapsed(timeout) {
             isInactive = true
             stopTimer()
         }
@@ -149,7 +149,7 @@ public final class InactivityMonitor {
             return
         }
 
-        lastActivityUptime.updateValue()
+        lastActivityTime.reset()
         startTimer()
     }
 
@@ -159,7 +159,7 @@ public final class InactivityMonitor {
     /// continues monitoring from the reset point.
     public func reset() {
         isInactive = false
-        lastActivityUptime.updateValue()
+        lastActivityTime.reset()
         startTimer()
     }
 }
