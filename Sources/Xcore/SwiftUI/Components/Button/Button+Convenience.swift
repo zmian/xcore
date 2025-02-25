@@ -189,6 +189,13 @@ extension Button<Label<Text, Image>> {
             .labelStyle(.iconOnly)
             .accessibilityIdentifier("dismissButton")
     }
+
+    /// A button with `i` label and given action.
+    public static func info(action: @escaping @MainActor () -> Void) -> some View {
+        Button("Info", systemImage: "info.circle", action: action)
+            .labelStyle(.iconOnly)
+            .accessibilityIdentifier("infoButton")
+    }
 }
 
 // MARK: - Learn More, Read More, See More, See More/Less, See All, See All/Less
