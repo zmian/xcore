@@ -22,7 +22,7 @@
 /// **Usage**
 ///
 /// ```swift
-/// var closeAccountStatus: ConfirmOperationStatus<Empty, Empty, MyError> = .idle
+/// var closeAccountStatus: ConfirmOperationStatus<Empty, Empty, Error> = .idle
 ///
 /// // 1. Close account button tapped
 /// closeAccountStatus = .waitingConfirmation
@@ -30,7 +30,7 @@
 /// // 2. Present alert
 /// var showCloseAccountAlert = closeAccountStatus.isLoadingOrWaitingConfirmation
 ///
-/// // 3. Once confirmed
+/// // 3. User confirmed; handle closing account
 /// do {
 ///     closeAccountStatus = .loading
 ///     try closeAccount()
