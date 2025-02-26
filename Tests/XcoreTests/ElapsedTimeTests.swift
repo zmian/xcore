@@ -15,10 +15,8 @@ struct ElapsedTimeTests {
         var et2 = et1
 
         #expect(et1 == et2)
-        #expect(et1._start == et2._start)
 
         et2.reset()
         #expect(et1 != et2)
-        #expect(et1._start != et2._start)
     }
 }

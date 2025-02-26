@@ -13,27 +13,16 @@ import Foundation
 /// precision, relying on a monotonic clock source to ensure consistency across
 /// system clock changes.
 public struct ElapsedTime: Sendable, Hashable {
-    /// A unique identifier for the instance.
-    ///
-    /// Exclusively used to satisfy `Hashable` conformance; it simplifies using this
-    /// property in models that require `Hashable`.
-    private var id: UUID
-
     /// The last saved elapsed time.
     private var storage = LockIsolated(ContinuousClock.now)
 
     /// Creates a new instance of `ElapsedTime`.
-    ///
-    /// - Parameter id: A unique identifier for the instance.
-    public init(id: UUID = UUID()) {
-        self.id = id
-    }
+    public init() {}
 
     /// Resets the stored value to the current system uptime.
     public mutating func reset() {
         if !isKnownUniquelyReferenced(&storage) {
             storage = .init(.now)
-            id = UUID()
         } else {
             storage.setValue(.now)
         }
@@ -93,19 +82,10 @@ public struct ElapsedTime: Sendable, Hashable {
 
 extension ElapsedTime {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        hasher.combine(storage.value)
     }
 
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-// MARK: - Testing
-
-extension ElapsedTime {
-    /// NB: testing only.
-    var _start: ContinuousClock.Instant {
-        storage.value
+        lhs.storage.value == rhs.storage.value
     }
 }
