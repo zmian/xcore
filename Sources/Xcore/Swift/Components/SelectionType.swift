@@ -50,7 +50,7 @@ extension SelectionType: Hashable where Value: Hashable {
 
 // MARK: - ExpressibleByBooleanLiteral
 
-extension SelectionType: ExpressibleByBooleanLiteral where Value == Bool {
+extension SelectionType<Bool>: ExpressibleByBooleanLiteral {
     /// Creates an instance of SelectionType using a Boolean literal.
     ///
     /// **Usage**
