@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "Xcore", targets: ["Xcore"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.13.0"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.17.0"),
         .package(url: "https://github.com/zmian/AnyCodable", branch: "master"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.6.3"),
