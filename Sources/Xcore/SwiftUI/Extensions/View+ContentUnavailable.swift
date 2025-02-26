@@ -30,7 +30,7 @@ extension View {
     ///     present the content unavailable view when the value is empty.
     ///   - message: A string to display when content is unavailable.
     @ViewBuilder
-    public func contentUnavailable(_ data: DataStatus<some Collection>, message: String) -> some View {
+    public func contentUnavailable(_ data: DataStatus<some Collection, Error>, message: String) -> some View {
         contentUnavailable(data.value?.isEmpty == true, message: message)
     }
 

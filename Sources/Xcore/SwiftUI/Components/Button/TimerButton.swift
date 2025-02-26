@@ -8,12 +8,12 @@ import SwiftUI
 import Combine
 
 /// An enumeration representing the status of a timer button.
-public enum TimerButtonStatus {
+public enum TimerButtonStatus: Sendable, Hashable {
     case active
     case loading
     case countdown
 
-    fileprivate init(_ data: DataStatus<some Hashable>) {
+    fileprivate init(_ data: DataStatus<some Hashable, some Error>) {
         switch data {
             case .idle, .failure:
                 self = .active
@@ -27,7 +27,7 @@ public enum TimerButtonStatus {
 
 /// A button that counts down before provided action is invoked subsequently.
 public struct TimerButton<Label: View>: View {
-    private enum InternalState: Hashable {
+    private enum InternalState: Sendable, Hashable {
         case idle
         case active
         case loading
@@ -52,18 +52,6 @@ public struct TimerButton<Label: View>: View {
     private let countdown: Int
     private let action: () -> Void
     private let label: Label
-
-    public init(
-        countdown countdownSeconds: Int = 15,
-        status: TimerButtonStatus = .active,
-        action: @escaping () -> Void,
-        @ViewBuilder label: () -> Label
-    ) {
-        self.countdown = countdownSeconds
-        self.status = status
-        self.action = action
-        self.label = label()
-    }
 
     public var body: some View {
         ZStack {
@@ -158,6 +146,34 @@ public struct TimerButton<Label: View>: View {
 
 // MARK: - Inits
 
+extension TimerButton {
+    public init(
+        countdown countdownSeconds: Int = 15,
+        status: TimerButtonStatus = .active,
+        action: @escaping () -> Void,
+        @ViewBuilder label: () -> Label
+    ) {
+        self.countdown = countdownSeconds
+        self.status = status
+        self.action = action
+        self.label = label()
+    }
+
+    public init(
+        countdown countdownSeconds: Int = 15,
+        status: DataStatus<some Hashable, some Error>,
+        action: @escaping () -> Void,
+        @ViewBuilder label: () -> Label
+    ) {
+        self.init(
+            countdown: countdownSeconds,
+            status: .init(status),
+            action: action,
+            label: label
+        )
+    }
+}
+
 extension TimerButton<Text> {
     public init(
         _ title: some StringProtocol,
@@ -178,7 +194,7 @@ extension TimerButton<Text> {
     public init(
         _ title: some StringProtocol,
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<some Hashable>,
+        status: DataStatus<some Hashable, some Error>,
         action: @escaping () -> Void
     ) {
         self.init(
@@ -190,23 +206,7 @@ extension TimerButton<Text> {
     }
 }
 
-extension TimerButton {
-    public init<V: Hashable>(
-        countdown countdownSeconds: Int = 15,
-        status: DataStatus<V>,
-        action: @escaping () -> Void,
-        @ViewBuilder label: () -> Label
-    ) {
-        self.init(
-            countdown: countdownSeconds,
-            status: .init(status),
-            action: action,
-            label: label
-        )
-    }
-}
-
-// MARK: - Convenience
+// MARK: - Convenience: Resend
 
 extension TimerButton<Text> {
     /// A button with `Resend` label and given action.
@@ -225,9 +225,9 @@ extension TimerButton<Text> {
     }
 
     /// A button with `Resend` label and given action.
-    public static func resend<V: Hashable>(
+    public static func resend(
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<V>,
+        status: DataStatus<some Hashable, some Error>,
         action: @escaping () -> Void
     ) -> some View {
         resend(

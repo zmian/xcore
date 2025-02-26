@@ -48,7 +48,7 @@ public struct AddressForm: Sendable {
         /// The current search query entered by the user.
         var search = ""
         /// The status of the search results (idle, loading, success, failure).
-        var searchResults: DataStatus<[AddressSearchResult]> = .idle
+        var searchResults: DataStatus<[AddressSearchResult], AppError> = .idle
         /// The currently selected postal address.
         var address = PostalAddress()
         /// A Boolean property indicating whether the address editor is visible.
@@ -98,7 +98,7 @@ public struct AddressForm: Sendable {
         /// Indicates that the address confirmation button was tapped.
         case addressConfirmedButtonTapped
         /// Carries the result of an address validation request.
-        case addressValidateResult(AppResult<Xcore.Empty>)
+        case addressValidateResult(AppResult<Empty>)
         /// Indicates a successful address validation with the confirmed address.
         case addressSuccess(PostalAddress)
         /// Toggles the flag indicating if a request is in progress.

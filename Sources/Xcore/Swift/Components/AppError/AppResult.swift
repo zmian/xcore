@@ -31,12 +31,12 @@ extension Result where Failure == AppError {
         do {
             self = .success(try await body())
         } catch {
-            self = .failure((error as? AppError) ?? fallbackError())
+            self = .failure(error.asAppError(or: fallbackError()))
         }
     }
 }
 
-extension Result<Xcore.Empty, AppError> {
+extension Result<Empty, AppError> {
     /// Creates a new result by evaluating an async throwing closure, capturing the
     /// returned value as a success, or any thrown error as an `AppError`.
     ///
@@ -56,7 +56,7 @@ extension Result<Xcore.Empty, AppError> {
             _ = try await body()
             self = .success
         } catch {
-            self = .failure((error as? AppError) ?? fallbackError())
+            self = .failure(error.asAppError(or: fallbackError()))
         }
     }
 }

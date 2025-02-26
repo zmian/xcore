@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+// MARK: - Void
 
 extension Result where Success == Void {
     /// A success, storing a void `Success` value.
@@ -13,12 +13,16 @@ extension Result where Success == Void {
     }
 }
 
+// MARK: - Empty
+
 extension Result where Success == Empty {
     /// A success, storing an empty `Success` value.
     public static var success: Self {
         .success(Empty())
     }
 }
+
+// MARK: - Associated Values
 
 extension Result {
     /// Returns the value associated with `.success` case.
@@ -37,6 +41,8 @@ extension Result {
         }
     }
 }
+
+// MARK: - CancellationError
 
 extension Result where Failure: Error {
     /// A Boolean value indicating whether the result is a `.failure` case with

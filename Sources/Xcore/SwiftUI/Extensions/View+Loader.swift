@@ -9,11 +9,11 @@ import SwiftUI
 extension View {
     /// Layers a loader in front of this view when the given data status is
     /// `.loading`.
-    public func overlayLoader<Value: Hashable>(
-        _ data: DataStatus<Value>,
+    public func overlayLoader(
+        _ data: DataStatus<some Hashable, Error>,
         alignment: Alignment = .center
     ) -> some View {
-        overlayLoader(data == .loading, alignment: alignment)
+        overlayLoader(data.isLoading, alignment: alignment)
     }
 
     /// Layers a loader in front of this view when the given flag is `true`.
