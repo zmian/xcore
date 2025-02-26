@@ -31,7 +31,7 @@ extension UIImage {
         typealias Input = (url: URL, image: UIImage?)
         typealias Output = (url: URL, image: UIImage)
 
-        return await withTaskGroup(of: Input.self) { group -> [Output] in
+        return await withTaskGroup(of: Input.self) { group in
             urls.forEach { url in
                 group.addTask {
                     let image = try? await ImageDownloader.download(url: url)
