@@ -47,7 +47,7 @@ public struct TimerButton<Label: View>: View {
     @Environment(\.theme) private var theme
     @State private var state = InternalState.idle
     @State private var elapsedTime = ElapsedTime()
-    @State private var timer = makeTimer()
+    @State private var timerTask: Task<(), Never>?
     private let status: TimerButtonStatus
     private let countdown: Int
     private let action: () -> Void
@@ -68,13 +68,6 @@ public struct TimerButton<Label: View>: View {
                 .hidden(state != .loading)
         }
         .animation(.default, value: isButtonHidden)
-        .onReceive(timer) { _ in
-            if state.remainingSeconds > 0 {
-                state = .ticked(countdown - elapsedTime.elapsedSeconds())
-            } else {
-                state = .active
-            }
-        }
         .onChange(of: state) { _, state in
             switch state {
                 case .idle, .ticked:
@@ -90,6 +83,21 @@ public struct TimerButton<Label: View>: View {
         }
         .onAppear {
             onStatus(status)
+        }
+    }
+
+    private var showRemainingSeconds: Bool {
+        state.remainingSeconds > 0
+    }
+
+    private var isButtonHidden: Bool {
+        switch state {
+            case .loading:
+                true
+            case .idle, .active, .startTimer:
+                false
+            case let .ticked(remainingSeconds):
+                remainingSeconds > 0
         }
     }
 
@@ -115,32 +123,31 @@ public struct TimerButton<Label: View>: View {
 
     private func restartTimer() {
         state = .ticked(countdown)
-        timer = Self.makeTimer()
+        makeTimer()
         elapsedTime.reset()
     }
 
     private func stopTimer() {
-        timer.upstream.connect().cancel()
+        timerTask?.cancel()
+        timerTask = nil
     }
 
-    private var showRemainingSeconds: Bool {
-        state.remainingSeconds > 0
-    }
-
-    private var isButtonHidden: Bool {
-        switch state {
-            case .loading:
-                return true
-            case .idle, .active, .startTimer:
-                return false
-            case let .ticked(remainingSeconds):
-                return remainingSeconds > 0
+    private func makeTimer() {
+        stopTimer()
+        timerTask = Task {
+            do {
+                while true {
+                    try await Task.sleep(for: .seconds(1), tolerance: .zero, clock: .continuous)
+                    if state.remainingSeconds > 0 {
+                        state = .ticked(countdown - elapsedTime.elapsedSeconds())
+                    } else {
+                        state = .active
+                    }
+                }
+            } catch {
+                state = .active
+            }
         }
-    }
-
-    private static func makeTimer() -> Publishers.Autoconnect<Timer.TimerPublisher> {
-        Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
     }
 }
 
