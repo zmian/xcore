@@ -14,10 +14,10 @@
 /// related to an item, a Boolean value, and loading operations both inside and
 /// outside an alert.
 ///
-/// There are multiple places of the app where the flow goes like this:
-/// 1. User performs action
-/// 2. Alert is presented to confirm user's decision
-/// 3. On confirmation, action is performed.
+/// Typically multiple areas in any given app follow this workflow:
+/// 1. The user performs an action.
+/// 2. An alert is presented to confirm the user's decision.
+/// 3. Upon confirmation, the corresponding action is executed.
 ///
 /// **Usage**
 ///
