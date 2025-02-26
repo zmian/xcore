@@ -212,6 +212,7 @@ extension DataStatus {
     ///
     /// let result: DataStatus<Int, Error> = // ...
     /// // result == .failure(<error value>)
+    ///
     /// let resultWithDatedError = result.mapError { DatedError($0) }
     /// // result == .failure(DatedError(error: <error value>, date: <date>))
     /// ```
@@ -248,6 +249,7 @@ extension DataStatus {
     ///
     /// let result: DataStatus<Int, Error> = // ...
     /// // result == .failure(<error value>)
+    ///
     /// let resultWithDatedError = result.flatMapError { .failure(DatedError($0)) }
     /// // result == .failure(DatedError(error: <error value>, date: <date>))
     /// ```

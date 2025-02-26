@@ -315,3 +315,13 @@ extension ConfirmOperationStatus {
         .loading()
     }
 }
+
+// MARK: - CancellationError
+
+extension ConfirmOperationStatus {
+    /// A Boolean value indicating whether the status is a `.failure` case with
+    /// `CancellationError` as its error type.
+    public var isCancelled: Bool {
+        error is CancellationError
+    }
+}
