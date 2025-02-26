@@ -158,6 +158,9 @@ extension String: ImageRepresentable {
     }
 }
 
+#if canImport(DeveloperToolsSupport)
+import DeveloperToolsSupport
+
 extension ImageResource: ImageRepresentable {
     public var imageSource: ImageSourceType {
         .uiImage(UIImage(resource: self))
@@ -168,3 +171,4 @@ extension ImageResource: ImageRepresentable {
 public func r(_ resource: ImageResource) -> ImageResource {
     resource
 }
+#endif

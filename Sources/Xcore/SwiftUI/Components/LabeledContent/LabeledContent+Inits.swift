@@ -5,6 +5,9 @@
 //
 
 import SwiftUI
+#if canImport(DeveloperToolsSupport)
+import DeveloperToolsSupport
+#endif
 
 // MARK: - Money
 
@@ -38,6 +41,7 @@ extension LabeledContent<Text, Money?> {
 // MARK: - Image
 
 extension LabeledContent<Text, Image?> {
+    #if canImport(DeveloperToolsSupport)
     /// Creates a labeled content with a title generated from a string and a value
     /// with an image resource.
     ///
@@ -49,6 +53,7 @@ extension LabeledContent<Text, Image?> {
             image.map(Image.init)
         }
     }
+    #endif
 
     /// Creates a labeled content with a title generated from a string and a value
     /// with a system image.
@@ -151,6 +156,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
         self.init(title, subtitle: subtitle, spacing: spacing, content: { value })
     }
 
+    #if canImport(DeveloperToolsSupport)
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with an image resource.
     ///
@@ -165,6 +171,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
     ) where Content == Image {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(image))
     }
+    #endif
 
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with a system image.
@@ -238,6 +245,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
         self.init(title, subtitle: subtitle, spacing: spacing, content: { value })
     }
 
+    #if canImport(DeveloperToolsSupport)
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with an image resource.
     ///
@@ -258,6 +266,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
     ) where Content == Image {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(image))
     }
+    #endif
 
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value with a system image.
