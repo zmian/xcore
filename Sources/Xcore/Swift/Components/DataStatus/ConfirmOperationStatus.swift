@@ -28,18 +28,18 @@
 /// closeAccountStatus = .waitingConfirmation
 ///
 /// // 2. Present alert
-/// var showCloseAccountAlert = closeAccountStatus.isLoadingOrWaitingConfirmation,
+/// var showCloseAccountAlert = closeAccountStatus.isLoadingOrWaitingConfirmation
 ///
 /// // 3. Once confirmed
-/// closeAccountStatus = .loading
-///
-/// // Start closing of account
-///
-/// // If closed account completed successfully
-/// closeAccountStatus = .success
-///
-/// // If closed account failed
-/// closeAccountStatus = .failure(.someError)
+/// do {
+///     closeAccountStatus = .loading
+///     try closeAccount()
+///     // account closing operation completed successfully
+///     closeAccountStatus = .success
+/// } catch {
+///     // account closing operation failed
+///     closeAccountStatus = .failure(error)
+/// }
 /// ```
 ///
 /// **Usage**

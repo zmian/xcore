@@ -39,6 +39,35 @@ struct ReloadableDataStatusTests {
     }
 
     @Test
+    func startLoading() {
+        var status = ReloadableDataStatus<String, AppError>.idle
+
+        // idle → loading
+        status.startLoading()
+        #expect(status == .loading)
+
+        // loading → loading
+        status = .loading
+        status.startLoading()
+        #expect(status == .loading)
+
+        // failure → loading
+        status = .failure(.general)
+        status.startLoading()
+        #expect(status == .loading)
+
+        // success → reloading
+        status = .success("Fetched Data")
+        status.startLoading()
+        #expect(status == .reloading("Fetched Data"))
+
+        // reloading → reloading
+        status = .reloading("Fetched Data")
+        status.startLoading()
+        #expect(status == .reloading("Fetched Data"))
+    }
+
+    @Test
     func booleanProperties() {
         var status = ReloadableDataStatus<[String], Error>.idle
         #expect(status.isIdle)
