@@ -154,18 +154,29 @@ extension Color {
     }
 }
 
-// MARK: - ColorResource
+// MARK: - Resolve
 
 extension Color {
-    /// Initialize a `Color` with a color resource that is resolved using the given
-    /// color scheme.
+    /// Returns a new Color resolved for the specified color scheme.
     ///
-    /// - Parameters:
-    ///   - resource: A color resource from the asset catalog.
-    ///   - colorScheme: The color scheme to resolve the color resource version.
-    public init(_ resource: ColorResource, colorScheme: ColorScheme) {
-        let uiColor = UIColor(resource: resource)
-            .resolve(for: UIUserInterfaceStyle(colorScheme))
-        self = Color(uiColor: uiColor)
+    /// This method creates an `EnvironmentValues` instance with the given
+    /// color scheme, then resolves the current color within that environment.
+    /// It is useful for dynamically adjusting the color to a particular color
+    /// scheme.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let someColor = Color(.someColor)
+    /// let resolvedColor = someColor.resolve(for: .light)
+    /// ```
+    ///
+    /// - Parameter colorScheme: The color scheme for which the color should be
+    ///   resolved.
+    /// - Returns: A new `Color` instance resolved for the specified color scheme.
+    public func resolve(for colorScheme: ColorScheme) -> Self {
+        var env = EnvironmentValues()
+        env.colorScheme = colorScheme
+        return Color(resolve(in: env))
     }
 }
