@@ -141,10 +141,7 @@ extension Timer {
     /// timer.resume()
     /// ```
     public func resume() {
-        guard
-            let pauseDate = pauseDate,
-            let previousFireDate = previousFireDate
-        else {
+        guard let pauseDate, let previousFireDate else {
             return
         }
 
