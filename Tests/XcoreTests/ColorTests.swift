@@ -11,20 +11,32 @@ import SwiftUI
 struct ColorTests {
     @Test
     func resolveForColorScheme() {
-        let blue = UIColor.blue
-        let orange = UIColor.orange
+        let env = EnvironmentValues()
+        let blue = Color(Color.blue.resolve(in: env))
+        let orange = Color(Color.orange.resolve(in: env))
 
-        let baseColor = Color(uiColor: UIColor {
-            switch $0.userInterfaceStyle {
-                case .dark: orange
-                default: blue
-            }
-        })
+        let baseColor = Color(ColorSchemeShapeStyle(light: blue, dark: orange))
 
         let lightColor = baseColor.resolve(for: .light)
         let darkColor = baseColor.resolve(for: .dark)
 
-        #expect(lightColor.uiColor.hex == blue.hex)
-        #expect(darkColor.uiColor.hex == orange.hex)
+        #expect(lightColor == blue)
+        #expect(darkColor == orange)
+    }
+}
+
+struct ColorSchemeShapeStyle: ShapeStyle, Hashable {
+    let light: Color
+    let dark: Color
+
+    func resolve(in environment: EnvironmentValues) -> Color.Resolved {
+        switch environment.colorScheme {
+            case .dark:
+                dark.resolve(in: environment)
+            case .light:
+                light.resolve(in: environment)
+            @unknown default:
+                light.resolve(in: environment)
+        }
     }
 }
