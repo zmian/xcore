@@ -18,9 +18,7 @@ public struct CapsuleView<Label>: View where Label: View {
         HStack(spacing: .s4) {
             if let image {
                 Image(system: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(28)
+                    .font(.title)
             }
 
             VStack {
@@ -33,7 +31,7 @@ public struct CapsuleView<Label>: View where Label: View {
                         .foregroundStyle(theme.textSecondaryColor)
                 }
             }
-            .padding(hasImage ? .trailing : .horizontal)
+            .padding(image.isNil ? .horizontal : .trailing)
         }
         .padding(.horizontal)
         .frame(minHeight: 56)
@@ -41,10 +39,6 @@ public struct CapsuleView<Label>: View where Label: View {
         .clipShape(.capsule)
         .floatingShadow()
         .accessibilityElement(children: .combine)
-    }
-
-    private var hasImage: Bool {
-        image != nil
     }
 }
 
