@@ -92,6 +92,13 @@ extension UIColor {
         get { cgColor.alpha }
         set { withAlphaComponent(newValue) }
     }
+
+    public func alpha(_ alpha: CGFloat) -> UIColor {
+        // The colors are lazily evaluated. Please don't assign to variable as it won't
+        // be dark mode compliant.
+        let copy = copy() as! UIColor
+        return UIColor(light: copy.withAlphaComponent(alpha), dark: copy.withAlphaComponent(alpha))
+    }
 }
 
 // MARK: - Lighter & Darker
