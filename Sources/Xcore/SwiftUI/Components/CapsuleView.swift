@@ -112,39 +112,32 @@ extension CapsuleView<Never> {
 
 #Preview {
     Samples.capsuleViewPreviews
-        .colorScheme(.light)
 }
 
 extension Samples {
-    @MainActor public static var capsuleViewPreviews: some View {
-        LazyView {
-            ZStack {
-                Color(.systemBackground)
-                    .ignoresSafeArea()
-
-                VStack(spacing: .s6) {
-                    CapsuleView("Apple Pencil") {
-                        HStack {
-                            Text("100%")
-                            Image(system: .battery100Bolt)
-                                .renderingMode(.original)
-                        }
-                    }
-
-                    CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
-                        .foregroundStyle(.indigo)
-                        .colorScheme(.dark)
-
-                    CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
-                        .foregroundStyle(.orange)
-
-                    CapsuleView("Mail pasted from Photos")
-
-                    CapsuleView("Dismiss")
-
-                    CapsuleView("9:41 AM", systemImage: .bellFill)
+    @MainActor
+    public static var capsuleViewPreviews: some View {
+        VStack(spacing: .s6) {
+            CapsuleView("Apple Pencil") {
+                HStack {
+                    Text("100%")
+                    Image(system: .battery100Bolt)
+                        .renderingMode(.original)
                 }
             }
+
+            CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
+                .foregroundStyle(.indigo)
+                .colorScheme(.dark)
+
+            CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
+                .foregroundStyle(.orange)
+
+            CapsuleView("Mail pasted from Photos")
+
+            CapsuleView("Dismiss")
+
+            CapsuleView("9:41 AM", systemImage: .bellFill)
         }
     }
 }
