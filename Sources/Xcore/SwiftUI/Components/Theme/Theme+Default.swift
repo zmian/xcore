@@ -22,11 +22,11 @@ extension Theme {
     private static let system = Theme(
         id: "system",
         tintColor: .accentColor,
-        separatorColor: Color(.separator),
-        borderColor: Color(.separator),
+        separatorColor: Color(uiColor: .separator),
+        borderColor: Color(uiColor: .separator),
         toggleColor: .accentColor,
-        linkColor: Color(.link),
-        placeholderTextColor: Color(.placeholderText),
+        linkColor: Color(uiColor: .link),
+        placeholderTextColor: Color(uiColor: .placeholderText),
 
         // Sentiment
         positiveSentimentColor: .green,
@@ -36,18 +36,18 @@ extension Theme {
         // Text
         textColor: .primary,
         textSecondaryColor: .secondary,
-        textTertiaryColor: Color(.tertiaryLabel),
-        textQuaternaryColor: Color(.quaternaryLabel),
+        textTertiaryColor: Color(uiColor: .tertiaryLabel),
+        textQuaternaryColor: Color(uiColor: .quaternaryLabel),
 
         // Background
-        backgroundColor: Color(.systemBackground),
-        backgroundSecondaryColor: Color(.secondarySystemBackground),
-        backgroundTertiaryColor: Color(.tertiarySystemBackground),
+        backgroundColor: Color(uiColor: .systemBackground),
+        backgroundSecondaryColor: Color(uiColor: .secondarySystemBackground),
+        backgroundTertiaryColor: Color(uiColor: .tertiarySystemBackground),
 
         // Grouped Background
-        groupedBackgroundColor: Color(.systemGroupedBackground),
-        groupedBackgroundSecondaryColor: Color(.secondarySystemGroupedBackground),
-        groupedBackgroundTertiaryColor: Color(.tertiarySystemGroupedBackground),
+        groupedBackgroundColor: Color(uiColor: .systemGroupedBackground),
+        groupedBackgroundSecondaryColor: Color(uiColor: .secondarySystemGroupedBackground),
+        groupedBackgroundTertiaryColor: Color(uiColor: .tertiarySystemGroupedBackground),
 
         // Button Text
         buttonTextColor: { style, state, position in
@@ -60,7 +60,7 @@ extension Theme {
                 case (_, .pressed, _):
                     return .white
                 case (_, .disabled, _):
-                    return Color(.systemGray4)
+                    return Color(uiColor: .systemGray4)
             }
         },
 
@@ -72,7 +72,7 @@ extension Theme {
                 case (_, .pressed, _):
                     return .accentColor
                 case (_, .disabled, _):
-                    return Color(.secondarySystemBackground)
+                    return Color(uiColor: .secondarySystemBackground)
             }
         },
 

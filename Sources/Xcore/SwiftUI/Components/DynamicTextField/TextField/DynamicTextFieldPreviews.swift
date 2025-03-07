@@ -53,8 +53,6 @@ private struct ShowcaseFieldPreview: View {
                 $0.placeholderBehavior = placeholderBehavior
             }
             .isLoading(showLoading)
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color(.tertiarySystemFill))
 
             Toggle("Show Loading State", isOn: $showLoading)
 

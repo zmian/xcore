@@ -22,11 +22,11 @@ public struct TextFieldAttributes: Sendable, Hashable, MutableAppliable {
 
     public init(
         placeholderBehavior: PlaceholderBehavior = .floating,
-        placeholderColor: Color = Color(.placeholderText),
-        placeholderErrorColor: Color = Color(.systemOrange),
-        placeholderSuccessColor: Color = Color(.systemGreen),
-        errorColor: Color = Color(.systemOrange),
-        successColor: Color = Color(.systemGreen),
+        placeholderColor: Color = Color(uiColor: .placeholderText),
+        placeholderErrorColor: Color = .orange,
+        placeholderSuccessColor: Color = .green,
+        errorColor: Color = .orange,
+        successColor: Color = .green,
         disabledColor: Color? = nil
     ) {
         self.placeholderBehavior = placeholderBehavior
