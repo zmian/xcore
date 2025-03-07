@@ -13,20 +13,12 @@ extension Color.RGBColorSpace {
 // MARK: - Hex Support
 
 extension Color {
-    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
-        self.init(UIColor(colorSpace, hex: hex))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, opacity: CGFloat? = nil) {
+        self.init(uiColor: UIColor(colorSpace, hex: hex, alpha: opacity))
     }
 
-    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, opacity: CGFloat) {
-        self.init(UIColor(colorSpace, hex: hex, alpha: opacity))
-    }
-
-    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: String) {
-        self.init(UIColor(colorSpace, hex: hex))
-    }
-
-    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, opacity: CGFloat) {
-        self.init(UIColor(colorSpace, hex: hex, alpha: opacity))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, opacity: CGFloat? = nil) {
+        self.init(uiColor: UIColor(colorSpace, hex: hex, alpha: opacity))
     }
 }
 
@@ -38,7 +30,7 @@ extension Color {
         let hue = CGFloat(Int.random() % 256) / 256
         let saturation = CGFloat(Int.random() % 128) / 256 + 0.5
         let brightness = CGFloat(Int.random() % 128) / 256 + 0.5
-        return Color(hue: hue, saturation: saturation, brightness: brightness, opacity: 1)
+        return Color(hue: hue, saturation: saturation, brightness: brightness)
     }
 }
 
@@ -48,24 +40,24 @@ extension Color {
     // Credit: http://stackoverflow.com/a/31466450
 
     public func lighter(_ amount: CGFloat = 0.25) -> Color {
-        hueColorWithBrightness(1 + amount)
+        hsbColor(brightness: 1 + amount)
     }
 
     public func darker(_ amount: CGFloat = 0.25) -> Color {
-        hueColorWithBrightness(1 - amount)
+        hsbColor(brightness: 1 - amount)
     }
 
-    private func hueColorWithBrightness(_ amount: CGFloat) -> Color {
+    private func hsbColor(brightness amount: CGFloat) -> Color {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
 
-        if uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
-            return Color(hue: hue, saturation: saturation, brightness: brightness * amount, opacity: alpha)
-        } else {
+        guard uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) else {
             return self
         }
+
+        return Color(hue: hue, saturation: saturation, brightness: brightness * amount, opacity: alpha)
     }
 }
 
@@ -106,51 +98,31 @@ extension Color {
     }
 }
 
-// MARK: - Color Scheme Mode
+// MARK: - Color Scheme
 
 extension Color {
-    /// Creates a color object that generates its color data dynamically using the
-    /// specified colors.
+    /// Creates a color that adapts to the current context using the specified
+    /// colors.
     ///
     /// - Parameters:
     ///   - light: The color for light color scheme.
     ///   - dark: The color for dark color scheme.
-    public init(
-        light: @autoclosure @escaping () -> Color,
-        dark: @autoclosure @escaping () -> Color
-    ) {
-        self.init(UIColor {
-            switch $0.userInterfaceStyle {
-                case .dark: UIColor(dark())
-                default: UIColor(light())
-            }
-        })
+    public init(light: Color, dark: Color) {
+        let shapeStyle = ColorSchemeShapeStyle(light: light, dark: dark)
+        self.init(shapeStyle)
     }
 
-    /// Creates a color object that generates its color data dynamically using the
-    /// specified colors.
-    ///
-    /// - Parameters:
-    ///   - light: The color for light color scheme.
-    ///   - dark: The color for dark color scheme.
-    @_disfavoredOverload
-    public init(
-        light: @autoclosure @escaping () -> UIColor,
-        dark: @autoclosure @escaping () -> UIColor
-    ) {
-        self.init(UIColor {
-            switch $0.userInterfaceStyle {
-                case .dark: dark()
-                default: light()
-            }
-        })
-    }
-}
+    private struct ColorSchemeShapeStyle: ShapeStyle, Hashable {
+        let light: Color
+        let dark: Color
 
-extension Color {
-    /// The `UIColor` that corresponds to the color object.
-    public var uiColor: UIColor {
-        UIColor(self)
+        func resolve(in environment: EnvironmentValues) -> Color.Resolved {
+            switch environment.colorScheme {
+                case .dark: dark.resolve(in: environment)
+                case .light: light.resolve(in: environment)
+                @unknown default: light.resolve(in: environment)
+            }
+        }
     }
 }
 
@@ -178,5 +150,14 @@ extension Color {
         var env = EnvironmentValues()
         env.colorScheme = colorScheme
         return Color(resolve(in: env))
+    }
+}
+
+// MARK: - UIColor
+
+extension Color {
+    /// The `UIColor` that corresponds to the color object.
+    public var uiColor: UIColor {
+        UIColor(self)
     }
 }

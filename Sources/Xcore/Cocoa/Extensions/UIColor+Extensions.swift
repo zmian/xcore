@@ -27,24 +27,14 @@ extension UIColor {
 // MARK: - Hex Support
 
 extension UIColor {
-    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
-        let (r, g, b, a) = Self.components(hex: hex)
-        self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
-    }
-
-    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, alpha: CGFloat) {
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, alpha: CGFloat? = nil) {
         let (r, g, b, a) = Self.components(hex: hex, alpha: alpha)
         self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
     }
 
-    @nonobjc
-    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String) {
-        self.init(colorSpace, hex: Self.components(hex: hex))
-    }
-
-    @nonobjc
-    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, alpha: CGFloat) {
-        self.init(colorSpace, hex: Self.components(hex: hex), alpha: alpha)
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, alpha: CGFloat? = nil) {
+        let components = Int64(hex.droppingPrefix("#"), radix: 16) ?? 0x000000
+        self.init(colorSpace, hex: components, alpha: alpha)
     }
 
     public var hex: String {
@@ -92,42 +82,15 @@ extension UIColor {
 
         return (r, g, b, a)
     }
-
-    private static func components(hex: String) -> Int64 {
-        Int64(hex.droppingPrefix("#"), radix: 16) ?? 0x000000
-    }
-
-    private func components(normalize: Bool = true) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-
-        if normalize {
-            r *= 255
-            g *= 255
-            b *= 255
-        }
-
-        return (r, g, b, a)
-    }
 }
 
 // MARK: - Alpha
 
 extension UIColor {
+    /// The value of the alpha component associated with a color.
     public var alpha: CGFloat {
         get { cgColor.alpha }
         set { withAlphaComponent(newValue) }
-    }
-
-    public func alpha(_ alpha: CGFloat) -> UIColor {
-        // The colors are lazily evaluated. Please don't assign to variable as it won't
-        // be dark mode compliant.
-        let copy = copy() as! UIColor
-        return UIColor(light: copy.withAlphaComponent(alpha), dark: copy.withAlphaComponent(alpha))
     }
 }
 
@@ -137,24 +100,24 @@ extension UIColor {
     // Credit: http://stackoverflow.com/a/31466450
 
     public func lighter(_ amount: CGFloat = 0.25) -> UIColor {
-        hueColorWithBrightness(1 + amount)
+        hsbColor(brightness: 1 + amount)
     }
 
     public func darker(_ amount: CGFloat = 0.25) -> UIColor {
-        hueColorWithBrightness(1 - amount)
+        hsbColor(brightness: 1 - amount)
     }
 
-    private func hueColorWithBrightness(_ amount: CGFloat) -> UIColor {
+    private func hsbColor(brightness amount: CGFloat) -> UIColor {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
 
-        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
-            return UIColor(hue: hue, saturation: saturation, brightness: brightness * amount, alpha: alpha)
-        } else {
+        guard getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) else {
             return self
         }
+
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness * amount, alpha: alpha)
     }
 
     public func isLight(threshold: CGFloat = 0.6) -> Bool {
@@ -185,6 +148,23 @@ extension UIColor {
             alpha: a
         )
     }
+
+    private func components(normalize: Bool) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        if normalize {
+            r *= 255
+            g *= 255
+            b *= 255
+        }
+
+        return (r, g, b, a)
+    }
 }
 
 // MARK: - Random
@@ -200,7 +180,7 @@ extension UIColor {
     }
 }
 
-// MARK: - Color Scheme Mode
+// MARK: - Color Scheme
 
 extension UIColor {
     /// Creates a color object that generates its color data dynamically using the
