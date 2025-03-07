@@ -126,13 +126,12 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @ViewBuilder
     private var maskButtonIfNeeded: some View {
         if configuration.secureTextEntry == .yesWithToggleButton {
-            Button {
+            Button(isSecure ? "Show" : "Hide", systemImage: isSecure ? "eye" : "eye.slash") {
                 isSecure.toggle()
-            } label: {
-                Image(system: isSecure ? .eye : .eyeSlash)
-                    .imageScale(.small)
             }
-            .accessibilityLabel(Text(isSecure ? "Show" : "Hide"))
+            .imageScale(.small)
+            .labelStyle(.iconOnly)
+            .accessibilityIdentifier("maskButton")
         }
     }
 
