@@ -39,8 +39,8 @@ extension DefaultDynamicTextFieldStyle {
                 ProgressView()
                     .hidden(!isLoading, remove: true)
             }
-            .unwrap(foregroundColor) {
-                $0.foregroundColor($1)
+            .foregroundStyle {
+                isEnabled ? nil : attributes.disabledColor
             }
         }
 
@@ -57,17 +57,17 @@ extension DefaultDynamicTextFieldStyle {
             ZStack(alignment: .leading) {
                 placeholderView
                     .onSizeChange {
-                        labelHeight = $0.height
+                        labelHeight = $0.height.rounded()
                     }
-                    .offset(y: placeholderOffsetY)
-                    .scaleEffect(CGFloat(text.isEmpty ? 1.0 : 0.75), anchor: .topLeading)
-                    .animation(.spring(response: .default, dampingFraction: 0.75), value: placeholderOffsetY)
+                    .offset(y: -floatingContentOffsetY)
+                    .scaleEffect(text.isEmpty ? 1.0 : 0.75, anchor: .topLeading)
+                    .animation(.smooth, value: floatingContentOffsetY)
 
                 configuration.textField
                     .onSizeChange {
-                        textFieldHeight = $0.height
+                        textFieldHeight = $0.height.rounded()
                     }
-                    .offset(y: textFieldOffsetY)
+                    .offset(y: floatingContentOffsetY)
             }
             .frame(height: floor(textFieldHeight + labelHeight))
         }
@@ -79,22 +79,14 @@ extension DefaultDynamicTextFieldStyle {
                         return attributes.placeholderColor
                     }
 
-                    return configuration.isValid ?
-                    attributes.placeholderSuccessColor :
-                    attributes.placeholderErrorColor
+                    return configuration.isValid
+                        ? attributes.placeholderSuccessColor
+                        : attributes.placeholderErrorColor
                 }
         }
 
-        private var placeholderOffsetY: CGFloat {
-            text.isEmpty ? 0 : -floor(textFieldHeight * 0.5)
-        }
-
-        private var textFieldOffsetY: CGFloat {
+        private var floatingContentOffsetY: CGFloat {
             text.isEmpty ? 0 : floor(textFieldHeight * 0.5)
-        }
-
-        private var foregroundColor: Color? {
-            isEnabled ? nil : attributes.disabledColor
         }
     }
 }
