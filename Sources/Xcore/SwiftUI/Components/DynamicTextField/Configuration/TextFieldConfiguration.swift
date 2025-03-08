@@ -7,17 +7,22 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
-    /// An enumeration representing the type of secure text entry.
-    public enum SecureTextEntry: String, Sendable {
-        /// The text will be visible.
-        case no
+    /// An enumeration representing the text entry mode for a text field.
+    ///
+    /// Use this enumeration to configure how sensitive text is displayed. When set to
+    /// `.plain`, the text is visible. When set to `.masked`, the text is obscured to
+    /// protect sensitive information. The `.maskedWithToggle` mode obscures the text by
+    /// default but provides a toggle to reveal it temporarily.
+    public enum TextEntryMode: String, Sendable {
+        /// The text is displayed normally without any masking.
+        case plain
 
-        /// The text will be masked to enter private text.
-        case yes
+        /// The text is masked for secure private input.
+        case masked
 
-        /// The text will be masked to enter private text. The textfield will have
-        /// toggle button to unmask the text.
-        case yesWithToggleButton
+        /// The text is masked by default, with a toggle button available to unmask it
+        /// temporarily.
+        case maskedWithToggle
     }
 }
 
@@ -43,8 +48,8 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Sendable, E
     /// The default value is `nil`.
     public var textContentType: UITextContentType?
 
-    /// The default value is `.no`.
-    public var secureTextEntry: SecureTextEntry
+    /// The default value is `.plain`.
+    public var textEntryMode: TextEntryMode
 
     /// The default value is `true`.
     public var isEditable: Bool
@@ -68,7 +73,7 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Sendable, E
         spellChecking: UITextSpellCheckingType = .default,
         keyboard: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil,
-        secureTextEntry: SecureTextEntry = .no,
+        textEntryMode: TextEntryMode = .plain,
         isEditable: Bool = true,
         validation: ValidationRule<String> = .none,
         formatter: Formatter,
@@ -80,7 +85,7 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Sendable, E
         self.spellChecking = spellChecking
         self.keyboard = keyboard
         self.textContentType = textContentType
-        self.secureTextEntry = secureTextEntry
+        self.textEntryMode = textEntryMode
         self.isEditable = isEditable
         self.validation = validation
         self.formatter = formatter
@@ -99,7 +104,7 @@ extension TextFieldConfiguration {
             lhs.spellChecking == rhs.spellChecking &&
             lhs.keyboard == rhs.keyboard &&
             lhs.textContentType == rhs.textContentType &&
-            lhs.secureTextEntry == rhs.secureTextEntry &&
+            lhs.textEntryMode == rhs.textEntryMode &&
             lhs.isEditable == rhs.isEditable
     }
 }
@@ -116,7 +121,7 @@ extension TextFieldConfiguration<AnyTextFieldFormatter> {
             spellChecking: configuration.spellChecking,
             keyboard: configuration.keyboard,
             textContentType: configuration.textContentType,
-            secureTextEntry: .init(rawValue: configuration.secureTextEntry.rawValue)!,
+            textEntryMode: .init(rawValue: configuration.textEntryMode.rawValue)!,
             isEditable: configuration.isEditable,
             validation: configuration.validation,
             formatter: .init(configuration.formatter),
@@ -135,7 +140,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         spellChecking: UITextSpellCheckingType = .default,
         keyboard: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil,
-        secureTextEntry: SecureTextEntry = .no,
+        textEntryMode: TextEntryMode = .plain,
         isEditable: Bool = true,
         validation: ValidationRule<String> = .none
     ) {
@@ -146,7 +151,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
             spellChecking: spellChecking,
             keyboard: keyboard,
             textContentType: textContentType,
-            secureTextEntry: secureTextEntry,
+            textEntryMode: textEntryMode,
             isEditable: isEditable,
             validation: validation,
             formatter: .init()

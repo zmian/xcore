@@ -15,7 +15,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: nil,
-            secureTextEntry: .yesWithToggleButton,
+            textEntryMode: .maskedWithToggle,
             validation: .ssn,
             formatter: .init("###-##-####")
         )
@@ -29,7 +29,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: nil,
-            secureTextEntry: .yesWithToggleButton,
+            textEntryMode: .maskedWithToggle,
             validation: .number(count: 4),
             formatter: .init("####")
         )

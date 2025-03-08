@@ -29,7 +29,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         onEditingChanged: @escaping (_ isFocused: Bool) -> Void
     ) {
         self._value = value
-        self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
+        self._isSecure = State(initialValue: configuration.textEntryMode != .plain)
         self.label = label.eraseToAnyView()
         self.configuration = configuration
         self.onEditingChanged = onEditingChanged
@@ -119,7 +119,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
 
     @ViewBuilder
     private var maskButtonIfNeeded: some View {
-        if configuration.secureTextEntry == .yesWithToggleButton {
+        if configuration.textEntryMode == .maskedWithToggle {
             Button(isSecure ? "Show" : "Hide", systemImage: isSecure ? "eye" : "eye.slash") {
                 isSecure.toggle()
             }
