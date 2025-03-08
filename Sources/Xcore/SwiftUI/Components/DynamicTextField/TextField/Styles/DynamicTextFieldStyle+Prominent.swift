@@ -23,15 +23,15 @@ import SwiftUI
 /// **Usage**
 ///
 /// ```swift
-/// // Example: Using a prominent dynamic text field style with a rounded rectangle
-/// // and an outline that automatically applies validation colors.
+/// // Using a prominent dynamic text field style with a rounded rectangle and
+/// // an outline that automatically applies validation colors.
 /// DynamicTextField(
 ///    value: $text,
 ///    configuration: .default
-///  )
-///  .dynamicTextFieldStyle(
-///    .prominent(.outline(.automatic), shape: .rect(cornerRadius: 8))
-///  )
+/// )
+/// .dynamicTextFieldStyle(
+///     .prominent(.outline(.automatic), shape: .rect(cornerRadius: 8))
+/// )
 /// ```
 public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFieldStyle {
     /// An enumeration representing the visual prominence of the text field.
@@ -75,7 +75,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
 
     /// The shape used for clipping and drawing the text field border.
     private let shape: S
-    /// The desired prominence style (fill or outline).
+    /// The desired prominence style.
     private let prominence: Prominence
     /// Optional custom padding to apply around the text field.
     private let padding: EdgeInsets?
@@ -125,11 +125,12 @@ extension ProminentDynamicTextFieldStyle {
                 .clipShape(shape)
                 .contentShape(shape)
                 .apply {
-                    if case .outline = prominence {
-                        let color = outlineBorderColor
-                        $0.border(shape, lineWidth: color == nil ? 0.5 : 1, color: color)
-                    } else {
-                        $0
+                    switch prominence {
+                        case .fill:
+                            $0
+                        case .outline:
+                            let color = outlineBorderColor
+                            $0.border(shape, lineWidth: color == nil ? 0.5 : 1, color: color)
                     }
                 }
         }
