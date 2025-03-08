@@ -34,7 +34,7 @@ struct PrimaryDynamicTextFieldStyle: DynamicTextFieldStyle {
         ProminentDynamicTextFieldStyle(.outline, shape: .capsule)
             .makeBody(configuration: configuration)
             .textFieldAttributes {
-                $0.placeholderBehavior = .inline
+                $0.placeholderPlacement = .inline
             }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// This style is provided as the default appearance for dynamic text fields in
 /// the application. It adapts its layout based on the current text field
-/// configuration, such as inline or floating placeholder behavior.
+/// configuration, such as inline or floating placeholder placement.
 struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
     func makeBody(configuration: Configuration) -> some View {
         InternalBody(configuration: configuration)
@@ -32,7 +32,7 @@ extension DefaultDynamicTextFieldStyle {
 
         var body: some View {
             HStack(spacing: .s2) {
-                switch attributes.placeholderBehavior {
+                switch attributes.placeholderPlacement {
                     case .inline:
                         inlineContent
                     case .floating:
@@ -87,7 +87,7 @@ extension DynamicTextFieldStyle where Self == DefaultDynamicTextFieldStyle {
     ///
     /// This style is provided as the default appearance for dynamic text fields in
     /// the application. It adapts its layout based on the current text field
-    /// configuration, such as inline or floating placeholder behavior.
+    /// configuration, such as inline or floating placeholder placement.
     static var `default`: Self { .init() }
 }
 

@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A dynamic text field style that adds a prominent, adaptive border or fill
-/// effect based on validation and placeholder behavior.
+/// effect based on validation and placeholder placement.
 ///
 /// This style displays a text field with a custom shape and a visual treatment
 /// determined by the provided prominence. When the prominence is set to `.fill`,
@@ -60,7 +60,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
             /// Automatically use the validation color based on the placeholder
             /// behavior. When the placeholder is floating, no border color is applied.
             ///
-            /// If you set the `placeholderBehavior` attribute to `.floating`, the color
+            /// If you set the `placeholderPlacement` attribute to `.floating`, the color
             /// won't be applied to the border; otherwise, the validation color is used on
             /// the border.
             case automatic
@@ -86,7 +86,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
     ///   - prominence: The desired prominence style for the text field.
     ///   - shape: The shape used for clipping and border rendering.
     ///   - padding: Optional custom padding. If not provided, default values
-    ///     based on placeholder behavior are used.
+    ///     based on placeholder placement are used.
     public init(
         _ prominence: Prominence,
         shape: S,
@@ -139,7 +139,7 @@ extension ProminentDynamicTextFieldStyle {
                 return padding
             } else {
                 var padding: EdgeInsets = .zero
-                padding.vertical = attributes.placeholderBehavior == .floating ? .s2 : .s4
+                padding.vertical = attributes.placeholderPlacement == .floating ? .s2 : .s4
                 padding.horizontal = S.self == Capsule.self ? .s4 : .s3
                 return padding
             }
@@ -160,7 +160,7 @@ extension ProminentDynamicTextFieldStyle {
 
             switch validationColor {
                 case .automatic:
-                    return attributes.placeholderBehavior == .floating ? nil : color
+                    return attributes.placeholderPlacement == .floating ? nil : color
                 case .enable:
                     return color
                 case .disable:
