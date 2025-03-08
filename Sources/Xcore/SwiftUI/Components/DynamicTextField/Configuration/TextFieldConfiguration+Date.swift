@@ -108,18 +108,27 @@ extension TextFieldConfiguration.Date {
 // MARK: - Date
 
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
-    /// A text field configuration for entering a date of birth.
+    /// A text field configuration for entering a date of birth formatted as
+    /// `(yyyy/m/d)`.
     public static var birthday: Self {
-        date(.minimumAge18).applying {
-            $0.id = "birthday"
-        }
+        .init(
+            id: "birthday",
+            autocapitalization: .never,
+            spellChecking: .no,
+            textContentType: .birthdate,
+            validation: .textFieldDate(
+                .minimumAge18,
+                format: .dateTime
+                    .month(.defaultDigits)
+                    .day(.defaultDigits)
+                    .year(.defaultDigits)
+            ),
+            formatter: .init()
+        )
     }
 
-    /// Creates a date-based text field configuration.
-    ///
-    /// - Parameter configuration: The date configuration to apply.
-    /// - Returns: A text field configuration for date input.
-    public static func date(_ configuration: Date) -> Self {
+    /// A text field configuration for entering a datetime.
+    public static var dateTime: Self {
         .init(
             id: "date",
             autocapitalization: .never,
@@ -128,5 +137,41 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
             validation: .none,
             formatter: .init()
         )
+    }
+}
+
+// MARK: - ValidationRule
+
+extension ValidationRule<String> {
+    /// A validation rule that checks whether the input date falls within the
+    /// specified range.
+    ///
+    /// - Parameters:
+    ///   - configuration: A `TextFieldConfiguration.Date` instance specifying the
+    ///     minimum and maximum allowed dates.
+    ///   - strategy: The parsing strategy used to convert the input string into a
+    ///     `Date`.
+    ///
+    /// - Returns: A validation rule that evaluates to `true` if the date is within
+    ///   the provided range; otherwise, `false`.
+    public static func textFieldDate<T: ParseStrategy & Sendable>(
+        _ configuration: TextFieldConfiguration<PassthroughTextFieldFormatter>.Date,
+        format strategy: T
+    ) -> Self where T.ParseInput == String, T.ParseOutput == Date {
+        .init { input in
+            guard let date = try? Date(input, strategy: strategy) else {
+                return false
+            }
+
+            if let minDate = configuration.min, date < minDate {
+                return false
+            }
+
+            if let maxDate = configuration.max, date > maxDate {
+                return false
+            }
+
+            return true
+        }
     }
 }
