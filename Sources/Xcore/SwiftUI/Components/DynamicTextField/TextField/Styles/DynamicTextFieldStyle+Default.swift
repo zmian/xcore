@@ -6,6 +6,11 @@
 
 import SwiftUI
 
+/// The default dynamic text field style.
+///
+/// This style is provided as the default appearance for dynamic text fields in
+/// the application. It adapts its layout based on the current text field
+/// configuration, such as inline or floating placeholder behavior.
 struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
     func makeBody(configuration: Configuration) -> some View {
         InternalBody(configuration: configuration)
@@ -78,6 +83,11 @@ extension DefaultDynamicTextFieldStyle {
 // MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == DefaultDynamicTextFieldStyle {
+    /// The default dynamic text field style.
+    ///
+    /// This style is provided as the default appearance for dynamic text fields in
+    /// the application. It adapts its layout based on the current text field
+    /// configuration, such as inline or floating placeholder behavior.
     static var `default`: Self { .init() }
 }
 
