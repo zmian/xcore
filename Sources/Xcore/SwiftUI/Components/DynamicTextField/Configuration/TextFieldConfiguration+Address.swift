@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
-    /// An enumeration representing postal address components.
+    /// An enumeration representing the postal address components.
     public enum AddressComponent: String, Sendable, Hashable {
         /// The street address in a postal address.
         case street
@@ -36,6 +36,11 @@ extension TextFieldConfiguration {
 // MARK: - Address Components
 
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
+    /// Creates a text field configuration for a specified address component.
+    ///
+    /// - Parameter component: The address component for the text field.
+    /// - Returns: A configured `TextFieldConfiguration` instance for the specified
+    ///   address component.
     public static func address(component: AddressComponent) -> Self {
         switch component {
             case .street: fullStreetAddress
