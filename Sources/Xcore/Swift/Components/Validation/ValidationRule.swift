@@ -16,7 +16,8 @@ import Foundation
 ///
 /// ```swift
 /// let emailRule = ValidationRule<String> { input in
-///     input.wholeMatch(of: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/) != nil
+///     let pattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+///     return input.wholeMatch(of: pattern) != nil
 /// }
 ///
 /// emailRule.validate("help@example.com") // valid
