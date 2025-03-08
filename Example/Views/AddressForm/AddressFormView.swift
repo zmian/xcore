@@ -104,16 +104,16 @@ public struct AddressFormView<Content: View, Footer: View>: View {
             DynamicTextField(
                 L.searchPlaceholder,
                 value: $store.search,
-                configuration: .address(component: .street),
-                onCommit: {
-                    store.send(.searchButtonTapped)
-                }
+                configuration: .address(component: .street)
             )
             .dynamicTextFieldStyle(.primary)
             .submitLabel(.continue)
             .focused($isTextFieldFocused)
             .isLoading(store.searchResults.isLoading)
             .padding(.horizontal)
+            .onSubmit {
+                store.send(.searchButtonTapped)
+            }
 
             searchResultsView
         }

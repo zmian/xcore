@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import Combine
 
 public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @Environment(\.dynamicTextFieldStyle) private var style
@@ -14,12 +13,10 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @State private var previousText: String
     @State private var isValid = true
     @State private var isFocused = false
-    @State private var isFloatingPlaceholderEnabled = true
     @State private var isSecure: Bool
     private let label: AnyView
     private let configuration: TextFieldConfiguration<Formatter>
     private let onEditingChanged: (Bool) -> Void
-    private let onCommit: () -> Void
     private var onValidationChanged: (Bool) -> Void = { _ in }
     private var formatter: Formatter {
         configuration.formatter
@@ -29,15 +26,13 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         value: Binding<Formatter.Value>,
         label: Label,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void,
-        onCommit: @escaping () -> Void
+        onEditingChanged: @escaping (Bool) -> Void
     ) {
         self._value = value
         self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
         self.label = label.eraseToAnyView()
         self.configuration = configuration
         self.onEditingChanged = onEditingChanged
-        self.onCommit = onCommit
 
         // Initial value
         let formatter = configuration.formatter
@@ -75,11 +70,10 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                         onEditingChanged: { isFocused in
                             self.isFocused = isFocused
                             onEditingChanged(isFocused)
-                        },
-                        onCommit: onCommit
+                        }
                     )
                 case true:
-                    SecureField("", text: $text, onCommit: onCommit)
+                    SecureField("", text: $text)
             }
         }
         .textInputAutocapitalization(configuration.autocapitalization)

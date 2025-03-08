@@ -50,22 +50,17 @@ extension DynamicTextField {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {}
+        onEditingChanged: @escaping (Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
             label: Text(titleKey).accessibilityHidden(true),
             configuration: configuration,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 
@@ -81,22 +76,17 @@ extension DynamicTextField {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     public init(
         _ title: some StringProtocol,
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {}
+        onEditingChanged: @escaping (Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
             label: Text(title).accessibilityHidden(true),
             configuration: configuration,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 
@@ -111,23 +101,18 @@ extension DynamicTextField {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     ///   - label: The label of the text field, describing its purpose.
     public init(
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {},
         @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,
             label: label(),
             configuration: configuration,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 }
@@ -147,21 +132,16 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<String>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {}
+        onEditingChanged: @escaping (Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
             label: Text(titleKey),
             configuration: .text,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 
@@ -175,21 +155,16 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     public init(
         _ title: some StringProtocol,
         value: Binding<String>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {}
+        onEditingChanged: @escaping (Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
             label: Text(title),
             configuration: .text,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 
@@ -202,22 +177,17 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///     The closure receives a Boolean value that indicates the editing
     ///     status: `true` when the user begins editing, `false` when they
     ///     finish.
-    ///   - onCommit: An action to perform when the user performs an action
-    ///     (for example, when the user presses the Return key) while the text
-    ///     field has focus.
     ///   - label: The label of the text field, describing its purpose.
     public init(
         value: Binding<String>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = {},
         @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,
             label: label(),
             configuration: .text,
-            onEditingChanged: onEditingChanged,
-            onCommit: onCommit
+            onEditingChanged: onEditingChanged
         )
     }
 }
