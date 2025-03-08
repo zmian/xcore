@@ -45,22 +45,15 @@ extension DynamicTextField {
     ///   - text: The text to display and edit.
     ///   - configuration: A configuration used to define the behavior of the text
     ///     field.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<Formatter.Value>,
-        configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
+        configuration: TextFieldConfiguration<Formatter>
     ) {
         self.init(
             value: value,
             label: Text(titleKey).accessibilityHidden(true),
-            configuration: configuration,
-            onEditingChanged: onEditingChanged
+            configuration: configuration
         )
     }
 
@@ -71,22 +64,15 @@ extension DynamicTextField {
     ///   - value: The value to display and edit.
     ///   - configuration: A configuration used to define the behavior of the text
     ///     field.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     public init(
         _ title: some StringProtocol,
         value: Binding<Formatter.Value>,
-        configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
+        configuration: TextFieldConfiguration<Formatter>
     ) {
         self.init(
             value: value,
             label: Text(title).accessibilityHidden(true),
-            configuration: configuration,
-            onEditingChanged: onEditingChanged
+            configuration: configuration
         )
     }
 
@@ -96,23 +82,16 @@ extension DynamicTextField {
     ///   - value: The value to display and edit.
     ///   - configuration: A configuration used to define the behavior of the text
     ///     field.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     ///   - label: The label of the text field, describing its purpose.
     public init(
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in },
         @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,
             label: label(),
-            configuration: configuration,
-            onEditingChanged: onEditingChanged
+            configuration: configuration
         )
     }
 }
@@ -127,21 +106,14 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///   - titleKey: The key for the localized title of the text field,
     ///     describing its purpose.
     ///   - text: The text to display and edit.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     public init(
         _ titleKey: LocalizedStringKey,
-        value: Binding<String>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
+        value: Binding<String>
     ) {
         self.init(
             value: value,
             label: Text(titleKey),
-            configuration: .text,
-            onEditingChanged: onEditingChanged
+            configuration: .text
         )
     }
 
@@ -150,21 +122,14 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     /// - Parameters:
     ///   - title: The title of the text view, describing its purpose.
     ///   - value: The value to display and edit.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     public init(
         _ title: some StringProtocol,
-        value: Binding<String>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
+        value: Binding<String>
     ) {
         self.init(
             value: value,
             label: Text(title),
-            configuration: .text,
-            onEditingChanged: onEditingChanged
+            configuration: .text
         )
     }
 
@@ -172,22 +137,15 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///
     /// - Parameters:
     ///   - value: The value to display and edit.
-    ///   - onEditingChanged: The action to perform when the user
-    ///     begins editing `text` and after the user finishes editing `text`.
-    ///     The closure receives a Boolean value that indicates the editing
-    ///     status: `true` when the user begins editing, `false` when they
-    ///     finish.
     ///   - label: The label of the text field, describing its purpose.
     public init(
         value: Binding<String>,
-        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in },
         @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,
             label: label(),
-            configuration: .text,
-            onEditingChanged: onEditingChanged
+            configuration: .text
         )
     }
 }
