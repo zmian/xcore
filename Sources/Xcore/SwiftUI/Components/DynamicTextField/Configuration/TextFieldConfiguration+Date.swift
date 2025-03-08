@@ -108,8 +108,10 @@ extension TextFieldConfiguration.Date {
 // MARK: - Date
 
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
-    /// A text field configuration for entering a date of birth formatted as
-    /// `(yyyy/m/d)`.
+    /// A text field configuration for entering a date of birth.
+    ///
+    /// The date must be formatted as `yyyy/m/d` and ensures the entered birth date
+    /// corresponds to a minimum age of 18 years and a maximum age of 150 years.
     public static var birthday: Self {
         .init(
             id: "birthday",
@@ -127,7 +129,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         )
     }
 
-    /// A text field configuration for entering a datetime.
+    /// A text field configuration for entering a date and time value.
     public static var dateTime: Self {
         .init(
             id: "date",
