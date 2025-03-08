@@ -15,7 +15,7 @@ extension EnvironmentValues {
     @Entry var popupPreferredWidth = AppConstants.popupPreferredWidth
 }
 
-// MARK: - View Helpers
+// MARK: - View Modifiers
 
 extension View {
     /// Clips popups within the environment to its bounding frame, with the

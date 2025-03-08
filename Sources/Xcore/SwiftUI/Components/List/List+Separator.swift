@@ -41,7 +41,7 @@ extension EnvironmentValues {
     @Entry public var listRowSeparatorStyle: ListRowSeparatorStyle = .line
 }
 
-// MARK: - View Helpers
+// MARK: - View Modifiers
 
 extension View {
     /// Applies an inset to the rows separator in a list.

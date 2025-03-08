@@ -30,7 +30,7 @@ extension EnvironmentValues {
     @Entry public var defaultOutlineButtonBorderColor: Color?
 }
 
-// MARK: - View Helpers
+// MARK: - View Modifiers
 
 extension View {
     public func theme(_ theme: Theme) -> some View {

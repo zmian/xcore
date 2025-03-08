@@ -12,7 +12,7 @@ extension EnvironmentValues {
     @Entry var customListRowInsets: EdgeInsets = .listRow
 }
 
-// MARK: - View Helpers
+// MARK: - View Modifiers
 
 extension View {
     /// Applies an inset to the rows in a list.

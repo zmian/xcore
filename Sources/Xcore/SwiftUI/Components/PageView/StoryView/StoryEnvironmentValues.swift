@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-// MARK: - View Helpers
+// MARK: - View Modifiers
 
 extension View {
     /// Sets the tint for the story progress indicator.
