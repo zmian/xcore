@@ -160,7 +160,7 @@ private struct TextFieldPreviewBox<Content: View>: View {
                                 height = $0.height
                             })
                     }
-                    subviews[1...]
+                    subviews.dropFirst()
                 }
             }
         } header: {
