@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Configuration
 
-extension DynamicTextField<PassthroughTextFieldFormatter> {
+extension DynamicTextField<Never, PassthroughTextFieldFormatter> {
     /// Creates a text field based on a text field style configuration.
     ///
     /// You can use this initializer within the ``makeBody(configuration:)`` method
@@ -35,7 +35,7 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     }
 }
 
-extension DynamicTextField {
+extension DynamicTextField where Label == Text {
     /// Creates a text field with a text label generated from a localized title
     /// string.
     ///
@@ -50,11 +50,9 @@ extension DynamicTextField {
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>
     ) {
-        self.init(
-            value: value,
-            label: Text(titleKey).accessibilityHidden(true),
-            configuration: configuration
-        )
+        self.init(value: value, configuration: configuration) {
+            Text(titleKey)
+        }
     }
 
     /// Creates a text field with a text label generated from a title string.
@@ -69,36 +67,15 @@ extension DynamicTextField {
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>
     ) {
-        self.init(
-            value: value,
-            label: Text(title).accessibilityHidden(true),
-            configuration: configuration
-        )
-    }
-
-    /// Creates a text field with a text label generated from a title string.
-    ///
-    /// - Parameters:
-    ///   - value: The value to display and edit.
-    ///   - configuration: A configuration used to define the behavior of the text
-    ///     field.
-    ///   - label: The label of the text field, describing its purpose.
-    public init(
-        value: Binding<Formatter.Value>,
-        configuration: TextFieldConfiguration<Formatter>,
-        @ViewBuilder label: () -> some View
-    ) {
-        self.init(
-            value: value,
-            label: label(),
-            configuration: configuration
-        )
+        self.init(value: value, configuration: configuration) {
+            Text(title)
+        }
     }
 }
 
 // MARK: - Convenience Inits
 
-extension DynamicTextField<PassthroughTextFieldFormatter> {
+extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
     /// Creates a text field with a text label generated from a localized title
     /// string.
     ///
@@ -106,15 +83,10 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///   - titleKey: The key for the localized title of the text field,
     ///     describing its purpose.
     ///   - text: The text to display and edit.
-    public init(
-        _ titleKey: LocalizedStringKey,
-        value: Binding<String>
-    ) {
-        self.init(
-            value: value,
-            label: Text(titleKey),
-            configuration: .text
-        )
+    public init(_ titleKey: LocalizedStringKey, value: Binding<String>) where Label == Text {
+        self.init(value: value, configuration: .text) {
+            Text(titleKey)
+        }
     }
 
     /// Creates a text field with a text label generated from a title string.
@@ -122,30 +94,23 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     /// - Parameters:
     ///   - title: The title of the text view, describing its purpose.
     ///   - value: The value to display and edit.
-    public init(
-        _ title: some StringProtocol,
-        value: Binding<String>
-    ) {
-        self.init(
-            value: value,
-            label: Text(title),
-            configuration: .text
-        )
+    public init(_ title: some StringProtocol, value: Binding<String>) where Label == Text {
+        self.init(value: value, configuration: .text) {
+            Text(title)
+        }
     }
 
-    /// Creates a text field with a text label generated from a title string.
+    /// Creates a text field with a label generated from a view builder.
     ///
     /// - Parameters:
     ///   - value: The value to display and edit.
-    ///   - label: The label of the text field, describing its purpose.
-    public init(
-        value: Binding<String>,
-        @ViewBuilder label: () -> some View
-    ) {
+    ///   - label: A view builder that produces a label for the text field,
+    ///     describing its purpose.
+    public init(value: Binding<String>, @ViewBuilder label: () -> Label) {
         self.init(
             value: value,
-            label: label(),
-            configuration: .text
+            configuration: .text,
+            label: label
         )
     }
 }

@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
+public struct DynamicTextField<Label: View, Formatter: TextFieldFormatter>: View {
     @Environment(\.dynamicTextFieldStyle) private var style
     @Binding private var value: Formatter.Value
     @State private var text: String
@@ -14,21 +14,29 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @State private var isValid = true
     @State private var isFocused = false
     @State private var isSecure: Bool
-    private let label: AnyView
+    private let label: Label
     private let configuration: TextFieldConfiguration<Formatter>
     private var onValidationChanged: (Bool) -> Void = { _ in }
     private var formatter: Formatter {
         configuration.formatter
     }
 
-    init<Label: View>(
+    /// Creates a text field with a label generated from a view builder.
+    ///
+    /// - Parameters:
+    ///   - value: The value to display and edit.
+    ///   - configuration: A configuration used to define the behavior of the text
+    ///     field.
+    ///   - label: A view builder that produces a label for the text field,
+    ///     describing its purpose.
+    public init(
         value: Binding<Formatter.Value>,
-        label: Label,
-        configuration: TextFieldConfiguration<Formatter>
+        configuration: TextFieldConfiguration<Formatter>,
+        @ViewBuilder label: () -> Label
     ) {
         self._value = value
         self._isSecure = State(initialValue: configuration.textEntryMode != .plain)
-        self.label = label.eraseToAnyView()
+        self.label = label()
         self.configuration = configuration
 
         // Initial value
