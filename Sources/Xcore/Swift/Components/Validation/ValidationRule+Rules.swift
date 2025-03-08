@@ -191,7 +191,7 @@ extension ValidationRule<String> {
 
     /// A validation rule that checks whether the input is a valid email address.
     public static var email: Self {
-        "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     }
 
     /// A validation rule that checks whether the input is a valid phone number with
