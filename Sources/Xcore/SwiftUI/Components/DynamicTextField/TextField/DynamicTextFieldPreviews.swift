@@ -4,35 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
-import SwiftUI
-
 #if DEBUG
-
-// MARK: - Preview Box
-
-private struct TextFieldPreviewBox<Content: View>: View {
-    @State private var height: CGFloat = 0
-    private let title: String
-    private let content: Content
-
-    init(_ title: String, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-
-    var body: some View {
-        Section {
-            content
-                .onSizeChange {
-                    height = $0.height
-                }
-        } header: {
-            Text(title)
-        } footer: {
-            Text("Text Field Height \(height)")
-        }
-    }
-}
+import SwiftUI
 
 // MARK: - Showcase
 
@@ -53,6 +26,8 @@ private struct ShowcaseFieldPreview: View {
                 $0.placeholderBehavior = placeholderBehavior
             }
             .isLoading(showLoading)
+            .listRowSeparator(.hidden)
+            .listRowBackground(Rectangle().fill(.bar))
 
             Toggle("Show Loading State", isOn: $showLoading)
 
@@ -65,21 +40,20 @@ private struct ShowcaseFieldPreview: View {
             }
 
             // Style Picker
-            Picker("", selection: $style) {
+            Picker("Text Field Style", selection: $style) {
                 ForEach(Style.allCases) {
                     Text($0.rawValue)
                         .tag($0)
                 }
             }
-            .pickerStyle(.segmented)
         }
     }
 
     private enum Style: String, Hashable, CaseIterable, Identifiable {
         case `default` = "Default"
         case line = "Line"
-        case prominent1 = "P1"
-        case prominent2 = "P2"
+        case prominent1 = "Prominent: Fill"
+        case prominent2 = "Prominent: Outline"
 
         @MainActor
         var textFieldStyle: AnyDynamicTextFieldStyle {
@@ -161,6 +135,39 @@ private struct DataFormatTypesFieldPreview: View {
                 }
         }
         .tint(.secondary)
+    }
+}
+
+// MARK: - Preview Box
+
+private struct TextFieldPreviewBox<Content: View>: View {
+    @State private var height: CGFloat = 0
+    private let title: String
+    private let content: Content
+
+    init(_ title: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
+
+    var body: some View {
+        Section {
+            if #available(iOS 18.0, *) {
+                Group(subviews: content) { subviews in
+                    if let first = subviews.first {
+                        first
+                            .background(Color.clear.onSizeChange {
+                                height = $0.height
+                            })
+                    }
+                    subviews[1...]
+                }
+            }
+        } header: {
+            Text(title)
+        } footer: {
+            Text("Text Field Height \(height)")
+        }
     }
 }
 
