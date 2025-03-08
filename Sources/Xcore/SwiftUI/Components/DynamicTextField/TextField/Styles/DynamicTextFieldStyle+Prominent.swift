@@ -10,10 +10,10 @@ import SwiftUI
 /// effect based on validation and placeholder placement.
 ///
 /// This style displays a text field with a custom shape and a visual treatment
-/// determined by the provided prominence. When the prominence is set to `.fill`,
-/// the background is filled with the theme’s secondary background color. When set
-/// to `.outline`, an outline is drawn around the text field, optionally using a
-/// validation color.
+/// determined by the provided prominence. When the prominence is set to
+/// `.fill`, the background is filled with the theme’s secondary background
+/// color. When set to `.outline`, an outline is drawn around the text field,
+/// optionally using a validation color.
 ///
 /// The style is generic over a shape type (conforming to InsettableShape) that
 /// defines the text field’s border. It provides a unified interface to control
