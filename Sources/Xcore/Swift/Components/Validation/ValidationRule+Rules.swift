@@ -31,7 +31,7 @@ extension ValidationRule where Input: Collection {
     ///
     /// - Parameter range: The range expression to check against input count.
     /// - Returns: The validation rule.
-    public static func range<T: RangeExpression & Sendable>(_ range: T) -> Self where T.Bound == Int {
+    public static func range(_ range: some RangeExpression<Int> & Sendable) -> Self{
         .init { range.contains($0.count) }
     }
 
@@ -118,6 +118,18 @@ extension ValidationRule<String> {
     /// - Returns: The validation rule.
     public static func regex(_ pattern: String) -> Self {
         .init { $0.isMatch(pattern) }
+    }
+
+    /// A validation rule using a regular expression to validate input.
+    ///
+    /// - Parameters:
+    ///   - pattern: The regular expression pattern used to validate the input.
+    /// - Returns: A `ValidationRule` instance.
+    public static func regex<Output>(_ pattern: Regex<Output>) -> Self {
+        nonisolated(unsafe) let pattern = pattern
+        return .init { input in
+            input.wholeMatch(of: pattern) != nil
+        }
     }
 
     /// A validation rule that checks whether the input contains the given string.
@@ -224,7 +236,7 @@ extension ValidationRule<String> {
         name(range: 1...50)
     }
 
-    public static func name<T: RangeExpression & Sendable>(range: T) -> Self where T.Bound == Int {
+    public static func name(range: some RangeExpression<Int> & Sendable) -> Self {
         self.range(range) && subset(of: .numbers.inverted)
     }
 
@@ -232,7 +244,7 @@ extension ValidationRule<String> {
     ///
     /// - Parameter range: The range of the input.
     /// - Returns: The validation rule.
-    public static func number<T: RangeExpression & Sendable>(range: T) -> Self where T.Bound == Int {
+    public static func number(range: some RangeExpression<Int> & Sendable) -> Self {
         self.range(range) && subset(of: .numbers)
     }
 
