@@ -8,17 +8,17 @@ import SwiftUI
 
 extension TextFieldConfiguration {
     public struct Date: Sendable, Hashable {
-        public let minimum: Foundation.Date?
-        public let maximum: Foundation.Date?
+        public let min: Foundation.Date?
+        public let max: Foundation.Date?
         public let selection: Foundation.Date
 
         public init(
-            minimum: Foundation.Date?,
-            maximum: Foundation.Date?,
+            min: Foundation.Date?,
+            max: Foundation.Date?,
             selection: Foundation.Date = .init(year: 2000, month: 1, day: 1)
         ) {
-            self.minimum = minimum
-            self.maximum = maximum
+            self.min = min
+            self.max = max
             self.selection = selection
         }
     }
@@ -29,24 +29,24 @@ extension TextFieldConfiguration {
 extension TextFieldConfiguration.Date {
     public static var pastDate: Self {
         .init(
-            minimum: nil,
-            maximum: Date(),
-            selection: Date()
+            min: nil,
+            max: .now,
+            selection: .now
         )
     }
 
     public static var futureDate: Self {
         .init(
-            minimum: Date(),
-            maximum: nil,
-            selection: Date()
+            min: .now,
+            max: nil,
+            selection: .now
         )
     }
 
     public static var minimumAge18: Self {
         .init(
-            minimum: Calendar.current.date(byAdding: .year, value: -150, to: Date()),
-            maximum: Calendar.current.date(byAdding: .year, value: -18, to: Date())
+            min: Calendar.current.date(byAdding: .year, value: -150, to: .now),
+            max: Calendar.current.date(byAdding: .year, value: -18, to: .now)
         )
     }
 
@@ -71,9 +71,9 @@ extension TextFieldConfiguration.Date {
     /// - Returns: A new date.
     public static func now(byAdding component: Calendar.Component, value: Int) -> Self {
         .init(
-            minimum: Date(),
-            maximum: Calendar.current.date(byAdding: component, value: value, to: Date()),
-            selection: Date()
+            min: .now,
+            max: Calendar.current.date(byAdding: component, value: value, to: .now),
+            selection: .now
         )
     }
 }

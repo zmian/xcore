@@ -38,20 +38,13 @@ extension TextFieldConfiguration {
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static func address(component: AddressComponent) -> Self {
         switch component {
-            case .street:
-                return fullStreetAddress
-            case .street1:
-                return streetAddressLine1
-            case .street2:
-                return streetAddressLine2
-            case .city:
-                return addressCity
-            case .state:
-                return addressState
-            case .postalCode:
-                return .postalCode
-            case .country:
-                return .country
+            case .street: fullStreetAddress
+            case .street1: streetAddressLine1
+            case .street2: streetAddressLine2
+            case .city: addressCity
+            case .state: addressState
+            case .postalCode: .postalCode
+            case .country: .country
         }
     }
 

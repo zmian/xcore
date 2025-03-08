@@ -16,7 +16,10 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             keyboard: .numberPad,
             textContentType: .oneTimeCode,
             validation: .oneTimeCode,
-            formatter: .init(String(repeating: "#", count: FeatureFlag.oneTimeCodeCharacterLimit))
+            formatter: .init(String(
+                repeating: "#",
+                count: FeatureFlag.oneTimeCodeCharacterLimit
+            ))
         )
     }
 }

@@ -12,6 +12,16 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(id: #function)
     }
 
+    /// Similar to text but no spell checking, auto capitalization or auto
+    /// correction.
+    public static var plain: Self {
+        .init(
+            id: #function,
+            autocapitalization: .never,
+            spellChecking: .no
+        )
+    }
+
     /// Email
     public static var emailAddress: Self {
         .init(
@@ -21,16 +31,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
             keyboard: .emailAddress,
             textContentType: .emailAddress,
             validation: .email
-        )
-    }
-
-    /// Similar to text but no spell checking, auto capitalization or auto
-    /// correction.
-    public static var plain: Self {
-        .init(
-            id: #function,
-            autocapitalization: .never,
-            spellChecking: .no
         )
     }
 }

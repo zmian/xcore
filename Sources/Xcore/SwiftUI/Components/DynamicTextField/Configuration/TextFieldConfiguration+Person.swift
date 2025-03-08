@@ -20,14 +20,10 @@ extension TextFieldConfiguration {
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static func person(component: PersonNameComponent) -> Self {
         switch component {
-            case .fullName:
-                return fullName
-            case .givenName:
-                return givenName
-            case .middleName:
-                return middleName
-            case .familyName:
-                return familyName
+            case .fullName: fullName
+            case .givenName: givenName
+            case .middleName: middleName
+            case .familyName: familyName
         }
     }
 
