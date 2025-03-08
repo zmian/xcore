@@ -62,19 +62,19 @@ extension ValidationRule<String> {
 
 // MARK: - Conditional Conformance
 
-extension ValidationRule: ExpressibleByStringLiteral where Input == String {
+extension ValidationRule<String>: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(pattern: value)
     }
 }
 
-extension ValidationRule: ExpressibleByExtendedGraphemeClusterLiteral where Input == String {
+extension ValidationRule<String>: ExpressibleByExtendedGraphemeClusterLiteral {
     public init(extendedGraphemeClusterLiteral value: String) {
         self.init(pattern: value)
     }
 }
 
-extension ValidationRule: ExpressibleByUnicodeScalarLiteral where Input == String {
+extension ValidationRule<String>: ExpressibleByUnicodeScalarLiteral {
     public init(unicodeScalarLiteral value: String) {
         self.init(pattern: value)
     }
