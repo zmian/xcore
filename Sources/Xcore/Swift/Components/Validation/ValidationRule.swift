@@ -43,7 +43,7 @@ public struct ValidationRule<Input>: Sendable {
     }
 }
 
-// MARK: - Conditional Conformance
+// MARK: - Regex Based Rules
 
 extension ValidationRule<String> {
     /// Creates a validation rule based on a regular expression pattern.
@@ -59,6 +59,8 @@ extension ValidationRule<String> {
         }
     }
 }
+
+// MARK: - Conditional Conformance
 
 extension ValidationRule: ExpressibleByStringLiteral where Input == String {
     public init(stringLiteral value: StringLiteralType) {
