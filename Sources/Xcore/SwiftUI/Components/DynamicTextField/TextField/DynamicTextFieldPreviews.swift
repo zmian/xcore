@@ -157,7 +157,7 @@ private struct TextFieldPreviewBox<Content: View>: View {
                     if let first = subviews.first {
                         first
                             .background(Color.clear.onSizeChange {
-                                height = $0.height
+                                height = $0.height.rounded()
                             })
                     }
                     subviews.dropFirst()
@@ -166,7 +166,7 @@ private struct TextFieldPreviewBox<Content: View>: View {
         } header: {
             Text(title)
         } footer: {
-            Text("Text Field Height \(height)")
+            Text("Text Field Height \(height.formatted())")
         }
     }
 }
