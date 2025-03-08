@@ -54,7 +54,7 @@ extension DynamicTextField {
         _ titleKey: LocalizedStringKey,
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in }
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
@@ -80,7 +80,7 @@ extension DynamicTextField {
         _ title: some StringProtocol,
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in }
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
@@ -105,7 +105,7 @@ extension DynamicTextField {
     public init(
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in },
         @ViewBuilder label: () -> some View
     ) {
         self.init(
@@ -135,7 +135,7 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<String>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in }
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
@@ -158,7 +158,7 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     public init(
         _ title: some StringProtocol,
         value: Binding<String>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in }
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in }
     ) {
         self.init(
             value: value,
@@ -180,7 +180,7 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///   - label: The label of the text field, describing its purpose.
     public init(
         value: Binding<String>,
-        onEditingChanged: @escaping (Bool) -> Void = { _ in },
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void = { _ in },
         @ViewBuilder label: () -> some View
     ) {
         self.init(

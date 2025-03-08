@@ -16,7 +16,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @State private var isSecure: Bool
     private let label: AnyView
     private let configuration: TextFieldConfiguration<Formatter>
-    private let onEditingChanged: (Bool) -> Void
+    private let onEditingChanged: (_ isFocused: Bool) -> Void
     private var onValidationChanged: (Bool) -> Void = { _ in }
     private var formatter: Formatter {
         configuration.formatter
@@ -26,7 +26,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         value: Binding<Formatter.Value>,
         label: Label,
         configuration: TextFieldConfiguration<Formatter>,
-        onEditingChanged: @escaping (Bool) -> Void
+        onEditingChanged: @escaping (_ isFocused: Bool) -> Void
     ) {
         self._value = value
         self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
