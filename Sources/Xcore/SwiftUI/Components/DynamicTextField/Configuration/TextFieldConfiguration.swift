@@ -9,10 +9,10 @@ import SwiftUI
 extension TextFieldConfiguration {
     /// An enumeration representing the text entry mode for a text field.
     ///
-    /// Use this enumeration to configure how sensitive text is displayed. When set to
-    /// `.plain`, the text is visible. When set to `.masked`, the text is obscured to
-    /// protect sensitive information. The `.maskedWithToggle` mode obscures the text by
-    /// default but provides a toggle to reveal it temporarily.
+    /// Use this enumeration to configure how sensitive text is displayed. When set
+    /// to `.plain`, the text is visible. When set to `.masked`, the text is
+    /// obscured to protect sensitive information. The `.maskedWithToggle` mode
+    /// obscures the text by default but provides a toggle to reveal it temporarily.
     public enum TextEntryMode: String, Sendable {
         /// The text is displayed normally without any masking.
         case plain
