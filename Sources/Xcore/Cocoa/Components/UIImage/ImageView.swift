@@ -18,7 +18,7 @@ import SwiftUI
 ///
 /// ```swift
 /// ImageView(url) {
-///     ProgressView()
+///     Color.gray
 /// }
 /// ```
 public struct ImageView<Placeholder: View>: View {
