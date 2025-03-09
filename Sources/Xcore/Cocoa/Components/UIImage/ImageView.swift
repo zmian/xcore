@@ -18,7 +18,7 @@ import SwiftUI
 ///
 /// ```swift
 /// ImageView(url) {
-///     Color.gray
+///     PlaceholderImage()
 /// }
 /// ```
 public struct ImageView<Placeholder: View>: View {
@@ -117,8 +117,8 @@ extension ImageView {
     ///   - image: The source of the image to load.
     ///   - contentMode: The content mode specifying how the image should fit the
     ///     available space.
-    ///   - placeholder: A view builder returning the placeholder displayed during
-    ///     loading.
+    ///   - placeholder: A view builder returning the placeholder to be displayed
+    ///     when the source image is not found or an error occurs.
     public init(
         _ image: ImageRepresentable?,
         contentMode: ContentMode = .fit,
