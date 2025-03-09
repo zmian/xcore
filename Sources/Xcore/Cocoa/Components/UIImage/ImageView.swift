@@ -72,23 +72,30 @@ public struct ImageView<Placeholder: View>: View {
     /// blocking.
     @ViewBuilder
     private var widgetsBody: some View {
+        if let widgetsImage {
+            Image(uiImage: widgetsImage.removingAlpha())
+                .resizable()
+        } else {
+            makePlaceholderView()
+        }
+    }
+
+    private var widgetsImage: UIImage? {
         switch imageRepresentable?.imageSource {
             case .none:
-                makePlaceholderView()
+                return nil
             case let .url(string):
                 if
                     let url = URL(string: string),
                     let data = try? Data(contentsOf: url),
                     let uiImage = UIImage(data: data)
                 {
-                    Image(uiImage: uiImage.removingAlpha())
-                        .resizable()
-                } else {
-                    makePlaceholderView()
+                    return uiImage
                 }
+
+                return nil
             case let .uiImage(image):
-                Image(uiImage: image.removingAlpha())
-                    .resizable()
+                return image
         }
     }
 
