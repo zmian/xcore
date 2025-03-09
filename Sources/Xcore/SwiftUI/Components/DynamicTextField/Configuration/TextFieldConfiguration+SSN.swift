@@ -30,7 +30,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             keyboard: .numberPad,
             textContentType: nil,
             textEntryMode: .maskedWithToggle,
-            validation: .number(count: 4),
+            validation: .number(length: 4),
             formatter: .init("####")
         )
     }

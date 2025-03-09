@@ -16,36 +16,36 @@ extension ValidationRule {
 // MARK: - Input: Collection
 
 extension ValidationRule where Input: Collection {
-    /// A validation rule that checks whether the input count is contained within
+    /// A validation rule that checks whether the input length is contained within
     /// the range expression.
     ///
     /// This validation rule can be used guard minimum or maximum length:
     ///
     /// ```swift
     /// let name = "Sam Swift"
-    /// name.validate(rule: .range(1...)) // length >= 1
+    /// name.validate(rule: .length(1...)) // length >= 1
     ///
     /// let password = "***"
-    /// password.validate(rule: .range(8...50)) // length between 8 - 50
+    /// password.validate(rule: .length(8...50)) // length between 8 - 50
     /// ```
     ///
-    /// - Parameter range: The range expression to check against input count.
+    /// - Parameter length: The range expression to check against input length.
     /// - Returns: The validation rule.
-    public static func range(_ range: some RangeExpression<Int> & Sendable) -> Self{
-        .init { range.contains($0.count) }
+    public static func length(_ length: some RangeExpression<Int> & Sendable) -> Self{
+        .init { length.contains($0.count) }
     }
 
-    /// A validation rule that checks whether the input count matches given count.
+    /// A validation rule that checks whether the input length matches given length.
     ///
     /// ```swift
     /// let accountLastFour = 1234
-    /// accountLastFour.validate(rule: .count(4))
+    /// accountLastFour.validate(rule: .length(4))
     /// ```
     ///
-    /// - Parameter count: The input count.
+    /// - Parameter length: The input length.
     /// - Returns: The validation rule.
-    public static func count(_ count: Int) -> Self {
-        .init { $0.count == count }
+    public static func length(_ length: Int) -> Self {
+        .init { $0.count == length }
     }
 
     /// A validation rule that checks whether the input is not empty.
@@ -229,31 +229,57 @@ extension ValidationRule<String> {
 
     /// A validation rule that checks whether the input is a valid one-time code.
     public static var oneTimeCode: Self {
-        number(count: FeatureFlag.oneTimeCodeCharacterLimit)
+        number(length: FeatureFlag.oneTimeCodeCharacterLimit)
     }
 
+    /// A validation rule for validating a person's name.
+    ///
+    /// Ensures the name is between `1` and `50` characters, excluding numeric
+    /// characters.
+    ///
+    /// ```swift
+    /// ValidationRule.name.validate("Sam Swift") // true
+    /// ValidationRule.name.validate("Sam123")  // false
+    /// ```
     public static var name: Self {
-        name(range: 1...50)
+        alphabetic(length: 1...50)
     }
 
-    public static func name(range: some RangeExpression<Int> & Sendable) -> Self {
-        self.range(range) && subset(of: .numbers.inverted)
+    /// A validation rule ensuring the input contains only alphabetic and non-digit
+    /// characters, within a specified length.
+    ///
+    /// Use this rule to validate strings composed of letters and allowed non-digit
+    /// characters, explicitly excluding numbers.
+    ///
+    /// ```swift
+    /// ValidationRule.alphabetic(length: 1...50).validate("Sam Swift") // true
+    /// ValidationRule.alphabetic(length: 1...50).validate("Sam123")  // false
+    /// ```
+    ///
+    /// - Parameter length: The acceptable length range for the input string.
+    /// - Returns: A validation rule checking that the input is within the specified
+    ///   length and does not contain numeric characters.
+    public static func alphabetic(length: some RangeExpression<Int> & Sendable) -> Self {
+        self.length(length) && subset(of: .numbers.inverted)
     }
 
     /// A validation rule that checks whether the input is equal to the given range.
     ///
     /// - Parameter range: The range of the input.
-    /// - Returns: The validation rule.
-    public static func number(range: some RangeExpression<Int> & Sendable) -> Self {
-        self.range(range) && subset(of: .numbers)
+    /// - Returns: A validation rule checking that the input is within the specified
+    ///   length and only contain numeric characters.
+    public static func number(length: some RangeExpression<Int> & Sendable) -> Self {
+        self.length(length) && subset(of: .numbers)
     }
 
-    /// A validation rule that checks whether the input is equal to the given count.
+    /// A validation rule that checks whether the input is equal to the given
+    /// length.
     ///
-    /// - Parameter count: The input count.
-    /// - Returns: The validation rule.
-    public static func number(count: Int) -> Self {
-        self.count(count) && subset(of: .numbers)
+    /// - Parameter length: The input length.
+    /// - Returns: A validation rule checking that the input equal the specified
+    ///   length and only contain numeric characters.
+    public static func number(length: Int) -> Self {
+        self.length(length) && subset(of: .numbers)
     }
 }
 

@@ -207,23 +207,23 @@ struct ValidationRuleTests {
     }
 
     @Test
-    func range() {
-        #expect("Sam Swift".validate(rule: .range(1...)))
-        #expect(!"secret".validate(rule: .range(8...50)))
-        #expect("secret123".validate(rule: .range(8...50)))
+    func lengthRange() {
+        #expect("Sam Swift".validate(rule: .length(1...)))
+        #expect(!"secret".validate(rule: .length(8...50)))
+        #expect("secret123".validate(rule: .length(8...50)))
     }
 
     @Test
-    func count() {
-        #expect("1234".validate(rule: .count(4)))
-        #expect("s123".validate(rule: .count(4)))
-        #expect(!"1234".validate(rule: .count(3)))
-        #expect(!"1234".validate(rule: .count(50)))
+    func length() {
+        #expect("1234".validate(rule: .length(4)))
+        #expect("s123".validate(rule: .length(4)))
+        #expect(!"1234".validate(rule: .length(3)))
+        #expect(!"1234".validate(rule: .length(50)))
 
-        #expect("1234".validate(rule: .number(count: 4)))
-        #expect(!"s123".validate(rule: .number(count: 4)))
-        #expect(!"1234".validate(rule: .number(count: 3)))
-        #expect(!"1234".validate(rule: .number(count: 50)))
+        #expect("1234".validate(rule: .number(length: 4)))
+        #expect(!"s123".validate(rule: .number(length: 4)))
+        #expect(!"1234".validate(rule: .number(length: 3)))
+        #expect(!"1234".validate(rule: .number(length: 50)))
     }
 
     @Test
