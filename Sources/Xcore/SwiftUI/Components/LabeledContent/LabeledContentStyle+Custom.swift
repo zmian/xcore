@@ -52,16 +52,16 @@ public struct CustomLabeledContentStyle: LabeledContentStyle {
     public func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: alignment, spacing: spacing) {
             configuration.label
-                .unwrap(titleForegroundColor) {
-                    $0.foregroundStyle($1)
+                .foregroundStyle {
+                    dim == .label ? theme.textSecondaryColor : nil
                 }
 
             Spacer(minLength: 0)
 
             configuration.content
                 .multilineTextAlignment(.trailing)
-                .unwrap(valueForegroundColor) {
-                    $0.foregroundStyle($1)
+                .foregroundStyle {
+                    dim == .value ? theme.textSecondaryColor : nil
                 }
                 .applyIf(traits.contains(.header)) {
                     $0.font(.app(.body))
@@ -74,14 +74,6 @@ public struct CustomLabeledContentStyle: LabeledContentStyle {
             $0.accessibilityAddTraits(.isHeader)
                 .font(.app(.headline))
         }
-    }
-
-    private var titleForegroundColor: Color? {
-        dim == .label ? theme.textSecondaryColor : nil
-    }
-
-    private var valueForegroundColor: Color? {
-        dim == .value ? theme.textSecondaryColor : nil
     }
 }
 
