@@ -66,7 +66,7 @@ public struct PostalAddress: Sendable, Hashable, Identifiable, CustomStringConve
 extension PostalAddress {
     /// Returns a locale-aware string representation by combining the postal address
     /// components into a multi-line mailing address.
-    public var description: String {
+    public func formatted() -> String {
         let address = CNMutablePostalAddress().apply {
             $0.street = [street1, street2].filter { !$0.isBlank }.joined(separator: "\n")
             $0.city = city
@@ -77,6 +77,10 @@ extension PostalAddress {
 
         return CNPostalAddressFormatter()
             .string(from: address)
+    }
+
+    public var description: String {
+        formatted()
     }
 
     /// A Boolean property indicating whether all of the required address fields are
