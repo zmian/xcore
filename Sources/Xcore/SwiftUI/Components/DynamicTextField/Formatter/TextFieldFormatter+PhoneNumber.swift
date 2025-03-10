@@ -36,7 +36,7 @@ extension PhoneNumberTextFieldFormatter {
 
 /// A formatter that converts between phone number and the textual
 /// representation of it.
-public struct PhoneNumberTextFieldFormatter: TextFieldFormatter, Sendable {
+public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
     private let mask: MaskingTextFieldFormatter
     private let style: Style
 

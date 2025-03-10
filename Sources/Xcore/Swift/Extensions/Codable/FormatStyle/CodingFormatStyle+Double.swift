@@ -8,13 +8,6 @@ import Foundation
 
 public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
     nonisolated(unsafe) public static var defaultEncodeAsString = false
-
-    private static let numberFormatter = NumberFormatter().apply {
-        $0.numberStyle = .decimal
-        $0.locale = .us
-        $0.fractionLength = .maxFractionDigits
-    }
-
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {
@@ -32,14 +25,14 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
             return Double(value)
         }
 
-        if
-            let value = value as? String,
-            let double = Self.numberFormatter.number(from: value)?.doubleValue
-        {
-            return double
+        guard let value = value as? String else {
+            throw CodingFormatStyleError.invalidValue
         }
 
-        throw CodingFormatStyleError.invalidValue
+        return try Double(value, format: .number
+            .locale(.usPosix)
+            .precision(.fractionLength(.maxFractionDigits))
+        )
     }
 
     public func encode(_ value: Double) throws -> AnyCodable {

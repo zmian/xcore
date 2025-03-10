@@ -9,14 +9,18 @@ import Foundation
 // MARK: - Int
 
 extension Int {
-    private static let numberFormatter = NumberFormatter().apply {
-        $0.paddingPosition = .beforePrefix
-        $0.paddingCharacter = "0"
-    }
-
-    public func pad(by amount: Int) -> String {
-        Self.numberFormatter.minimumIntegerDigits = amount
-        return Self.numberFormatter.string(from: self)!
+    /// Returns a string representation of the integer, padded with leading zeros to
+    /// reach a specified minimum length.
+    ///
+    /// ```swift
+    /// 42.padded(length: 5)  // "00042"
+    /// ```
+    ///
+    /// - Parameter length: The minimum number of digits the resulting string should
+    ///   contain.
+    /// - Returns: A zero-padded string of the integer.
+    public func padded(length: Int) -> String {
+        formatted(.number.precision(.integerLength(length...)).grouping(.never))
     }
 
     /// Returns a random value from `0` to the specified range upper bound.

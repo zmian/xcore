@@ -8,29 +8,24 @@ import Foundation
 
 /// A formatter that converts between integer values and their textual
 /// representations.
-public struct IntegerTextFieldFormatter: TextFieldFormatter, Sendable {
-    private let numberFormatter = NumberFormatter().apply {
-        $0.allowsFloats = false
-        $0.numberStyle = .decimal
-    }
-
+public struct IntegerTextFieldFormatter: TextFieldFormatter {
     public func string(from value: Int?) -> String {
-        numberFormatter.string(from: value) ?? ""
+        value?.formatted(.number) ?? ""
     }
 
     public func value(from string: String) -> Int? {
-        numberFormatter.number(from: string)?.intValue
+        try? Int(string, format: .number)
     }
 
     public func format(_ string: String) -> String? {
-        guard let value = Int(string) else {
+        guard let value = value(from: string) else {
             return string.isEmpty ? "" : nil
         }
 
-        return numberFormatter.string(from: value) ?? ""
+        return self.string(from: value)
     }
 
     public func unformat(_ string: String) -> String {
-        string.replacingOccurrences(of: ",", with: "")
+        string.filter { $0.isNumber || $0 == "." }
     }
 }

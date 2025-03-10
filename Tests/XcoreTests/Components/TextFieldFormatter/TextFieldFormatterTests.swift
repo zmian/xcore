@@ -9,7 +9,7 @@ import Testing
 
 struct TextFieldFormatterTests {
     @Test
-    func phoneNumberFormatterUS() {
+    func phoneNumberFormatterUS() throws {
         let formatter = PhoneNumberTextFieldFormatter(style: .us)
         let validation = ValidationRule<String>.phoneNumber(length: 11)
 
@@ -49,8 +49,8 @@ struct TextFieldFormatterTests {
         let initialValue = "18006927753"
         let stringValue = formatter.string(from: initialValue)
         let unformattedValue1 = formatter.unformat(stringValue)
-        let formattedValue = formatter.format(unformattedValue1)
-        let unformattedValue2 = formatter.unformat(formattedValue!)
+        let formattedValue = try #require(formatter.format(unformattedValue1))
+        let unformattedValue2 = formatter.unformat(formattedValue)
         let originalValue = formatter.value(from: unformattedValue2)
 
         #expect(initialValue == "18006927753")
@@ -63,7 +63,7 @@ struct TextFieldFormatterTests {
     }
 
     @Test
-    func phoneNumberFormatterAU() {
+    func phoneNumberFormatterAU() throws {
         let formatter = PhoneNumberTextFieldFormatter(style: .au)
         let validation = ValidationRule<String>.phoneNumber(length: 11)
 
@@ -102,8 +102,8 @@ struct TextFieldFormatterTests {
         let initialValue = "61423456789"
         let stringValue = formatter.string(from: initialValue)
         let unformattedValue1 = formatter.unformat(stringValue)
-        let formattedValue = formatter.format(unformattedValue1)
-        let unformattedValue2 = formatter.unformat(formattedValue!)
+        let formattedValue = try #require(formatter.format(unformattedValue1))
+        let unformattedValue2 = formatter.unformat(formattedValue)
         let originalValue = formatter.value(from: unformattedValue2)
 
         #expect(initialValue == "61423456789")
@@ -117,7 +117,7 @@ struct TextFieldFormatterTests {
 
     @Test
     func doubleNumberFormatter() {
-        let formatter = DecimalTextFieldFormatter(isCurrency: false)
+        let formatter = DecimalTextFieldFormatter(style: .decimal)
         #expect(formatter.value(from: "100") == 100)
         #expect(formatter.value(from: "100.99") == 100.99)
         #expect(formatter.value(from: "100.991") == 100.991)
@@ -136,8 +136,8 @@ struct TextFieldFormatterTests {
     }
 
     @Test
-    func currencyNumberFormatter() {
-        let formatter = DecimalTextFieldFormatter(isCurrency: true)
+    func currencyNumberFormatter() throws {
+        let formatter = DecimalTextFieldFormatter(style: .currency)
         #expect(formatter.value(from: "100") == 100)
         #expect(formatter.value(from: "100.99") == 100.99)
         #expect(formatter.value(from: "100.991") == 100.991)
@@ -160,8 +160,8 @@ struct TextFieldFormatterTests {
         let initialValue = 1_000_000.01
         let stringValue = formatter.string(from: initialValue)
         let unformattedValue1 = formatter.unformat(stringValue)
-        let formattedValue = formatter.format(unformattedValue1)
-        let unformattedValue2 = formatter.unformat(formattedValue!)
+        let formattedValue = try #require(formatter.format(unformattedValue1))
+        let unformattedValue2 = formatter.unformat(formattedValue)
         let originalValue = formatter.value(from: unformattedValue2)
 
         #expect(initialValue == 1_000_000.01)
@@ -170,6 +170,42 @@ struct TextFieldFormatterTests {
         #expect(formattedValue == "$1,000,000.01")
         #expect(unformattedValue2 == "1000000.01")
         #expect(originalValue == 1_000_000.01)
+        #expect(originalValue == initialValue)
+    }
+
+    @Test
+    func integerNumberFormatter() throws {
+        let formatter = IntegerTextFieldFormatter()
+        #expect(formatter.value(from: "100") == 100)
+        #expect(formatter.value(from: "100.99") == 100)
+        #expect(formatter.value(from: "100.991") == 100)
+        #expect(formatter.value(from: "100.") == 100)
+        #expect(formatter.string(from: 100) == "100")
+
+        // Display
+        #expect(formatter.format("100") == "100")
+        #expect(formatter.format("100.") == "100")
+        #expect(formatter.format("100.0") == "100")
+        #expect(formatter.format("100.0123") == "100")
+        #expect(formatter.format("1000.0123") == "1,000")
+        #expect(formatter.format("1000000.0123") == "1,000,000")
+
+        // Full loop
+        //           string(from:) → unformat(_:) → format(_:)   → unformat(_:) → value(from:)
+        // 1000000 → "1,000,000"   → "1000000"    → "$1,000,000" → "1000000"    → 1000000
+        let initialValue = 1_000_000
+        let stringValue = formatter.string(from: initialValue)
+        let unformattedValue1 = formatter.unformat(stringValue)
+        let formattedValue = try #require(formatter.format(unformattedValue1))
+        let unformattedValue2 = formatter.unformat(formattedValue)
+        let originalValue = formatter.value(from: unformattedValue2)
+
+        #expect(initialValue == 1_000_000)
+        #expect(stringValue == "1,000,000")
+        #expect(unformattedValue1 == "1000000")
+        #expect(formattedValue == "1,000,000")
+        #expect(unformattedValue2 == "1000000")
+        #expect(originalValue == 1_000_000)
         #expect(originalValue == initialValue)
     }
 }

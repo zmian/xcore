@@ -76,4 +76,24 @@ struct NumbersTests {
         #expect(3.0 == 3.0.clamped(to: 0.0...10.0))
         #expect("x" == "z".clamped(to: "a"..."x"))
     }
+
+    @Test
+    func paddedLength() {
+        // 0
+        #expect("0" == 0.padded(length: 0))
+        #expect("0" == 0.padded(length: 1))
+        #expect("00000" == 0.padded(length: 5))
+        // 1
+        #expect("1" == 1.padded(length: 0))
+        #expect("1" == 1.padded(length: 1))
+        #expect("00001" == 1.padded(length: 5))
+        // 10
+        #expect("10" == 10.padded(length: 0))
+        #expect("10" == 10.padded(length: 1))
+        #expect("00010" == 10.padded(length: 5))
+        // 100
+        #expect("100" == 100.padded(length: 0))
+        #expect("100" == 100.padded(length: 1))
+        #expect("00100" == 100.padded(length: 5))
+    }
 }

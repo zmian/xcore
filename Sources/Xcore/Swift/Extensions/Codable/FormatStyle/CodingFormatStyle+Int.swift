@@ -7,10 +7,6 @@
 import Foundation
 
 public struct IntCodingFormatStyle: CodingFormatStyle, Sendable {
-    private static let numberFormatter = NumberFormatter().apply {
-        $0.locale = .us
-    }
-
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {
@@ -24,14 +20,11 @@ public struct IntCodingFormatStyle: CodingFormatStyle, Sendable {
             return value
         }
 
-        if
-            let value = value as? String,
-            let int = Self.numberFormatter.number(from: value)?.intValue
-        {
-            return int
+        guard let value = value as? String else {
+            throw CodingFormatStyleError.invalidValue
         }
 
-        throw CodingFormatStyleError.invalidValue
+        return try Int(value, format: .number.locale(.usPosix))
     }
 
     public func encode(_ value: Int) throws -> AnyCodable {

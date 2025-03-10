@@ -139,8 +139,13 @@ extension String {
 }
 
 extension Int {
+    @_disfavoredOverload
     nonisolated(unsafe) public static var maxFractionDigits = 100
+
+    @_disfavoredOverload
     nonisolated(unsafe) public static var defaultFractionDigits = 2
+
+    @_disfavoredOverload
     nonisolated(unsafe) public static var defaultRandomUpperBound = 100
 }
 
@@ -148,9 +153,14 @@ extension Double {
     nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
 }
 
-extension ClosedRange<Int> {
-    nonisolated(unsafe) public static var defaultFractionDigits: Self = 0...Int.defaultFractionDigits
-    nonisolated(unsafe) public static var maxFractionDigits: Self = 0...Int.maxFractionDigits
+extension RangeExpression where Self == ClosedRange<Int> {
+    public static var defaultFractionDigits: Self {
+        0...Int.defaultFractionDigits
+    }
+
+    public static var maxFractionDigits: Self {
+        0...Int.maxFractionDigits
+    }
 }
 
 // MARK: - App Constants
