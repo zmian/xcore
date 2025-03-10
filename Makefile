@@ -18,3 +18,20 @@ format:
 
 lint:
 	@swiftlint lint
+
+docC-disabled:
+	swift package \
+		--allow-writing-to-directory /docs-out/ \
+		generate-documentation \
+		--target Xcore \
+		--disable-indexing \
+		--transform-for-static-hosting \
+		--hosting-base-path /xcore/ \
+		--output-path /docs-out/
+
+docs-disabled:
+	xcodebuild docbuild \
+		-workspace Xcore.xcworkspace \
+		-scheme Xcore \
+		-destination generic/platform=iOS \
+		OTHER_DOCC_FLAGS="--disable-indexing --transform-for-static-hosting --hosting-base-path /xcore/ --output-path /docs-out/"
