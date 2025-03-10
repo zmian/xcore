@@ -26,7 +26,7 @@ struct RootView: View {
                             }
                         } icon: {
                             Image(system: item.icon)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(.foreground)
                         }
                     }
                 }
@@ -46,7 +46,7 @@ struct RootView: View {
                     ))
                 } label: {
                     Label("Address Form", systemImage: "text.page.badge.magnifyingglass")
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.foreground)
                 }
             } header: {
                 Text("Dependencies")

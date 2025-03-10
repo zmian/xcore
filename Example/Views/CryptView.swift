@@ -101,6 +101,7 @@ struct CryptView: View {
 }
 
 private struct InternalSection: View {
+    @Environment(\.colorScheme) private var colorScheme
     @State private var value = ""
     private let title: String
     private let generate: () -> String
@@ -117,7 +118,7 @@ private struct InternalSection: View {
                     .padding(.vertical)
                     .font(.system(size: 14, design: .monospaced))
                     .foregroundStyle(.white)
-                    .listRowBackground(Color.black)
+                    .listRowBackground(colorScheme == .dark ? Color(uiColor: .tertiarySystemGroupedBackground) : Color.black)
                     .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .top))
             }
