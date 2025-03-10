@@ -15,13 +15,18 @@ struct RootView: View {
             Section {
                 ForEach(items) { item in
                     NavigationLink(destination: item.content) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(item.title)
-                            if let subtitle = item.subtitle {
-                                Text(subtitle)
-                                    .foregroundStyle(.secondary)
-                                    .font(.footnote)
+                        Label {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(item.title)
+                                if let subtitle = item.subtitle {
+                                    Text(subtitle)
+                                        .foregroundStyle(.secondary)
+                                        .font(.footnote)
+                                }
                             }
+                        } icon: {
+                            Image(system: item.icon)
+                                .foregroundStyle(.black)
                         }
                     }
                 }
@@ -32,13 +37,16 @@ struct RootView: View {
             }
 
             Section {
-                NavigationLink("Address Form") {
+                NavigationLink {
                     AddressFormView(store: .init(
                         initialState: .init(navigationTitle: "Address"),
                         reducer: {
                             AddressForm()
                         }
                     ))
+                } label: {
+                    Label("Address Form", systemImage: "text.page.badge.magnifyingglass")
+                        .foregroundStyle(.black)
                 }
             } header: {
                 Text("Dependencies")
