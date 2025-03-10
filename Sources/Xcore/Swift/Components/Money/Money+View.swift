@@ -11,3 +11,11 @@ extension Money: View {
         Text(attributedString())
     }
 }
+
+#if DEBUG
+// MARK: - Preview
+
+#Preview {
+    Samples.moneyPreviews
+}
+#endif

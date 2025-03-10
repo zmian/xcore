@@ -4,9 +4,10 @@
 // MIT license, see LICENSE file for details
 //
 
+#if DEBUG
 import SwiftUI
 
-struct MoneyView: View {
+private struct MoneyPreviews: View {
     @State private var amount: Decimal = 9.99
     @State private var crypto: Decimal = 0.00000001
 
@@ -81,3 +82,10 @@ extension Font.CustomTextStyle {
     /// `48`
     fileprivate static let jumbo3 = Self(size: 48, relativeTo: .largeTitle)
 }
+
+extension Samples {
+    public static var moneyPreviews: some View {
+        MoneyPreviews()
+    }
+}
+#endif

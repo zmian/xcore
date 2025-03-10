@@ -35,23 +35,23 @@ extension Optional: OptionalProtocol {
 
 // MARK: - isEqual
 
-extension Optional {
-    func isEqual(_ other: Self) -> Bool where Wrapped == EncodableDictionary {
+extension Optional<EncodableDictionary> {
+    func isEqual(_ other: Self) -> Bool {
         switch (self, other) {
             case (.none, .none):
-                return true
+                true
             case let (.none, .some(value)):
                 // nil or empty are the same
-                return value.isEmpty
+                value.isEmpty
             case let (.some(value), .none):
-                return value.isEmpty
+                value.isEmpty
             case let (.some(lhs), .some(rhs)):
-                return lhs.isEqual(rhs)
+                lhs.isEqual(rhs)
         }
     }
 }
 
-extension Dictionary where Key == String, Value == Encodable & Sendable {
+extension Dictionary<String, Encodable & Sendable> {
     func isEqual(_ other: Self) -> Bool {
         if isEmpty, other.isEmpty {
             // Fast pass
@@ -72,10 +72,8 @@ extension String? {
     /// (e.g., \n, “ “).
     public var isNilOrBlank: Bool {
         switch self {
-            case .none:
-                return true
-            case let .some(wrapped):
-                return wrapped.isBlank
+            case .none: true
+            case let .some(wrapped): wrapped.isBlank
         }
     }
 }

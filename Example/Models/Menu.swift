@@ -83,7 +83,7 @@ extension Menu {
 
     private static let money = Self(
         title: "Money",
-        content: MoneyView()
+        content: Samples.moneyPreviews
     )
 
     private static let labeledContent = Self(
