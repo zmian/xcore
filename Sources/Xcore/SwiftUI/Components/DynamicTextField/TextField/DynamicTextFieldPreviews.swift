@@ -115,7 +115,8 @@ private struct NumberFieldPreview: View {
 private struct DataFormatTypesFieldPreview: View {
     @State private var ssn = ""
     @State private var ssnLastFour = ""
-    @State private var phoneNumber = ""
+    @State private var phoneNumberUS = ""
+    @State private var phoneNumberAU = ""
 
     var body: some View {
         TextFieldPreviewBox("Data Types") {
@@ -129,9 +130,14 @@ private struct DataFormatTypesFieldPreview: View {
                     print("SSN (Last Four): \(newValue)")
                 }
 
-            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(for: .us))
-                .onChange(of: phoneNumber) { _, newValue in
-                    print("Phone Number: \(newValue)")
+            DynamicTextField("Phone Number (US)", value: $phoneNumberUS, configuration: .phoneNumber(for: .us))
+                .onChange(of: phoneNumberUS) { _, newValue in
+                    print("Phone Number (US): \(newValue)")
+                }
+
+            DynamicTextField("Phone Number (AU)", value: $phoneNumberAU, configuration: .phoneNumber(for: .au))
+                .onChange(of: phoneNumberAU) { _, newValue in
+                    print("Phone Number (AU): \(newValue)")
                 }
         }
         .tint(.secondary)

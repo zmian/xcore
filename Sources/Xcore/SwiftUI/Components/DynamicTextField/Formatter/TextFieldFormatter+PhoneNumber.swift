@@ -25,7 +25,7 @@ extension PhoneNumberTextFieldFormatter {
             .init(mask: "🇺🇸 +# (###) ###-####", countryCode: 1)
         }
 
-        /// Australia Phone Numbers
+        /// Australian Phone Numbers
         ///
         /// 🇦🇺 +61 423 456 789
         public static var au: Self {
@@ -41,7 +41,7 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
     private let style: Style
 
     public init(style: Style) {
-        self.mask = .init(style.mask)
+        self.mask = .init(style.mask, placeholderCharacter: "#")
         self.style = style
     }
 

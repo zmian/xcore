@@ -9,6 +9,25 @@ import Testing
 
 struct TextFieldFormatterTests {
     @Test
+    func maskingFormatter() throws {
+        // Number
+        let numberFormatter = MaskingTextFieldFormatter("###-##-####", placeholderCharacter: "#")
+        #expect(numberFormatter.format("123456789") == "123-45-6789")
+
+        // Alphabetic
+        let alphaFormatter = MaskingTextFieldFormatter("XX-XXXX")
+        #expect(alphaFormatter.format("ABCDEF") == "AB-CDEF")
+
+        // USA Phone Numbers
+        let usPhoneNumberFormatter = MaskingTextFieldFormatter("🇺🇸 +# (###) ###-####", placeholderCharacter: "#")
+        #expect(usPhoneNumberFormatter.format("18006927753") == "🇺🇸 +1 (800) 692-7753")
+
+        // Australian Phone Numbers
+        let auPhoneNumberFormatter = MaskingTextFieldFormatter("🇦🇺 +## ### ### ###", placeholderCharacter: "#")
+        #expect(auPhoneNumberFormatter.format("61423456789") == "🇦🇺 +61 423 456 789")
+    }
+
+    @Test
     func phoneNumberFormatterUS() throws {
         let formatter = PhoneNumberTextFieldFormatter(style: .us)
         let validation = ValidationRule<String>.phoneNumber(length: 11)

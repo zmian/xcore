@@ -17,7 +17,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             textContentType: nil,
             textEntryMode: .maskedWithToggle,
             validation: .ssn,
-            formatter: .init("###-##-####")
+            formatter: .init("###-##-####", placeholderCharacter: "#")
         )
     }
 
@@ -31,7 +31,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             textContentType: nil,
             textEntryMode: .maskedWithToggle,
             validation: .number(length: 4),
-            formatter: .init("####")
+            formatter: .init("####", placeholderCharacter: "#")
         )
     }
 }
