@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+#if canImport(WebKit)
 import WebKit
 
 /// `WKUserContentController` retains `WKScriptMessageHandler` so this object
@@ -41,3 +41,4 @@ extension WKUserContentController {
         swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
     }
 }
+#endif

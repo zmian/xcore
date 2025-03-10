@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct CornerRadiusImageTransform: ImageTransform {
@@ -37,3 +38,4 @@ extension ImageTransform where Self == CornerRadiusImageTransform {
         .init(cornerRadius: value)
     }
 }
+#endif

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 open class XCView: UIView {
@@ -32,3 +33,4 @@ open class XCView: UIView {
     /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 }
+#endif

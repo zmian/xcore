@@ -4,7 +4,9 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 
 /// A configuration pattern generic implementation.
 ///
@@ -67,6 +69,7 @@ extension XConfiguration: Hashable {
     }
 }
 
+#if canImport(UIKit)
 // MARK: - Convenience UIKit Initializers
 
 extension UILabel {
@@ -96,6 +99,7 @@ extension XConfigurationInitializable where Self: UIView {
 
 extension UIView: XConfigurationInitializable {}
 extension UIBarButtonItem: XConfigurationInitializable {}
+#endif
 
 // MARK: - Built-in
 

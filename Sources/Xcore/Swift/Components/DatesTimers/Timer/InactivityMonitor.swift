@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 /// Monitors user inactivity and toggles the `isInactive` property after a specified
 /// timeout period.

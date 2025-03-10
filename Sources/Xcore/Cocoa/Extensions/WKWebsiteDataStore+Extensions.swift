@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(WebKit)
 import WebKit
 
 extension WKWebsiteDataStore {
@@ -46,3 +47,4 @@ extension WKWebsiteDataStore {
         ]
     }
 }
+#endif

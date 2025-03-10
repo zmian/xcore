@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension HapticFeedbackClient {
@@ -174,3 +175,4 @@ extension LiveHapticFeedbackClient {
 extension LiveHapticFeedbackClient {
     private static let notificationFeedbackGenerator = LiveHapticFeedbackClient(UINotificationFeedbackGenerator()) { _ in }
 }
+#endif

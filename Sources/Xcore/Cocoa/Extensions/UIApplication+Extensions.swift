@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 import OSLog
 
@@ -177,3 +178,4 @@ extension UIScene.ActivationState: @retroactive CustomStringConvertible {
         }
     }
 }
+#endif

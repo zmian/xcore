@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
@@ -72,3 +73,4 @@ extension ImageTransform where Self == CompositeImageTransform {
         return transformer
     }
 }
+#endif

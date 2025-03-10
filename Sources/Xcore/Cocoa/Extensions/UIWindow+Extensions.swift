@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIWindow {
@@ -47,3 +48,4 @@ extension WindowStyle {
         .init(label: "Privacy Screen", level: .privacy)
     }
 }
+#endif

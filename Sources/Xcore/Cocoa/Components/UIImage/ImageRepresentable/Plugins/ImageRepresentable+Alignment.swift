@@ -4,8 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
-
 public enum ImageRepresentableAlignment: ImageRepresentablePlugin {
     case top
     case bottom

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - ImageSourceType
@@ -14,10 +15,8 @@ public enum ImageSourceType: Sendable, Hashable {
 
     var isValid: Bool {
         switch self {
-            case .uiImage:
-                return true
-            case let .url(value):
-                return !value.isBlank
+            case .uiImage: true
+            case let .url(value): !value.isBlank
         }
     }
 
@@ -171,4 +170,5 @@ extension ImageResource: ImageRepresentable {
 public func r(_ resource: ImageResource) -> ImageResource {
     resource
 }
+#endif
 #endif

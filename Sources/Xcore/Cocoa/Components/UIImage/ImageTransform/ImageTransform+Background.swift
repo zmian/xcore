@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct BackgroundImageTransform: ImageTransform {
@@ -70,3 +71,4 @@ extension ImageTransform where Self == BackgroundImageTransform {
         .init(color: color, preferredSize: preferredSize, alignment: alignment)
     }
 }
+#endif

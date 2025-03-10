@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A base class for creating a HUD (Heads-Up Display) that presents a customizable
@@ -442,3 +443,4 @@ extension HUD {
         return HUD.appearanceStorage[baseInstanceName]
     }
 }
+#endif

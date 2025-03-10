@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIImage {
@@ -101,3 +102,4 @@ extension UIImage {
         applying(.scaled(to: newSize, scalingMode: scalingMode, tintColor: tintColor))
     }
 }
+#endif

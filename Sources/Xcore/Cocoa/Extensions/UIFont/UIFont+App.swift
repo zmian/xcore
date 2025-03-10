@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIFont {
@@ -94,3 +95,4 @@ extension UIFont.TextStyle {
         self == .headline ? .semibold : .regular
     }
 }
+#endif

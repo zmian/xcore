@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct AlphaImageTransform: ImageTransform {
@@ -36,3 +37,4 @@ extension ImageTransform where Self == AlphaImageTransform {
         .init(alpha: value)
     }
 }
+#endif

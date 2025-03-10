@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A wrapper type to encode information for any `ImageRepresentable` with list
@@ -107,3 +108,4 @@ extension PluginImage: MutableCollection, RangeReplaceableCollection, Bidirectio
         plugins.replaceSubrange(subRange, with: newElements)
     }
 }
+#endif

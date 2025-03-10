@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
 extension StringProtocol {
     /// Returns `true` iff `value` is in `self`.

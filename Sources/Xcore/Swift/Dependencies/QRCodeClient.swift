@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 private import CoreImage.CIFilterBuiltins
 
@@ -73,3 +74,4 @@ extension DependencyValues {
         set { self[QRCodeClientKey.self] = newValue }
     }
 }
+#endif

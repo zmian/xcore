@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A protocol for objects responsible for fetching images asynchronously.
@@ -47,3 +48,4 @@ enum ImageFetcherError: Error {
     case notFound
     case invalidImageSource
 }
+#endif

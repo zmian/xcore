@@ -4,7 +4,9 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 import SwiftUI
 
 // MARK: - SystemAssetIdentifier
@@ -30,11 +32,13 @@ extension SystemAssetIdentifier: ExpressibleByStringLiteral {
     }
 }
 
+#if canImport(UIKit)
 extension SystemAssetIdentifier: ImageRepresentable {
     public var imageSource: ImageSourceType {
         .uiImage(UIImage(system: self))
     }
 }
+#endif
 
 // MARK: - Image
 
@@ -51,6 +55,7 @@ extension Image {
     }
 }
 
+#if canImport(UIKit)
 // MARK: - UIImage
 
 extension UIImage {
@@ -97,6 +102,7 @@ extension UIImageView {
         self.init(image: UIImage(system: system))
     }
 }
+#endif
 
 /// A convenience function to get resource.
 public func r(_ system: SystemAssetIdentifier) -> SystemAssetIdentifier {

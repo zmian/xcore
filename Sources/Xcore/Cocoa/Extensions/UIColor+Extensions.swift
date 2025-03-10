@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 import SwiftUI
 
@@ -234,3 +235,4 @@ extension CGColor {
         UIColor(cgColor: self)
     }
 }
+#endif

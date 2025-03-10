@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct ResizeImageTransform: ImageTransform {
@@ -73,3 +74,4 @@ extension ResizeImageTransform {
         }
     }
 }
+#endif

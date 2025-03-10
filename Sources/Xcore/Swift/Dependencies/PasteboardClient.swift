@@ -4,7 +4,11 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// Provides functionality for copying a string to pasteboard.
 ///
@@ -49,7 +53,11 @@ extension PasteboardClient {
     /// Returns live variant of `PasteboardClient`.
     public static var live: Self {
         .init { string in
+            #if canImport(UIKit)
             UIPasteboard.general.string = string
+            #elseif canImport(AppKit)
+            NSPasteboard.general.string = string
+            #endif
         }
     }
 }

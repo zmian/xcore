@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - NSAttributedString
@@ -182,3 +183,4 @@ extension NSAttributedString {
         )
     }
 }
+#endif

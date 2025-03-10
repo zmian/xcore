@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension Date {
     /// Temporarily changes the `default` calendar to the given calendar for the
@@ -383,18 +383,5 @@ extension Date {
         #else
         return calendar.dateComponents([component], from: self, to: date).value(for: component) ?? 0
         #endif
-    }
-}
-
-// MARK: - Date Picker
-
-@MainActor
-extension XConfiguration<UIDatePicker> {
-    public static func `default`(minimumDate: Date) -> Self {
-        .init(id: "default") { picker in
-            picker.minimumDate = minimumDate
-            picker.calendar = .default
-            picker.timeZone = Calendar.default.timeZone
-        }
     }
 }

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A spacer view with optional intrinsic content size. In stack view, it can
@@ -39,3 +40,4 @@ open class SpacerView: UIView {
         contentSize
     }
 }
+#endif

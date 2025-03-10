@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 import MessageUI
 
@@ -59,3 +60,4 @@ extension MFMailComposeViewController {
         actionHandler = ClosureWrapper(handler)
     }
 }
+#endif

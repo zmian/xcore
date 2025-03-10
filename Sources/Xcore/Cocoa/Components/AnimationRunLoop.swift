@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A class to report in-flight animation progress.
@@ -57,3 +58,4 @@ public final class AnimationRunLoop {
         }
     }
 }
+#endif

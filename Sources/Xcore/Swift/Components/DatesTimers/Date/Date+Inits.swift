@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension Date {
     /// Creates a `Date` object using the given date components.

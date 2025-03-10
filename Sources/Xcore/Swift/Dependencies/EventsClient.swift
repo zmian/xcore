@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+#if canImport(Combine)
 @preconcurrency import Combine
 
 /// Provides functionality for sending and receiving events.
@@ -100,3 +100,4 @@ extension EventsClient {
         )
     }
 }
+#endif

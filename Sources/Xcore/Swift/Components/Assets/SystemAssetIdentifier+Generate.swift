@@ -4,9 +4,9 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
-
 #if DEBUG
+import Foundation
+
 extension String {
     /// **Usage**
     ///

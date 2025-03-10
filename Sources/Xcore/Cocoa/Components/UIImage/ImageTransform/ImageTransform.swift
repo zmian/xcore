@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A protocol for objects responsible for transforming images in the context of
@@ -43,3 +44,4 @@ extension ImageTransform {
         lhs.id == rhs.id
     }
 }
+#endif

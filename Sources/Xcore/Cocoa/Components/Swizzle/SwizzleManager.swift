@@ -4,8 +4,9 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+#if canImport(WebKit)
 import WebKit
+#endif
 
 @MainActor
 public enum SwizzleManager {
@@ -51,9 +52,11 @@ public enum SwizzleManager {
     }
 
     private static func xcoreSwizzle(options: SwizzleOptions) {
+        #if canImport(WebKit)
         if options.contains(.userContentController) {
             WKUserContentController.runOnceSwapSelectors()
         }
+        #endif
     }
 }
 
@@ -66,7 +69,10 @@ extension SwizzleManager {
             self.rawValue = rawValue
         }
 
+        #if canImport(WebKit)
         public static let userContentController = Self(rawValue: 1 << 0)
+        #endif
+
         public static let all: Self = [
             userContentController
         ]

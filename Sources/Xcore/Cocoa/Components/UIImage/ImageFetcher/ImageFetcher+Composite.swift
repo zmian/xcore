@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 import OSLog
 
@@ -97,3 +98,4 @@ extension CompositeImageFetcher {
         fetchers.forEach { $0.removeCache() }
     }
 }
+#endif

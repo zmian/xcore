@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 final class DefaultImageFetcher: ImageFetcher {
@@ -59,3 +60,4 @@ final class DefaultImageFetcher: ImageFetcher {
         cache.removeAll()
     }
 }
+#endif

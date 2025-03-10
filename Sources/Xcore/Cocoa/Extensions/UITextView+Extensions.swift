@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UITextView {
@@ -70,3 +71,4 @@ extension UITextView {
         return linkElements
     }
 }
+#endif

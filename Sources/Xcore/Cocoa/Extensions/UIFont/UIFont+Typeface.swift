@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import SwiftUI
 
 extension Font {
@@ -123,3 +124,4 @@ extension UIFont.Typeface {
         }
     }
 }
+#endif

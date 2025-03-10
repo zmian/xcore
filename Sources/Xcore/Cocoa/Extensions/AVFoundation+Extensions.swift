@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(AVFoundation)
 import AVFoundation
 
 // MARK: - Current Playback Time Monitoring
@@ -96,3 +97,4 @@ extension AVAsset {
         self.init(url: url)
     }
 }
+#endif

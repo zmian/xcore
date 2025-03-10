@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - Bullets
@@ -97,3 +98,4 @@ extension NSAttributedString {
         return context.actualScaleFactor
     }
 }
+#endif

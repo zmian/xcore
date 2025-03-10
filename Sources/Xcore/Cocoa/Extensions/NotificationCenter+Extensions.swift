@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension NotificationCenter {
     /// Returns an asynchronous sequence of notifications produced by default center

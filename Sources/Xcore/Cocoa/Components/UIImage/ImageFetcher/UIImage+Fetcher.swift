@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - Namespace
@@ -78,3 +79,4 @@ struct ImageDownloaderCancelToken: @unchecked Sendable {
         cancel()
     }
 }
+#endif

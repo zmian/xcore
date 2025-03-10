@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// Creating arbitrarily-colored icons from a black-with-alpha master image.
@@ -44,3 +45,4 @@ extension ImageTransform where Self == TintColorImageTransform {
         .init(tintColor: color)
     }
 }
+#endif

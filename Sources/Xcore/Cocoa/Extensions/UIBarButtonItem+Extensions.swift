@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 // MARK: - TextColor
@@ -65,3 +66,4 @@ extension UIControl.State {
         [.normal, .highlighted, .disabled, .focused]
     }
 }
+#endif

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 private import SDWebImage
 
@@ -95,3 +96,4 @@ extension ImageSourceType.CacheType {
         }
     }
 }
+#endif

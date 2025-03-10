@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public struct BlockImageTransform: ImageTransform {
@@ -22,3 +23,4 @@ public struct BlockImageTransform: ImageTransform {
         block(image, source)
     }
 }
+#endif

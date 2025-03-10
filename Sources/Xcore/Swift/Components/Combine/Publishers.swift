@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-#if canImport(Combine)
+#if canImport(UIKit) && canImport(Combine)
 import UIKit
 import Combine
 

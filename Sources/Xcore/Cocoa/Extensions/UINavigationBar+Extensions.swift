@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UINavigationBar {
@@ -35,3 +36,4 @@ extension UINavigationBar {
         set { titleTextAttributes?[.foregroundColor] = newValue }
     }
 }
+#endif

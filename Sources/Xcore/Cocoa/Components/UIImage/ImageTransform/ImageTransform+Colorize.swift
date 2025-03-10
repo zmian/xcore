@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension ColorizeImageTransform {
@@ -137,3 +138,4 @@ extension ImageTransform where Self == ColorizeImageTransform {
         .init(color: color, kind: kind)
     }
 }
+#endif

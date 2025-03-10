@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+#if canImport(WebKit)
 import WebKit
 
 extension WKWebView {
@@ -36,3 +36,4 @@ extension WKWebView {
         return go(to: lastItem)
     }
 }
+#endif

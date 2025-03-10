@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIAccessibility {
@@ -46,3 +47,4 @@ extension UIAccessibility {
     /// A variable indicating the last focused accessibility element.
     @MainActor public static var lastFocusedElement = ReturnFocus()
 }
+#endif

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension ImageRepresentable {
@@ -37,3 +38,4 @@ extension ImageRepresentable {
         append(value)
     }
 }
+#endif

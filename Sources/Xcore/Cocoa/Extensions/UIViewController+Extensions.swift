@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 @objc
@@ -102,3 +103,4 @@ extension UIViewController {
         view.safeAreaInsets.bottom > 0
     }
 }
+#endif

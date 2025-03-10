@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /// A wrapper for `UIViewPropertyAnimator` that runs an animation and executes a
@@ -74,3 +75,4 @@ struct UIAnimator {
         self.animator = nil
     }
 }
+#endif

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIGestureRecognizer: TargetActionBlockRepresentable {
@@ -56,3 +57,4 @@ extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
         addTarget(wrapper, action: #selector(wrapper.invoke(_:)))
     }
 }
+#endif

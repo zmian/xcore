@@ -4,7 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+#if canImport(ObjectiveC)
+import ObjectiveC
 
 /// An enumeration representing the swizzle method type.
 public enum SwizzleMethodType {
@@ -85,3 +86,4 @@ public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSe
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }
+#endif

@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension HapticFeedbackClient {
@@ -109,3 +110,4 @@ extension DependencyValues {
         set { self[HapticFeedbackClientKey.self] = newValue }
     }
 }
+#endif

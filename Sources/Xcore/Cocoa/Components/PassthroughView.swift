@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 class PassthroughView: UIView {
@@ -19,3 +20,4 @@ class PassthroughView: UIView {
         }
     }
 }
+#endif

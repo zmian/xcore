@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIImageView {
@@ -88,3 +89,4 @@ extension UIImageView {
         }
     }
 }
+#endif

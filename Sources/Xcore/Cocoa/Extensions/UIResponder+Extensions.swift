@@ -4,6 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
+#if canImport(UIKit)
 import UIKit
 
 extension UIResponder {
@@ -29,3 +30,4 @@ extension UIResponder {
         return nil
     }
 }
+#endif
