@@ -24,19 +24,19 @@ import Foundation
 ///             return nil
 ///         }
 ///
-///         var string: String?
+///         let string: String
 ///
-///         if let stringValue = configValue.stringValue {
-///             string = stringValue
-///         } else if configValue.boolValue {
+///         if configValue.boolValue {
 ///             // We don't care about `false` as that would be the default value for any absent
 ///             // value.
 ///             string = String(describing: true)
 ///         } else if !configValue.numberValue.stringValue.isEmpty {
 ///             string = configValue.numberValue.stringValue
+///         } else {
+///             string = configValue.stringValue
 ///         }
 ///
-///         if let string, !string.isEmpty {
+///         if !string.isEmpty {
 ///             return .init(string)
 ///         }
 ///
