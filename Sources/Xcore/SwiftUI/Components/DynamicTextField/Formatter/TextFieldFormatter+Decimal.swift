@@ -18,7 +18,7 @@ import Foundation
 /// ```
 public struct DecimalTextFieldFormatter: TextFieldFormatter {
     /// An enumeration representing the formatting style to apply to numeric values.
-    public enum Style: Sendable, Hashable, Codable {
+    enum Style: Sendable, Hashable, Codable {
         /// A locale-aware decimal number format.
         ///
         /// Example: "1234.5678" → "1,234.568" in en_US locale.
