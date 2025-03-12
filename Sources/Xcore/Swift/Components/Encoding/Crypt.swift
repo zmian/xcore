@@ -245,7 +245,7 @@ extension Crypt {
     ///   - value: Obfuscated value to deobfuscate.
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
-    public static func deobfuscate(_ value: [UInt8], secret: [UInt8]) throws -> [UInt8] {
+    public static func deobfuscate(_ value: [UInt8], secret: [UInt8]) -> [UInt8] {
         zip(value, secret).map(^)
     }
 }
