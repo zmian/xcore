@@ -48,3 +48,18 @@ extension Mutex {
         }
     }
 }
+
+@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
+extension Mutex where Value: Sendable {
+    /// Returns the protected wrapped value.
+    ///
+    /// ```swift
+    /// let counter = Mutex(0)
+    /// print(counter.wrappedValue)
+    /// ```
+    ///
+    /// - Returns: The current value of the mutex-protected property.
+    public var wrappedValue: Value {
+        withLock { $0 }
+    }
+}
