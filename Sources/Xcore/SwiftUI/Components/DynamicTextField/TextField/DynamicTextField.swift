@@ -6,6 +6,22 @@
 
 import SwiftUI
 
+/// A SwiftUI text field that supports dynamic formatting, validation, and secure entry.
+///
+/// `TextFieldView` provides an extensible, SwiftUI-native alternative to `TextField`,
+/// allowing for custom formatting, validation, and secure text entry modes.
+///
+/// ## Example Usage
+///
+/// ```swift
+/// struct ContentView: View {
+///     @State private var emailAddress: String = ""
+///
+///     var body: some View {
+///         DynamicTextField("Email Address", value: $emailAddress, configuration: .emailAddress)
+///     }
+/// }
+/// ```
 public struct DynamicTextField<Label: View, Formatter: TextFieldFormatter>: View {
     @Environment(\.dynamicTextFieldStyle) private var style
     @Binding private var value: Formatter.Value
@@ -16,7 +32,7 @@ public struct DynamicTextField<Label: View, Formatter: TextFieldFormatter>: View
     @State private var isSecure: Bool
     private let label: Label
     private let configuration: TextFieldConfiguration<Formatter>
-    private var onValidationChanged: (Bool) -> Void = { _ in }
+    private var onValidationChanged: ((Bool) -> Void)?
     private var formatter: Formatter {
         configuration.formatter
     }
@@ -25,8 +41,8 @@ public struct DynamicTextField<Label: View, Formatter: TextFieldFormatter>: View
     ///
     /// - Parameters:
     ///   - value: The value to display and edit.
-    ///   - configuration: A configuration used to define the behavior of the text
-    ///     field.
+    ///   - configuration: A configuration defining behavior, formatting, and
+    ///     validation.
     ///   - label: A view builder that produces a label for the text field,
     ///     describing its purpose.
     public init(
@@ -138,13 +154,13 @@ public struct DynamicTextField<Label: View, Formatter: TextFieldFormatter>: View
 
         if isValid != newValue {
             isValid = newValue
-            onValidationChanged(newValue)
+            onValidationChanged?(newValue)
         }
     }
 }
 
 extension DynamicTextField {
-    public func onValidation(_ value: Binding<Bool>) -> Self {
+    public func onValidationChanged(_ value: Binding<Bool>) -> Self {
         var copy = self
         copy.onValidationChanged = {
             value.wrappedValue = $0
