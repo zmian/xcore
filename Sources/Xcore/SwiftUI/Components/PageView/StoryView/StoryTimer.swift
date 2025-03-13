@@ -76,9 +76,9 @@ final class StoryTimer {
                 case .infinite:
                     newProgress = 0
                     onCycleComplete?(.infinite)
-                case let .times(count):
+                case let .finite(count):
                     let remainingCount = max(0, count - cyclesCompleted)
-                    onCycleComplete?(.times(remainingCount))
+                    onCycleComplete?(.finite(remainingCount))
 
                     if remainingCount == 0 {
                         stop()
