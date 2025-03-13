@@ -3,6 +3,7 @@
 // Copyright © 2021 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable for_where
 
 import SwiftUI
 
@@ -75,7 +76,125 @@ extension AppStatusClient {
         let isProtectedDataAvailable = UIApplication.shared.isProtectedDataAvailable
         return isApplicationActive && isProtectedDataAvailable && sessionState.value == .unlocked
     }
+
+    /// Emits an event when the app should attempt to auto-prompt the user to unlock
+    /// their locked session.
+    ///
+    /// This event is triggered when:
+    /// - The user **cold launches** the app.
+    /// - The app **enters the foreground** after being inactive.
+    ///
+    /// The purpose of this event is to prompt the user to **auto-unlock** their
+    /// session when necessary.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// // 1. Create `SessionLockScreen` view modifier.
+    ///
+    /// extension View {
+    ///     /// The content view is automatically displayed when app transitions to
+    ///     /// session lock state.
+    ///     public func sessionLockScreen() -> some View {
+    ///         modifier(SessionLockScreen())
+    ///     }
+    /// }
+    ///
+    /// // MARK: - ViewModifier
+    ///
+    /// private struct SessionLockScreen: ViewModifier {
+    ///     @Dependency(\.appStatus) private var appStatus
+    ///     @State private var isLocked: Bool
+    ///
+    ///     init() {
+    ///         let state = Dependency(\.appStatus).wrappedValue.sessionState.value
+    ///         _isLocked = .init(initialValue: state.isLocked)
+    ///     }
+    ///
+    ///     func body(content: Content) -> some View {
+    ///         content
+    ///             .opacity(isLocked ? 0 : 1)
+    ///             .overlay {
+    ///                 lockScreen
+    ///                     .hidden(!isLocked)
+    ///             }
+    ///             .overlayScreen(isPresented: $isLocked, style: .sessionLock) {
+    ///                 lockScreen
+    ///             }
+    ///             .onReceive(appStatus.sessionState) { sessionState in
+    ///                 isLocked = sessionState.isLocked
+    ///             }
+    ///             .task {
+    ///                 for await _ in appStatus.onAutoUnlockSession where isLocked {
+    ///                     performUnlock()
+    ///                 }
+    ///             }
+    ///     }
+    ///
+    ///     private func performUnlock() {
+    ///         appStatus.changeSession(to: .unlocked)
+    ///     }
+    ///
+    ///     private var lockScreen: some View {
+    ///         SplashView()
+    ///     }
+    /// }
+    ///
+    /// // MARK: - Window Style
+    ///
+    /// extension WindowStyle {
+    ///     /// The style for a session lock screen.
+    ///     ///
+    ///     /// It appear on top of your app's main window, status bar and alerts, but below
+    ///     /// privacy screen.
+    ///     fileprivate static var sessionLock: Self {
+    ///         .init(label: "Session Lock Screen", level: .privacy - 1)
+    ///     }
+    /// }
+    ///
+    /// // MARK: - Session State
+    ///
+    /// extension AppStatus.SessionState {
+    ///     /// We want to only hide the lock screen when session is unlocked. If user taps
+    ///     /// sign out button, we don't want to dismiss the lock screen and transition to
+    ///     /// onboarding view simultaneously.
+    ///     fileprivate var isLocked: Bool {
+    ///         self != .unlocked
+    ///     }
+    /// }
+    ///
+    /// // 2. Attach `SessionLockScreen` view modifier to the root of the appliction.
+    /// @main
+    /// struct ExampleApp: App {
+    ///     var body: some Scene {
+    ///         WindowGroup {
+    ///             ContentView()
+    ///                 .sessionLockScreen()
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    public var onAutoUnlockSession: AsyncStream<Void> {
+        AsyncStream { continuation in
+            @Dependency(\.appPhase) var appPhase
+
+            if isColdLaunch.value {
+                continuation.yield()
+                isColdLaunch.setValue(false)
+            }
+
+            Task {
+                for await _ in appPhase.receive.when(.willEnterForeground).values {
+                    if !isColdLaunch.value {
+                        continuation.yield()
+                    }
+                }
+            }
+        }
+    }
 }
+
+private let isColdLaunch = LockIsolated(true)
 
 // MARK: - Variants
 
