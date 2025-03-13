@@ -7,6 +7,7 @@
 import Testing
 @testable import Xcore
 
+@Suite(.serialized)
 struct PasteboardClientTests {
     @Test
     func inMemoryVariant() {
