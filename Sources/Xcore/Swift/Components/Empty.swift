@@ -7,13 +7,13 @@
 import Foundation
 import SwiftUI
 
-/// A structure representing an empty value.
+/// A structure representing the absence of meaningful content or state.
 ///
-/// The `Empty` struct serves as a placeholder type that indicates the absence
-/// of meaningful data. It conforms to several protocols to allow use as a
-/// default or dummy value in type-safe contexts. In addition, when used as a
-/// SwiftUI view, it renders as an `EmptyView`, making it ideal for cases where
-/// no visual content is desired.
+/// `Empty` is a lightweight, immutable type that can be used as a placeholder
+/// or default value in contexts where no data is required. It is comparable to
+/// an empty tuple `()` but provides a named, explicit type for clarity in APIs
+/// and generic constraints. When used in SwiftUI, it renders as `EmptyView`,
+/// making it ideal for scenarios where no visual content is required.
 ///
 /// **Usage**
 ///
@@ -21,14 +21,17 @@ import SwiftUI
 /// // Creating an instance
 /// let emptyInstance = Empty()
 ///
-/// // Using Empty as a view
-/// var body: some View {
-///     Empty()
+/// // Use in SwiftUI
+/// struct ContentView: View {
+///     var body: some View {
+///         Empty()
+///     }
 /// }
 /// ```
 @frozen
 public struct Empty {
     /// Creates a new instance of `Empty`.
+    @inlinable
     public init() {}
 }
 
