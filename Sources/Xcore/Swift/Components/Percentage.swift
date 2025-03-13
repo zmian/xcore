@@ -6,96 +6,107 @@
 
 import Foundation
 
-/// A type that can be used to represent percentage with bounds check to ensure
-/// the value is always between `0` and `100` and support for addition and
-/// subtraction.
+/// A type representing a percentage value, clamped between `0.0` and `1.0`.
+///
+/// The `Percentage` type ensures its value is always within valid bounds (`0.0`
+/// to `1.0`), supports arithmetic operations, and provides a user-friendly
+/// string representation.
 ///
 /// **Usage**
 ///
 /// ```swift
-/// let sliderValue: Percentage = 0.5
-/// // print(sliderValue) // 0.5%
+/// let progress: Percentage = 0.5
+/// print(progress) // "50%"
 ///
-/// // Bounds check to ensure the value is between 0 & 100.
-/// var sliderValue: Percentage = 500
-/// // print(sliderValue) // 100.0%
+/// var score: Percentage = 500
+/// print(score) // "100%" (clamped)
 ///
-/// sliderValue -= 1
-/// // print(sliderValue) // 99.0%
+/// score -= 0.01
+/// print(score) // "99%"
 /// ```
-public struct Percentage: RawRepresentable, Sendable {
+public struct Percentage: Sendable, Hashable, Codable {
+    /// The minimum allowed percentage value (`0.0`).
     public static let min: Percentage = 0
-    public static let max: Percentage = 100
 
-    public private(set) var rawValue: Double
+    /// The maximum allowed percentage value (`1.0`).
+    public static let max: Percentage = 1
 
-    public init(rawValue: Double) {
-        self.rawValue = Self.clamped(rawValue)
+    /// The underlying decimal representation of the percentage, clamped between
+    /// `0.0` and `1.0`.
+    private let decimalValue: Decimal
+
+    /// The percentage value as a `Double`, always clamped between `0.0` and `1.0`.
+    public var value: Double {
+        decimalValue.double
     }
 
-    private static func clamped(_ value: Double) -> Double {
-        value.clamped(to: 0...100)
+    /// Creates a new `Percentage` instance with a given value, clamped within `0.0`
+    /// to `1.0`.
+    ///
+    /// - Parameter value: The initial percentage value.
+    public init(_ value: Decimal) {
+        self.decimalValue = value.clamped(to: 0...1)
     }
 }
 
+// MARK: - Expressible Conformances
+
 extension Percentage: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
-        self.init(rawValue: Double(value))
+        self.init(Decimal(value))
     }
 }
 
 extension Percentage: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
-        self.init(rawValue: Double(value))
+        self.init(Decimal(value))
     }
 }
 
+// MARK: - Comparable & Strideable
+
+extension Percentage: Comparable {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.decimalValue < rhs.decimalValue
+    }
+}
+
+extension Percentage: Strideable {
+    public func advanced(by n: Decimal) -> Self {
+        Percentage(decimalValue + n)
+    }
+
+    public func distance(to other: Self) -> Decimal {
+        other.decimalValue - decimalValue
+    }
+}
+
+// MARK: - Arithmetic Operations
+
+extension Percentage: AdditiveArithmetic {
+    public static func + (lhs: Self, rhs: Self) -> Self {
+        .init(lhs.decimalValue + rhs.decimalValue)
+    }
+
+    public static func - (lhs: Self, rhs: Self) -> Self {
+        .init(lhs.decimalValue - rhs.decimalValue)
+    }
+}
+
+// MARK: - String Representations
+
 extension Percentage: CustomStringConvertible {
     public var description: String {
-        "\(rawValue)%"
+        let percentage = decimalValue * 100
+        return decimalValue.formatted(
+            .percent
+            .precision(.fractionLength(percentage.isFractionalPartZero ? 0 : 2))
+        )
     }
 }
 
 extension Percentage: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        rawValue
+        value
     }
 }
-
-extension Percentage: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(rawValue)
-    }
-}
-
-extension Percentage: Equatable {
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue == rhs.rawValue
-    }
-}
-
-extension Percentage: Comparable {
-    public static func <(lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
-}
-
-extension Percentage {
-    public static func +(lhs: Self, rhs: Self) -> Self {
-        .init(rawValue: lhs.rawValue + rhs.rawValue)
-    }
-
-    public static func -(lhs: Self, rhs: Self) -> Self {
-        .init(rawValue: lhs.rawValue - rhs.rawValue)
-    }
-
-    public static func +=(lhs: inout Self, rhs: Self) {
-        lhs.rawValue = clamped(lhs.rawValue + rhs.rawValue)
-    }
-
-    public static func -=(lhs: inout Self, rhs: Self) {
-        lhs.rawValue = clamped(lhs.rawValue - rhs.rawValue)
-    }
-}
-
-extension Percentage: Codable {}

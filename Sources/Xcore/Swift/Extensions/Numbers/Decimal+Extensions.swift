@@ -214,10 +214,10 @@ extension Decimal {
     /// `0`.
     ///
     /// ```swift
-    /// print(Decimal(120.30).isFractionZero)
+    /// print(Decimal(120.30).isFractionalPartZero)
     /// // Prints "false"
     ///
-    /// print(Decimal(120.00).isFractionZero)
+    /// print(Decimal(120.00).isFractionalPartZero)
     /// // Prints "true"
     /// ```
     public var isFractionalPartZero: Bool {
@@ -312,6 +312,6 @@ extension Decimal {
     }
 
     public var double: Double {
-        doubleValue ?? 0
+        doubleValue ?? NSDecimalNumber(decimal: self).doubleValue
     }
 }
