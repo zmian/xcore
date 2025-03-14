@@ -29,7 +29,7 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     /// documented as [thread safe]:
     ///
     /// [thread safe]: https://developer.apple.com/documentation/foundation/nscache
-    nonisolated(unsafe) private let cache = NSCache<Box<Key>, Box<Value>>()
+    nonisolated(unsafe) private let cache = NSCache<ReferenceBox<Key>, ReferenceBox<Value>>()
 
     /// A delegate wrapper that handles eviction callbacks.
     private let delegate: DelegateWrapper<Value>
@@ -61,12 +61,12 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     }
 
     public subscript(_ key: Key, cost cost: Int? = nil) -> Value? {
-        get { cache.object(forKey: Box(key))?.value }
+        get { cache.object(forKey: ReferenceBox(key))?.value }
         set {
-            let key = Box(key)
+            let key = ReferenceBox(key)
 
             if let newValue {
-                let newValue = Box(newValue)
+                let newValue = ReferenceBox(newValue)
 
                 if let cost {
                     cache.setObject(newValue, forKey: key, cost: cost)
@@ -136,7 +136,7 @@ private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, Sendable 
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
         guard
             let willEvictValue = willEvictValue,
-            let value = (obj as? Box<Value>)?.value
+            let value = (obj as? ReferenceBox<Value>)?.value
         else {
             return
         }

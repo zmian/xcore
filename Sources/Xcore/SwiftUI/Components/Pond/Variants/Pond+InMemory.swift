@@ -7,7 +7,7 @@
 import Foundation
 
 public struct InMemoryPond: Pond, Sendable {
-    private var storage = MutableBox<[String: any Sendable]>([:])
+    private var storage = MutableReferenceBox<[String: any Sendable]>([:])
     public let id = "inMemory"
 
     public init() {}
