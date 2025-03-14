@@ -21,7 +21,7 @@ import Foundation
 ///     url: URL(string: "https://example.com/legal/privacy")!
 /// )
 /// ```
-public struct URLDescriptor: UserInfoContainer, MutableAppliable, Sendable {
+public struct URLDescriptor: Sendable, UserInfoContainer, MutableAppliable {
     /// The title of the URL.
     public var title: String
 
