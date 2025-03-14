@@ -66,7 +66,7 @@ extension Percentage: ExpressibleByFloatLiteral {
 // MARK: - Comparable & Strideable
 
 extension Percentage: Comparable {
-    public static func < (lhs: Self, rhs: Self) -> Bool {
+    public static func <(lhs: Self, rhs: Self) -> Bool {
         lhs.decimalValue < rhs.decimalValue
     }
 }
@@ -84,11 +84,11 @@ extension Percentage: Strideable {
 // MARK: - Arithmetic Operations
 
 extension Percentage: AdditiveArithmetic {
-    public static func + (lhs: Self, rhs: Self) -> Self {
+    public static func +(lhs: Self, rhs: Self) -> Self {
         .init(lhs.decimalValue + rhs.decimalValue)
     }
 
-    public static func - (lhs: Self, rhs: Self) -> Self {
+    public static func -(lhs: Self, rhs: Self) -> Self {
         .init(lhs.decimalValue - rhs.decimalValue)
     }
 }

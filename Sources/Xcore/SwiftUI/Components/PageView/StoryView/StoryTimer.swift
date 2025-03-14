@@ -11,15 +11,15 @@ import SwiftUI
 final class StoryTimer {
     private let tick = Duration.seconds(0.01)
     private var duration: Duration
-    private let cycle: Count
+    private let cycle: Count<Int>
     private var pagesCount: Int
     private var cyclesCompleted = 0
     private var isPaused = false
     private var timerTask: Task<Void, any Error>?
-    var onCycleComplete: ((_ remainingCycles: Count) -> Void)?
+    var onCycleComplete: ((_ remainingCycles: Count<Int>) -> Void)?
     var progress: Double
 
-    init(pagesCount: Int, duration: Duration, cycle: Count) {
+    init(pagesCount: Int, duration: Duration, cycle: Count<Int>) {
         self.pagesCount = pagesCount
         self.duration = duration
         self.cycle = cycle

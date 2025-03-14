@@ -48,13 +48,13 @@ extension Weak: @unchecked Sendable where Value: Sendable {}
 
 // MARK: - Equatable
 
-extension Weak: Equatable {
-    public static func == (lhs: Weak, rhs: Weak) -> Bool {
-        lhs.value === rhs.value
+extension Weak: Equatable where Value: Equatable {
+    public static func ==(lhs: Weak, rhs: Weak) -> Bool {
+        lhs.value == rhs.value
     }
 
-    public static func == (lhs: Weak, rhs: Value) -> Bool {
-        lhs.value === rhs
+    public static func ==(lhs: Weak, rhs: Value) -> Bool {
+        lhs.value == rhs
     }
 }
 
@@ -69,7 +69,7 @@ extension Weak: Hashable where Value: Hashable {
 // MARK: - Comparable
 
 extension Weak: Comparable where Value: Comparable {
-    public static func < (lhs: Weak, rhs: Weak) -> Bool {
+    public static func <(lhs: Weak, rhs: Weak) -> Bool {
         guard let lhs = lhs.value, let rhs = rhs.value else {
             return false
         }
@@ -77,7 +77,7 @@ extension Weak: Comparable where Value: Comparable {
         return lhs < rhs
     }
 
-    public static func > (lhs: Weak, rhs: Weak) -> Bool {
+    public static func >(lhs: Weak, rhs: Weak) -> Bool {
         guard let lhs = lhs.value, let rhs = rhs.value else {
             return false
         }

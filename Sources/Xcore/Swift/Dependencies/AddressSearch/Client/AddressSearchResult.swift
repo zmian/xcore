@@ -51,7 +51,7 @@ public final class AddressSearchResult: Sendable, Hashable {
 // MARK: - Equatable
 
 extension AddressSearchResult {
-    public static func == (lhs: AddressSearchResult, rhs: AddressSearchResult) -> Bool {
+    public static func ==(lhs: AddressSearchResult, rhs: AddressSearchResult) -> Bool {
         lhs.title == rhs.title &&
         lhs.subtitle == rhs.subtitle
     }
