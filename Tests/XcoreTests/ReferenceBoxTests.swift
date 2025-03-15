@@ -7,20 +7,20 @@
 import Testing
 @testable import Xcore
 
-struct BoxTests {
+struct ReferenceBoxTests {
     @Test
     func box() {
-        let box = Box("Hello, world!")
+        let box = ReferenceBox("Hello, world!")
         #expect(box.value == "Hello, world!")
     }
 
     @Test
     func boxEquality() {
-        let box1 = Box(1)
-        let box2 = Box(1)
+        let box1 = ReferenceBox(1)
+        let box2 = ReferenceBox(1)
         #expect(box1 == box2)
 
-        let box3 = Box(3)
+        let box3 = ReferenceBox(3)
         #expect(box1 != box3)
     }
 }

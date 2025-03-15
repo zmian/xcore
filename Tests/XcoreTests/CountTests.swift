@@ -165,6 +165,7 @@ struct CountTests {
 
     @Test
     func comparison() {
+        // < less than
         #expect(Count.finite(2) < .finite(5))
         #expect(!(Count.finite(9) < .finite(5)))
         #expect(!(Count.finite(5) < .finite(5)))
@@ -175,6 +176,18 @@ struct CountTests {
         #expect((Count.infinite < .finite(100)) == false)
         // finite < ∞ // true
         #expect((Count.finite(100) < .infinite) == true)
+
+        // > greater than
+        #expect(!(Count.finite(2) > .finite(5)))
+        #expect(Count.finite(9) > .finite(5))
+        #expect(!(Count.finite(5) > .finite(5)))
+
+        // ∞ > ∞ // false
+        #expect((Count<Int>.infinite > .infinite) == false)
+        // ∞ > finite // true
+        #expect((Count.infinite > .finite(100)) == true)
+        // finite > ∞ // false
+        #expect((Count.finite(100) > .infinite) == false)
     }
 
     @Test

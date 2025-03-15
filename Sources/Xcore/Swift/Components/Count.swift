@@ -107,7 +107,7 @@ public enum Count<Value> {
     public var isInfinite: Bool {
         switch self {
             case .infinite: true
-            default: false
+            case .finite: false
         }
     }
 
