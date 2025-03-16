@@ -80,6 +80,9 @@ public struct Money: Hashable, MutableAppliable {
     /// The amount of money.
     public let amount: Decimal
 
+    /// Creates a new instance of `Money`.
+    ///
+    /// - Parameter amount: The monetary amount.
     public init(_ amount: Decimal) {
         self.amount = amount
         fractionLength = amount.calculatePrecision()
@@ -127,7 +130,7 @@ public struct Money: Hashable, MutableAppliable {
     /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
     public var currencySymbol: String
 
-    /// The currency symbol position.
+    /// The position of the currency symbol relative to the amount.
     public var currencySymbolPosition: CurrencySymbolPosition = .prefix
 
     /// The minimum and maximum number of digits after the decimal separator.
