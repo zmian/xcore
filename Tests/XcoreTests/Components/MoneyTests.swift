@@ -22,31 +22,31 @@ struct MoneyTests {
 
     @Test
     func currentSign() {
-        // Sign: .default
-        #expect(Money(-1200).currentSign == "−")
-        #expect(Money(1200).currentSign == "")
-        #expect(Money(0).currentSign == "")
+        // signSymbols: .default
+        #expect(Money(-1200).sign == "−")
+        #expect(Money(1200).sign == "")
+        #expect(Money(0).sign == "")
 
-        // Sign: .whenPositive
-        #expect(Money(-1200).sign(.whenPositive).currentSign == "")
-        #expect(Money(1200).sign(.whenPositive).currentSign == "+")
-        #expect(Money(0).sign(.whenPositive).currentSign == "")
+        // signSymbols: .whenPositive
+        #expect(Money(-1200).signSymbols(.whenPositive).sign == "")
+        #expect(Money(1200).signSymbols(.whenPositive).sign == "+")
+        #expect(Money(0).signSymbols(.whenPositive).sign == "")
 
-        // Sign: .both
-        #expect(Money(-1200).sign(.both).currentSign == "−")
-        #expect(Money(1200).sign(.both).currentSign == "+")
-        #expect(Money(0).sign(.both).currentSign == "")
+        // signSymbols: .both
+        #expect(Money(-1200).signSymbols(.both).sign == "−")
+        #expect(Money(1200).signSymbols(.both).sign == "+")
+        #expect(Money(0).signSymbols(.both).sign == "")
 
-        // Sign: .none
-        #expect(Money(-1200).sign(.none).currentSign == "")
-        #expect(Money(1200).sign(.none).currentSign == "")
-        #expect(Money(0).sign(.none).currentSign == "")
+        // signSymbols: .none
+        #expect(Money(-1200).signSymbols(.none).sign == "")
+        #expect(Money(1200).signSymbols(.none).sign == "")
+        #expect(Money(0).signSymbols(.none).sign == "")
 
-        // Sign: .emoji
-        let emojiSigned = Money.Sign(positive: "✅", negative: "❌", zero: "0️⃣")
-        #expect(Money(-1200).sign(emojiSigned).currentSign == "❌")
-        #expect(Money(1200).sign(emojiSigned).currentSign == "✅")
-        #expect(Money(0).sign(emojiSigned).currentSign == "0️⃣")
+        // signSymbols: .emoji
+        let emojiSigned = Money.SignSymbols(positive: "✅", negative: "❌", zero: "0️⃣")
+        #expect(Money(-1200).signSymbols(emojiSigned).sign == "❌")
+        #expect(Money(1200).signSymbols(emojiSigned).sign == "✅")
+        #expect(Money(0).signSymbols(emojiSigned).sign == "0️⃣")
     }
 
     @Test
@@ -57,7 +57,7 @@ struct MoneyTests {
 
         let amount4 = Money(-1200)
             .style(.default)
-            .sign(.default)
+            .signSymbols(.default)
 
         #expect(String(describing: amount4) == "−$1,200.00")
         #expect(Money(-1200).formatted() == "−$1,200.00")
@@ -68,19 +68,19 @@ struct MoneyTests {
     func signed_both() {
         // Sign for positive value
         let amount1 = Money(1200)
-            .sign(.both)
+            .signSymbols(.both)
 
         #expect(String(describing: amount1) == "+$1,200.00")
 
         // Sign for negative value
         let amount2 = Money(-1200)
-            .sign(.both)
+            .signSymbols(.both)
 
         #expect(String(describing: amount2) == "−$1,200.00")
 
         // Sign for zero value
         let amount3 = Money(0)
-            .sign(.both)
+            .signSymbols(.both)
 
         #expect(String(describing: amount3) == "$0.00")
     }
@@ -88,43 +88,43 @@ struct MoneyTests {
     @Test
     func signed_whenPositive() {
         let amount1 = Money(0)
-            .sign(.whenPositive)
+            .signSymbols(.whenPositive)
 
         #expect(String(describing: amount1) == "$0.00")
 
         let amount2 = Money(1200.30)
-            .sign(.whenPositive)
+            .signSymbols(.whenPositive)
 
         #expect(String(describing: amount2) == "+$1,200.30")
 
         let amount3 = Money(-1200.30)
-            .sign(.whenPositive)
+            .signSymbols(.whenPositive)
 
         #expect(String(describing: amount3) == "$1,200.30")
     }
 
     @Test
     func signed_custom() {
-        let emojiSigned = Money.Sign(positive: "✅", negative: "❌", zero: "0️⃣")
+        let emojiSigned = Money.SignSymbols(positive: "✅", negative: "❌", zero: "0️⃣")
 
         let amount1 = Money(0)
-            .sign(emojiSigned)
+            .signSymbols(emojiSigned)
 
         #expect(String(describing: amount1) == "0️⃣$0.00")
 
         let amount2 = Money(120.30)
-            .sign(emojiSigned)
+            .signSymbols(emojiSigned)
 
         #expect(String(describing: amount2) == "✅$120.30")
 
         let amount3 = Money(-120.30)
-            .sign(emojiSigned)
+            .signSymbols(emojiSigned)
 
         #expect(String(describing: amount3) == "❌$120.30")
 
         let amount4 = Money(0)
             .zeroString("--")
-            .sign(emojiSigned)
+            .signSymbols(emojiSigned)
 
         #expect(String(describing: amount4) == "--")
     }
@@ -219,13 +219,13 @@ struct MoneyTests {
 
         let amount12 = Money(1200)
             .style(.abbreviated(threshold: 1200))
-            .sign(.both)
+            .signSymbols(.both)
 
         #expect(String(describing: amount12) == "+$1.2K")
 
         let amount13 = Money(-1200)
             .style(.abbreviated(threshold: 1200))
-            .sign(.whenPositive)
+            .signSymbols(.whenPositive)
 
         #expect(String(describing: amount13) == "$1.2K")
     }
@@ -309,7 +309,7 @@ struct MoneyTests {
         let amount4 = Money(-120)
             .currencySymbol("ETH", position: .suffix)
             .style(.default)
-            .sign(.default)
+            .signSymbols(.default)
 
         #expect(String(describing: amount4) == "−120.00 ETH")
 
@@ -333,7 +333,7 @@ struct MoneyTests {
             format: {
                 let components = $0.components(includeMinorUnit: true)
 
-                let sign = $0.currentSign
+                let sign = $0.sign
                 let formattedAmount: String
 
                 switch $0.currencySymbolPosition {

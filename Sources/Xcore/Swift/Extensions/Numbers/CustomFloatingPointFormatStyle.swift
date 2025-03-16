@@ -38,7 +38,7 @@ extension CustomFloatingPointFormatStyle {
 public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Sendable, Hashable, Codable {
     public let type: Kind
     public var locale: Locale = .numbers
-    public var sign: SignedNumericSign = .default
+    public var signSymbols: NumberFormatStyleConfiguration.SignSymbols = .default
     public var fractionLength: ClosedRange<Int>?
     public var trimFractionalPartIfZero = true
     public var minimumBound: Value?
@@ -58,10 +58,10 @@ extension CustomFloatingPointFormatStyle {
         }
     }
 
-    /// The sign (+/−) used to format value.
-    public func sign(_ sign: SignedNumericSign) -> Self {
+    /// The sign symbols (+/−) used to format value.
+    public func signSymbols(_ signSymbols: NumberFormatStyleConfiguration.SignSymbols) -> Self {
         applying {
-            $0.sign = sign
+            $0.signSymbols = signSymbols
         }
     }
 
@@ -128,7 +128,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
     /// - Returns: A string representation of the value.
     public func format(_ value: Value) -> String {
         let value = normalize(value)
-        let sign = value == 0 ? sign.zero : (value > 0 ? sign.positive : sign.negative)
+        let sign = value.signSymbol(signSymbols)
         let fractionLength = normalizeFractionLength(value)
 
         // MinimumBound
@@ -284,7 +284,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Double> {
     /// -0.0000109 → "<−0.01%"
     /// 0.0000109  → "<0.01"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 0, sign: .both
+    /// // scale: .zeroToOne (default), fractionLength: 0, signSymbols: .both
     /// 0.019   → "+2%"
     /// -0.0109 → "−1%"
     /// 0.02    → "+2%"
@@ -414,7 +414,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// -0.0000109 → "<−0.01%"
     /// 0.0000109  → "<0.01"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 0, sign: .both
+    /// // scale: .zeroToOne (default), fractionLength: 0, signSymbols: .both
     /// 0.019   → "+2%"
     /// -0.0109 → "−1%"
     /// 0.02    → "+2%"

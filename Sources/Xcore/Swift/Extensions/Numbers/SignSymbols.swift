@@ -6,46 +6,49 @@
 
 import Foundation
 
-/// A structure representing signs (+/−) used to format signed numeric types.
-public struct SignedNumericSign: Sendable, Hashable, Codable {
-    /// The string used to represent sign for positive values.
-    public let positive: String
+extension NumberFormatStyleConfiguration {
+    /// A structure representing signs symbols (+/−) used to format signed numeric
+    /// types.
+    public struct SignSymbols: Sendable, Hashable, Codable {
+        /// The string used to represent sign for positive values.
+        public let positive: String
 
-    /// The string used to represent sign for negative values.
-    public let negative: String
+        /// The string used to represent sign for negative values.
+        public let negative: String
 
-    /// The string used to represent sign for zero values.
-    public let zero: String
+        /// The string used to represent sign for zero values.
+        public let zero: String
 
-    /// Creates an instance of sign.
-    ///
-    /// - Parameters:
-    ///   - positive: The string used to represent sign for positive values.
-    ///   - negative: The string used to represent sign for negative values.
-    ///   - zero: The string used to represent sign for zero values.
-    public init(positive: String, negative: String, zero: String) {
-        self.positive = positive
-        self.negative = negative
-        self.zero = zero
+        /// Creates an instance of sign.
+        ///
+        /// - Parameters:
+        ///   - positive: The string used to represent sign for positive values.
+        ///   - negative: The string used to represent sign for negative values.
+        ///   - zero: The string used to represent sign for zero values.
+        public init(positive: String, negative: String, zero: String) {
+            self.positive = positive
+            self.negative = negative
+            self.zero = zero
+        }
     }
 }
 
 // MARK: - Built-in
 
-extension SignedNumericSign {
+extension NumberFormatStyleConfiguration.SignSymbols {
     /// Displays minus sign (`"−"`) for the negative values and empty string (`""`)
     /// for positive and zero values.
     ///
     /// ```swift
     /// // When the amount is positive then the sign is empty string ("").
     /// let amount = Money(120.30)
-    ///     .sign(.default) // ← Specifying the sign
+    ///     .signSymbols(.default) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     ///
     /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
-    ///     .sign(.default) // ← Specifying the sign
+    ///     .signSymbols(.default) // ← Specifying the sign
     ///
     /// print(amount) // "−$120.30"
     /// ```
@@ -59,13 +62,13 @@ extension SignedNumericSign {
     /// ```swift
     /// // When the amount is positive then the sign is "+".
     /// let amount = Money(120.30)
-    ///     .sign(.whenPositive) // ← Specifying the sign
+    ///     .signSymbols(.whenPositive) // ← Specifying the sign
     ///
     /// print(amount) // "+$120.30"
     ///
     /// // When the amount is negative then the sign is empty string ("").
     /// let amount = Money(-120.30)
-    ///     .sign(.whenPositive) // ← Specifying the sign
+    ///     .signSymbols(.whenPositive) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     /// ```
@@ -79,13 +82,13 @@ extension SignedNumericSign {
     /// ```swift
     /// // When the amount is positive then the sign is "+".
     /// let amount = Money(120.30)
-    ///     .sign(.both) // ← Specifying the sign
+    ///     .signSymbols(.both) // ← Specifying the sign
     ///
     /// print(amount) // "+$120.30"
     ///
     /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
-    ///     .sign(.both) // ← Specifying the sign
+    ///     .signSymbols(.both) // ← Specifying the sign
     ///
     /// print(amount) // "-$120.30"
     /// ```
@@ -98,13 +101,13 @@ extension SignedNumericSign {
     /// ```swift
     /// // When the amount is positive then the sign is empty string ("").
     /// let amount = Money(120.30)
-    ///     .sign(.none) // ← Specifying the sign
+    ///     .signSymbols(.none) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     ///
     /// // When the amount is negative then the sign is empty string ("").
     /// let amount = Money(-120.30)
-    ///     .sign(.none) // ← Specifying the sign
+    ///     .signSymbols(.none) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     /// ```
@@ -113,17 +116,15 @@ extension SignedNumericSign {
     }
 }
 
-// MARK: - Helpers
+// MARK: - SignedNumeric
 
-extension Money {
-    public typealias Sign = SignedNumericSign
-
-    /// Returns the sign of the current amount.
-    var currentSign: String {
-        if amount == 0 {
-            return sign.zero
+extension SignedNumeric where Self: Comparable {
+    /// Returns the sign symbol of `self`.
+    func signSymbol(_ signSymbols: NumberFormatStyleConfiguration.SignSymbols) -> String {
+        if self == .zero {
+            return signSymbols.zero
         }
 
-        return amount > 0 ? sign.positive : sign.negative
+        return self > .zero ? signSymbols.positive : signSymbols.negative
     }
 }

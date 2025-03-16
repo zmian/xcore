@@ -3,6 +3,7 @@
 // Copyright © 2017 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable compiler_protocol_init
 
 import SwiftUI
 
@@ -136,7 +137,7 @@ public struct Money: Hashable, MutableAppliable {
     /// The minimum and maximum number of digits after the decimal separator.
     public var fractionLength: ClosedRange<Int>
 
-    /// The sign (+/−) used to format money.
+    /// The sign symbols (+/−) used to format money.
     ///
     /// The default value is `.default`, meaning, displays minus sign (`"−"`) for
     /// the negative values and empty string (`""`) for positive and zero values.
@@ -144,17 +145,17 @@ public struct Money: Hashable, MutableAppliable {
     /// ```swift
     /// // When the amount is positive then the sign is empty string ("").
     /// let amount = Money(120.30)
-    ///     .sign(.default) // ← Specifying the sign
+    ///     .signSymbols(.default) // ← Specifying the sign style
     ///
     /// print(amount) // "$120.30"
     ///
     /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
-    ///     .sign(.default) // ← Specifying the sign
+    ///     .signSymbols(.default) // ← Specifying the sign style
     ///
     /// print(amount) // "−$120.30"
     /// ```
-    public var sign: Sign = .default
+    public var signSymbols: SignSymbols = .default
 
     /// The style used to format money components.
     ///
@@ -219,10 +220,10 @@ extension Money {
         fractionLength(limit...limit)
     }
 
-    /// The sign (+/-) used to format money.
-    public func sign(_ sign: Sign) -> Self {
+    /// The sign symbols (+/-) used to format money.
+    public func signSymbols(_ signSymbols: SignSymbols) -> Self {
         applying {
-            $0.sign = sign
+            $0.signSymbols = signSymbols
         }
     }
 
@@ -330,6 +331,17 @@ extension Money {
     /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
     public var decimalSeparator: String {
         locale.decimalSeparator ?? "."
+    }
+}
+
+// MARK: - SignSymbols
+
+extension Money {
+    public typealias SignSymbols = NumberFormatStyleConfiguration.SignSymbols
+
+    /// Returns the sign symbol (+/−) of the amount.
+    var sign: String {
+        amount.signSymbol(signSymbols)
     }
 }
 

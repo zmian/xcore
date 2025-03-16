@@ -234,7 +234,7 @@ extension Money.Style {
                     .fractionLength(fractionLength)
                     .locale($0.locale)
                     // sign is appended by `string(from:)` method below.
-                    .sign(.none)
+                    .signSymbols(.none)
                 )
 
                 return .init(
@@ -285,9 +285,9 @@ extension Money {
     fileprivate func format(_ amount: String) -> String {
         switch currencySymbolPosition {
             case .prefix:
-                "\(currentSign)\(currencySymbol)\(amount)"
+                "\(sign)\(currencySymbol)\(amount)"
             case .suffix:
-                "\(currentSign)\(amount) \(currencySymbol)"
+                "\(sign)\(amount) \(currencySymbol)"
         }
     }
 }
