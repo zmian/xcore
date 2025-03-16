@@ -14,17 +14,17 @@ extension Money {
     /// - Parameter format: An optional string format.
     /// - Returns: A locale-aware string representation.
     public func formatted(format: String? = nil) -> String {
-        if amount == 0, let zeroString = zeroString {
+        if amount == 0, let zeroString {
             return zeroString
         }
 
-        let amountString = style.format(self)
+        let formattedAmount = style.format(self).formattedAmount
 
         guard let format else {
-            return amountString
+            return formattedAmount
         }
 
-        return String(format: format, amountString)
+        return String(format: format, formattedAmount)
     }
 }
 
@@ -36,11 +36,12 @@ extension Money {
     /// - Parameter format: An optional string format.
     /// - Returns: A locale-aware attributed string representation.
     public func attributedString(format: String? = nil) -> AttributedString {
-        if amount == 0, let zeroString = zeroString {
+        if amount == 0, let zeroString {
             return AttributedString(zeroString)
         }
 
-        var attributedString = AttributedString(style.format(self))
+        let components = style.format(self)
+        var attributedString = AttributedString(components.formattedAmount)
 
         // ForegroundColor
         if let foregroundColor {
@@ -53,7 +54,7 @@ extension Money {
 
             // Superscript: MinorUnit
             if superscriptMinorUnitEnabled, let minorUnitInfo = font.minorUnit {
-                if let minorUnitRange = style.range(self).minorUnit {
+                if let minorUnitRange = components.minorUnitRange {
                     if let range = Range(minorUnitRange, in: attributedString) {
                         attributedString.setAttributes(minorUnitInfo, range: range)
                     }

@@ -331,21 +331,25 @@ struct MoneyTests {
         let customStyle = Money.Style(
             id: "custom",
             format: {
-                let components = $0.components()
-
-                let amount = [components.majorUnit, components.minorUnit]
-                    .joined(separator: $0.decimalSeparator)
+                let components = $0.components(includeMinorUnit: true)
 
                 let sign = $0.currentSign
+                let formattedAmount: String
 
                 switch $0.currencySymbolPosition {
                     case .prefix:
-                        return "\($0.currencySymbol) \(sign)\(amount)"
+                        formattedAmount = "\($0.currencySymbol) \(sign)\(components.rawAmount)"
                     case .suffix:
-                        return "\(sign)\(amount) \($0.currencySymbol)"
+                        formattedAmount = "\(sign)\(components.rawAmount) \($0.currencySymbol)"
                 }
-            },
-            range: \.ranges
+
+                return .init(
+                    rawAmount: components.rawAmount,
+                    formattedAmount: formattedAmount,
+                    majorUnitRange: components.majorUnitRange,
+                    minorUnitRange: components.minorUnitRange
+                )
+            }
         )
 
         let amount1 = Money(1200.30)

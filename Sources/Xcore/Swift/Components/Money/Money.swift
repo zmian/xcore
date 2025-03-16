@@ -311,8 +311,8 @@ extension Money: CustomStringConvertible {
 // MARK: - ExpressibleByFloatLiteral
 
 extension Money: ExpressibleByFloatLiteral {
-    public init(floatLiteral value: FloatLiteralType) {
-        self.init(Decimal(value))
+    public init(floatLiteral value: Decimal.FloatLiteralType) {
+        self.init(Decimal(floatLiteral: value))
     }
 
     public init(_ value: Double) {
@@ -323,8 +323,8 @@ extension Money: ExpressibleByFloatLiteral {
 // MARK: - ExpressibleByIntegerLiteral
 
 extension Money: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: IntegerLiteralType) {
-        self.init(Decimal(value))
+    public init(integerLiteral value: Decimal.IntegerLiteralType) {
+        self.init(Decimal(integerLiteral: value))
     }
 
     public init(_ value: Int) {

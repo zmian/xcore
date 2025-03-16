@@ -7,22 +7,81 @@
 import Foundation
 
 extension Money {
-    /// A structure representing formatting used to format money components.
+    /// A structure representing formatting styles for `Money`.
+    ///
+    /// `Money.Style` provides a flexible way to define how monetary values
+    /// are formatted, including:
+    /// - Displaying minor units (`cents` or `pennies`)
+    /// - Removing minor units if they are zero
+    /// - Abbreviating large amounts (e.g., `$1.2M`)
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let amount = Money(1200.30)
+    ///
+    /// let formatted = amount.style(.default)  // "$1,200.30"
+    /// let withoutMinorUnit = amount.style(.removeMinorUnit)  // "$1,200"
+    /// let abbreviated = Money(1200000).style(.abbreviated)  // "$1.2M"
+    /// ```
     public struct Style: Sendable {
-        public typealias Components = (majorUnit: String, minorUnit: String)
-        public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
+        /// A unique identifier for the style.
         public let id: Identifier<Self>
-        public let format: @Sendable (Money) -> String
-        public let range: @Sendable (Money) -> Range
 
+        /// A closure that formats `Money` values according to the style.
+        public let format: @Sendable (Money) -> Components
+
+        /// Creates a `Money.Style` with a given formatting function.
+        ///
+        /// - Parameters:
+        ///   - id: A unique identifier for the style.
+        ///   - format: A closure that transforms `Money` into formatted components.
         public init(
             id: Identifier<Self>,
-            format: @escaping @Sendable (Money) -> String,
-            range: @escaping @Sendable (Money) -> Range
+            format: @escaping @Sendable (Money) -> Components
         ) {
             self.id = id
             self.format = format
-            self.range = range
+        }
+
+        /// Represents the structured components of a formatted money value.
+        ///
+        /// This structure provides access to:
+        /// - The **raw amount** (without formatting)
+        /// - The **formatted amount** (including currency symbols, locale adjustments)
+        /// - The **index ranges** for major and minor units within the formatted string.
+        public struct Components: Sendable, Hashable {
+            /// The raw numeric representation of the money value without currency symbol
+            /// and sign (e.g., `"1,200.30"`).
+            public let rawAmount: String
+
+            /// The fully formatted monetary value (e.g., `"$1,200.30"`).
+            public let formattedAmount: String
+
+            /// The index range for the **major unit** (e.g., `"1,200"`).
+            public let majorUnitRange: Range<String.Index>?
+
+            /// The index range for the **minor unit** (e.g., `"30"` in `"$1,200.30"`).
+            public let minorUnitRange: Range<String.Index>?
+
+            /// Creates a `Components` instance representing formatted money details.
+            ///
+            /// - Parameters:
+            ///   - rawAmount: The numeric string without currency symbol and sign.
+            ///   - formattedAmount: The formatted money string.
+            ///   - majorUnitRange: The index range for the major unit.
+            ///   - minorUnitRange: The index range for the minor unit.
+            public init(
+                rawAmount: String,
+                formattedAmount: String,
+                majorUnitRange: Range<String.Index>?,
+                minorUnitRange: Range<String.Index>?
+            ) {
+                self.rawAmount = rawAmount
+                self.formattedAmount = formattedAmount
+                self.majorUnitRange = majorUnitRange
+                self.minorUnitRange = minorUnitRange
+            }
         }
     }
 }
@@ -43,10 +102,10 @@ extension Money.Style: Hashable {
     }
 }
 
-// MARK: - Built-in
+// MARK: - Built-in Styles
 
 extension Money.Style {
-    /// Joins all of the money components.
+    /// Default formatting style with all components intact.
     ///
     /// ```swift
     /// let amount = Money(120.30)
@@ -54,18 +113,16 @@ extension Money.Style {
     ///
     /// print(amount) // "$120.30"
     /// ```
+    ///
+    /// - Returns: A `Money.Style` style with all components intact.
     public static var `default`: Self {
         .init(
             id: #function,
-            format: {
-                let components = $0.components()
-                return $0.string(majorUnit: components.majorUnit, minorUnit: components.minorUnit)
-            },
-            range: { $0.ranges }
+            format: { $0.components(includeMinorUnit: true) }
         )
     }
 
-    /// Removes minor units and then joins all of the money components.
+    /// Removes minor units from the formatted money string.
     ///
     /// ```swift
     /// let amount = Money(120.30)
@@ -73,16 +130,16 @@ extension Money.Style {
     ///
     /// print(amount) // "$120"
     /// ```
+    ///
+    /// - Returns: A `Money.Style` removing minor unit.
     public static var removeMinorUnit: Self {
         .init(
             id: #function,
-            format: { $0.string(majorUnit: $0.components().majorUnit) },
-            range: { ($0.ranges.majorUnit, nil) }
+            format: { $0.components(includeMinorUnit: false) }
         )
     }
 
-    /// Conditionally removes minor units if the value is zero and then joins
-    /// remaining money components.
+    /// Removes minor units if the fractional part is zero.
     ///
     /// ```swift
     /// let amount = Money(120.30)
@@ -95,23 +152,27 @@ extension Money.Style {
     ///
     /// print(amount) // "$120"
     /// ```
+    ///
+    /// - Returns: A `Money.Style` removing minor unit when it's value is zero.
     public static var removeMinorUnitIfZero: Self {
         .init(
             id: #function,
             format: {
-                ($0.amount.isFractionalPartZero ? Self.removeMinorUnit : .default)
+                ($0.amount.isFractionalPartZero ? removeMinorUnit : .default)
                     .format($0)
-            },
-            range: {
-                ($0.amount.isFractionalPartZero ? Self.removeMinorUnit : .default)
-                    .range($0)
             }
         )
     }
 
-    /// Abbreviates the money components to the compact representation.
+    /// Abbreviates the money components to their compact representation.
+    /// (e.g., `$120K`, `$1.2M`).
     ///
     /// ```swift
+    /// let amount = Money(1200000)
+    ///     .style(.abbreviated)
+    ///
+    /// print(amount) // "$1.2M"
+    ///
     /// 987     // → 987
     /// 1200    // → 1.2K
     /// 12000   // → 12K
@@ -121,14 +182,20 @@ extension Money.Style {
     /// 132456  // → 132.5K
     /// ```
     ///
-    /// - Returns: Abbreviated version of `self`.
+    /// - Returns: A `Money.Style` applying abbreviation.
     public static var abbreviated: Self {
         abbreviated(threshold: 0)
     }
 
-    /// Abbreviates the money components to the compact representation.
+    /// Abbreviates the money components to their compact representation with a
+    /// customizable threshold.
     ///
     /// ```swift
+    /// let amount = Money(1200000)
+    ///     .style(.abbreviated(threshold: 0))
+    ///
+    /// print(amount) // "$1.2M"
+    ///
     /// 987     // → 987
     /// 1200    // → 1.2K
     /// 12000   // → 12K
@@ -139,19 +206,18 @@ extension Money.Style {
     /// ```
     ///
     /// - Parameters:
-    ///   - threshold: A property to only abbreviate if `amount` is greater then
-    ///     this value.
-    ///   - fractionLength: The minimum and maximum number of digits after the
+    ///   - threshold: The minimum value required before abbreviating amount.
+    ///   - fractionLength:The minimum and maximum number of digits after the
     ///     decimal separator.
     ///   - fallback: The formatting style to use when threshold isn't reached.
-    /// - Returns: Abbreviated version of `self`.
+    /// - Returns: A `Money.Style` applying abbreviation when necessary.
     public static func abbreviated(
         threshold: Decimal,
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
         @Sendable
-        func canAbbreviate(amount: Decimal) -> Bool {
+        func shouldAbbreviate(amount: Decimal) -> Bool {
             let amount = abs(amount)
             return amount >= 1000 && amount >= threshold
         }
@@ -159,7 +225,7 @@ extension Money.Style {
         return .init(
             id: .init(rawValue: "abbreviated\(threshold)\(fallback.id)"),
             format: {
-                guard canAbbreviate(amount: $0.amount) else {
+                guard shouldAbbreviate(amount: $0.amount) else {
                     return fallback.format($0)
                 }
 
@@ -171,14 +237,12 @@ extension Money.Style {
                     .sign(.none)
                 )
 
-                return $0.string(from: amount)
-            },
-            range: {
-                guard canAbbreviate(amount: $0.amount) else {
-                    return fallback.range($0)
-                }
-
-                return (nil, nil)
+                return .init(
+                    rawAmount: amount,
+                    formattedAmount: $0.format(amount),
+                    majorUnitRange: nil,
+                    minorUnitRange: nil
+                )
             }
         )
     }
@@ -187,58 +251,43 @@ extension Money.Style {
 // MARK: - Internal API
 
 extension Money {
-    func components() -> Style.Components {
+    /// Splits the amount into major and minor units.
+    func components(includeMinorUnit: Bool) -> Style.Components {
         // 1200.30 → "$1,200.30" → ["1,200", "30"]
-        let parts = amount
-            .formatted(
-                .number
-                    .precision(.fractionLength(fractionLength))
-                    .sign(strategy: .never)
-                    .locale(locale)
-                    // When truncating fraction digits, if needed, we should round up.
-                    // For example, `0.165` → `0.17` instead of `0.16`.
-                    .rounded(rule: .toNearestOrAwayFromZero)
-            )
-            .components(separatedBy: decimalSeparator)
+        let parts = amount.formatted(
+            .number
+                .precision(.fractionLength(fractionLength))
+                .sign(strategy: .never)
+                .locale(locale)
+                .grouping(.automatic)
+                // When truncating fraction digits, if needed, we should round up.
+                // For example, `0.165` → `0.17` instead of `0.16`.
+                .rounded(rule: .toNearestOrAwayFromZero)
+        )
+        .components(separatedBy: decimalSeparator)
 
-        var majorUnit = "0"
-        var minorUnit = "00"
+        let majorUnit = parts.first ?? "0"
+        let minorUnit = parts.dropFirst().first?.replacing("\\D", with: "") ?? "00"
 
-        if let majorUnitString = parts.first {
-            majorUnit = majorUnitString
-        }
+        let rawAmount = [majorUnit, includeMinorUnit ? minorUnit : nil].joined(separator: decimalSeparator)
+        let formattedString = format(rawAmount)
+        let majorRange = formattedString.range(of: majorUnit)
+        let minorRange = includeMinorUnit ? formattedString.range(of: minorUnit) : nil
 
-        if let minorUnitString = parts.at(1) {
-            minorUnit = minorUnitString.replacing("\\D", with: "")
-        }
-
-        return (majorUnit: majorUnit, minorUnit: minorUnit)
+        return .init(
+            rawAmount: rawAmount,
+            formattedAmount: formattedString,
+            majorUnitRange: majorRange,
+            minorUnitRange: minorRange
+        )
     }
 
-    var ranges: Style.Range {
-        let components = components()
-        let majorUnitAndDecimalSeparator = "\(string(majorUnit: components.majorUnit))\(decimalSeparator)"
-        let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
-        let minorUnitRange = NSRange(location: majorUnitRange.length, length: components.minorUnit.count)
-
-        let finalMajorUnitRange = majorUnitRange.location == NSNotFound ? nil : majorUnitRange
-        let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
-
-        return (finalMajorUnitRange, finalMinorUnitRange)
-    }
-
-    private func string(majorUnit: String, minorUnit: String? = nil) -> String {
-        string(from: [majorUnit, minorUnit].joined(separator: decimalSeparator))
-    }
-
-    private func string(from amount: String) -> String {
-        let sign = currentSign
-
+    fileprivate func format(_ amount: String) -> String {
         switch currencySymbolPosition {
             case .prefix:
-                return "\(sign)\(currencySymbol)\(amount)"
+                "\(currentSign)\(currencySymbol)\(amount)"
             case .suffix:
-                return "\(sign)\(amount) \(currencySymbol)"
+                "\(currentSign)\(amount) \(currencySymbol)"
         }
     }
 }
