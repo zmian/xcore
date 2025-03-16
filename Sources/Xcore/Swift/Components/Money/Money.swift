@@ -216,29 +216,6 @@ extension Money {
         fractionLength(limit...limit)
     }
 
-    /// Returns precision range to be used to ensure at least 2 significant fraction
-    /// digits are shown.
-    ///
-    /// Minimum precision is always set to 2. For higher precisions, for amounts
-    /// lower than $0.01, we want to show the first two significant digits after the
-    /// decimal point.
-    ///
-    /// ```swift
-    /// $1           → $1.00
-    /// $1.234       → $1.23
-    /// $1.000031    → $1.00
-    /// $0.00001     → $0.00001
-    /// $0.000010000 → $0.00001
-    /// $0.000012    → $0.000012
-    /// $0.00001243  → $0.000012
-    /// $0.00001253  → $0.000013
-    /// $0.00001283  → $0.000013
-    /// $0.000000138 → $0.00000014
-    /// ```
-    public func fractionLengthDefault() -> Self {
-        fractionLength(amount.calculatePrecision())
-    }
-
     /// The sign (+/-) used to format money.
     public func sign(_ sign: Sign) -> Self {
         applying {
@@ -336,7 +313,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money {
     /// An enumeration representing the position of currency symbol.
-    public enum CurrencySymbolPosition: Sendable, Hashable {
+    public enum CurrencySymbolPosition: Sendable, Hashable, Codable {
         /// Adds currency symbol before the amount (e.g., `$10.00`).
         case prefix
 
@@ -369,7 +346,7 @@ extension Money {
     ///     $0.locale = .uk
     /// }
     /// ```
-    public final class Appearance: Appliable, @unchecked Sendable {
+    public final class Appearance: @unchecked Sendable, Appliable {
         public var superscriptMinorUnitEnabled = true
 
         /// The character the formatter uses as a currency symbol for the amount.
