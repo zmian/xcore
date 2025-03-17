@@ -103,7 +103,7 @@ public struct StoryView<Data, Content: View, Background: View>: View {
     /// - Parameter callback: The block to execute with a parameter indicating
     ///   remaining number of cycles.
     public func onCycleComplete(
-        _ callback: @escaping (_ remainingCycles: Count<Int>) -> Void
+        _ callback: @escaping (_ remainingCycles: Count<UInt>) -> Void
     ) -> Self {
         storyTimer.onCycleComplete = callback
         return self
@@ -217,7 +217,7 @@ extension StoryView {
     ///   - background: A view that describes the page background.
     public init(
         duration: Duration = .seconds(4),
-        cycle: Count<Int> = .infinite,
+        cycle: Count<UInt> = .infinite,
         data: [Data],
         pauseWhenInactive: Bool = true,
         @ViewBuilder content: @escaping (Data) -> Content,
@@ -272,7 +272,7 @@ extension StoryView where Background == Never {
     ///   - content: A view that describes the page content.
     public init(
         duration: Duration = .seconds(4),
-        cycle: Count<Int> = .infinite,
+        cycle: Count<UInt> = .infinite,
         data: [Data],
         pauseWhenInactive: Bool = true,
         @ViewBuilder content: @escaping (Data) -> Content
