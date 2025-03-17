@@ -127,9 +127,9 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
     /// - Parameter value: The floating point value to format.
     /// - Returns: A string representation of the value.
     public func format(_ value: Value) -> String {
-        let value = normalize(value)
-        let sign = value.signSymbol(signSymbols)
+        let value = normalizeValue(value)
         let fractionLength = normalizeFractionLength(value)
+        let sign = value.signSymbol(signSymbols)
 
         // MinimumBound
         let valueToUse: Value = {
@@ -173,7 +173,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
 
     /// Normalize `0 - 100` scale to `0.0 - 1.0` to match `NumberFormatter` scale
     /// for `percent` numbers.
-    private func normalize(_ value: Value) -> Value {
+    private func normalizeValue(_ value: Value) -> Value {
         switch type {
             case .number, .abbreviated:
                 value
