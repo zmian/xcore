@@ -33,16 +33,73 @@ extension CustomFloatingPointFormatStyle {
 
 // MARK: - FormatStyle
 
-/// A structure that creates a locale-appropriate string representation of a
-/// double and decimal instance.
+/// A custom format style for locale-aware string representations of
+/// floating-point values, supporting numbers, percentages, and abbreviated
+/// formats.
+///
+/// This format style allows formatting `Double` and `Decimal` values based on
+/// different presentation needs, such as:
+/// - **Standard number representation** (e.g., `"1,234.56"`)
+/// - **Percentage formatting** with custom scaling (e.g., `"12.5%"`)
+/// - **Abbreviated representation** for large numbers (e.g., `"1.2M"`)
+///
+/// **Usage**
+///
+/// ```swift
+/// let number: Double = 1234.56
+///
+/// print(number.formatted(.asNumber))      // "1,234.56"
+/// print(number.formatted(.asPercent))     // "123,456%"
+/// print(number.formatted(.asAbbreviated)) // "1.2K"
+/// ```
 public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Sendable, Hashable, Codable {
+    /// The formatting type.
     public let type: Kind
+
+    /// The locale to use when formatting the value.
     public var locale: Locale = .numbers
+
+    /// The sign symbols (+/−) used to format value.
     public var signSymbols: NumberFormatStyleConfiguration.SignSymbols = .default
+
+    /// The minimum and maximum number of digits after the decimal separator.
     public var fractionLength: ClosedRange<Int>?
+
+    /// A Boolean property indicating whether to omit the fractional part from the
+    /// formatted value if the value is a whole number.
+    ///
+    /// ```swift
+    /// 1.formatted(.asRounded)
+    /// // Outputs "1"
+    ///
+    /// 1.formatted(.asRounded.trimFractionalPartIfZero(false))
+    /// // Outputs "1.00"
+    ///
+    /// 1.09.formatted(.asRounded)
+    /// // Outputs "1.09"
+    ///
+    /// 1.9.formatted(.asRounded)
+    /// // Outputs "1.90"
+    /// ```
     public var trimFractionalPartIfZero = true
+
+    /// The value must be greater than the given value; otherwise, formatted string
+    /// will return formatted "minimum bound" value with "`<`" character prepended.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// -0.0000109.formatted(.asPercent.minimumBound(0.0001))
+    /// // Outputs "<−0.01%"
+    ///
+    /// -0.019.formatted(.asPercent.minimumBound(0.0001))
+    /// // Outputs "−1.90%"
+    /// ```
     public var minimumBound: Value?
 
+    /// Creates a `CustomFloatingPointFormatStyle` with the given type.
+    ///
+    /// - Parameter type: The desired formatting style.
     public init(type: Kind) {
         self.type = type
     }
@@ -503,9 +560,10 @@ private final class FormatStyleFormatter: Sendable {
                 case let .abbreviated(threshold):
                     typealias Abbreviation = (suffix: String, threshold: Value, divisor: Value)
 
+                    /// Predefined thresholds for compact number formatting.
                     let abbreviations: [Abbreviation] = [
                         ("", 0, 1),
-                        ("K", 1000, 1000),
+                        ("K", 1_000, 1_000),
                         ("M", 499_000, 1_000_000),
                         ("M", 1_000_000, 1_000_000),
                         ("B", 1_000_000_000, 1_000_000_000),
@@ -516,20 +574,13 @@ private final class FormatStyleFormatter: Sendable {
                         // Adopted from: http://stackoverflow.com/a/35504720
                         let value = abs(value)
 
+                        // If a threshold is set and the value is below it, return standard formatting.
                         if let threshold, threshold > value {
                             return abbreviations[0]
                         }
 
-                        var prevAbbreviation = abbreviations[0]
-
-                        for tmpAbbreviation in abbreviations {
-                            if value < tmpAbbreviation.threshold {
-                                break
-                            }
-                            prevAbbreviation = tmpAbbreviation
-                        }
-
-                        return prevAbbreviation
+                        // Find the appropriate abbreviation
+                        return abbreviations.last { value >= $0.threshold } ?? abbreviations[0]
                     }()
 
                     let abbreviatedValue = value / abbreviation.divisor
