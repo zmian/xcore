@@ -158,4 +158,17 @@ struct NumbersTests {
         #expect(2.1355.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 2.14)
         #expect(2.1355.rounded(.toNearestOrAwayFromZero) == 2.00)
     }
+
+    @Test("Digits count for BinaryInteger")
+    func digitsCount() {
+        #expect((0 as Int).digitsCount == 1, "0 should have 1 digit")
+        #expect((5 as Int).digitsCount == 1, "5 should have 1 digit")
+        #expect((-5 as Int).digitsCount == 1, "-5 should have 1 digit")
+        #expect((123 as Int).digitsCount == 3, "123 should have 3 digits")
+        #expect((-1234 as Int).digitsCount == 4, "-1234 should have 4 digits")
+        #expect((99999 as Int).digitsCount == 5, "99999 should have 5 digits")
+        #expect((UInt(54321)).digitsCount == 5, "54321 (UInt) should have 5 digits")
+        #expect((Int8(-12)).digitsCount == 2, "-12 (Int8) should have 2 digits")
+        #expect((Int.max).digitsCount == 19, "Int.max should have 19 digits") // 9223372036854775807
+    }
 }

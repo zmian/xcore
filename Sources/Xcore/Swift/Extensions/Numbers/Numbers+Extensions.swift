@@ -29,6 +29,8 @@ extension Int {
     }
 }
 
+// MARK: - Map
+
 extension FixedWidthInteger {
     /// Returns an array containing the results of mapping the given closure over
     /// `self`.
@@ -55,27 +57,43 @@ extension FixedWidthInteger {
     }
 }
 
-extension SignedInteger {
-    public var digitsCount: Self {
-        numberOfDigits(in: self)
-    }
+// MARK: - DigitsCount
 
-    private func numberOfDigits(in number: Self) -> Self {
-        abs(number) < 10 ? 1 : 1 + numberOfDigits(in: number / 10)
-    }
-}
-
-extension UnsignedInteger {
-    public var digitsCount: Self {
-        numberOfDigits(in: self)
-    }
-
-    private func numberOfDigits(in number: Self) -> Self {
-        if number < 10 {
+extension BinaryInteger {
+    /// The number of digits in the integer.
+    ///
+    /// Returns the count of digits in the absolute value of `self`, ignoring the
+    /// negative sign (if present).
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// print(12345.digitsCount) // 5
+    /// print(0.digitsCount)     // 1 (zero has one digit)
+    /// print((-9876).digitsCount) // 4 (negative sign is ignored)
+    /// ```
+    ///
+    /// - Complexity: `O(log n)`, where `n` is the absolute value of `self`.
+    public var digitsCount: Int {
+        /// Special case: Zero has exactly **one** digit.
+        guard self != 0 else {
             return 1
-        } else {
-            return 1 + numberOfDigits(in: number / 10)
         }
+
+        /// Ignore the negative sign by working with the magnitude.
+        var number = magnitude
+
+        /// Counter to keep track of the number of digits.
+        var count = 0
+
+        // Iteratively divide `number` by 10, increasing `count` each time,
+        // until `number` is reduced to zero.
+        while number > 0 {
+            number /= 10
+            count += 1
+        }
+
+        return count
     }
 }
 
