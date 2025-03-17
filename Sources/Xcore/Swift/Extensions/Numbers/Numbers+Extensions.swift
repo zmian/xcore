@@ -61,11 +61,7 @@ extension SignedInteger {
     }
 
     private func numberOfDigits(in number: Self) -> Self {
-        if abs(number) < 10 {
-            return 1
-        } else {
-            return 1 + numberOfDigits(in: number / 10)
-        }
+        abs(number) < 10 ? 1 : 1 + numberOfDigits(in: number / 10)
     }
 }
 
@@ -80,18 +76,6 @@ extension UnsignedInteger {
         } else {
             return 1 + numberOfDigits(in: number / 10)
         }
-    }
-}
-
-// MARK: - Pi
-
-extension FloatingPoint {
-    public static var pi2: Self {
-        .pi / 2
-    }
-
-    public static var pi4: Self {
-        .pi / 4
     }
 }
 
@@ -178,4 +162,142 @@ extension Comparable {
     public func clamped(to limits: ClosedRange<Self>) -> Self {
         min(max(self, limits.lowerBound), limits.upperBound)
     }
+}
+
+// MARK: - Pi
+
+extension FloatingPoint {
+    public static var pi2: Self {
+        .pi / 2
+    }
+
+    public static var pi4: Self {
+        .pi / 4
+    }
+}
+
+// MARK: - Integral & Fractional Parts
+
+extension FloatingPoint {
+    /// The whole part of the floating point.
+    ///
+    /// ```swift
+    /// let amount = 120.30
+    /// // 120 - integral part
+    /// // 30 - fractional part
+    /// ```
+    public var integralPart: Self {
+        rounded(.towardZero)
+    }
+
+    /// The fractional part of the floating point.
+    ///
+    /// ```swift
+    /// let amount = 120.30
+    /// // 120 - integral part
+    /// // 30 - fractional part
+    /// ```
+    public  var fractionalPart: Self {
+        self - integralPart
+    }
+
+    /// A Boolean property indicating whether the fractional part of the floating
+    /// point is `0`.
+    ///
+    /// ```swift
+    /// print(120.30.isFractionalPartZero)
+    /// // Prints "false"
+    ///
+    /// print(120.00.isFractionalPartZero)
+    /// // Prints "true"
+    /// ```
+    public var isFractionalPartZero: Bool {
+        truncatingRemainder(dividingBy: 1) == 0
+    }
+}
+
+// MARK: - Rounded with fractionDigits
+
+extension BinaryFloatingPoint {
+    /// Returns `self` rounded to an integral value using the specified rounding
+    /// fraction digits.
+    ///
+    /// ```swift
+    /// 1      → "1.00"
+    /// 1.09   → "1.09"
+    /// 1.9    → "1.90"
+    /// 2.1345 → "2.13"
+    /// 2.1355 → "2.14"
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - rule: The rounding rule to use.
+    ///   - fractionDigits: The number of digits result can have after its decimal
+    ///     point.
+    public func rounded(
+        _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
+        fractionDigits: Int
+    ) -> Self {
+        let multiplier: Self = pow_xc(10.0, fractionDigits)
+        return (self * multiplier).rounded(rule) / multiplier
+    }
+}
+
+// MARK: - Largest Remainder Round
+
+extension Sequence where Element: BinaryFloatingPoint {
+    /// Rounds a list of percentage values (0...1) while keeping it's sum equal to
+    /// one.
+    ///
+    /// ```swift
+    /// [0.42857, 0.28571, 0.28571].largestRemainderRound() // [0.43, 0.29, 0.28]
+    /// ```
+    public func largestRemainderRound() -> [Element] {
+        let percentages = self
+
+        func getRemainder(value: Element) -> Element {
+            value - floor(value)
+        }
+
+        /// 1. Transform each value into `Remainder` struct calculating
+        /// integer value and decimal part.
+        /// Add index for later sort
+        var result: [PercentageItem<Element>] =
+            percentages
+                .enumerated()
+                .map { idx, percentage in
+                    let percentageBase = percentage * 100
+                    return PercentageItem(
+                        floor: floor(percentageBase),
+                        remainder: getRemainder(value: percentageBase),
+                        index: idx
+                    )
+                }
+                .sorted {
+                    $0.remainder > $1.remainder
+                }
+
+        /// 2. Calculate sum of the integral part of each value and the delta
+        /// to 100.
+        let delta = 100 - Int(result.sum(\.floor))
+
+        /// 3. Based on the remainder sort (starting by highest remainder)
+        /// keep adding 1 until we reach sum of 100
+        for idx in 0..<delta where idx < result.count - 1 {
+            result[idx].floor += 1
+        }
+
+        /// 4. Return integer values dividing by 100 to return to 0...1 percentage
+        /// notation
+        return
+            result
+                .sorted { $0.index < $1.index }
+                .map { $0.floor / 100 }
+    }
+}
+
+private struct PercentageItem<Element> {
+    var floor: Element
+    let remainder: Element
+    let index: Int
 }

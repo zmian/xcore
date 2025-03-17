@@ -78,40 +78,6 @@ struct DoubleTests {
     }
 
     @Test
-    func integralAndFractionalParts() throws {
-        let amount1 = 1200.30
-        #expect(amount1.integralPart == 1200)
-        #expect(amount1.fractionalPart == 0.2999999999999545)
-
-        let amount2 = 1200.00
-        #expect(amount2.integralPart == 1200)
-        #expect(amount2.fractionalPart == 0)
-
-        let amount3 = try #require(Double("1200.3000000012"))
-        #expect(String(describing: amount3) == "1200.3000000012")
-        #expect(amount3.integralPart == 1200)
-        #expect(amount3.fractionalPart == Double("0.3000000012000328"))
-        #expect(amount3.fractionalPart.stringValue == "0.3000000012000328")
-
-        let amount4 = 1200.000000000000000000
-        #expect(amount4.integralPart == 1200)
-        #expect(amount4.fractionalPart == 0)
-    }
-
-    @Test
-    func isFractionalPartZero() throws {
-        // True
-        #expect(1200.isFractionalPartZero == true)
-        #expect(1200.00.isFractionalPartZero == true)
-        #expect(1200.000000000000000000.isFractionalPartZero == true)
-
-        // False
-        #expect(1200.30.isFractionalPartZero == false)
-        #expect(try #require(Double("1200.3000000012")).isFractionalPartZero == false)
-        #expect(try #require(Double("1200.0000000012")).isFractionalPartZero == false)
-    }
-
-    @Test
     func abbreviated() {
         let values1: [(Double, String)] = [
             (0.000001466, "0.000001466"),
@@ -251,15 +217,5 @@ struct DoubleTests {
         for (input, output) in valuesFr {
             #expect(output == input.formatted(.asAbbreviated.locale(.fr).fractionLength(0...1)))
         }
-    }
-
-    @Test
-    func largestRemainderRound() {
-        let input = [0.42857, 0.28571, 0.28571]
-        let expected = [0.43, 0.29, 0.28]
-        #expect(input.largestRemainderRound() == expected)
-
-        #expect(input.sum() == 0.99999)
-        #expect(expected.sum() == 1)
     }
 }
