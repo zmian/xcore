@@ -62,17 +62,17 @@ extension NumberFormatStyleConfiguration.SignSymbols {
     /// ```swift
     /// // When the amount is positive then the sign is "+".
     /// let amount = Money(120.30)
-    ///     .signSymbols(.whenPositive) // ← Specifying the sign
+    ///     .signSymbols(.onlyPositive) // ← Specifying the sign
     ///
     /// print(amount) // "+$120.30"
     ///
     /// // When the amount is negative then the sign is empty string ("").
     /// let amount = Money(-120.30)
-    ///     .signSymbols(.whenPositive) // ← Specifying the sign
+    ///     .signSymbols(.onlyPositive) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     /// ```
-    public static var whenPositive: Self {
+    public static var onlyPositive: Self {
         .init(positive: "+", negative: "", zero: "")
     }
 

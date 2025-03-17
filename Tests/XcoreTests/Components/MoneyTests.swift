@@ -27,10 +27,10 @@ struct MoneyTests {
         #expect(Money(1200).sign == "")
         #expect(Money(0).sign == "")
 
-        // signSymbols: .whenPositive
-        #expect(Money(-1200).signSymbols(.whenPositive).sign == "")
-        #expect(Money(1200).signSymbols(.whenPositive).sign == "+")
-        #expect(Money(0).signSymbols(.whenPositive).sign == "")
+        // signSymbols: .onlyPositive
+        #expect(Money(-1200).signSymbols(.onlyPositive).sign == "")
+        #expect(Money(1200).signSymbols(.onlyPositive).sign == "+")
+        #expect(Money(0).signSymbols(.onlyPositive).sign == "")
 
         // signSymbols: .both
         #expect(Money(-1200).signSymbols(.both).sign == "−")
@@ -86,19 +86,19 @@ struct MoneyTests {
     }
 
     @Test
-    func signed_whenPositive() {
+    func signed_onlyPositive() {
         let amount1 = Money(0)
-            .signSymbols(.whenPositive)
+            .signSymbols(.onlyPositive)
 
         #expect(String(describing: amount1) == "$0.00")
 
         let amount2 = Money(1200.30)
-            .signSymbols(.whenPositive)
+            .signSymbols(.onlyPositive)
 
         #expect(String(describing: amount2) == "+$1,200.30")
 
         let amount3 = Money(-1200.30)
-            .signSymbols(.whenPositive)
+            .signSymbols(.onlyPositive)
 
         #expect(String(describing: amount3) == "$1,200.30")
     }
@@ -225,7 +225,7 @@ struct MoneyTests {
 
         let amount13 = Money(-1200)
             .style(.abbreviated(threshold: 1200))
-            .signSymbols(.whenPositive)
+            .signSymbols(.onlyPositive)
 
         #expect(String(describing: amount13) == "$1.2K")
     }
