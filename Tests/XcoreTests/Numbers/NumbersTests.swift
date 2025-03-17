@@ -132,16 +132,6 @@ struct NumbersTests {
     }
 
     @Test
-    func largestRemainderRound() {
-        let input = [0.42857, 0.28571, 0.28571]
-        let expected = [0.43, 0.29, 0.28]
-        #expect(input.largestRemainderRound() == expected)
-
-        #expect(input.sum() == 0.99999)
-        #expect(expected.sum() == 1)
-    }
-
-    @Test
     func binaryFloatingPointRounded() {
         #expect(1.rounded(fractionDigits: 2) == 1.00)
         #expect(1.rounded() == 1.00)

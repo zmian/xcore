@@ -3,7 +3,6 @@
 // Copyright © 2017 Xcore
 // MIT license, see LICENSE file for details
 //
-// swiftlint:disable compiler_protocol_init
 
 import SwiftUI
 
@@ -293,7 +292,7 @@ extension Money: CustomStringConvertible {
 
 extension Money: ExpressibleByFloatLiteral {
     public init(floatLiteral value: Decimal.FloatLiteralType) {
-        self.init(Decimal(floatLiteral: value))
+        self.init(Decimal(value))
     }
 
     public init(_ value: Double) {
@@ -305,7 +304,7 @@ extension Money: ExpressibleByFloatLiteral {
 
 extension Money: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Decimal.IntegerLiteralType) {
-        self.init(Decimal(integerLiteral: value))
+        self.init(Decimal(value))
     }
 
     public init(_ value: Int) {

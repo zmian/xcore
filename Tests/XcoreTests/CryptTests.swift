@@ -28,12 +28,12 @@ struct CryptTests {
     }
 
     @Test
-    func obfuscateData() throws {
+    func obfuscateData() {
         let secret = Crypt.generateSecureRandom().bytes
         let message = Crypt.generateSecureRandom().bytes
 
         let obfuscated = Crypt.obfuscate(message, secret: secret)
-        let deobfuscate = try Crypt.deobfuscate(obfuscated, secret: secret)
+        let deobfuscate = Crypt.deobfuscate(obfuscated, secret: secret)
 
         #expect(deobfuscate == message)
     }

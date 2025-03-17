@@ -33,7 +33,7 @@ struct CountTests {
         #expect(countInt.value == 10)
 
         let countUInt: Count<UInt> = 10
-        #expect(countInt.value == 10)
+        #expect(countUInt.value == 10)
 
         let countDouble: Count<Double> = 10
         #expect(countDouble.value == 10)

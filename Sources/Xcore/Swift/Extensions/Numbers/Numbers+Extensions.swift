@@ -3,6 +3,7 @@
 // Copyright © 2014 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable unused_enumerated
 
 import Foundation
 
@@ -99,13 +100,13 @@ extension BinaryInteger {
 
 // MARK: - Sum
 
-extension Sequence where Iterator.Element: AdditiveArithmetic {
+extension Sequence where Element: AdditiveArithmetic {
     /// Returns the running sum of all elements in the collection.
     ///
     /// ```swift
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
-    public func runningSum() -> [Iterator.Element] {
+    public func runningSum() -> [Element] {
         reduce([]) { sums, element in
             sums + [element + (sums.last ?? .zero)]
         }
@@ -146,14 +147,14 @@ extension Sequence {
 
 // MARK: - Average
 
-extension Collection where Iterator.Element: BinaryInteger {
+extension Collection where Element: BinaryInteger {
     /// Returns the average of all elements in the collection.
     public func average() -> Double {
         isEmpty ? 0 : Double(sum()) / Double(count)
     }
 }
 
-extension Collection where Element: BinaryFloatingPoint {
+extension Collection where Element: FloatingPoint {
     /// Returns the average of all elements in the collection.
     public func average() -> Element {
         isEmpty ? 0 : sum() / Element(count)
@@ -261,61 +262,75 @@ extension BinaryFloatingPoint {
     }
 }
 
-// MARK: - Largest Remainder Round
+// MARK: - Largest Remainder Method (LRM)
 
-extension Sequence where Element: BinaryFloatingPoint {
-    /// Rounds a list of percentage values (0...1) while keeping it's sum equal to
-    /// one.
+extension Collection where Element: BinaryFloatingPoint {
+    /// Rounds the collection using the **Largest Remainder Method (LRM)** while
+    /// ensuring the sum matches the specified `total`.
+    ///
+    /// This method distributes rounding adjustments **fairly** by prioritizing
+    /// values with the largest remainders, ensuring that the final sum of the
+    /// collection equals the provided `total`.
+    ///
+    /// **Usage**
     ///
     /// ```swift
-    /// [0.42857, 0.28571, 0.28571].largestRemainderRound() // [0.43, 0.29, 0.28]
+    /// let values = [4.2857, 2.8571, 2.8571]
+    /// let roundedValues = values.roundedUsingLargestRemainder(to: 10)
+    ///
+    /// print(roundedValues) // [4, 3, 3]
+    /// print(roundedValues.sum()) // 10.0
     /// ```
-    public func largestRemainderRound() -> [Element] {
-        let percentages = self
-
-        func getRemainder(value: Element) -> Element {
-            value - floor(value)
+    ///
+    /// ```swift
+    /// let percentages = [0.42857, 0.28571, 0.28571]
+    /// print(percentages.sum()) // 0.99999
+    ///
+    /// let roundedPercentages = percentages.roundedUsingLargestRemainder(to: 1.0)
+    /// print(roundedPercentages.sum()) // 1.0
+    /// print(roundedPercentages) // [0.43, 0.29, 0.28]
+    /// ```
+    ///
+    /// - Parameter total: The desired sum of the rounded values.
+    /// - Returns: An array where each value is rounded, ensuring the sum equals
+    ///   `total`.
+    public func roundedUsingLargestRemainder(to total: Element) -> [Element] {
+        guard !isEmpty else {
+            return []
         }
 
-        /// 1. Transform each value into `Remainder` struct calculating
-        /// integer value and decimal part.
-        /// Add index for later sort
-        var result: [PercentageItem<Element>] =
-            percentages
-                .enumerated()
-                .map { idx, percentage in
-                    let percentageBase = percentage * 100
-                    return PercentageItem(
-                        floor: floor(percentageBase),
-                        remainder: getRemainder(value: percentageBase),
-                        index: idx
-                    )
-                }
-                .sorted {
-                    $0.remainder > $1.remainder
-                }
+        let inputSum = sum()
 
-        /// 2. Calculate sum of the integral part of each value and the delta
-        /// to 100.
-        let delta = 100 - Int(result.sum(\.floor))
-
-        /// 3. Based on the remainder sort (starting by highest remainder)
-        /// keep adding 1 until we reach sum of 100
-        for idx in 0..<delta where idx < result.count - 1 {
-            result[idx].floor += 1
+        guard inputSum != 0 else {
+            return Array(repeating: 0, count: count)
         }
 
-        /// 4. Return integer values dividing by 100 to return to 0...1 percentage
-        /// notation
-        return
-            result
-                .sorted { $0.index < $1.index }
-                .map { $0.floor / 100 }
+        // Use higher precision for small totals to avoid floating-point errors
+        let precision: Element = abs(total) <= 1.0 ? 100.0 : 1.0
+        let scaledTotal = total * precision
+        let scaleFactor = scaledTotal / inputSum
+
+        // Scale values and determine remainders
+        let scaledValues = map { $0 * scaleFactor }
+        let flooredValues = scaledValues.map { $0.rounded(.towardZero) }
+        let remainders = zip(scaledValues, flooredValues).map(-)
+
+        // Calculate necessary adjustments
+        let delta = Int(scaledTotal - flooredValues.sum())
+
+        let indices = remainders
+            .enumerated()
+            .sorted { abs($0.element) > abs($1.element) }
+            .prefix(abs(delta))
+            .map(\.offset)
+
+        // Adjust values based on largest absolute remainders (stable sort)
+        var adjustedValues = flooredValues
+        for index in indices {
+            adjustedValues[index] += delta > 0 ? 1.0 : -1.0
+        }
+
+        // Scale back to original precision
+        return adjustedValues.map { $0 / precision }
     }
-}
-
-private struct PercentageItem<Element> {
-    var floor: Element
-    let remainder: Element
-    let index: Int
 }
