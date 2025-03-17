@@ -58,7 +58,7 @@ extension Money {
             /// The fully formatted monetary value (e.g., `"$1,200.30"`).
             public let formattedAmount: String
 
-            /// The index range for the **major unit** (e.g., `"1,200"`).
+            /// The index range for the **major unit** (e.g., `"1,200"` in `"$1,200.30"`).
             public let majorUnitRange: Range<String.Index>?
 
             /// The index range for the **minor unit** (e.g., `"30"` in `"$1,200.30"`).
