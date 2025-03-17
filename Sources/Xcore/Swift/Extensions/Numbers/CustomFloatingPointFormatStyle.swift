@@ -133,10 +133,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
 
         // MinimumBound
         let valueToUse: Value = {
-            guard
-                let minimumBound = minimumBound,
-                abs(value) < minimumBound
-            else {
+            guard let minimumBound, abs(value) < minimumBound else {
                 return value
             }
 
@@ -162,7 +159,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
                 // "30%" → "30"
                 let fractionalPartDigits = fractionalPart.replacing("\\D", with: "")
                 // "30%" → "%"
-                lazy var fractionalPartNonDigits = fractionalPart.replacing("\\d", with: "")
+                let fractionalPartNonDigits = fractionalPart.replacing("\\d", with: "")
 
                 if Int64(fractionalPartDigits) == 0 {
                     formattedString = whole + fractionalPartNonDigits
@@ -179,11 +176,11 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
     private func normalize(_ value: Value) -> Value {
         switch type {
             case .number, .abbreviated:
-                return value
+                value
             case .percent(scale: .zeroToOne):
-                return value
+                value
             case .percent(scale: .zeroToHundred):
-                return value / 100
+                value / 100
         }
     }
 
