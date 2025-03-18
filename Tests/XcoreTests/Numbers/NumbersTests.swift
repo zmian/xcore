@@ -119,34 +119,37 @@ struct NumbersTests {
     }
 
     @Test
-    func isFractionalPartZero() throws {
+    func isInteger() throws {
         // True
-        #expect(1200.isFractionalPartZero == true)
-        #expect(1200.00.isFractionalPartZero == true)
-        #expect(1200.000000000000000000.isFractionalPartZero == true)
+        #expect(1200.isInteger == true)
+        #expect(1200.00.isInteger == true)
+        #expect(1200.000000000000000000.isInteger == true)
 
         // False
-        #expect(1200.30.isFractionalPartZero == false)
-        #expect(try #require(Double("1200.3000000012")).isFractionalPartZero == false)
-        #expect(try #require(Double("1200.0000000012")).isFractionalPartZero == false)
+        #expect(1200.30.isInteger == false)
+        #expect(try #require(Double("1200.3000000012")).isInteger == false)
+        #expect(try #require(Double("1200.0000000012")).isInteger == false)
     }
 
     @Test
     func binaryFloatingPointRounded() {
-        #expect(1.rounded(fractionDigits: 2) == 1.00)
+        #expect(1.rounded(scale: 2) == 1.00)
         #expect(1.rounded() == 1.00)
 
-        #expect(1.09.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 1.09)
+        #expect(1.09.rounded(.toNearestOrAwayFromZero, scale: 2) == 1.09)
         #expect(1.09.rounded(.toNearestOrAwayFromZero) == 1.00)
 
-        #expect(1.9.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 1.90)
+        #expect(1.9.rounded(.toNearestOrAwayFromZero, scale: 2) == 1.90)
         #expect(1.9.rounded(.toNearestOrAwayFromZero) == 2.00)
 
-        #expect(2.1345.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 2.13)
+        #expect(2.1345.rounded(.toNearestOrAwayFromZero, scale: 2) == 2.13)
         #expect(2.1345.rounded(.toNearestOrAwayFromZero) == 2.00)
 
-        #expect(2.1355.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 2.14)
+        #expect(2.1355.rounded(.toNearestOrAwayFromZero, scale: 2) == 2.14)
         #expect(2.1355.rounded(.toNearestOrAwayFromZero) == 2.00)
+
+        #expect(1.999.rounded(.toNearestOrAwayFromZero, scale: 0) == 2.00)
+        #expect(1.999.rounded(.toNearestOrAwayFromZero) == 2.00)
     }
 
     @Test("Digits count for BinaryInteger")

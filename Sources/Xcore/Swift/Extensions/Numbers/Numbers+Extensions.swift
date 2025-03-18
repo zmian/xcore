@@ -220,44 +220,44 @@ extension FloatingPoint {
         self - integralPart
     }
 
-    /// A Boolean property indicating whether the fractional part of the floating
-    /// point is `0`.
+    /// A Boolean property indicating whether the number is an integer, meaning the
+    /// fractional part is `0`.
     ///
     /// ```swift
-    /// print(120.30.isFractionalPartZero)
+    /// print(120.30.isInteger)
     /// // Prints "false"
     ///
-    /// print(120.00.isFractionalPartZero)
+    /// print(120.00.isInteger)
     /// // Prints "true"
     /// ```
-    public var isFractionalPartZero: Bool {
+    public var isInteger: Bool {
         truncatingRemainder(dividingBy: 1) == 0
     }
 }
 
-// MARK: - Rounded with fractionDigits
+// MARK: - Rounded with Scale
 
 extension BinaryFloatingPoint {
-    /// Returns `self` rounded to an integral value using the specified rounding
-    /// fraction digits.
+    /// Returns `self` rounded to an integral value using the specified rounding and
+    /// scale.
     ///
     /// ```swift
-    /// 1      → "1.00"
-    /// 1.09   → "1.09"
-    /// 1.9    → "1.90"
-    /// 2.1345 → "2.13"
-    /// 2.1355 → "2.14"
+    /// print(1.rounded(scale: 2))      // Output: 1.00
+    /// print(1.09.rounded(scale: 2))   // Output: 1.09
+    /// print(1.9.rounded(scale: 2))    // Output: 1.90
+    /// print(2.1345.rounded(scale: 2)) // Output: 2.13
+    /// print(2.1355.rounded(scale: 2)) // Output: 2.14
+    /// print(1.999.rounded(scale: 0))  // Output: 2
     /// ```
     ///
     /// - Parameters:
     ///   - rule: The rounding rule to use.
-    ///   - fractionDigits: The number of digits result can have after its decimal
-    ///     point.
+    ///   - scale: The number of digits result can have after its decimal point.
     public func rounded(
         _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        fractionDigits: Int
+        scale: Int
     ) -> Self {
-        let multiplier: Self = pow_xc(10.0, fractionDigits)
+        let multiplier: Self = pow_xc(10.0, scale)
         return (self * multiplier).rounded(rule) / multiplier
     }
 }

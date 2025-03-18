@@ -13,9 +13,9 @@ struct DecimalTests {
     func rounded() {
         let x = Decimal(6.5)
 
-        #expect(Decimal(6).rounded(fractionDigits: 2) == 6)
+        #expect(Decimal(6).rounded(scale: 2) == 6)
 
-        #expect(x.rounded(.toNearestOrAwayFromZero, fractionDigits: 2) == 6.5)
+        #expect(x.rounded(.toNearestOrAwayFromZero, scale: 2) == 6.5)
 
         // Equivalent to the C 'round' function:
         #expect(x.rounded(.toNearestOrAwayFromZero) == 7.0)
@@ -61,11 +61,11 @@ struct DecimalTests {
         #expect(w1 == 7.0)
 
         var w2 = Decimal(6.5)
-        w2.round(fractionDigits: 2)
+        w2.round(scale: 2)
         #expect(w2 == 6.5)
 
         var w3 = Decimal(6.56873)
-        w3.round(fractionDigits: 2)
+        w3.round(scale: 2)
         #expect(w3 == 6.57)
     }
 
@@ -100,15 +100,15 @@ struct DecimalTests {
     }
 
     @Test
-    func isFractionalPartZero() throws {
+    func isInteger() throws {
         // True
-        #expect(Decimal(1200).isFractionalPartZero == true)
-        #expect(Decimal(1200.00).isFractionalPartZero == true)
-        #expect(Decimal(1200.000000000000000000).isFractionalPartZero == true)
+        #expect(Decimal(1200).isInteger == true)
+        #expect(Decimal(1200.00).isInteger == true)
+        #expect(Decimal(1200.000000000000000000).isInteger == true)
 
         // False
-        #expect(Decimal(1200.30).isFractionalPartZero == false)
-        #expect(try #require(Decimal(string: "1200.3000000012")).isFractionalPartZero == false)
-        #expect(try #require(Decimal(string: "1200.0000000012")).isFractionalPartZero == false)
+        #expect(Decimal(1200.30).isInteger == false)
+        #expect(try #require(Decimal(string: "1200.3000000012")).isInteger == false)
+        #expect(try #require(Decimal(string: "1200.0000000012")).isInteger == false)
     }
 }

@@ -11,17 +11,17 @@ import Foundation
 public protocol DoubleOrDecimalProtocol: SignedNumeric, Comparable, Hashable, Codable, ExpressibleByFloatLiteral, Sendable {
     var nsNumber: NSNumber { get }
 
-    /// A Boolean property indicating whether the fractional part of the decimal is
-    /// `0`.
+    /// A Boolean property indicating whether the number is an integer, meaning the
+    /// fractional part is `0`.
     ///
     /// ```swift
-    /// print(Decimal(120.30).isFractionalPartZero)
+    /// print(Decimal(120.30).isInteger)
     /// // Prints "false"
     ///
-    /// print(Decimal(120.00).isFractionalPartZero)
+    /// print(Decimal(120.00).isInteger)
     /// // Prints "true"
     /// ```
-    var isFractionalPartZero: Bool { get }
+    var isInteger: Bool { get }
 
     /// Returns precision range to be used to ensure at least 2 significant fraction
     /// digits are shown.

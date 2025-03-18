@@ -158,7 +158,7 @@ extension Money.Style {
         .init(
             id: #function,
             format: {
-                ($0.amount.isFractionalPartZero ? removeMinorUnit : .default)
+                ($0.amount.isInteger ? removeMinorUnit : .default)
                     .format($0)
             }
         )

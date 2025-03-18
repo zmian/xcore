@@ -242,7 +242,7 @@ extension CustomFloatingPointFormatStyle: FormatStyle {
     }
 
     private func normalizeFractionLength(_ value: Value) -> ClosedRange<Int> {
-        if trimFractionalPartIfZero, value.isFractionalPartZero {
+        if trimFractionalPartIfZero, value.isInteger {
             return 0...0
         }
 

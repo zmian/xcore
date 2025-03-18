@@ -100,7 +100,7 @@ extension Percentage: CustomStringConvertible {
         let percentage = decimalValue * 100
         return decimalValue.formatted(
             .percent
-            .precision(.fractionLength(percentage.isFractionalPartZero ? 0 : 2))
+            .precision(.fractionLength(percentage.isInteger ? 0 : 2))
         )
     }
 }

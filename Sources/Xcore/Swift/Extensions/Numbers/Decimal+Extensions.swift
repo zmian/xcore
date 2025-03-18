@@ -88,20 +88,19 @@ extension Decimal {
     ///
     /// ```swift
     /// var w2 = Decimal(6.5)
-    /// w2.round(fractionDigits: 2)
+    /// w2.round(scale: 2)
     /// // w2 == 6.50
     /// ```
     ///
     /// - Parameters:
     ///   - rule: The rounding rule to use.
-    ///   - fractionDigits: The number of digits result can have after its decimal
-    ///     point.
+    ///   - scale: The number of digits result can have after its decimal point.
     public mutating func round(
         _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        fractionDigits: Int = 0
+        scale: Int = 0
     ) {
         var original = self
-        NSDecimalRound(&self, &original, fractionDigits, .init(rule, for: self))
+        NSDecimalRound(&self, &original, scale, .init(rule, for: self))
     }
 
     /// Returns this value rounded to an integral value using the specified rounding
@@ -141,21 +140,20 @@ extension Decimal {
     /// Use the fraction digits parameter to customize the output:
     ///
     /// ```swift
-    /// print(x.rounded(fractionDigits: 2))
+    /// print(x.rounded(scale: 2))
     /// // Prints "6.50"
     /// ```
     ///
     /// - Parameters:
     ///   - rule: The rounding rule to use.
-    ///   - fractionDigits: The number of digits result can have after its decimal
-    ///     point.
+    ///   - scale: The number of digits result can have after its decimal point.
     /// - Returns: The integral value found by rounding using `rule`.
     public func rounded(
         _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        fractionDigits: Int = 0
+        scale: Int = 0
     ) -> Self {
         var copy = self
-        copy.round(rule, fractionDigits: fractionDigits)
+        copy.round(rule, scale: scale)
         return copy
     }
 }
@@ -210,17 +208,17 @@ extension Decimal {
         self - integralPart
     }
 
-    /// A Boolean property indicating whether the fractional part of the decimal is
-    /// `0`.
+    /// A Boolean property indicating whether the number is an integer, meaning the
+    /// fractional part is `0`.
     ///
     /// ```swift
-    /// print(Decimal(120.30).isFractionalPartZero)
+    /// print(Decimal(120.30).isInteger)
     /// // Prints "false"
     ///
-    /// print(Decimal(120.00).isFractionalPartZero)
+    /// print(Decimal(120.00).isInteger)
     /// // Prints "true"
     /// ```
-    public var isFractionalPartZero: Bool {
+    public var isInteger: Bool {
         significantFractionalDecimalDigits == 0
     }
 }
