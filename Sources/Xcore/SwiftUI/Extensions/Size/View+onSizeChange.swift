@@ -30,20 +30,3 @@ extension View {
         )
     }
 }
-
-// MARK: - readOffsetY
-
-extension View {
-    nonisolated public func readOffsetY(_ offset: Binding<CGFloat>) -> some View {
-        onGeometryChange(for: CGFloat.self) { proxy in
-            proxy.frame(in: .global).minY
-        } action: { newValue in
-            let currentValue = offset.wrappedValue
-
-            // Avoid excessively writing the same value to the binding.
-            if currentValue != newValue {
-                offset.wrappedValue = newValue
-            }
-        }
-    }
-}
