@@ -294,6 +294,8 @@ extension Collection where Element: BinaryFloatingPoint {
     /// - Parameter total: The desired sum of the rounded values.
     /// - Returns: An array where each value is rounded, ensuring the sum equals
     ///   `total`.
+    ///
+    /// - SeeAlso: [Quota method](https://en.wikipedia.org/wiki/Quota_method#:~:text=The%20largest%20remainder%20method%20divides,part%20plus%20a%20fractional%20remainder.)
     public func roundedUsingLargestRemainder(to total: Element) -> [Element] {
         guard !isEmpty else {
             return []
