@@ -104,7 +104,7 @@ extension PluginImage: MutableCollection, RangeReplaceableCollection, Bidirectio
         plugins.makeIterator()
     }
 
-    mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {
+    mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Element == Element {
         plugins.replaceSubrange(subRange, with: newElements)
     }
 }

@@ -8,9 +8,9 @@ import Foundation
 
 // MARK: - Unique
 
-extension Sequence where Iterator.Element: Hashable {
+extension Sequence where Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
-    public func uniqued() -> [Iterator.Element] {
+    public func uniqued() -> [Element] {
         uniqued { $0 }
     }
 }
@@ -23,7 +23,7 @@ extension Sequence {
     ///   returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
     ///   in order, that satisfy the predicate `uniqueProperty`.
-    public func uniqued<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
+    public func uniqued<T: Hashable>(_ uniqueProperty: (Element) -> T) -> [Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
