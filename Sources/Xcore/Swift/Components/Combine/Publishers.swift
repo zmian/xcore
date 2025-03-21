@@ -14,7 +14,7 @@ extension Publishers {
     }
 
     /// Emits an event whenever keyboard visibility changes.
-    public static var keyboardShown: some Publisher<Bool, Never> {
+    public static var keyboardVisible: some Publisher<Bool, Never> {
         let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
             .map { _ in true }
 

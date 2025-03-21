@@ -23,18 +23,18 @@ extension View {
 // MARK: - ViewModifier
 
 private struct KeyboardSpecificBottomPaddingModifier: ViewModifier {
-    @State private var isKeyboardShown = false
+    @State private var isKeyboardVisible = false
     let length: CGFloat?
 
     func body(content: Content) -> some View {
         content
             .padding(.bottom, padding)
-            .onReceive(Publishers.keyboardShown) { value in
-                isKeyboardShown = value
+            .onReceive(Publishers.keyboardVisible) { value in
+                isKeyboardVisible = value
             }
     }
 
     private var padding: CGFloat {
-        isKeyboardShown ? (length ?? .defaultSpacing) : 0
+        isKeyboardVisible ? (length ?? .defaultSpacing) : 0
     }
 }
