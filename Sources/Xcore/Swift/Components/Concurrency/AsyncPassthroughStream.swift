@@ -110,3 +110,14 @@ extension AsyncPassthroughStream {
         }
     }
 }
+
+// MARK: - AsyncStream
+
+extension AsyncPassthroughStream {
+    /// Creates an asynchronous sequence that produce new elements over time.
+    @available(iOS, deprecated: 18.0, message: "Use 'eraseToAsyncSequence()', instead.")
+    @Sendable
+    func makeAsyncStream() -> AsyncStream<Element> {
+        AsyncStream(self)
+    }
+}
