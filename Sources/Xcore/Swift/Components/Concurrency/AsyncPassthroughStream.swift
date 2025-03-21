@@ -14,6 +14,17 @@ import Foundation
 /// ```swift
 /// let stream = AsyncPassthroughStream<Int>()
 ///
+/// Task {
+///     // Collect all produced elements
+///     var values: [Int] = []
+///
+///     for await value in stream {
+///         values.append(value)
+///     }
+///
+///     print(values) // [1, 2]
+/// }
+///
 /// // Produce new elements
 /// stream.send(1)
 /// stream.send(2)

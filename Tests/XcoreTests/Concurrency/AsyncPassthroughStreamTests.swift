@@ -13,7 +13,7 @@ struct AsyncPassthroughStreamTests {
         let stream = AsyncPassthroughStream<Int>()
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {
@@ -25,7 +25,7 @@ struct AsyncPassthroughStreamTests {
         }
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {
@@ -51,7 +51,7 @@ struct AsyncPassthroughStreamTests {
         let asyncStream = stream.makeAsyncStream()
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in asyncStream {
@@ -63,7 +63,7 @@ struct AsyncPassthroughStreamTests {
         }
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in asyncStream {
@@ -91,7 +91,7 @@ struct AsyncPassthroughStreamTests {
         }
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {
@@ -103,7 +103,7 @@ struct AsyncPassthroughStreamTests {
         }
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {

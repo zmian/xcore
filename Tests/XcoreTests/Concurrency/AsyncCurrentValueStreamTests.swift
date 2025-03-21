@@ -33,7 +33,7 @@ struct AsyncCurrentValueStreamTests {
         let stream = AsyncCurrentValueStream<Int>(5)
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {
@@ -45,7 +45,7 @@ struct AsyncCurrentValueStreamTests {
         }
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in stream {

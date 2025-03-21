@@ -35,7 +35,7 @@ struct AsyncValueStreamTests {
         let externalStream = AsyncValueStream(internalStream)
 
         Task {
-            // Collection all produced elements
+            // Collect all produced elements
             var values: [Int] = []
 
             for await value in externalStream {
