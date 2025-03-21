@@ -23,7 +23,7 @@ extension View {
 // MARK: - Status
 
 /// An enumeration representing the visibility status.
-public enum VisibilityStatus: String, Sendable, CustomAnalyticsValueConvertible {
+public enum VisibilityStatus: String, Sendable, Hashable, CustomAnalyticsValueConvertible {
     /// The element visibility is unknown.
     case unknown
 
