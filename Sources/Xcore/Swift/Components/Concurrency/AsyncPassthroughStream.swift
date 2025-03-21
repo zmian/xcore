@@ -21,7 +21,7 @@ import Foundation
 /// // Finish producing elements
 /// stream.finish()
 /// ```
-public final class AsyncPassthroughStream<Element: Sendable>: AsyncSequence, Sendable {
+public struct AsyncPassthroughStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
     private let continuations = LockIsolated([UUID: Continuation]())
@@ -52,11 +52,11 @@ public final class AsyncPassthroughStream<Element: Sendable>: AsyncSequence, Sen
     /// the stream enters a terminal state and doesn't produces any additional
     /// elements.
     public func finish() {
-        continuations.values.forEach {
-            $0.finish()
-        }
-
         continuations.withValue {
+            $0.values.forEach {
+                $0.finish()
+            }
+
             $0.removeAll()
         }
     }
@@ -68,20 +68,20 @@ extension AsyncPassthroughStream {
     public func makeAsyncIterator() -> Iterator {
         let id = UUID()
 
-        let stream = AsyncStream<Element> { [weak self] continuation in
-            self?.continuations.withValue {
+        let stream = AsyncStream<Element> { continuation in
+            continuations.withValue {
                 $0[id] = continuation
             }
 
-            continuation.onTermination = { [weak self] _ in
-                self?.continuations.withValue {
+            continuation.onTermination = { _ in
+                continuations.withValue {
                     $0[id] = nil
                 }
             }
         }
 
-        return Iterator(stream.makeAsyncIterator()) { [weak self] in
-            self?.continuations.withValue {
+        return Iterator(stream.makeAsyncIterator()) {
+            continuations.withValue {
                 $0[id] = nil
             }
         }
@@ -108,16 +108,5 @@ extension AsyncPassthroughStream {
             }
             return next
         }
-    }
-}
-
-// MARK: - AsyncStream
-
-extension AsyncPassthroughStream {
-    /// Creates an asynchronous sequence that produce new elements over time.
-    @available(iOS, deprecated: 18.0, message: "Use 'eraseToAsyncSequence()', instead.")
-    @Sendable
-    public func makeAsyncStream() -> AsyncStream<Element> {
-        AsyncStream(self)
     }
 }
