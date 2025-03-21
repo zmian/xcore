@@ -275,20 +275,20 @@ extension Collection where Element: BinaryFloatingPoint {
     /// **Usage**
     ///
     /// ```swift
-    /// let values = [4.2857, 2.8571, 2.8571]
-    /// let roundedValues = values.roundedUsingLargestRemainder(to: 10)
-    ///
-    /// print(roundedValues) // [4, 3, 3]
-    /// print(roundedValues.sum()) // 10.0
-    /// ```
-    ///
-    /// ```swift
     /// let percentages = [0.42857, 0.28571, 0.28571]
     /// print(percentages.sum()) // 0.99999
     ///
     /// let roundedPercentages = percentages.roundedUsingLargestRemainder(to: 1.0)
     /// print(roundedPercentages.sum()) // 1.0
     /// print(roundedPercentages) // [0.43, 0.29, 0.28]
+    /// ```
+    ///
+    /// ```swift
+    /// let values = [4.2857, 2.8571, 2.8571]
+    /// let roundedValues = values.roundedUsingLargestRemainder(to: 10)
+    ///
+    /// print(roundedValues.sum()) // 10.0
+    /// print(roundedValues) // [4, 3, 3]
     /// ```
     ///
     /// - Parameter total: The desired sum of the rounded values.
