@@ -13,8 +13,8 @@ extension EnvironmentValues {
     /// view hierarchy. This can be useful for layout adjustments based on the
     /// actual device insets.
     ///
-    /// To enable this environment value, apply the `withDeviceSafeAreaInsets()`
-    /// view modifier at the app's root view.
+    /// To enable this environment value, apply the
+    /// `withDeviceSafeAreaInsetsProvider()` view modifier at the app's root view.
     ///
     /// **Usage**
     ///
@@ -25,7 +25,7 @@ extension EnvironmentValues {
     ///     var body: some Scene {
     ///         WindowGroup {
     ///             ContentView()
-    ///                 .withDeviceSafeAreaInsets() // 👈 Apply the modifier here
+    ///                 .withDeviceSafeAreaInsetsProvider() // 👈 Apply the modifier here
     ///         }
     ///     }
     /// }
@@ -57,7 +57,7 @@ extension View {
     ///     var body: some Scene {
     ///         WindowGroup {
     ///             ContentView()
-    ///                 .withDeviceSafeAreaInsets() // 👈 Apply the modifier here
+    ///                 .withDeviceSafeAreaInsetsProvider() // 👈 Apply the modifier here
     ///         }
     ///     }
     /// }
@@ -73,14 +73,14 @@ extension View {
     /// ```
     ///
     /// - Returns: A view that provides safe area insets via environment.
-    public func withDeviceSafeAreaInsets() -> some View {
-        modifier(DeviceSafeAreaProviderModifier())
+    public func withDeviceSafeAreaInsetsProvider() -> some View {
+        modifier(DeviceSafeAreaInsetsProviderModifier())
     }
 }
 
 // MARK: - ViewModifier
 
-private struct DeviceSafeAreaProviderModifier: ViewModifier {
+private struct DeviceSafeAreaInsetsProviderModifier: ViewModifier {
     /// A view modifier that enables access to the `deviceSafeAreaInsets`
     /// environment value.
     ///
