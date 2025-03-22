@@ -147,7 +147,7 @@ extension SystemAlertConfiguration {
 extension SystemAlertConfiguration {
     /// Returns a sample maintenance mode system alert suitable for display in
     /// previews and tests.
-    public static var maintenance: Self {
+    public static var sampleMaintenance: Self {
         .init(
             id: "maintenance_mode",
             title: "Undergoing Maintenance",
@@ -158,19 +158,22 @@ extension SystemAlertConfiguration {
 
     /// Returns a sample unsupported app version alert suitable for display in
     /// previews and tests.
-    public static var unsupportedAppVersion: Self {
+    public static func sampleUnsupportedAppVersion(longMessage: Bool = false) -> Self {
         .init(
             id: "unsupported_app_version",
             title: "Unsupported App Version",
-            message: "This version of the app is no longer supported. Please update to the latest version.",
+            message: longMessage
+                ? "This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version. This version of the app is no longer supported. Please update to the latest version."
+                : "This version of the app is no longer supported. Please update to the latest version.",
             isDismissable: false,
+            imageUrl: appIcon,
             ctaUrl: URL(string: "https://www.example.com")
         )
     }
 
     /// Returns a sample unsupported app version alert with inline links suitable
     /// for display in previews and tests.
-    public static var unsupportedAppVersionWithLinks: Self {
+    public static var sampleUnsupportedAppVersionWithLinks: Self {
         .init(
             id: "unsupported_app_version",
             title: "Unsupported App Version",
@@ -180,6 +183,36 @@ extension SystemAlertConfiguration {
             ctaTitle: "Contact Customer Support",
             ctaUrl: URL(string: "https://www.example.com")
         )
+    }
+
+    /// Returns a sample unsupported app version alert suitable for display in
+    /// previews and tests.
+    ///
+    /// ```
+    /// {
+    ///     "id": "unsupported_app_version",
+    ///     "title": "New Version Available",
+    ///     "message": "Please update your app to enjoy the latest feature enhancements.",
+    ///     "dismissable": true,
+    ///     "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ce/9a/05/ce9a05d9-dec5-92c8-e6fa-3c4551a856b1/AppIcon-Release-0-2x_U007euniversal-0-4-0-0-85-220-0.png/460x0w.png",
+    ///     "cta_title": "Update Now",
+    ///     "cta_url": "https://apps.apple.com/us/app/apple-developer/id640199958"
+    /// }
+    /// ```
+    public static var sampleNewVersionAvailable: Self {
+        .init(
+            id: "unsupported_app_version",
+            title: "New Version Available",
+            message: "Please update your app to enjoy the latest feature enhancements.",
+            isDismissable: true,
+            imageUrl: appIcon,
+            ctaTitle: "Update Now",
+            ctaUrl: URL(string: "https://apps.apple.com/us/app/apple-developer/id640199958")
+        )
+    }
+
+    private static var appIcon: URL {
+        URL(string: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ce/9a/05/ce9a05d9-dec5-92c8-e6fa-3c4551a856b1/AppIcon-Release-0-2x_U007euniversal-0-4-0-0-85-220-0.png/460x0w.png")!
     }
 }
 #endif
