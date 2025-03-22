@@ -13,7 +13,7 @@ extension View {
     ///   - isPresented: A binding to a Boolean value indicating whether to present
     ///     the window.
     ///   - style: A structure representing the style of a window.
-    ///   - content: A closure that returns the content of the window.
+    ///   - content: The view content to display in the window.
     public func window(
         isPresented: Binding<Bool>,
         style: WindowStyle = .init(),
