@@ -409,8 +409,8 @@ public typealias AppPhaseClient = EventsClient<AppPhase>
 extension DependencyValues {
     private enum AppPhaseClientKey: DependencyKey {
         static let liveValue: AppPhaseClient = .live
-        static let testValue: AppPhaseClient = .unimplemented
-        static let previewValue: AppPhaseClient = .noop
+        static let testValue: AppPhaseClient = .live
+        static let previewValue: AppPhaseClient = .live
     }
 
     /// Provides functionality for sending and receiving events for app’s
