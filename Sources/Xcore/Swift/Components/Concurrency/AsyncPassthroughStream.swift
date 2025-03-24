@@ -34,8 +34,7 @@ import Foundation
 /// ```
 public struct AsyncPassthroughStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
-    private typealias Continuation = Base.Continuation
-    private let continuations = LockIsolated([UUID: Continuation]())
+    private let continuations = LockIsolated([UUID: Base.Continuation]())
 
     /// Creates an asynchronous sequence.
     public init() {}

@@ -31,8 +31,7 @@ import Foundation
 /// ```
 public struct AsyncCurrentValueStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
-    private typealias Continuation = Base.Continuation
-    private let continuations = LockIsolated([UUID: Continuation]())
+    private let continuations = LockIsolated([UUID: Base.Continuation]())
     /// The lock-isolated value.
     private let lockedValue: LockIsolated<Element>
 
