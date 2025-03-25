@@ -18,7 +18,7 @@ extension FeatureFlag {
     /// - Returns: The maximum number of characters allowed for a one-time code
     ///   input.
     public static func oneTimeCodeCharacterLimit(default defaultValue: Int = 6) -> Int {
-        key(#function).value(default: defaultValue)
+        key("one_time_code_character_limit").value(default: defaultValue)
     }
 }
 

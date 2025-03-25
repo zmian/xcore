@@ -7,8 +7,17 @@
 import SwiftUI
 
 extension TextFieldConfiguration<MaskingTextFieldFormatter> {
-    /// One-Time Code
-    public static var oneTimeCode: Self {
+    /// Returns a text field configuration preconfigured for one-time code input.
+    ///
+    /// This configuration sets appropriate content type, disables spell checking,
+    /// uses a numeric keyboard, and applies a masking formatter to limit input to a
+    /// fixed number of characters.
+    ///
+    /// - Parameter defaultCharacterLimit: The fallback character limit for the
+    ///   one-time code input, used when the feature flag is not set. See
+    ///   `FeatureFlag.oneTimeCodeCharacterLimit(default:)` for more information.
+    /// - Returns: A `TextFieldConfiguration` suitable for one-time code entry.
+    public static func oneTimeCode(limit defaultCharacterLimit: Int = 6) -> Self {
         .init(
             id: #function,
             autocapitalization: .never,
@@ -17,7 +26,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
             textContentType: .oneTimeCode,
             validation: .oneTimeCode,
             formatter: .init(
-                String(repeating: "#", count: FeatureFlag.oneTimeCodeCharacterLimit),
+                String(repeating: "#", count: FeatureFlag.oneTimeCodeCharacterLimit(default: defaultCharacterLimit)),
                 placeholderCharacter: "#"
             )
         )

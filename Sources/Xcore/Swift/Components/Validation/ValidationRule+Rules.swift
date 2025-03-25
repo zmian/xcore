@@ -229,7 +229,7 @@ extension ValidationRule<String> {
 
     /// A validation rule that checks whether the input is a valid one-time code.
     public static var oneTimeCode: Self {
-        number(length: FeatureFlag.oneTimeCodeCharacterLimit)
+        number(length: FeatureFlag.oneTimeCodeCharacterLimit())
     }
 
     /// A validation rule for validating a person's name.
