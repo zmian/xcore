@@ -42,7 +42,7 @@ extension Empty: Codable {}
 // MARK: - Identifiable
 
 extension Empty: Identifiable {
-    /// A unique identifier for this instance.
+    /// A unique id for this instance.
     ///
     /// Always returns an empty string since `Empty` represents a singular, default
     /// value.

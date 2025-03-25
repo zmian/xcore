@@ -39,22 +39,33 @@ public struct SystemAlertConfiguration: Sendable, Hashable, Codable, Identifiabl
     /// The title of the system alert.
     public let title: String
 
-    /// The message describing the system alert.
+    /// A message describing the purpose of the system alert.
     public let message: String
 
-    /// A Boolean property indicating whether the system alert can be dismissed.
+    /// A Boolean value indicating whether the system alert can be dismissed by the
+    /// user.
     public let isDismissable: Bool
 
-    /// An optional image associated with the system alert.
+    /// An optional URL pointing to an image associated with the system alert.
     public let imageUrl: URL?
 
-    /// An optional CTA title associated with the CTA URL property of the system
-    /// alert.
+    /// An optional title for the call-to-action button.
     public let ctaTitle: String?
 
-    /// An optional CTA URL to show more information about the system alert.
+    /// An optional URL to open when the call-to-action is tapped.
     public let ctaUrl: URL?
 
+    /// Creates a new `SystemAlertConfiguration`.
+    ///
+    /// - Parameters:
+    ///   - id: A unique id for the system alert.
+    ///   - title: The title of the system alert.
+    ///   - message: A message describing the purpose of the system alert.
+    ///   - isDismissable: A Boolean value indicating whether the system alert can
+    ///     be dismissed by the user.
+    ///   - imageUrl: An optional URL to an image associated with the system alert.
+    ///   - ctaTitle: An optional title for the call-to-action button.
+    ///   - ctaUrl: An optional URL to open when the call-to-action is tapped.
     public init(
         id: String,
         title: String,

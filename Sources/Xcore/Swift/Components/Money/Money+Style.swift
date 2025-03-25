@@ -25,7 +25,7 @@ extension Money {
     /// let abbreviated = Money(1200000).style(.abbreviated)  // "$1.2M"
     /// ```
     public struct Style: Sendable {
-        /// A unique identifier for the style.
+        /// A unique id for the style.
         public let id: Identifier<Self>
 
         /// A closure that formats `Money` values according to the style.
@@ -34,7 +34,7 @@ extension Money {
         /// Creates a `Money.Style` with a given formatting function.
         ///
         /// - Parameters:
-        ///   - id: A unique identifier for the style.
+        ///   - id: A unique id for the style.
         ///   - format: A closure that transforms `Money` into formatted components.
         public init(
             id: Identifier<Self>,

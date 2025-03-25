@@ -9,7 +9,7 @@ import KeychainAccess
 
 /// A structure representing a key for the ``Pond``.
 public struct PondKey: Sendable, Hashable, Identifiable, UserInfoContainer {
-    /// A unique identifier for the key.
+    /// A unique id for the key.
     public let id: String
 
     /// The storage where the value of the key will be saved.

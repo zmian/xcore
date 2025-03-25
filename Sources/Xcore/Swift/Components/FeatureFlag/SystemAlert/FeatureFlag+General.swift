@@ -7,29 +7,43 @@
 import Foundation
 
 extension FeatureFlag {
-    public static var oneTimeCodeCharacterLimit: Int {
-        key(#function).value(default: 6)
+    /// Returns the maximum number of characters permitted for a one-time code
+    /// input.
+    ///
+    /// If a value is not explicitly provided via the feature flag provider, the
+    /// given default value is used.
+    ///
+    /// - Parameter defaultValue: The fallback value used if the feature flag is not
+    ///   set.
+    /// - Returns: The maximum number of characters allowed for a one-time code
+    ///   input.
+    public static func oneTimeCodeCharacterLimit(default defaultValue: Int = 6) -> Int {
+        key(#function).value(default: defaultValue)
     }
 }
 
 // MARK: - App Store Review Prompt
 
 extension FeatureFlag {
-    /// A Boolean property indicating whether App Store review prompt is enabled.
+    /// A Boolean property indicating whether the App Store review prompt is enabled.
+    ///
+    /// When this property is `true`, the application can present a prompt
+    /// requesting an App Store review.
     public static var reviewPromptEnabled: Bool {
         key(#function).value()
     }
 
-    /// A property indicating number of user's visits multiple before prompting the
-    /// user for the review prompt.
+    /// Returns the number of user visits multiple required before prompting for an
+    /// App Store review.
     ///
-    /// The default value is `10`, meaning after every 10th visit we ask the user to
-    /// review the app. Apple API doesn't guarantee that user will see the prompt.
+    /// The default value is `10`, meaning that after every 10th visit the user may
+    /// be prompted for a review. A value of `0` indicates that the review prompt
+    /// should never be shown based on user visits.
     ///
-    /// - Note: If `reviewPromptEnabled` is `false` this property has no effect.
+    /// - Note: This property is effective only when `reviewPromptEnabled` is
+    ///   `true`.
     ///
-    /// If this property value is `0` then it means to never show the review prompt
-    /// based on user's visits.
+    /// - Warning: Apple API doesn't guarantee that user will see the prompt.
     public static var reviewPromptVisitMultipleOf: Int {
         key(#function).value(default: 10)
     }

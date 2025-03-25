@@ -41,7 +41,7 @@ public struct AddressForm: Sendable {
     /// whether the country or state picker is shown).
     @ObservableState
     public struct State: Equatable {
-        /// A unique identifier for the current address input session.
+        /// A unique id for the current address input session.
         let id: UUID
         /// The title to be displayed in the navigation bar.
         let navigationTitle: String
