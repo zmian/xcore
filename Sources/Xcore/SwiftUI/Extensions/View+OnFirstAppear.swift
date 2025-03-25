@@ -14,7 +14,7 @@ extension View {
     ///
     /// - Returns: A view that triggers `action` when this view appears for the
     ///   time.
-    public func onFirstAppear(perform action: (() -> Void)? = nil) -> some View {
+    public func onFirstAppear(perform action: (() -> Void)?) -> some View {
         modifier(FirstAppearActionModifier(action: action))
     }
 
@@ -28,10 +28,10 @@ extension View {
     ///
     /// - Returns: A view that triggers `action` when this view appears for the
     ///   time or when the given id value changes.
-    public func onFirstAppear<ID>(
-        with id: ID,
-        perform action: (() -> Void)? = nil
-    ) -> some View where ID: Hashable {
+    public func onFirstAppear(
+        id: some Equatable,
+        perform action: (() -> Void)?
+    ) -> some View {
         onFirstAppear(perform: action)
             .onChange(of: id) { _, _ in
                 action?()
@@ -48,10 +48,10 @@ extension View {
     ///
     /// - Returns: A view that triggers `action` when this view appears or when the
     ///   given id value changes.
-    public func onAppear<ID>(
-        with id: ID,
-        perform action: (() -> Void)? = nil
-    ) -> some View where ID: Hashable {
+    public func onAppear(
+        id: some Equatable,
+        perform action: (() -> Void)?
+    ) -> some View {
         onAppear(perform: action)
             .onChange(of: id) { _, _ in
                 action?()
