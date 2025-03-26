@@ -50,11 +50,13 @@ extension Theme {
         groupedBackgroundTertiaryColor: Color(uiColor: .tertiarySystemGroupedBackground),
 
         // Button Text
-        buttonTextColor: { style, state, position in
+        buttonTextColor: { style, state, position, role in
             switch (style, state, position) {
                 case (.outline, .normal, _),
                      (.outline, .pressed, _):
-                    return .primary
+                    return role == .destructive ? .red : .primary
+                case (.plain, .normal, _):
+                    return role == .destructive ? .red : .white
                 case (_, .normal, _):
                     return .white
                 case (_, .pressed, _):
@@ -65,12 +67,12 @@ extension Theme {
         },
 
         // Button Background
-        buttonBackgroundColor: { style, state, position in
+        buttonBackgroundColor: { style, state, position, role in
             switch (style, state, position) {
                 case (_, .normal, _):
-                    return .accentColor
+                    return role == .destructive ? .red : .accentColor
                 case (_, .pressed, _):
-                    return .accentColor
+                    return role == .destructive ? .red : .accentColor
                 case (_, .disabled, _):
                     return Color(uiColor: .secondarySystemBackground)
             }

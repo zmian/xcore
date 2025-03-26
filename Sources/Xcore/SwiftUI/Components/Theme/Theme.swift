@@ -49,7 +49,12 @@ import SwiftUI
 @dynamicMemberLookup
 public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer {
     public typealias ID = Identifier<Self>
-    public typealias ButtonColor = @Sendable (ButtonIdentifier, ButtonState, ElementPosition) -> Color
+    public typealias ButtonColor = @Sendable (
+        _ id: ButtonIdentifier,
+        _ state: ButtonState,
+        _ position: ElementPosition,
+        _ role: ButtonRole?
+    ) -> Color
 
     /// A unique id for the theme.
     public var id: ID
@@ -225,18 +230,6 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
 
         // UserInfo
         self.userInfo = userInfo
-    }
-}
-
-// MARK: - Convenience
-
-extension Theme {
-    public func buttonBackgroundColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> Color {
-        buttonBackgroundColor(id, state, .primary)
-    }
-
-    public func buttonTextColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> Color {
-        buttonTextColor(id, state, .primary)
     }
 }
 

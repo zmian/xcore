@@ -78,11 +78,11 @@ extension ProminentButtonStyle {
         }
 
         private var foregroundContentColor: Color {
-            theme.buttonTextColor(id, buttonState)
+            theme.buttonTextColor(id, buttonState, .primary, configuration.role)
         }
 
         private var backgroundColor: Color {
-            theme.buttonBackgroundColor(id, buttonState)
+            theme.buttonBackgroundColor(id, buttonState, .primary, configuration.role)
         }
 
         private var borderColor: Color {

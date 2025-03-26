@@ -23,6 +23,7 @@ struct ButtonsView: View {
             symbolLabels
             others
             builtin
+            withRoles
             specialBtns
         }
         .contentUnavailable(isContentUnavailable) {
@@ -170,6 +171,30 @@ extension ButtonsView {
                 Text("Plain")
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    private var withRoles: some View {
+        Section("Button Role") {
+            Button.delete {
+                print("Delete button tapped")
+            }
+            .buttonStyle(.primary)
+
+            Button.cancel {
+                print("Cancel button tapped")
+            }
+            .buttonStyle(.primary)
+
+            Button.delete {
+                print("Delete button tapped")
+            }
+            .buttonStyle(.secondary)
+
+            Button.cancel {
+                print("Cancel button tapped")
+            }
+            .buttonStyle(.secondary)
         }
     }
 
