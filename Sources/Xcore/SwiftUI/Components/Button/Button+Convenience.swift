@@ -29,8 +29,8 @@ extension Button<Text> {
     }
 
     /// A button with `Yes` label and given action.
-    public static func yes(action: @escaping @MainActor () -> Void) -> some View {
-        Button(L.yes, action: action)
+    public static func yes(role: ButtonRole? = nil, action: @escaping @MainActor () -> Void) -> some View {
+        Button(L.yes, role: role, action: action)
             .accessibilityIdentifier("yesButton")
     }
 

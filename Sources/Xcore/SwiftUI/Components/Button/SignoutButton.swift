@@ -13,6 +13,13 @@ public struct SignoutButton: View {
     private let requiresConfirmation: Bool
     private let action: () -> Void
 
+    /// Creates a `SignoutButton` button instance.
+    ///
+    /// - Parameters:
+    ///   - requiresConfirmation: A Boolean value indicating whether to present a
+    ///     confirmation dialog before executing the given action.
+    ///   - action: The closure to execute when the sign-out is confirmed or
+    ///     immediately triggered.
     public init(confirmation requiresConfirmation: Bool = true, action: @escaping () -> Void) {
         self.requiresConfirmation = requiresConfirmation
         self.action = action
@@ -25,13 +32,13 @@ public struct SignoutButton: View {
                 popupTitle: L.ConfirmPopup.title,
                 popupMessage: L.ConfirmPopup.message,
                 popupConfirm: .yesOrNo,
+                role: .destructive,
                 action: action
             )
-        } else {
-            Button(action: action) {
-                Text(L.title)
-            }
             .accessibilityIdentifier("signoutButton")
+        } else {
+            Button(L.title, role: .destructive, action: action)
+                .accessibilityIdentifier("signoutButton")
         }
     }
 }
