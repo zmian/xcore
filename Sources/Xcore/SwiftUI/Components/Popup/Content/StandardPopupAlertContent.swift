@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A standard representation of an alert presentation with title, message and
 /// actions.
-public struct StandardPopupAlertContent<Header, Footer>: View where Header: View, Footer: View {
+public struct StandardPopupAlertContent<Header: View, Footer: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupTextAlignment) private var textAlignment
     private let title: Text

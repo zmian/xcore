@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A representation of an alert presentation.
-public struct PopupAlertContent<Content>: View where Content: View {
+public struct PopupAlertContent<Content: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupPreferredWidth) private var preferredWidth
     @Environment(\.popupCornerRadius) private var cornerRadius

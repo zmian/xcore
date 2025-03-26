@@ -42,7 +42,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct StandardBottomSheetContent<Header, Footer>: View where Header: View, Footer: View {
+public struct StandardBottomSheetContent<Header: View, Footer: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var multilineTextAlignment
     @Environment(\.horizontalSizeClass) private var sizeClass
