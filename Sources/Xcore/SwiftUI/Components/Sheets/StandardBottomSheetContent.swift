@@ -6,8 +6,42 @@
 
 import SwiftUI
 
-/// A standard representation of a bottom sheet presentation with title, message
-/// and actions.
+/// A view that presents a standard bottom sheet layout with a title, optional
+/// message, and configurable header and footer content.
+///
+/// Use this view to display modal content in a bottom sheet format. The layout
+/// adapts its text alignment based on device size class, automatically
+/// centering content on larger devices like iPads where the sheet is presented
+/// as a popup.
+///
+/// You can customize the content by providing header and footer views.
+///
+/// **Usage**
+///
+/// ```swift
+/// struct ContentView: View {
+///     @State private var showConfirmation = false
+///
+///     var body: some View {
+///         Button("Delete") {
+///             showConfirmation = true
+///         }
+///         .sheet(isPresented: $showConfirmation) {
+///             StandardBottomSheetContent("Delete Item", message: "Are you sure you want to delete this?") {
+///                 HStack {
+///                     Button.cancel {
+///                         showConfirmation = false
+///                     }
+///
+///                     Button.delete {
+///                         // Handle deletion
+///                     }
+///                 }
+///             }
+///         }
+///     }
+/// }
+/// ```
 public struct StandardBottomSheetContent<Header, Footer>: View where Header: View, Footer: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var multilineTextAlignment
@@ -17,6 +51,14 @@ public struct StandardBottomSheetContent<Header, Footer>: View where Header: Vie
     private let header: () -> Header
     private let footer: () -> Footer
 
+    /// Creates a bottom sheet with a title and message, along with header and
+    /// footer content.
+    ///
+    /// - Parameters:
+    ///   - title: The title text to display.
+    ///   - message: An optional secondary message text.
+    ///   - header: A view builder that produces the header content.
+    ///   - footer: A view builder that produces the footer content.
     public init(
         _ title: Text,
         message: Text? = nil,
@@ -68,7 +110,38 @@ public struct StandardBottomSheetContent<Header, Footer>: View where Header: Vie
 
 // MARK: - Inits
 
+extension StandardBottomSheetContent {
+    /// Creates a bottom sheet with a title and message, along with header and
+    /// footer content.
+    ///
+    /// - Parameters:
+    ///   - title: The title text to display.
+    ///   - message: An optional secondary message text.
+    ///   - header: A view builder that produces the header content.
+    ///   - footer: A view builder that produces the footer content.
+    public init(
+        _ title: String,
+        message: String? = nil,
+        @ViewBuilder header: @escaping () -> Header,
+        @ViewBuilder footer: @escaping () -> Footer
+    ) {
+        self.init(
+            Text(title),
+            message: message.map(Text.init),
+            header: header,
+            footer: footer
+        )
+    }
+}
+
 extension StandardBottomSheetContent where Header == Never {
+    /// Creates a bottom sheet with a title and message generated from `Text` and a
+    /// footer content.
+    ///
+    /// - Parameters:
+    ///   - title: The title text to display.
+    ///   - message: An optional secondary message text.
+    ///   - footer: A view builder that produces the footer content.
     public init(
         _ title: Text,
         message: Text? = nil,
@@ -82,6 +155,13 @@ extension StandardBottomSheetContent where Header == Never {
         )
     }
 
+    /// Creates a bottom sheet with a title and message generated from string and a
+    /// footer content.
+    ///
+    /// - Parameters:
+    ///   - title: The title text to display.
+    ///   - message: An optional secondary message text.
+    ///   - footer: A view builder that produces the footer content.
     public init(
         _ title: String,
         message: String? = nil,
