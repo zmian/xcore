@@ -69,7 +69,7 @@ extension ProminentButtonStyle {
                 case .fill:
                     shape.fill(backgroundColor)
                 case .outline:
-                    shape.strokeBorder(borderColor, lineWidth: .onePixel)
+                    shape.strokeBorder(borderColor, lineWidth: 1)
             }
         }
 

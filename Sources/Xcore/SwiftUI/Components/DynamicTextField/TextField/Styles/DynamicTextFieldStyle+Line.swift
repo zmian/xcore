@@ -59,7 +59,7 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
                     return theme.separatorColor
                 }()
 
-                color.frame(height: height ?? .onePixel)
+                color.frame(height: height ?? 1)
             }
         }
     }
