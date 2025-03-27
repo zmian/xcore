@@ -37,9 +37,9 @@
 
 // MARK: - Sign Out Button
 
-"signout.title" = "Log Out";
-"signout.confirm_popup.title" = "Log Out";
-"signout.confirm_popup.message" = "Are you sure you would like to log out?";
+"signout.title" = "Sign Out";
+"signout.confirm_popup.title" = "Sign Out";
+"signout.confirm_popup.message" = "Are you sure you would like to sign out?";
 
 // MARK: - Mail App
 
