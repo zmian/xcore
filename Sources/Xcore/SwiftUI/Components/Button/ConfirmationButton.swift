@@ -27,13 +27,13 @@ extension ConfirmationButton {
 ///
 /// ```swift
 /// ConfirmationButton(
-///     "Log Out",
-///     popupTitle: "Log Out",
-///     popupMessage: "Are you sure you would like to log out?",
+///     "Sign Out",
+///     popupTitle: "Sign Out",
+///     popupMessage: "Are you sure you would like to sign out?",
 ///     popupConfirm: .yesOrNo,
 ///     role: .destructive,
 ///     action: {
-///         print("Handle log out")
+///         print("Handle sign out")
 ///     }
 /// )
 /// ```
@@ -127,10 +127,10 @@ public struct ConfirmationButton: View {
 
 #Preview {
     ConfirmationButton(
-        "Log Out",
-        popupTitle: "Log Out",
-        popupMessage: "Are you sure you would like to log out?",
+        "Sign Out",
+        popupTitle: "Sign Out",
+        popupMessage: "Are you sure you would like to sign out?",
         popupConfirm: .yesOrNo) {
-            print("Handle log out")
+            print("Handle sign out")
         }
 }

@@ -47,6 +47,6 @@ public struct SignoutButton: View {
 
 #Preview {
     SignoutButton {
-        print("Handle log out")
+        print("Handle sign out")
     }
 }
