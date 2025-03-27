@@ -163,14 +163,38 @@ extension ButtonsView {
             .buttonStyle(.automatic)
 
             button {
+                Text("Plain")
+            }
+            .buttonStyle(.plain)
+
+            button {
                 Text("Borderless")
             }
             .buttonStyle(.borderless)
 
             button {
-                Text("Plain")
+                Text("Bordered")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.bordered)
+
+            button {
+                Text("BorderedProminent")
+            }
+            .buttonStyle(.borderedProminent)
+
+            button {
+                Text("BorderedProminent")
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: AppConstants.cornerRadius))
+            .controlSize(.extraLarge)
+            .tint(.orange)
+
+            button {
+                Text("BorderedProminent")
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
         }
     }
 
