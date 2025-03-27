@@ -9,6 +9,7 @@ import SwiftUI
 /// A representation of an alert presentation.
 public struct PopupAlertContent<Content: View>: View {
     @Environment(\.theme) private var theme
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.popupPreferredWidth) private var preferredWidth
     @Environment(\.popupCornerRadius) private var cornerRadius
     @Environment(\.popupTextAlignment) private var textAlignment
@@ -29,7 +30,7 @@ public struct PopupAlertContent<Content: View>: View {
             .padding(.defaultSpacing)
             .padding(.top, .defaultSpacing)
             .frame(width: preferredWidth)
-            .background(theme.backgroundColor)
+            .background(colorScheme == .dark ? theme.groupedBackgroundTertiaryColor : theme.backgroundColor)
             .cornerRadius(cornerRadius, style: .continuous)
             .floatingShadow()
 

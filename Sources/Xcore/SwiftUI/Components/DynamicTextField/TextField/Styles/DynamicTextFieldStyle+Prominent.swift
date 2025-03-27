@@ -186,7 +186,7 @@ extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<Rou
     /// - Returns: A configured prominent dynamic text field style.
     public static func prominent(
         _ prominence: Self.Prominence = .fill,
-        cornerRadius: CGFloat = AppConstants.tileCornerRadius,
+        cornerRadius: CGFloat = AppConstants.cornerRadius,
         padding: EdgeInsets? = nil
     ) -> Self {
         prominent(

@@ -183,19 +183,10 @@ public enum AppConstants {
     }
 
     public static var navBarHeight: CGFloat {
-        if Device.userInterfaceIdiom == .pad {
-            return 50
-        }
-
-        return 44
+        Device.userInterfaceIdiom == .pad ? 50 : 44
     }
 
-    public static var navBarItemHeight: CGFloat { 24 }
-    public static var uiControlsHeight: CGFloat { 50 }
-
-    nonisolated(unsafe) public static var tileCornerRadius: CGFloat = 12
-
-    nonisolated(unsafe) public static var cornerRadius: CGFloat = 6
+    nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
 
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width

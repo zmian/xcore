@@ -62,6 +62,8 @@ private struct PopupPreviews: View {
             Button.okay {
                 showSystemAlert = false
             }
+        } message: {
+            Text(L.message)
         }
         .popup(L.title, message: L.message, isPresented: $showAlert, dismissMethods: [.xmark, .tapOutside]) {
             Button.okay {
@@ -96,7 +98,7 @@ private struct PopupPreviews: View {
             .frame(height: 300)
             .padding(.s8)
             .background(.background.tertiary)
-            .cornerRadius(AppConstants.tileCornerRadius)
+            .cornerRadius(AppConstants.cornerRadius)
             .floatingShadow()
         }
     }
