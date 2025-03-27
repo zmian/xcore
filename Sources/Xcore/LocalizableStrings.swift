@@ -157,13 +157,13 @@ internal enum Localized {
     }
   }
   internal enum Signout {
-    /// Log Out
-    internal static let title = Localized.tr("Localizable", "signout.title", fallback: "Log Out")
+    /// Sign Out
+    internal static let title = Localized.tr("Localizable", "signout.title", fallback: "Sign Out")
     internal enum ConfirmPopup {
-      /// Are you sure you would like to log out?
-      internal static let message = Localized.tr("Localizable", "signout.confirm_popup.message", fallback: "Are you sure you would like to log out?")
-      /// Log Out
-      internal static let title = Localized.tr("Localizable", "signout.confirm_popup.title", fallback: "Log Out")
+      /// Are you sure you would like to sign out?
+      internal static let message = Localized.tr("Localizable", "signout.confirm_popup.message", fallback: "Are you sure you would like to sign out?")
+      /// Sign Out
+      internal static let title = Localized.tr("Localizable", "signout.confirm_popup.title", fallback: "Sign Out")
     }
   }
 }
