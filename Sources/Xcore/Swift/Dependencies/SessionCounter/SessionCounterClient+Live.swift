@@ -26,24 +26,18 @@ private final class LiveSessionCounterClient: @unchecked Sendable {
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
     @Dependency(\.requestReview) private var requestReview
-    private var cancellable: AnyCancellable?
+    private var appStatusTask: Task<Void, Never>?
 
     fileprivate init() {
-        withDelay(.seconds(0.3)) { [weak self] in
-            // Delay to avoid:
-            // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
-            // exclusive access. This is a client that invokes other clients.
-            self?.addAppStatusObserver()
-        }
+        addObserver()
     }
 
-    private func addAppStatusObserver() {
-        cancellable = appStatus
-            .receive
-            .when(.session(.unlocked))
-            .sink { [weak self] in
-                self?.increment()
+    private func addObserver() {
+        appStatusTask = Task {
+            for await status in appStatus.receive.values where status == .session(.unlocked) {
+                increment()
             }
+        }
     }
 
     public var count: Int {

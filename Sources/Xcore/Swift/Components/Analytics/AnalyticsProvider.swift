@@ -15,9 +15,9 @@ import Foundation
 /// ```swift
 /// private import Segment
 ///
-/// struct SegmentAnalyticsProvider: AnalyticsProvider {
+/// final class SegmentAnalyticsProvider: AnalyticsProvider, @unchecked Sendable {
 ///     @Dependency(\.appPhase) private var appPhase
-///     private var cancellable: AnyCancellable?
+///     private var appPhaseTask: Task<Void, Never>?
 ///     private var segment: Segment.Analytics {
 ///         Segment.Analytics.shared()
 ///     }
@@ -37,13 +37,7 @@ import Foundation
 ///             #endif
 ///         }
 ///         Segment.Analytics.setup(with: configuration)
-///
-///         withDelay(.seconds(0.3)) { [weak self] in
-///             // Delay to avoid:
-///             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
-///             // exclusive access. This is a client that invokes other clients.
-///             self?.addListener()
-///         }
+///         addObserver()
 ///     }
 ///
 ///     func track(_ event: AnalyticsEventProtocol) {
@@ -63,25 +57,23 @@ import Foundation
 ///         segment.reset()
 ///     }
 ///
-///     private func addListener() {
-///         cancellable = appPhase.receive.sink { phase in
-///             let segment = Segment.Analytics.shared()
-///
-///             switch phase {
-///                 case let .launched(launchOptions):
-///                     SEGAppboyIntegrationFactory.instance().saveLaunchOptions(launchOptions)
-///                 case let .remoteNotificationsRegistered(.success(token)):
-///                     segment.registeredForRemoteNotifications(withDeviceToken: token)
-///                 case let .remoteNotificationsRegistered(.failure(error)):
-///                     segment.failedToRegisterForRemoteNotificationsWithError(error)
-///                 case let .remoteNotificationReceived(userInfo):
-///                     segment.receivedRemoteNotification(userInfo)
-///                 case let .continueUserActivity(activity, _):
-///                     segment.continue(activity)
-///                 case let .openUrl(url, options):
-///                     segment.open(url.maskingSensitiveQueryItems(), options: options)
-///                 default:
-///                     break
+///     private func addObserver() {
+///         appPhaseTask = Task {
+///             for await phase in appPhase.receive.values {
+///                 switch phase {
+///                     case let .remoteNotificationsRegistered(.success(token)):
+///                         segment.registeredForRemoteNotifications(withDeviceToken: token)
+///                     case let .remoteNotificationsRegistered(.failure(error)):
+///                         segment.failedToRegisterForRemoteNotificationsWithError(error)
+///                     case let .remoteNotificationReceived(userInfo):
+///                         segment.receivedRemoteNotification(userInfo)
+///                     case let .continueUserActivity(activity, _):
+///                         segment.continue(activity)
+///                     case let .openUrl(url, options):
+///                         segment.open(url.maskingSensitiveQueryItems(), options: options)
+///                     default:
+///                         break
+///                 }
 ///             }
 ///         }
 ///     }
