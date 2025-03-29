@@ -50,30 +50,4 @@ extension AsyncSequence where Self: Sendable {
             })
     }
 }
-
-extension AsyncStream where Element: Sendable {
-    /// Returns a publisher that emits events when asynchronous sequence produces
-    /// new elements.
-    @available(iOS, introduced: 13.0, obsoleted: 18.0, message: "Use the newer AsyncSequence publisher API.")
-    @available(macOS, introduced: 10.15, obsoleted: 15.0, message: "Use the newer AsyncSequence publisher API.")
-    @available(tvOS, introduced: 13.0, obsoleted: 18.0, message: "Use the newer AsyncSequence publisher API.")
-    @available(watchOS, introduced: 6.0, obsoleted: 11.0, message: "Use the newer AsyncSequence publisher API.")
-    @available(visionOS, introduced: 1.0, obsoleted: 2.0, message: "Use the newer AsyncSequence publisher API.")
-    public func publisher() -> some Publisher<Element, Never> {
-        let box = UncheckedSendable(PassthroughSubject<Element, Never>())
-
-        let task = Task {
-            for await value in self {
-                box.wrappedValue.send(value)
-            }
-            box.wrappedValue.send(completion: .finished)
-        }
-
-        return box
-            .wrappedValue
-            .handleEvents(receiveCancel: {
-                task.cancel()
-            })
-    }
-}
 #endif
