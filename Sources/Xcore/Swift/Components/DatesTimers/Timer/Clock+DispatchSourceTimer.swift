@@ -8,9 +8,6 @@ import Foundation
 
 /// A custom `Clock` that uses `DispatchSourceTimer` for sleeping.
 ///
-/// This can be used to ensure sleeping continues to work correctly even when
-/// background execution is required.
-///
 /// **Usage**
 ///
 /// ```swift
@@ -76,9 +73,6 @@ struct DispatchSourceTimerClock: Clock {
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, visionOS 1.0, *)
 extension Clock where Self == DispatchSourceTimerClock {
     /// A custom `Clock` that uses `DispatchSourceTimer` for sleeping.
-    ///
-    /// This can be used to ensure sleeping continues to work correctly even when
-    /// background execution is required.
     ///
     /// **Usage**
     ///
