@@ -6,10 +6,10 @@
 
 import SwiftUI
 
-/// A view that presents a standard bottom sheet layout with a title, optional
-/// message, and configurable header and footer content.
+/// A view that presents a fitted sheet layout with a title, optional message,
+/// and configurable header and footer content.
 ///
-/// Use this view to display modal content in a bottom sheet format. The layout
+/// Use this view to display modal content in a fitted sheet format. The layout
 /// adapts its text alignment based on device size class, automatically
 /// centering content on larger devices like iPads where the sheet is presented
 /// as a popup.
@@ -27,7 +27,7 @@ import SwiftUI
 ///             showConfirmation = true
 ///         }
 ///         .sheet(isPresented: $showConfirmation) {
-///             StandardBottomSheetContent("Delete Item", message: "Are you sure you want to delete this?") {
+///             FittedSheetContent("Delete Item", message: "Are you sure you want to delete this?") {
 ///                 HStack {
 ///                     Button.cancel {
 ///                         showConfirmation = false
@@ -42,7 +42,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct StandardBottomSheetContent<Header: View, Footer: View>: View {
+public struct FittedSheetContent<Header: View, Footer: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var multilineTextAlignment
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -51,7 +51,7 @@ public struct StandardBottomSheetContent<Header: View, Footer: View>: View {
     private let header: () -> Header
     private let footer: () -> Footer
 
-    /// Creates a bottom sheet with a title and message, along with header and
+    /// Creates a fitted sheet with a title and message, along with header and
     /// footer content.
     ///
     /// - Parameters:
@@ -102,7 +102,7 @@ public struct StandardBottomSheetContent<Header: View, Footer: View>: View {
         isPopup ? .center : multilineTextAlignment
     }
 
-    /// On iPad, the bottom sheet is displayed as a popup.
+    /// On iPad, the fitted sheet is displayed as a popup.
     private var isPopup: Bool {
         sizeClass == .regular
     }
@@ -110,8 +110,8 @@ public struct StandardBottomSheetContent<Header: View, Footer: View>: View {
 
 // MARK: - Inits
 
-extension StandardBottomSheetContent {
-    /// Creates a bottom sheet with a title and message, along with header and
+extension FittedSheetContent {
+    /// Creates a fitted sheet with a title and message, along with header and
     /// footer content.
     ///
     /// - Parameters:
@@ -134,8 +134,8 @@ extension StandardBottomSheetContent {
     }
 }
 
-extension StandardBottomSheetContent where Header == Never {
-    /// Creates a bottom sheet with a title and message generated from `Text` and a
+extension FittedSheetContent where Header == Never {
+    /// Creates a fitted sheet with a title and message generated from `Text` and a
     /// footer content.
     ///
     /// - Parameters:
@@ -155,7 +155,7 @@ extension StandardBottomSheetContent where Header == Never {
         )
     }
 
-    /// Creates a bottom sheet with a title and message generated from string and a
+    /// Creates a fitted sheet with a title and message generated from string and a
     /// footer content.
     ///
     /// - Parameters:
@@ -181,7 +181,7 @@ extension StandardBottomSheetContent where Header == Never {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
-        StandardBottomSheetContent(L.title, message: L.message) {
+        FittedSheetContent(L.title, message: L.message) {
             HStack {
                 Button.cancel {
                     print("Cancel Tapped")
@@ -195,7 +195,7 @@ extension StandardBottomSheetContent where Header == Never {
             }
         }
 
-        StandardBottomSheetContent(L.title, message: L.message) {
+        FittedSheetContent(L.title, message: L.message) {
             EmptyView()
         }
     }

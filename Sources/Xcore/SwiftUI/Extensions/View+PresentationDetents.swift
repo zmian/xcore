@@ -66,7 +66,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                 }
                 .presentationDetents([.height(detentHeight)])
                 .presentationCornerRadius(cornerRadius)
-                // On iPad adapt the bottom sheet to be a popup.
+                // On iPad adapt the fitted sheet to be a popup.
                 .unwrap(preferredWidth) { view, preferredWidth in
                     view.presentationBackground {
                         theme.backgroundColor
@@ -94,7 +94,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
         isPopup ? AppConstants.preferredMaxWidth : nil
     }
 
-    /// On iPad, the bottom sheet is displayed as a popup.
+    /// On iPad, the fitted sheet is displayed as a popup.
     private var isPopup: Bool {
         sizeClass == .regular
     }
@@ -111,7 +111,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
     .sheet(isPresented: $showConfirmation) {
         let L = Samples.Strings.deleteMessageAlert
 
-        StandardBottomSheetContent(L.title, message: L.message) {
+        FittedSheetContent(L.title, message: L.message) {
             HStack {
                 Button.cancel {
                     showConfirmation.toggle()

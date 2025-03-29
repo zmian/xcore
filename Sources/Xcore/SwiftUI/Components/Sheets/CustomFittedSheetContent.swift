@@ -6,12 +6,64 @@
 
 import SwiftUI
 
-public struct CustomBottomSheetContent<Content: View, Header: View>: View {
+/// A view that presents content in a custom fitted sheet layout with an
+/// optional header.
+///
+/// The header is displayed with centered text and standard padding, while the
+/// content uses a custom button style. Separators are inserted between the
+/// header and content to improve visual clarity. The view adapts its height to
+/// fit the content using the
+/// `.presentationDetents(.contentHeight(insets: .zero))` modifier.
+///
+/// **Usage**
+///
+/// ```swift
+/// CustomFittedSheetContent {
+///     Button("Option 1") { }
+///     Button("Option 2") { }
+///     Button("Option 3") { }
+/// } header: {
+///     Label("Sheet Title", systemImage: "tv")
+///         .font(.app(.title3))
+/// }
+/// .frame(maxWidth: .infinity, alignment: .bottom)
+/// .background(.secondary)
+/// ```
+
+/// **Usage**
+///
+/// ```swift
+/// struct ContentView: View {
+///     @State private var showOptions = false
+///
+///     var body: some View {
+///         Button("Show Options") {
+///             showOptions = true
+///         }
+///         .sheet(isPresented: $showOptions) {
+///             CustomFittedSheetContent {
+///                 Button("Option 1") { }
+///                 Button("Option 2") { }
+///                 Button("Option 3") { }
+///             } header: {
+///                 Label("Sheet Title", systemImage: "tv")
+///                     .font(.app(.title3))
+///             }
+///         }
+///     }
+/// }
+/// ```
+public struct CustomFittedSheetContent<Content: View, Header: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var textAlignment
     private let content: () -> Content
     private let header: () -> Header
 
+    /// Creates a custom fitted sheet content with optional header.
+    ///
+    /// - Parameters:
+    ///   - content: A view builder that produces the content of the sheet.
+    ///   - header: A view builder that produces the header of the sheet.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         @ViewBuilder header: @escaping () -> Header
@@ -34,7 +86,7 @@ public struct CustomBottomSheetContent<Content: View, Header: View>: View {
             }
 
             content()
-                .buttonStyle(CustomBottomSheetContentButtonStyle())
+                .buttonStyle(CustomFittedSheetContentButtonStyle())
                 .separator()
         }
         .clipLastSeparator()
@@ -44,7 +96,12 @@ public struct CustomBottomSheetContent<Content: View, Header: View>: View {
 
 // MARK: - Inits
 
-extension CustomBottomSheetContent where Header == Text? {
+extension CustomFittedSheetContent where Header == Text? {
+    /// Creates a custom fitted sheet content with optional header from a string.
+    ///
+    /// - Parameters:
+    ///   - title: An optional title to be displayed in the header.
+    ///   - content: A view builder that produces the content of the sheet.
     public init(
         _ title: String? = nil,
         @ViewBuilder content: @escaping () -> Content
@@ -60,7 +117,7 @@ extension CustomBottomSheetContent where Header == Text? {
 
 // MARK: - ButtonStyle
 
-private struct CustomBottomSheetContentButtonStyle: ButtonStyle {
+private struct CustomFittedSheetContentButtonStyle: ButtonStyle {
     @Environment(\.multilineTextAlignment) private var textAlignment
     @Environment(\.isEnabled) private var isEnabled
 
@@ -80,7 +137,7 @@ private struct CustomBottomSheetContentButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 #Preview {
-    CustomBottomSheetContent {
+    CustomFittedSheetContent {
         Button("Option 1") {}
         Button("Option 2") {}
         Button("Option 3") {}

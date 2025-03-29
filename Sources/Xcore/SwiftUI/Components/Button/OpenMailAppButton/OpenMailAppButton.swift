@@ -63,7 +63,7 @@ private struct MailAppViewModifier: ViewModifier {
                 }
             }
             .sheet(isPresented: isSheetPresented) {
-                CustomBottomSheetContent(L.open) {
+                CustomFittedSheetContent(L.open) {
                     ForEach(apps) { app in
                         Button(app.name) {
                             openUrl(app.url)
