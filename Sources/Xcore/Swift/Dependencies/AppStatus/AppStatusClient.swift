@@ -183,12 +183,16 @@ extension AppStatusClient {
                 isColdLaunch.setValue(false)
             }
 
-            Task {
+            let task = Task {
                 for await _ in appPhase.receive.when(.willEnterForeground).values {
                     if !isColdLaunch.value {
                         continuation.yield()
                     }
                 }
+            }
+
+            continuation.onTermination = { h in
+                task.cancel()
             }
         }
     }
