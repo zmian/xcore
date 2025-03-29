@@ -71,17 +71,20 @@ public final class AppPhaseOperation {
     }
 
     private func shouldSchedule(_ schedule: Bool) {
-        // Cancel any existing scheduled task.
-        scheduledTask?.cancel()
-        scheduledTask = nil
-
         guard schedule else {
+            // Cancel any existing scheduled task.
+            scheduledTask?.cancel()
+            scheduledTask = nil
+            return
+        }
+
+        if scheduledTask?.isCancelled == false {
             return
         }
 
         // Schedule the operation to be executed after the specified delay.
         scheduledTask = Task {
-            try await Task.sleep(for: delay)
+            try await Task.sleep(for: delay, tolerance: .zero)
             try Task.checkCancellation()
             operation()
         }
