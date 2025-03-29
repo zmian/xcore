@@ -18,21 +18,6 @@ import SwiftUI
 /// **Usage**
 ///
 /// ```swift
-/// CustomFittedSheetContent {
-///     Button("Option 1") {}
-///     Button("Option 2") {}
-///     Button("Option 3") {}
-/// } header: {
-///     Label("Sheet Title", systemImage: "tv")
-///         .font(.app(.title3))
-/// }
-/// .frame(maxWidth: .infinity, alignment: .bottom)
-/// .background(.secondary)
-/// ```
-
-/// **Usage**
-///
-/// ```swift
 /// struct ContentView: View {
 ///     @State private var showOptions = false
 ///
@@ -42,9 +27,9 @@ import SwiftUI
 ///         }
 ///         .sheet(isPresented: $showOptions) {
 ///             CustomFittedSheetContent {
-///                 Button("Option 1") { }
-///                 Button("Option 2") { }
-///                 Button("Option 3") { }
+///                 Button("Option 1") {}
+///                 Button("Option 2") {}
+///                 Button("Option 3") {}
 ///             } header: {
 ///                 Label("Sheet Title", systemImage: "tv")
 ///                     .font(.app(.title3))
