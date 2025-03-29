@@ -59,8 +59,8 @@ import Foundation
 ///
 ///     private func addObserver() {
 ///         appPhaseTask = Task {
-///             for await phase in appPhase.receive.values {
-///                 switch phase {
+///             for await appPhase in appPhase.receive.values {
+///                 switch appPhase {
 ///                     case let .remoteNotificationsRegistered(.success(token)):
 ///                         segment.registeredForRemoteNotifications(withDeviceToken: token)
 ///                     case let .remoteNotificationsRegistered(.failure(error)):

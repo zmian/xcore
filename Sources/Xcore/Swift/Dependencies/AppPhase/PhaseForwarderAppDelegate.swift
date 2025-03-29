@@ -45,29 +45,32 @@ import Combine
 ///
 /// // 3. Receive events from `AppPhaseClient`
 ///
-/// struct SegmentAnalyticsProvider: AnalyticsProvider {
-///     @Dependency(\.appPhase) var appPhase
-///     private var cancellable: AnyCancellable?
+/// final class SegmentAnalyticsProvider: AnalyticsProvider {
+///     @Dependency(\.appPhase) private var appPhase
+///     private var appPhaseTask: Task<Void, Never>?
+///     private var segment: Segment.Analytics {
+///         Segment.Analytics.shared()
+///     }
 ///
 ///     ...
 ///
-///     private mutating func addListener() {
-///         cancellable = appPhase.receive.sink { phase in
-///             let segment = Segment.Analytics.shared()
-///
-///             switch phase {
-///                 case let .remoteNotificationsRegistered(.success(token)):
-///                     segment.registeredForRemoteNotifications(withDeviceToken: token)
-///                 case let .remoteNotificationsRegistered(.failure(error)):
-///                     segment.failedToRegisterForRemoteNotificationsWithError(error)
-///                 case let .remoteNotificationReceived(userInfo):
-///                     segment.receivedRemoteNotification(userInfo)
-///                 case let .continueUserActivity(activity, _):
-///                     segment.continue(activity)
-///                 case let .openUrl(url, options):
-///                     segment.open(url, options: options)
-///                 default:
-///                     break
+///     private func addObserver() {
+///         appPhaseTask = Task {
+///             for await appPhase in appPhase.receive.values {
+///                 switch appPhase {
+///                     case let .remoteNotificationsRegistered(.success(token)):
+///                         segment.registeredForRemoteNotifications(withDeviceToken: token)
+///                     case let .remoteNotificationsRegistered(.failure(error)):
+///                         segment.failedToRegisterForRemoteNotificationsWithError(error)
+///                     case let .remoteNotificationReceived(userInfo):
+///                         segment.receivedRemoteNotification(userInfo)
+///                     case let .continueUserActivity(activity, _):
+///                         segment.continue(activity)
+///                     case let .openUrl(url, options):
+///                         segment.open(url.maskingSensitiveQueryItems(), options: options)
+///                     default:
+///                         break
+///                 }
 ///             }
 ///         }
 ///     }

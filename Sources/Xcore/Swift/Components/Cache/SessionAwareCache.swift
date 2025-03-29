@@ -39,7 +39,7 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     private var lastActiveTime = ElapsedTime()
     private let inactivityDuration: Duration
     private let storage = LockIsolated<Set<Value>>([])
-    nonisolated(unsafe) private var cancellable: AnyCancellable?
+    private var appPhaseTask: Task<Void, Never>?
 
     /// Creates an instance of `SessionAwareCache`.
     ///
@@ -47,14 +47,11 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     ///   if the app remains in the background.
     public init(inactivityDuration: Duration = .seconds(30)) {
         self.inactivityDuration = inactivityDuration
+        addAppPhaseObserver()
+    }
 
-        withDelay(.seconds(0.3)) { [weak self] in
-            // Delay to avoid:
-            // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
-            // exclusive access. This class can be used inside analytics client that invokes
-            // other clients.
-            self?.addAppPhaseObserver()
-        }
+    deinit {
+        appPhaseTask?.cancel()
     }
 
     /// Observes app lifecycle events to manage session activity.
@@ -63,19 +60,19 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     /// the app returns to the foreground, the last active time is checked. If the
     /// session has expired, the cached values are cleared.
     private func addAppPhaseObserver() {
-        cancellable = appPhase.receive.sink { [weak self] appPhase in
-            guard let self else { return }
-
-            switch appPhase {
-                case .background:
-                    lastActiveTime.reset()
-                case .willEnterForeground:
-                    if lastActiveTime.hasElapsed(inactivityDuration) {
-                        // Reset the cache for a new session
-                        storage.withValue { $0.removeAll() }
-                    }
-                default:
-                    break
+        appPhaseTask = Task {
+            for await appPhase in appPhase.receive.values {
+                switch appPhase {
+                    case .background:
+                        lastActiveTime.reset()
+                    case .willEnterForeground:
+                        if lastActiveTime.hasElapsed(inactivityDuration) {
+                            // Reset the cache for a new session
+                            storage.withValue { $0.removeAll() }
+                        }
+                    default:
+                        break
+                }
             }
         }
     }

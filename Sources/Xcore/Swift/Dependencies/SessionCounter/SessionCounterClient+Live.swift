@@ -32,9 +32,13 @@ private final class LiveSessionCounterClient: @unchecked Sendable {
         addObserver()
     }
 
+    deinit {
+        appStatusTask?.cancel()
+    }
+
     private func addObserver() {
         appStatusTask = Task {
-            for await status in appStatus.receive.values where status == .session(.unlocked) {
+            for await appStatus in appStatus.receive.values where appStatus == .session(.unlocked) {
                 increment()
             }
         }
