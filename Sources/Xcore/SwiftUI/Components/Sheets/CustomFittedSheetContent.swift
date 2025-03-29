@@ -19,9 +19,9 @@ import SwiftUI
 ///
 /// ```swift
 /// CustomFittedSheetContent {
-///     Button("Option 1") { }
-///     Button("Option 2") { }
-///     Button("Option 3") { }
+///     Button("Option 1") {}
+///     Button("Option 2") {}
+///     Button("Option 3") {}
 /// } header: {
 ///     Label("Sheet Title", systemImage: "tv")
 ///         .font(.app(.title3))
