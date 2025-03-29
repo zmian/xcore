@@ -18,15 +18,15 @@ public struct UnimplementedAnalyticsProvider: AnalyticsProvider {
     }
 
     public func identify(userId: String?, traits: EncodableDictionary) {
-        reportIssue("AnalyticsProvider.identify is unimplemented")
+        IssueReporting.unimplemented("\(AnalyticsProvider.self).identify")
     }
 
     public func setEnabled(_ enable: Bool) {
-        reportIssue("AnalyticsProvider.setEnabled is unimplemented")
+        IssueReporting.unimplemented("\(AnalyticsProvider.self).setEnabled")
     }
 
     public func reset() {
-        reportIssue("AnalyticsProvider.reset is unimplemented")
+        IssueReporting.unimplemented("\(AnalyticsProvider.self).reset")
     }
 
     private func issueMessage(_ event: AnalyticsEventProtocol) -> String {
