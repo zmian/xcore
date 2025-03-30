@@ -25,12 +25,12 @@ struct PondTests {
     @Test
     func pond_Basics_Composite() throws {
         let suite = try #require(UserDefaults(suiteName: "pond_test"))
-        let stub = InMemoryPond()
+        let mock = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
         try assertBasicCases(with: .composite(id: "test") { method, key in
             if key == .testValue2 {
-                return stub
+                return mock
             }
 
             return userDefaults
