@@ -77,27 +77,36 @@ extension Error {
             return error.id
         }
 
-        return "general"
+        let code = nsError.code == 1 ? "" : ":\(nsError.code)"
+        return "\(nsError.domain)\(code)".removingAnonymousContextDescriptor()
     }
 
     public var title: String {
-        appError.title
+        appError?.title ?? localizedError?.errorDescription ?? localizedDescription
     }
 
     public var message: String {
-        appError.message
+        appError?.message ?? localizedError?.failureReason ?? nsError.localizedFailureReason ?? AppError.general.message
     }
 
     public var debugMessage: String? {
-        appError.debugMessage
+        appError?.debugMessage
     }
 
     public var logLevel: LogLevel? {
-        appError.logLevel
+        appError?.logLevel
     }
 
-    private var appError: any AppErrorProtocol {
-        self as? any AppErrorProtocol ?? AppError.general
+    private var appError: (any AppErrorProtocol)? {
+        self as? any AppErrorProtocol
+    }
+
+    private var localizedError: (any LocalizedError)? {
+        self as? any LocalizedError
+    }
+
+    private var nsError: NSError {
+        self as NSError
     }
 }
 
