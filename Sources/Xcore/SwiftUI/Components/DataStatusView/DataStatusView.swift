@@ -103,13 +103,13 @@ import SwiftUI
 ///                 Button.help {
 ///                     // Handle help
 ///                 }
-///                 .buttonStyle(.primary)
+///                 .buttonStyle(.secondary)
 ///             }
 ///
 ///             Button.retry {
 ///                 onRetry?(error)
 ///             }
-///             .buttonStyle(.secondary)
+///             .buttonStyle(.primary)
 ///         }
 ///     }
 /// }
