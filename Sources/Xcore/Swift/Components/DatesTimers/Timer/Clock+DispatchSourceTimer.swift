@@ -30,7 +30,7 @@ struct DispatchSourceTimerClock: Clock {
     init() {}
 
     func sleep(until deadline: Instant, tolerance: Duration? = nil) async throws {
-        nonisolated(unsafe) let timer = DispatchSource.makeTimerSource(queue: .global(qos: .default))
+        let timer = DispatchSource.makeTimerSource(queue: .global(qos: .default))
 
         try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
