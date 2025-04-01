@@ -6,15 +6,17 @@
 
 import SwiftUI
 
-struct DataStatusViewPreview: View {
+struct DataStatusListPreview: View {
     private typealias Status = DataStatus<[Ocean], AppError>
     @State private var data: Status = .idle
 
     var body: some View {
-        DataStatusView(data) { oceans in
-            List(oceans) { ocean in
+        DataStatusList(data) { oceans in
+            ForEach(oceans) { ocean in
                 Text(ocean.name)
             }
+        } contentUnavailable: {
+            contentUnavailableView
         } failure: { error in
             ErrorRecoveryView(error) { error in
                 Task {
@@ -33,6 +35,10 @@ struct DataStatusViewPreview: View {
                         button("Loading", action: .loading)
                         button("Success", action: .success(Ocean.data))
                         button("Failure", action: .failure(Ocean.error))
+                    }
+
+                    Section("Empty State") {
+                        button("Content Unavailable", action: .success([]))
                     }
                 } label: {
                     Label("Settings", systemImage: .gear)
@@ -57,11 +63,25 @@ struct DataStatusViewPreview: View {
             data = .success(Ocean.data)
         }
     }
+
+    private var contentUnavailableView: some View {
+        ContentUnavailableView {
+            Label("Ocean Data Unavailable", systemImage: "water.waves")
+        } description: {
+            Text("There is currently no ocean data available. Please check back later or refresh the view to check for new data.")
+        } actions: {
+            Button("Refresh") {
+                Task {
+                    await fetch()
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Preview
 
 #Preview {
-    DataStatusViewPreview()
+    DataStatusListPreview()
         .embedInNavigation()
 }

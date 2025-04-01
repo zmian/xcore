@@ -60,6 +60,7 @@ extension Destination: @preconcurrency CaseIterable {
         textFields,
         text,
         dataStatusView,
+        dataStatusList,
         story,
         images,
         window,
@@ -126,6 +127,13 @@ extension Destination {
         title: "Data Status View",
         subtitle: "Custom views for each state of DataStatus",
         content: DataStatusViewPreview()
+    )
+
+    private static let dataStatusList = Self(
+        icon: "list.bullet.rectangle.portrait",
+        title: "Data Status List",
+        subtitle: "List with support for each state of DataStatus",
+        content: DataStatusListPreview()
     )
 
     private static let story = Self(
