@@ -17,7 +17,7 @@ public struct WebView: View {
     /// A closure to handle JavaScript messages from the web content.
     public typealias MessageHandler = @MainActor (_ body: Any) async throws -> (any Sendable)?
     /// A closure to decide the navigation policy for a given action.
-    public typealias PolicyDecision = (
+    public typealias PolicyDecision = @MainActor (
         _ webView: WKWebView,
         _ decidePolicyForNavigationAction: WKNavigationAction
     ) async -> WKNavigationActionPolicy
@@ -50,7 +50,7 @@ public struct WebView: View {
         switch scheme {
             case .email, .sms, .tel:
                 @Dependency(\.openUrl) var openUrl
-                openUrl(action.request.url)
+                await openUrl(action.request.url)
                 return .cancel
             default:
                 return .allow
