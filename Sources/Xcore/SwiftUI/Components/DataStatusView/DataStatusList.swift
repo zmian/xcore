@@ -104,11 +104,11 @@ public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, Suc
             switch data {
                 case .loading where isLoadingStateEnabled:
                     ProgressView()
-                case .success where ContentUnavailable.self != Never.self && data.isEmpty:
-                    contentUnavailable()
+                case .success, .reloading:
+                    contentUnavailableViewIfEmpty
                 case let .failure(error) where hasFailureView:
                     failure(error)
-                default:
+                case .idle, .loading, .failure:
                     EmptyView()
             }
         }
@@ -118,6 +118,13 @@ public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, Suc
                 .onChange(of: data) { _, data in
                     error = data.error
                 }
+        }
+    }
+
+    @ViewBuilder
+    private var contentUnavailableViewIfEmpty: some View {
+        if ContentUnavailable.self != Never.self && data.isEmpty {
+            contentUnavailable()
         }
     }
 

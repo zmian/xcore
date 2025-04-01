@@ -144,28 +144,16 @@ public struct DataStatusView<Success, Failure: Error, SuccessView: View, Failure
 
     public var body: some View {
         switch data {
-            case .idle:
-                placeholder
-            case .loading:
-                if isLoadingStateEnabled {
+            case .loading where isLoadingStateEnabled:
+                placeholder.overlay {
                     ProgressView()
-                        .frame(maxWidth: .infinity)
-                } else {
-                    placeholder
                 }
             case let .success(value), let .reloading(value):
                 success(value)
-            case let .failure(error):
-                failureView(error)
-        }
-    }
-
-    @ViewBuilder
-    private func failureView(_ error: Failure) -> some View {
-        if FailureView.self != Never.self {
-            failure(error)
-        } else {
-            placeholder
+            case let .failure(error) where FailureView.self != Never.self:
+                failure(error)
+            case .idle, .loading, .failure:
+                placeholder
         }
     }
 

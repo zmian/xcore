@@ -41,11 +41,13 @@ struct DataStatusListPreview: View {
                         button("Idle", action: .idle)
                         button("Loading", action: .loading)
                         button("Success", action: .success(Ocean.data))
+                        button("Reloading", action: .reloading(Ocean.data))
                         button("Failure", action: .failure(Ocean.error))
                     }
 
                     Section("Empty State") {
-                        button("Content Unavailable", action: .success([]))
+                        button("Content Unavailable (.success)", action: .success([]))
+                        button("Content Unavailable (.reloading)", action: .reloading([]))
                     }
 
                     Section {
