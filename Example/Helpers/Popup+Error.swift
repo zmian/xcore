@@ -8,11 +8,11 @@ import SwiftUI
 
 extension View {
     /// Displays popup with the title and message provided by the error.
-    func popup(
-        _ error: Binding<AppError?>,
+    func popup<Failure: Error>(
+        _ error: Binding<Failure?>,
         axis: Axis = .horizontal,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder footer: @escaping (Binding<AppError?>) -> some View
+        @ViewBuilder footer: @escaping (Binding<Failure?>) -> some View
     ) -> some View {
         popup(
             error.wrappedValue?.title ?? "",
@@ -36,8 +36,8 @@ extension View {
 
     /// Displays popup with the title and message provided by the error with "OK"
     /// labeled button to dismiss the popup.
-    func popup(
-        _ error: Binding<AppError?>,
+    func popup<Failure: Error>(
+        _ error: Binding<Failure?>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
         action: (() -> Void)? = nil
     ) -> some View {
@@ -52,30 +52,38 @@ extension View {
     }
 }
 
-private struct ErrorPopupDefaultActions: View {
+private struct ErrorPopupDefaultActions<Failure: Error>: View {
     @Dependency(\.openUrl) private var openUrl
-    private let error: Binding<AppError?>
+    private let error: Binding<Failure?>
     private let action: (() -> Void)?
 
-    init(_ error: Binding<AppError?>, action: (() -> Void)? = nil) {
+    init(_ error: Binding<Failure?>, action: (() -> Void)? = nil) {
         self.error = error
         self.action = action
     }
 
     var body: some View {
-        if error.openAppSettings {
-            Button.openAppSettings {
+        if let appError = error.wrappedValue as? AppError {
+            if appError.openAppSettings {
+                Button.openAppSettings {
+                    error.wrappedValue = nil
+                    openUrl(.settingsApp)
+                    action?()
+                }
+                .buttonStyle(.primary)
+            }
+
+            Button.okay {
                 error.wrappedValue = nil
-                openUrl(.settingsApp)
+                action?()
+            }
+            .buttonStyle(appError.openAppSettings ? .secondary : .primary)
+        } else {
+            Button.okay {
+                error.wrappedValue = nil
                 action?()
             }
             .buttonStyle(.primary)
         }
-
-        Button.okay {
-            error.wrappedValue = nil
-            action?()
-        }
-        .buttonStyle(error.openAppSettings ? .secondary : .primary)
     }
 }
