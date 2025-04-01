@@ -57,6 +57,8 @@ import SwiftUI
 ///             ForEach(places, id: \.self) { place in
 ///                 Text(place)
 ///             }
+///         } contentUnavailable: {
+///             Text("No places available")
 ///         } failure: { error in
 ///             // Optionally provide a view to display when an error occurs.
 ///             Button("Reload") {
