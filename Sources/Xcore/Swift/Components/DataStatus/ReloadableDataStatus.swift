@@ -356,6 +356,41 @@ extension ReloadableDataStatus {
     }
 }
 
+// MARK: - DataStatus
+
+extension ReloadableDataStatus {
+    /// Creates a new `ReloadableDataStatus` instance from a given `DataStatus` value.
+    ///
+    /// This initializer maps a `DataStatus` to a corresponding `ReloadableDataStatus`:
+    /// - `.idle` becomes `ReloadableDataStatus.idle`.
+    /// - `.loading` becomes `ReloadableDataStatus.loading`.
+    /// - `.success` becomes `ReloadableDataStatus.success` with the associated value.
+    /// - `.failure` becomes `ReloadableDataStatus.failure` with the associated error.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let dataStatus: DataStatus<String, MyError> = .success("Data")
+    /// let status = ReloadableDataStatus(dataStatus)
+    /// print(status) // ReloadableDataStatus.success("Data")
+    /// ```
+    ///
+    /// - Parameter dataStatus: A `DataStatus` value representing the current state of a data operation.
+    /// - Returns: A new `ReloadableDataStatus` instance corresponding to the given `dataStatus`.
+    public init(_ dataStatus: DataStatus<Value, Failure>) {
+        switch dataStatus {
+            case .idle:
+                self = .idle
+            case .loading:
+                self = .loading
+            case let .success(value):
+                self = .success(value)
+            case let .failure(error):
+                self = .failure(error)
+        }
+    }
+}
+
 // MARK: - Void
 
 extension ReloadableDataStatus where Value == Void {
@@ -386,6 +421,13 @@ extension ReloadableDataStatus {
 
 // MARK: - isFailureOrEmpty
 
+extension ReloadableDataStatus {
+    /// A Boolean property indicating whether the status is failure.
+    public var isFailureOrEmpty: Bool {
+        isFailure
+    }
+}
+
 extension ReloadableDataStatus where Value: Collection {
     /// A Boolean property indicating whether the status is failure or value
     /// collection is empty.
@@ -395,12 +437,5 @@ extension ReloadableDataStatus where Value: Collection {
             case let .success(value), let .reloading(value): value.isEmpty
             case .failure: true
         }
-    }
-}
-
-extension ReloadableDataStatus {
-    /// A Boolean property indicating whether the status is failure.
-    public var isFailureOrEmpty: Bool {
-        isFailure
     }
 }
