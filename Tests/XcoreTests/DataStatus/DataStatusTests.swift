@@ -21,7 +21,7 @@ struct DataStatusTests {
         status = .failure(.general)
         #expect(status.isFailureOrEmpty == true)
 
-        // False, collection is empty
+        // False, collection is not empty
         status = .success(["Hello"])
         #expect(status.isFailureOrEmpty == false)
 

@@ -21,7 +21,7 @@ struct ReloadableDataStatusTests {
         status = .failure(.general)
         #expect(status.isFailureOrEmpty == true)
 
-        // False, collection is empty
+        // False, collection is not empty
         status = .success(["Hello"])
         #expect(status.isFailureOrEmpty == false)
 
@@ -33,7 +33,7 @@ struct ReloadableDataStatusTests {
         status = .reloading([])
         #expect(status.isFailureOrEmpty == true)
 
-        // False, collection is empty
+        // False, collection is not empty
         status = .reloading(["Hello"])
         #expect(status.isFailureOrEmpty == false)
     }
