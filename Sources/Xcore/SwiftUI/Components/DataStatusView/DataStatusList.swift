@@ -89,7 +89,7 @@ import SwiftUI
 public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, SuccessView: View, FailureView: View, ContentUnavailable: View>: View {
     @Environment(\.dataStatusLoadingStateEnabled) private var isLoadingStateEnabled
     @State private var error: Failure?
-    private let data: ReloadableDataStatus<Success, Failure>
+    private let data: DataStatus<Success, Failure>
     private let success: (Success) -> SuccessView
     private let failure: (Failure) -> FailureView
     private let contentUnavailable: () -> ContentUnavailable
@@ -104,7 +104,7 @@ public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, Suc
             switch data {
                 case .loading where isLoadingStateEnabled:
                     ProgressView()
-                case .success, .reloading:
+                case .success:
                     contentUnavailableViewIfEmpty
                 case let .failure(error) where hasFailureView:
                     failure(error)
@@ -159,7 +159,7 @@ extension DataStatusList {
         @ViewBuilder contentUnavailable: @escaping () -> ContentUnavailable,
         @ViewBuilder failure: @escaping (Failure) -> FailureView
     ) {
-        self.data = .init(data)
+        self.data = data
         self.success = success
         self.contentUnavailable = contentUnavailable
         self.failure = failure
@@ -270,7 +270,7 @@ extension DataStatusList {
         @ViewBuilder contentUnavailable: @escaping () -> ContentUnavailable,
         @ViewBuilder failure: @escaping (Failure) -> FailureView
     ) {
-        self.data = data
+        self.data = .init(data)
         self.success = success
         self.contentUnavailable = contentUnavailable
         self.failure = failure
@@ -356,17 +356,5 @@ extension DataStatusList {
             contentUnavailable: { fatalError() },
             failure: { _ in fatalError() }
         )
-    }
-}
-
-// MARK: - Helpers
-
-extension ReloadableDataStatus {
-    fileprivate var isEmpty: Bool {
-        guard let value else {
-            return false
-        }
-
-        return Mirror.isEmpty(value) == true
     }
 }

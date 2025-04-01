@@ -125,8 +125,9 @@ extension ReloadableDataStatus {
         }
     }
 
-    /// Transitions the status to `loading` if currently `idle` or `failure`, or to
-    /// `reloading` if the status is `success` or already `reloading`.
+    /// Transitions the status to `.loading` if it is currently `.idle` or
+    /// `.failure`, or to `.reloading` if the status is `.success` or `.reloading`
+    /// and the associated value is not empty.
     ///
     /// Use this method to update the status before beginning a new data load.
     ///
@@ -138,11 +139,14 @@ extension ReloadableDataStatus {
     ///
     /// status = .success("Fetched Data")
     /// status.startLoading() // status becomes `.reloading("Fetched Data")`
+    ///
+    /// status = .success("")
+    /// status.startLoading() // status becomes `.loading`
     /// ```
     public mutating func startLoading() {
         switch self {
             case let .success(value), let .reloading(value):
-                self = .reloading(value)
+                self = isEmpty ? .loading : .reloading(value)
             case .idle, .loading, .failure:
                 self = .loading
         }
@@ -359,9 +363,11 @@ extension ReloadableDataStatus {
 // MARK: - DataStatus
 
 extension ReloadableDataStatus {
-    /// Creates a new `ReloadableDataStatus` instance from a given `DataStatus` value.
+    /// Creates a new `ReloadableDataStatus` instance from a given `DataStatus`
+    /// value.
     ///
-    /// This initializer maps a `DataStatus` to a corresponding `ReloadableDataStatus`:
+    /// This initializer maps a `DataStatus` to a corresponding
+    /// `ReloadableDataStatus`:
     /// - `.idle` becomes `ReloadableDataStatus.idle`.
     /// - `.loading` becomes `ReloadableDataStatus.loading`.
     /// - `.success` becomes `ReloadableDataStatus.success` with the associated value.
@@ -375,8 +381,10 @@ extension ReloadableDataStatus {
     /// print(status) // ReloadableDataStatus.success("Data")
     /// ```
     ///
-    /// - Parameter dataStatus: A `DataStatus` value representing the current state of a data operation.
-    /// - Returns: A new `ReloadableDataStatus` instance corresponding to the given `dataStatus`.
+    /// - Parameter dataStatus: A `DataStatus` value representing the current state
+    ///   of a data operation.
+    /// - Returns: A new `ReloadableDataStatus` instance corresponding to the given
+    ///   `dataStatus`.
     public init(_ dataStatus: DataStatus<Value, Failure>) {
         switch dataStatus {
             case .idle:
@@ -437,5 +445,17 @@ extension ReloadableDataStatus where Value: Collection {
             case let .success(value), let .reloading(value): value.isEmpty
             case .failure: true
         }
+    }
+}
+
+// MARK: - isEmpty
+
+extension ReloadableDataStatus {
+    var isEmpty: Bool {
+        guard let value else {
+            return false
+        }
+
+        return Mirror.isEmpty(value) == true
     }
 }

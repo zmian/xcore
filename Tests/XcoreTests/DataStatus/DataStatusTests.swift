@@ -10,6 +10,39 @@ import Foundation
 
 struct DataStatusTests {
     @Test
+    func isEmpty() {
+        var status = DataStatus<[String], AppError>.idle
+        #expect(status.isEmpty == false)
+
+        // False, collection case is not success
+        status = .loading
+        #expect(status.isEmpty == false)
+
+        // False, collection case is not success
+        status = .failure(.general)
+        #expect(status.isEmpty == false)
+
+        // False, collection is not empty
+        status = .success(["Hello"])
+        #expect(status.isEmpty == false)
+
+        // True, collection is empty
+        status = .success([])
+        #expect(status.isEmpty == true)
+
+        // String
+        var stringStatus = DataStatus<String, AppError>.idle
+
+        // False, string is not empty
+        stringStatus = .success("Hello")
+        #expect(stringStatus.isEmpty == false)
+
+        // True, string is empty
+        stringStatus = .success("")
+        #expect(stringStatus.isEmpty == true)
+    }
+
+    @Test
     func isFailureOrEmpty() {
         var status = DataStatus<[String], AppError>.idle
         #expect(status.isFailureOrEmpty == false)
@@ -28,6 +61,17 @@ struct DataStatusTests {
         // True, collection is empty
         status = .success([])
         #expect(status.isFailureOrEmpty == true)
+
+        // String
+        var stringStatus = DataStatus<String, AppError>.idle
+
+        // False, string is not empty
+        stringStatus = .success("Hello")
+        #expect(stringStatus.isFailureOrEmpty == false)
+
+        // True, string is empty
+        stringStatus = .success("")
+        #expect(stringStatus.isFailureOrEmpty == true)
     }
 
     @Test
@@ -99,6 +143,29 @@ struct DataStatusTests {
 
         let resultFailure: Result<String, AppError> = .failure(.general)
         let statusFailure = DataStatus(resultFailure)
+        #expect(statusFailure == .failure(.general))
+    }
+
+    @Test
+    func initWithReloadableDataStatus() {
+        let rdsIdle: ReloadableDataStatus<String, AppError> = .idle
+        let statusIdle = DataStatus(rdsIdle)
+        #expect(statusIdle == .idle)
+
+        let rdsLoading: ReloadableDataStatus<String, AppError> = .loading
+        let statusLoading = DataStatus(rdsLoading)
+        #expect(statusLoading == .loading)
+
+        let rdsSuccess: ReloadableDataStatus<String, AppError> = .success("Data")
+        let statusSuccess = DataStatus(rdsSuccess)
+        #expect(statusSuccess == .success("Data"))
+
+        let rdsReloading: ReloadableDataStatus<String, AppError> = .reloading("Data")
+        let statusReloading = DataStatus(rdsReloading)
+        #expect(statusReloading == .success("Data"))
+
+        let rdsFailure: Result<String, AppError> = .failure(.general)
+        let statusFailure = DataStatus(rdsFailure)
         #expect(statusFailure == .failure(.general))
     }
 

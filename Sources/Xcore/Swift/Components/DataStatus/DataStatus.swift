@@ -301,6 +301,46 @@ extension DataStatus {
     }
 }
 
+// MARK: - ReloadableDataStatus
+
+extension DataStatus {
+    /// Creates a new `DataStatus` instance from a given `ReloadableDataStatus`
+    /// value.
+    ///
+    /// This initializer maps a `ReloadableDataStatus` to a corresponding
+    /// `DataStatus`:
+    /// - `.idle` becomes `DataStatus.idle`.
+    /// - `.loading` becomes `DataStatus.loading`.
+    /// - `.success` becomes `DataStatus.success` with the associated value.
+    /// - `.reloading` becomes `DataStatus.success` with the associated value.
+    /// - `.failure` becomes `DataStatus.failure` with the associated error.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let dataStatus: ReloadableDataStatus<String, MyError> = .success("Data")
+    /// let status = DataStatus(dataStatus)
+    /// print(status) // DataStatus.success("Data")
+    /// ```
+    ///
+    /// - Parameter dataStatus: A `ReloadableDataStatus` value representing the
+    ///   current state of a data operation.
+    /// - Returns: A new `DataStatus` instance corresponding to the given
+    ///   `ReloadableDataStatus`.
+    public init(_ dataStatus: ReloadableDataStatus<Success, Failure>) {
+        switch dataStatus {
+            case .idle:
+                self = .idle
+            case .loading:
+                self = .loading
+            case let .success(value), let .reloading(value):
+                self = .success(value)
+            case let .failure(error):
+                self = .failure(error)
+        }
+    }
+}
+
 // MARK: - Void
 
 extension DataStatus where Success == Void {
@@ -347,5 +387,17 @@ extension DataStatus {
     /// A Boolean property indicating whether the status is failure.
     public var isFailureOrEmpty: Bool {
         isFailure
+    }
+}
+
+// MARK: - isEmpty
+
+extension DataStatus {
+    var isEmpty: Bool {
+        guard let value else {
+            return false
+        }
+
+        return Mirror.isEmpty(value) == true
     }
 }

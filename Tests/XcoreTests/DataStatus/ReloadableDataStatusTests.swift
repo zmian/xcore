@@ -10,6 +10,55 @@ import Foundation
 
 struct ReloadableDataStatusTests {
     @Test
+    func isEmpty() {
+        var status = ReloadableDataStatus<[String], AppError>.idle
+        #expect(status.isEmpty == false)
+
+        // False, collection case is not success
+        status = .loading
+        #expect(status.isEmpty == false)
+
+        // False, collection case is not success
+        status = .failure(.general)
+        #expect(status.isEmpty == false)
+
+        // False, collection is not empty
+        status = .success(["Hello"])
+        #expect(status.isEmpty == false)
+
+        // True, collection is empty
+        status = .success([])
+        #expect(status.isEmpty == true)
+
+        // False, collection is not empty
+        status = .reloading(["Hello"])
+        #expect(status.isEmpty == false)
+
+        // True, collection is empty
+        status = .reloading([])
+        #expect(status.isEmpty == true)
+
+        // String
+        var stringStatus = ReloadableDataStatus<String, AppError>.idle
+
+        // False, string is not empty
+        stringStatus = .success("Hello")
+        #expect(stringStatus.isEmpty == false)
+
+        // True, string is empty
+        stringStatus = .success("")
+        #expect(stringStatus.isEmpty == true)
+
+        // False, string is not empty
+        stringStatus = .reloading("Hello")
+        #expect(stringStatus.isEmpty == false)
+
+        // True, string is empty
+        stringStatus = .reloading("")
+        #expect(stringStatus.isEmpty == true)
+    }
+
+    @Test
     func isFailureOrEmpty() {
         var status = ReloadableDataStatus<[String], AppError>.idle
         #expect(status.isFailureOrEmpty == false)
@@ -33,9 +82,24 @@ struct ReloadableDataStatusTests {
         status = .reloading([])
         #expect(status.isFailureOrEmpty == true)
 
-        // False, collection is not empty
-        status = .reloading(["Hello"])
-        #expect(status.isFailureOrEmpty == false)
+        // String
+        var stringStatus = ReloadableDataStatus<String, AppError>.idle
+
+        // False, string is not empty
+        stringStatus = .success("Hello")
+        #expect(stringStatus.isFailureOrEmpty == false)
+
+        // True, string is empty
+        stringStatus = .success("")
+        #expect(stringStatus.isFailureOrEmpty == true)
+
+        // False, string is not empty
+        stringStatus = .reloading("Hello")
+        #expect(stringStatus.isFailureOrEmpty == false)
+
+        // True, string is empty
+        stringStatus = .reloading("")
+        #expect(stringStatus.isFailureOrEmpty == true)
     }
 
     @Test
@@ -65,6 +129,41 @@ struct ReloadableDataStatusTests {
         status = .reloading("Fetched Data")
         status.startLoading()
         #expect(status == .reloading("Fetched Data"))
+
+        // Collection Value
+        var collectionStatus = ReloadableDataStatus<[String], AppError>.idle
+
+        // Not Empty: success → reloading
+        collectionStatus = .success(["Fetched Data"])
+        collectionStatus.startLoading()
+        #expect(collectionStatus == .reloading(["Fetched Data"]))
+
+        // Not Empty: reloading → reloading
+        collectionStatus = .reloading(["Fetched Data"])
+        collectionStatus.startLoading()
+        #expect(collectionStatus == .reloading(["Fetched Data"]))
+
+        // Empty: success → loading
+        collectionStatus = .success([])
+        collectionStatus.startLoading()
+        #expect(collectionStatus == .loading)
+
+        // Empty: reloading → loading
+        collectionStatus = .reloading([])
+        collectionStatus.startLoading()
+        #expect(collectionStatus == .loading)
+
+        // Empty String Value
+
+        // success → loading
+        status = .success("")
+        status.startLoading()
+        #expect(status == .loading)
+
+        // reloading → loading
+        status = .reloading("")
+        status.startLoading()
+        #expect(status == .loading)
     }
 
     @Test

@@ -138,7 +138,7 @@ import SwiftUI
 /// ```
 public struct DataStatusView<Success, Failure: Error, SuccessView: View, FailureView: View>: View {
     @Environment(\.dataStatusLoadingStateEnabled) private var isLoadingStateEnabled
-    private let data: ReloadableDataStatus<Success, Failure>
+    private let data: DataStatus<Success, Failure>
     private let success: (Success) -> SuccessView
     private let failure: (Failure) -> FailureView
 
@@ -148,7 +148,7 @@ public struct DataStatusView<Success, Failure: Error, SuccessView: View, Failure
                 placeholder.overlay {
                     ProgressView()
                 }
-            case let .success(value), let .reloading(value):
+            case let .success(value):
                 success(value)
             case let .failure(error) where FailureView.self != Never.self:
                 failure(error)
@@ -197,7 +197,7 @@ extension DataStatusView {
         @ViewBuilder success: @escaping (Success) -> SuccessView,
         @ViewBuilder failure: @escaping (Failure) -> FailureView
     ) {
-        self.data = data
+        self.data = .init(data)
         self.success = success
         self.failure = failure
     }

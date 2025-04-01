@@ -105,11 +105,7 @@ struct DataStatusListPreview: View {
     }
 
     private func fetch() async {
-        data = if let value = data.value, !value.isEmpty {
-            .reloading(value)
-        } else {
-            .loading
-        }
+        data.startLoading()
 
         try? await Task.sleep(for: .seconds(1))
 
