@@ -12,7 +12,7 @@ struct CharacterSetTests {
     @Test
     func characters() {
         let characters = CharacterSet.uppercaseLetters.characters()
-        #expect(characters.count == 1862)
+        #expect(characters.count == 1889)
         #expect(characters.prefix(3) == ["A", "B", "C"])
     }
 

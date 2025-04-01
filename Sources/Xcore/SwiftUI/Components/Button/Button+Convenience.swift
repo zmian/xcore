@@ -196,6 +196,13 @@ extension Button<Label<Text, Image>> {
             .labelStyle(.iconOnly)
             .accessibilityIdentifier("infoButton")
     }
+
+    /// A button with `gear` icon as the label and given action.
+    static func settings(action: @escaping @MainActor () -> Void) -> some View {
+        Button("Settings", systemImage: "gear", action: action)
+            .labelStyle(.iconOnly)
+            .accessibilityIdentifier("settingsButton")
+    }
 }
 
 // MARK: - Learn More, Read More, See More, See More/Less, See All, See All/Less

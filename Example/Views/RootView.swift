@@ -8,7 +8,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
-    private let items = Menu.allCases
+    private let items = Destination.allCases
 
     var body: some View {
         List {

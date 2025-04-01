@@ -7,7 +7,7 @@
 import SwiftUI
 
 @MainActor
-struct Menu: Identifiable {
+struct Destination: Identifiable {
     let id: UUID
     let icon: SystemAssetIdentifier
     let title: String
@@ -49,8 +49,8 @@ struct Menu: Identifiable {
 
 // MARK: - CaseIterable
 
-extension Menu: @preconcurrency CaseIterable {
-    static var allCases: [Self] = [
+extension Destination: @preconcurrency CaseIterable {
+    static let allCases: [Self] = [
         separators,
         buttons,
         capsules,
@@ -59,6 +59,7 @@ extension Menu: @preconcurrency CaseIterable {
         popups,
         textFields,
         text,
+        dataStatusView,
         story,
         images,
         window,
@@ -70,7 +71,7 @@ extension Menu: @preconcurrency CaseIterable {
 
 // MARK: - Items
 
-extension Menu {
+extension Destination {
     private static let separators = Self(
         icon: .minus,
         title: "Separators",
@@ -118,6 +119,13 @@ extension Menu {
         title: "Text",
         subtitle: "Built-in Markdown Support",
         content: TextView()
+    )
+
+    private static let dataStatusView = Self(
+        icon: "rectangle.2.swap",
+        title: "Data Status View",
+        subtitle: "Custom views for each state of DataStatus",
+        content: DataStatusViewPreview()
     )
 
     private static let story = Self(

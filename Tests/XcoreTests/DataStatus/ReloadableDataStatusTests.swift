@@ -158,6 +158,25 @@ struct ReloadableDataStatusTests {
     }
 
     @Test
+    func initWithDataStatus() {
+        let dsIdle: DataStatus<String, AppError> = .idle
+        let statusIdle = ReloadableDataStatus(dsIdle)
+        #expect(statusIdle == .idle)
+
+        let dsLoading: DataStatus<String, AppError> = .loading
+        let statusLoading = ReloadableDataStatus(dsLoading)
+        #expect(statusLoading == .loading)
+
+        let dsSuccess: DataStatus<String, AppError> = .success("Data")
+        let statusSuccess = ReloadableDataStatus(dsSuccess)
+        #expect(statusSuccess == .success("Data"))
+
+        let dsFailure: Result<String, AppError> = .failure(.general)
+        let statusFailure = ReloadableDataStatus(dsFailure)
+        #expect(statusFailure == .failure(.general))
+    }
+
+    @Test
     func map() {
         func getNextInteger() -> ReloadableDataStatus<Int, AppError> { .success(5) }
         let integerStatus = getNextInteger()
