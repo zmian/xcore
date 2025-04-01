@@ -371,33 +371,36 @@ extension DataStatus {
 
 // MARK: - isFailureOrEmpty
 
+extension DataStatus {
+    /// A Boolean property indicating whether the current status is success and the
+    /// associated value is empty.
+    var isEmpty: Bool {
+        false
+    }
+
+    /// A Boolean property indicating whether the current status is failure.
+    public var isFailureOrEmpty: Bool {
+        isFailure
+    }
+}
+
 extension DataStatus where Success: Collection {
-    /// A Boolean property indicating whether the status is failure or value
-    /// collection is empty.
+    /// A Boolean property indicating whether the current status is success and the
+    /// associated value is empty.
+    var isEmpty: Bool {
+        switch self {
+            case let .success(value): value.isEmpty
+            case .idle, .loading, .failure: false
+        }
+    }
+
+    /// A Boolean property indicating whether the current status is failure or the
+    /// associated value is empty.
     public var isFailureOrEmpty: Bool {
         switch self {
             case .idle, .loading: false
             case let .success(value): value.isEmpty
             case .failure: true
         }
-    }
-}
-
-extension DataStatus {
-    /// A Boolean property indicating whether the status is failure.
-    public var isFailureOrEmpty: Bool {
-        isFailure
-    }
-}
-
-// MARK: - isEmpty
-
-extension DataStatus {
-    var isEmpty: Bool {
-        guard let value else {
-            return false
-        }
-
-        return Mirror.isEmpty(value) == true
     }
 }
