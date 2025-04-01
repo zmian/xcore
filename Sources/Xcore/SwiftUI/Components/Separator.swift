@@ -9,7 +9,9 @@ import SwiftUI
 extension View {
     /// Adds a separator to this view with the specified alignment.
     public func separator(hidden: Bool = false, alignment: Alignment = .bottom) -> some View {
-        overlay(Separator().hidden(hidden), alignment: alignment)
+        overlay(alignment: alignment) {
+            Separator().hidden(hidden)
+        }
     }
 }
 

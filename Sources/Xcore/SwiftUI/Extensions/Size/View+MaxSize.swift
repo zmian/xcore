@@ -8,7 +8,9 @@ import SwiftUI
 
 extension View {
     public func determineMaximumSize() -> some View {
-        overlay(DetermineMaximumSize())
+        overlay {
+            DetermineMaximumSize()
+        }
     }
 
     public func onMaximumSizeChange(_ action: @escaping @Sendable (CGSize) -> Void) -> some View {

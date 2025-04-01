@@ -9,8 +9,8 @@ import SwiftUI
 extension View {
     /// Layers a loader in front of this view when the given data status is
     /// `.loading`.
-    public func overlayLoader(
-        _ data: DataStatus<some Hashable, Error>,
+    public func overlayLoader<T>(
+        _ data: DataStatus<T, some Error>,
         alignment: Alignment = .center
     ) -> some View {
         overlayLoader(data.isLoading, alignment: alignment)
@@ -22,14 +22,13 @@ extension View {
         tint: Color? = nil,
         alignment: Alignment = .center
     ) -> some View {
-        overlay(
+        overlay(alignment: alignment) {
             ProgressView()
                 .unwrap(tint) { content, tint in
                     content.tint(tint)
                 }
-                .hidden(!show),
-            alignment: alignment
-        )
+                .hidden(!show)
+        }
     }
 
     /// Sets the transparency of this view to `0` when the given flag is `true` and

@@ -13,14 +13,14 @@ extension View {
         onChanged: @escaping (CGPoint) -> Void,
         onEnded: @escaping () -> Void
     ) -> some View {
-        overlay(
+        overlay {
             LongPressTrackingGestureRecognizer(
                 minimumPressDuration: minimumPressDuration,
                 allowableMovement: allowableMovement,
                 onChanged: onChanged,
                 onEnded: onEnded
             )
-        )
+        }
     }
 }
 
