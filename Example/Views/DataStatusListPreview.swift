@@ -7,25 +7,32 @@
 import SwiftUI
 
 struct DataStatusListPreview: View {
-    private typealias Status = DataStatus<[Ocean], AppError>
+    private typealias Status = ReloadableDataStatus<[Ocean], AppError>
     @State private var data: Status = .idle
+    @State private var showFailureAsAlert = true
 
     var body: some View {
-        DataStatusList(data) { oceans in
-            ForEach(oceans) { ocean in
-                Text(ocean.name)
+        Group {
+            if showFailureAsAlert {
+                failureAlertBody
+            } else {
+                customFailureViewBody
             }
-        } contentUnavailable: {
-            contentUnavailableView
-        } failure: { error in
-            ErrorRecoveryView(error) { error in
-                Task {
-                    await fetch()
-                }
-            }
+        }
+        // ✅ Built-in list modifier supported
+        .listStyle(.plain)
+        // ✅ Built-in refreshable modifier supported
+        .refreshable {
+            await fetch()
         }
         .task {
             await fetch()
+        }
+        .onAppear {
+            print("DataStatusList appeared")
+        }
+        .onDisappear {
+            print("DataStatusList disappeared")
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -40,6 +47,17 @@ struct DataStatusListPreview: View {
                     Section("Empty State") {
                         button("Content Unavailable", action: .success([]))
                     }
+
+                    Section {
+                        Button("Failure As Alert") {
+                            Task {
+                                showFailureAsAlert = true
+                                data = .loading // Allows alert to be re-displayed.
+                                try? await Task.sleep(for: .seconds(0.5))
+                                data = .failure(Ocean.error)
+                            }
+                        }
+                    }
                 } label: {
                     Label("Settings", systemImage: .gear)
                 }
@@ -47,16 +65,50 @@ struct DataStatusListPreview: View {
         }
     }
 
+    private var customFailureViewBody: some View {
+        DataStatusList(data) { oceans in
+            ForEach(oceans) { ocean in
+                Text(ocean.name)
+            }
+        } contentUnavailable: {
+            contentUnavailableView
+        } failure: { error in
+            ErrorRecoveryView(error) { error in
+                Task {
+                    await fetch()
+                }
+            }
+        }
+    }
+
+    private var failureAlertBody: some View {
+        DataStatusList(data) { oceans in
+            ForEach(oceans) { ocean in
+                Text(ocean.name)
+            }
+        } contentUnavailable: {
+            contentUnavailableView
+        }
+    }
+
     private func button(_ label: String, action: Status) -> some View {
         Button(label) {
             withAnimation {
+                if action.isFailure {
+                    showFailureAsAlert = false
+                }
                 data = action
             }
         }
     }
 
     private func fetch() async {
-        data = .loading
+        data = if let value = data.value, !value.isEmpty {
+            .reloading(value)
+        } else {
+            .loading
+        }
+
         try? await Task.sleep(for: .seconds(1))
 
         withAnimation {

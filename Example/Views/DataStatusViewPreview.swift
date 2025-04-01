@@ -25,6 +25,12 @@ struct DataStatusViewPreview: View {
         .task {
             await fetch()
         }
+        .onAppear {
+            print("DataStatusView appeared")
+        }
+        .onDisappear {
+            print("DataStatusView disappeared")
+        }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {

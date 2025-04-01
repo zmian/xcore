@@ -93,33 +93,34 @@ public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, Suc
     private let contentUnavailable: () -> ContentUnavailable
 
     public var body: some View {
-        DataStatusView(data) { value in
-            if !data.isEmpty {
-                List {
-                    success(value)
-                }
-            } else if ContentUnavailable.self != Never.self {
-                contentUnavailable()
-            } else {
-                placeholder
-            }
-        } failure: { error in
-            if FailureView.self != Never.self {
-                failure(error)
-            } else {
-                placeholder
-                    .popup($error)
+        List {
+            if let value = data.value, !data.isEmpty {
+                success(value)
             }
         }
-        .onChange(of: data) { _, data in
-            error = data.error
+        .overlay {
+            switch data {
+                case .loading where isLoadingStateEnabled:
+                    ProgressView()
+                case .success where ContentUnavailable.self != Never.self && data.isEmpty:
+                    contentUnavailable()
+                case let .failure(error) where hasFailureView:
+                    failure(error)
+                default:
+                    EmptyView()
+            }
+        }
+        .applyIf(!hasFailureView) { content in
+            content
+                .popup($error)
+                .onChange(of: data) { _, data in
+                    error = data.error
+                }
         }
     }
 
-    // Returns a placeholder view instead of using EmptyView, ensuring that
-    // lifecycle events such as `onAppear` or `onDisappear` are triggered.
-    private var placeholder: some View {
-        Color.clear
+    private var hasFailureView: Bool {
+        FailureView.self != Never.self
     }
 }
 
