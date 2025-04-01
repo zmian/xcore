@@ -7,15 +7,6 @@
 import SwiftUI
 
 extension View {
-    /// Layers a loader in front of this view when the given data status is
-    /// `.loading`.
-    public func overlayLoader<T>(
-        _ data: DataStatus<T, some Error>,
-        alignment: Alignment = .center
-    ) -> some View {
-        overlayLoader(data.isLoading, alignment: alignment)
-    }
-
     /// Layers a loader in front of this view when the given flag is `true`.
     public func overlayLoader(
         _ show: Bool,
