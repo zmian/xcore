@@ -38,19 +38,19 @@ public struct PasteboardClient: Sendable {
 // MARK: - Variants
 
 extension PasteboardClient {
-    /// Returns noop variant of `PasteboardClient`.
+    /// Returns the noop variant of `PasteboardClient`.
     public static var noop: Self {
         .init { _ in }
     }
 
-    /// Returns unimplemented variant of `PasteboardClient`.
+    /// Returns the unimplemented variant of `PasteboardClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.pasteboard)"#)
         }
     }
 
-    /// Returns live variant of `PasteboardClient`.
+    /// Returns the live variant of `PasteboardClient`.
     public static var live: Self {
         .init { string in
             #if canImport(UIKit)

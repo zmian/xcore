@@ -238,7 +238,7 @@ extension AppMonitoring {
 // MARK: - Variants
 
 extension AppMonitoring {
-    /// Returns noop variant of `AppMonitoring`.
+    /// Returns the noop variant of `AppMonitoring`.
     public static var noop: Self {
         .init(
             configure: {},
@@ -250,7 +250,7 @@ extension AppMonitoring {
         )
     }
 
-    /// Returns unimplemented variant of `AppMonitoring`.
+    /// Returns the unimplemented variant of `AppMonitoring`.
     public static var unimplemented: Self {
         .init(
             configure: {

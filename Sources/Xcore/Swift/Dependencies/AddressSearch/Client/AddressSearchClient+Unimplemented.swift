@@ -37,7 +37,7 @@ public struct UnimplementedAddressSearchClient: AddressSearchClient {
 // MARK: - Dot Syntax Support
 
 extension AddressSearchClient where Self == UnimplementedAddressSearchClient {
-    /// Returns unimplemented variant of `AddressSearchClient`.
+    /// Returns the unimplemented variant of `AddressSearchClient`.
     public static var unimplemented: Self {
         .init()
     }

@@ -8,7 +8,7 @@ import Foundation
 import Combine
 
 extension SessionCounterClient {
-    /// Returns live variant of `SessionCounterClient`.
+    /// Returns the live variant of `SessionCounterClient`.
     public static var live: Self {
         let client = LiveSessionCounterClient()
 

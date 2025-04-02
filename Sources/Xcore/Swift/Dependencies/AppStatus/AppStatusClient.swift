@@ -203,7 +203,7 @@ private let isColdLaunch = LockIsolated(true)
 // MARK: - Variants
 
 extension AppStatusClient {
-    /// Returns noop variant of `AppStatusClient`.
+    /// Returns the noop variant of `AppStatusClient`.
     public static var noop: Self {
         .init(
             receive: .constant(.preparingLaunch),
@@ -214,7 +214,7 @@ extension AppStatusClient {
         )
     }
 
-    /// Returns unimplemented variant of `AppStatusClient`.
+    /// Returns the unimplemented variant of `AppStatusClient`.
     public static var unimplemented: Self {
         .init(
             receive: {

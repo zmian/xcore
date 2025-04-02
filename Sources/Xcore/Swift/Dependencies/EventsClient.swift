@@ -72,7 +72,7 @@ public struct EventsClient<Event: Sendable>: Sendable {
 // MARK: - Variants
 
 extension EventsClient {
-    /// Returns noop variant of `EventsClient`.
+    /// Returns the noop variant of `EventsClient`.
     public static var noop: Self {
         .init(
             send: { _ in },
@@ -80,7 +80,7 @@ extension EventsClient {
         )
     }
 
-    /// Returns unimplemented variant of `EventsClient`.
+    /// Returns the unimplemented variant of `EventsClient`.
     public static var unimplemented: Self {
         .init(
             send: { _ in
@@ -90,7 +90,7 @@ extension EventsClient {
         )
     }
 
-    /// Returns live variant of `EventsClient`.
+    /// Returns the live variant of `EventsClient`.
     public static var live: Self {
         let subject = PassthroughSubject<Event, Never>()
 

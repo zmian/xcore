@@ -24,12 +24,12 @@ public struct QRCodeClient: Sendable {
 // MARK: - Variants
 
 extension QRCodeClient {
-    /// Returns noop variant of `QRCodeClient`.
+    /// Returns the noop variant of `QRCodeClient`.
     public static var noop: Self {
         .init { _ in UIImage() }
     }
 
-    /// Returns unimplemented variant of `QRCodeClient`.
+    /// Returns the unimplemented variant of `QRCodeClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.qrCode)"#)
@@ -37,7 +37,7 @@ extension QRCodeClient {
         }
     }
 
-    /// Returns live variant of `QRCodeClient`.
+    /// Returns the live variant of `QRCodeClient`.
     public static var live: Self {
         .init { string in
             let data = string.data(using: .ascii)

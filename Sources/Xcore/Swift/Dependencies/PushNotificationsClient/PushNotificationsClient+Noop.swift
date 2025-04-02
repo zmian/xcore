@@ -8,7 +8,7 @@
 import Foundation
 
 extension PushNotificationsClient {
-    /// Returns noop variant of `PushNotificationsClient`.
+    /// Returns the noop variant of `PushNotificationsClient`.
     public static var noop: Self {
         .init(
             authorizationStatus: { .notDetermined },

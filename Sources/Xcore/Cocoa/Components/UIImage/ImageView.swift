@@ -314,7 +314,7 @@ extension UIImage {
 // MARK: - Sample Image (Testing)
 
 extension UIImage {
-    /// Provides a lightweight sample image suitable for display in tests.
+    /// Provides a lightweight sample image suitable for use in tests.
     ///
     /// The `ImageView` uses this sample image during tests to avoid unnecessary
     /// network requests for _remote images_ and to reduce test runtime. You can

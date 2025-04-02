@@ -33,6 +33,6 @@ public struct UnimplementedPond: Pond {
 // MARK: - Dot Syntax Support
 
 extension Pond where Self == UnimplementedPond {
-    /// Returns unimplemented variant of `Pond`.
+    /// Returns the unimplemented variant of `Pond`.
     public static var unimplemented: Self { .init() }
 }

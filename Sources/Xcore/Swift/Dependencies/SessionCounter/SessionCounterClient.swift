@@ -31,12 +31,12 @@ public struct SessionCounterClient: Sendable {
 // MARK: - Variants
 
 extension SessionCounterClient {
-    /// Returns noop variant of `SessionCounterClient`.
+    /// Returns the noop variant of `SessionCounterClient`.
     public static var noop: Self {
         .init { 0 } increment: {}
     }
 
-    /// Returns unimplemented variant of `SessionCounterClient`.
+    /// Returns the unimplemented variant of `SessionCounterClient`.
     public static var unimplemented: Self {
         .init {
             reportIssue("\(Self.self).count is unimplemented")

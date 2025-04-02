@@ -51,19 +51,19 @@ public struct RequestReviewClient: Sendable {
 // MARK: - Variants
 
 extension RequestReviewClient {
-    /// Returns noop variant of `RequestReviewClient`.
+    /// Returns the noop variant of `RequestReviewClient`.
     public static var noop: Self {
         .init {}
     }
 
-    /// Returns unimplemented variant of `RequestReviewClient`.
+    /// Returns the unimplemented variant of `RequestReviewClient`.
     public static var unimplemented: Self {
         .init {
             reportIssue(#"Unimplemented: @Dependency(\.requestReview)"#)
         }
     }
 
-    /// Returns live variant of `RequestReviewClient`.
+    /// Returns the live variant of `RequestReviewClient`.
     public static var live: Self {
         .init {
             Task { @MainActor in

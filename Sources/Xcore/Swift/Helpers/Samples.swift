@@ -6,34 +6,34 @@
 
 import Foundation
 
-/// A namespace for common data suitable for display in previews and tests.
+/// A namespace for common data suitable for use in previews and tests.
 public enum Samples {}
 
 // MARK: - Built-in
 
 extension Samples {
-    /// Returns a sample email address suitable for display in previews and tests.
+    /// Returns a sample email address suitable for use in previews and tests.
     public static let emailAddress = "hello@example.com"
 
-    /// Returns a sample given name or first name suitable for display in previews
-    /// and tests.
+    /// Returns a sample given name or first name suitable for use in previews and
+    /// tests.
     public static let givenName = "Sam"
 
-    /// Returns a sample family name or last name suitable for display in previews
-    /// and tests.
+    /// Returns a sample family name or last name suitable for use in previews and
+    /// tests.
     public static let familyName = "Swift"
 
-    /// Returns a sample family name or last name initial suitable for display in
+    /// Returns a sample family name or last name initial suitable for use in
     /// previews and tests.
     public static let familyNameInitial = "S"
 
-    /// Returns a sample avatar URL suitable for display in previews and tests.
+    /// Returns a sample avatar URL suitable for use in previews and tests.
     public static let avatarUrl = URL(string: "https://avatars.githubusercontent.com/u/621693")!
 
-    /// Returns a sample URL suitable for display in previews and tests.
+    /// Returns a sample URL suitable for use in previews and tests.
     public static let url = URL(string: "https://www.example.com")!
 
-    /// Returns a URL to a sample PDF suitable for display in previews and tests.
+    /// Returns a URL to a sample PDF suitable for use in previews and tests.
     public static let pdfUrl = URL(string: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")!
 }
 

@@ -27,7 +27,7 @@ public struct NoopAddressSearchClient: AddressSearchClient {
 // MARK: - Dot Syntax Support
 
 extension AddressSearchClient where Self == NoopAddressSearchClient {
-    /// Returns noop variant of `AddressSearchClient`.
+    /// Returns the noop variant of `AddressSearchClient`.
     public static var noop: Self {
         .init()
     }

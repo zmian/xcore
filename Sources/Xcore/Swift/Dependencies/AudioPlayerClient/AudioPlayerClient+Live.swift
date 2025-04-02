@@ -8,7 +8,7 @@ import Foundation
 import AVKit
 
 extension AudioPlayerClient {
-    /// Returns live variant of `AudioPlayerClient`.
+    /// Returns the live variant of `AudioPlayerClient`.
     public static var live: Self {
         let client = LiveAudioClient()
 

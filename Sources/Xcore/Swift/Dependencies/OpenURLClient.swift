@@ -72,12 +72,12 @@ public struct OpenURLClient: Sendable {
 // MARK: - Variants
 
 extension OpenURLClient {
-    /// Returns noop variant of `OpenURLClient`.
+    /// Returns the noop variant of `OpenURLClient`.
     public static var noop: Self {
         .init { _ in false }
     }
 
-    /// Returns unimplemented variant of `OpenURLClient`.
+    /// Returns the unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.openUrl)"#)

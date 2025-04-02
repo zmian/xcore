@@ -10,7 +10,7 @@ internal import MapKit
 // MARK: - Dot Syntax Support
 
 extension AddressSearchClient where Self == LiveAddressSearchClient {
-    /// Returns live variant of `AddressSearchClient`.
+    /// Returns the live variant of `AddressSearchClient`.
     public static var live: Self {
         .init()
     }

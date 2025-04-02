@@ -64,12 +64,12 @@ public struct HapticFeedbackClient: Sendable {
 // MARK: - Variants
 
 extension HapticFeedbackClient {
-    /// Returns noop variant of `HapticFeedbackClient`.
+    /// Returns the noop variant of `HapticFeedbackClient`.
     public static var noop: Self {
         .init { _ in }
     }
 
-    /// Returns unimplemented variant of `HapticFeedbackClient`.
+    /// Returns the unimplemented variant of `HapticFeedbackClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.hapticFeedback)"#)

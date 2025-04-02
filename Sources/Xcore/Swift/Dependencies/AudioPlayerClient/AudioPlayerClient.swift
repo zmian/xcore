@@ -40,12 +40,12 @@ public struct AudioPlayerClient: Sendable {
 // MARK: - Variants
 
 extension AudioPlayerClient {
-    /// Returns noop variant of `AudioPlayerClient`.
+    /// Returns the noop variant of `AudioPlayerClient`.
     public static var noop: Self {
         .init { _ in }
     }
 
-    /// Returns unimplemented variant of `AudioPlayerClient`.
+    /// Returns the unimplemented variant of `AudioPlayerClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.audioPlayer)"#)

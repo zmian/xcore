@@ -8,7 +8,7 @@
 import UIKit
 
 extension HapticFeedbackClient {
-    /// Returns live variant of `HapticFeedbackClient`.
+    /// Returns the live variant of `HapticFeedbackClient`.
     public static var live: Self {
         .init { style in
             Task { @MainActor in

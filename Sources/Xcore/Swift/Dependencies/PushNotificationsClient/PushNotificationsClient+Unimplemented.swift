@@ -8,7 +8,7 @@
 import Foundation
 
 extension PushNotificationsClient {
-    /// Returns unimplemented variant of `PushNotificationsClient`.
+    /// Returns the unimplemented variant of `PushNotificationsClient`.
     public static var unimplemented: Self {
         .init(
             authorizationStatus: {

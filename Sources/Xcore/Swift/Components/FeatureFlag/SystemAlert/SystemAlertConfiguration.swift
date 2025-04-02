@@ -156,8 +156,8 @@ extension SystemAlertConfiguration {
 // MARK: - Sample
 
 extension SystemAlertConfiguration {
-    /// Returns a sample maintenance mode system alert suitable for display in
-    /// previews and tests.
+    /// Returns a sample maintenance mode system alert suitable for use in previews
+    /// and tests.
     public static var sampleMaintenance: Self {
         .init(
             id: "maintenance_mode",
@@ -167,8 +167,8 @@ extension SystemAlertConfiguration {
         )
     }
 
-    /// Returns a sample unsupported app version alert suitable for display in
-    /// previews and tests.
+    /// Returns a sample unsupported app version alert suitable for use in previews
+    /// and tests.
     public static func sampleUnsupportedAppVersion(longMessage: Bool = false) -> Self {
         .init(
             id: "unsupported_app_version",
@@ -183,7 +183,7 @@ extension SystemAlertConfiguration {
     }
 
     /// Returns a sample unsupported app version alert with inline links suitable
-    /// for display in previews and tests.
+    /// for use in previews and tests.
     public static var sampleUnsupportedAppVersionWithLinks: Self {
         .init(
             id: "unsupported_app_version",
@@ -196,8 +196,8 @@ extension SystemAlertConfiguration {
         )
     }
 
-    /// Returns a sample unsupported app version alert suitable for display in
-    /// previews and tests.
+    /// Returns a sample unsupported app version alert suitable for use in previews
+    /// and tests.
     ///
     /// ```
     /// {

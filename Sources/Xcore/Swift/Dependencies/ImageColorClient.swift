@@ -26,12 +26,12 @@ public struct ImageColorClient: Sendable {
 // MARK: - Variants
 
 extension ImageColorClient {
-    /// Returns noop variant of `ImageColorClient`.
+    /// Returns the noop variant of `ImageColorClient`.
     public static var noop: Self {
         .init { _ in nil }
     }
 
-    /// Returns unimplemented variant of `ImageColorClient`.
+    /// Returns the unimplemented variant of `ImageColorClient`.
     public static var unimplemented: Self {
         .init { _ in
             reportIssue(#"Unimplemented: @Dependency(\.imageColor)"#)
@@ -39,7 +39,7 @@ extension ImageColorClient {
         }
     }
 
-    /// Returns live variant of `ImageColorClient`.
+    /// Returns the live variant of `ImageColorClient`.
     public static var live: Self {
         .init { image in
             guard let image else {

@@ -9,7 +9,7 @@ import SwiftUI
 import UserNotifications
 
 extension PushNotificationsClient {
-    /// Returns live variant of `PushNotificationsClient`.
+    /// Returns the live variant of `PushNotificationsClient`.
     public static var live: Self {
         let client = LivePushNotificationsClient()
 
