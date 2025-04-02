@@ -27,6 +27,6 @@ public struct EmptyPond: Pond {
 // MARK: - Dot Syntax Support
 
 extension Pond where Self == EmptyPond {
-    /// Returns empty variant of `Pond`.
+    /// Returns the empty variant of `Pond`.
     public static var empty: Self { .init() }
 }

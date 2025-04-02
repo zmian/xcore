@@ -62,6 +62,6 @@ public struct InMemoryPond: Pond, Sendable {
 // MARK: - Dot Syntax Support
 
 extension Pond where Self == InMemoryPond {
-    /// Returns inMemory variant of `Pond`.
+    /// Returns the inMemory variant of `Pond`.
     public static var inMemory: Self { .init() }
 }

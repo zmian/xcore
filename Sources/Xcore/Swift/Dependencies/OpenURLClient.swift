@@ -85,7 +85,7 @@ extension OpenURLClient {
         }
     }
 
-    /// Returns system variant of `OpenURLClient`.
+    /// Returns the system variant of `OpenURLClient`.
     public static var system: Self {
         .init { @MainActor urlDescriptor in
             let url = urlDescriptor.url

@@ -47,26 +47,26 @@ public struct CompositePond: Pond {
 // MARK: - Dot Syntax Support
 
 extension Pond where Self == CompositePond {
-    /// Returns composite variant of `Pond`.
+    /// Returns the composite variant of `Pond`.
     public static func composite(id: String, _ pond: @escaping @Sendable (Self.Method, Key) -> Pond) -> Self {
         .init(id: id, pond)
     }
 
-    /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional
-    /// ``UserDefaults`` `suiteName`.
+    /// Returns the composite variant of `Pond` with Keychain `accessGroup` and
+    /// optional ``UserDefaults`` `suiteName`.
     ///
     /// - Parameters:
     ///   - accessGroup: A string indicating the access group for the Keychain
     ///     items.
     ///   - suiteName: Creates a user defaults object initialized with the defaults
     ///     for the specified database name. The default value is `.standard`
-    /// - Returns: Returns composite variant of `Pond`.
+    /// - Returns: Returns the composite variant of `Pond`.
     public static func composite(accessGroup: String, suiteName: String? = nil) -> Self {
         composite(keychain: .default(accessGroup: accessGroup), suiteName: suiteName)
     }
 
-    /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional
-    /// ``UserDefaults`` `suiteName`.
+    /// Returns the composite variant of `Pond` with Keychain `accessGroup` and
+    /// optional ``UserDefaults`` `suiteName`.
     ///
     /// - Parameters:
     ///   - keychain: The Keychain to use for keys that are marked with `keychain`
@@ -74,7 +74,7 @@ extension Pond where Self == CompositePond {
     ///     to ensure key preference is preserved.
     ///   - suiteName: Creates a user defaults object initialized with the defaults
     ///     for the specified database name. The default value is `.standard`
-    /// - Returns: Returns composite variant of `Pond`.
+    /// - Returns: Returns the composite variant of `Pond`.
     public static func composite(keychain: Keychain, suiteName: String? = nil) -> Self {
         let defaults = suiteName.map { UserDefaults(suiteName: $0)! } ?? .standard
         let userDefaults = UserDefaultsPond(defaults)
