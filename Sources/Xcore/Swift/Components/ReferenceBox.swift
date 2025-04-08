@@ -88,10 +88,6 @@ public final class MutableReferenceBox<Value>: ReferenceBox<Value> {
 
     // MARK: - Conformances
 
-    public override var description: String {
-        String(describing: value)
-    }
-
     public override var debugDescription: String {
         "MutableReferenceBox(\(String(reflecting: value)))"
     }
@@ -116,6 +112,20 @@ extension ReferenceBox: Identifiable where Value: Identifiable {
         value.id
     }
 }
+
+extension ReferenceBox: Comparable where Value: Comparable {
+    public static func <(lhs: ReferenceBox, rhs: ReferenceBox) -> Bool {
+        lhs.value < rhs.value
+    }
+}
+
+extension ReferenceBox: Encodable where Value: Encodable {
+    public func encode(to encoder: any Encoder) throws {
+        try value.encode(to: encoder)
+    }
+}
+
+extension ReferenceBox: Observable where Value: Observable {}
 
 // MARK: - Thread Safety
 
