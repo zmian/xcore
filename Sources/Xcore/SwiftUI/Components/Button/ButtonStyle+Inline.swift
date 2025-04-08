@@ -29,7 +29,8 @@ extension View {
     /// - Parameter style: A closure that receives a `ButtonStyle.Configuration` and
     ///   returns a view describing the appearance of buttons within this view.
     /// - Returns: A view modified with the specified inline button style.
-    public func buttonStyle(_ style: @escaping (ButtonStyle.Configuration) -> some View) -> some View {
+    @_disfavoredOverload
+    public func buttonStyle(_ style: @escaping (_ configuration: ButtonStyle.Configuration) -> some View) -> some View {
         buttonStyle(InlineButtonStyle(style: style))
     }
 }
