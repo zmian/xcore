@@ -36,10 +36,10 @@ private struct DetermineMaximumSize: View {
     }
 
     var body: some View {
-        GeometryReader { proxy in
+        GeometryReader { geometry in
             Color.clear
                 .anchorPreference(key: Key.self, value: .bounds) { anchor in
-                    proxy[anchor].size
+                    geometry[anchor].size
                 }
         }
     }

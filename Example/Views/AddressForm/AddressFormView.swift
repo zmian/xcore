@@ -184,7 +184,7 @@ public struct AddressFormView<Content: View, Footer: View>: View {
     /// It also includes pickers for selecting a state or country, ensuring a smooth
     /// user experience.
     private var addressEditView: some View {
-        GeometryReader { proxy in
+        GeometryReader { geometry in
             ScrollView {
                 VStack {
                     VStack {
@@ -217,9 +217,9 @@ public struct AddressFormView<Content: View, Footer: View>: View {
                 }
                 .padding(.horizontal, .defaultSpacing)
                 .deviceSpecificBottomPadding()
-                .frame(width: proxy.size.width, height: proxy.size.height)
+                .frame(width: geometry.size.width, height: geometry.size.height)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .ignoresSafeArea(.keyboard)
         .scrollDismissesKeyboard(.immediately)
