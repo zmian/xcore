@@ -311,7 +311,7 @@ extension StoryView where Background == Never {
             Text("\(data.id)")
                 .font(.system(size: 200))
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(max: .infinity)
     } background: { data in
         data.color
     }

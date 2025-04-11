@@ -8,9 +8,9 @@ import SwiftUI
 
 struct StoryPreviewView: View {
     private let data = [
-        Colorful(id: 1, color: .green),
-        Colorful(id: 2, color: .indigo),
-        Colorful(id: 3, color: .purple)
+        Colorful(id: 1, color: .green.gradient),
+        Colorful(id: 2, color: .indigo.gradient),
+        Colorful(id: 3, color: .purple.gradient)
     ]
 
     var body: some View {
@@ -23,9 +23,9 @@ struct StoryPreviewView: View {
                 Text("\(data.id)")
                     .font(.system(size: 200))
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(max: .infinity)
         } background: { data in
-            data.color
+            Rectangle().fill(AnyShapeStyle(data.color))
         }
         .onCycleComplete { remaining in
             print("Cycles remaining: \(remaining)")
@@ -37,6 +37,6 @@ struct StoryPreviewView: View {
 extension StoryPreviewView {
     private struct Colorful {
         let id: Int
-        let color: Color
+        let color: any ShapeStyle
     }
 }
