@@ -7,23 +7,30 @@
 #if canImport(UIKit)
 import UIKit
 import OSLog
+import CustomDump
 
 extension UIFont {
     private enum RegistrationError: Error {
         case fontNotFound
-        case remoteFontUrlDetected
+        case remoteFontUrlNotSupported
         case failedToCreateFont
         case failedToRegisterFont
         case failedToUnregisterFont
     }
 
+    /// A Boolean property indicating whether to print the variation axes
+    /// information for variable fonts after successful registration.
+    ///
+    /// - Note: Effective only in `DEBUG` mode.
+    nonisolated(unsafe) public static var shouldPrintFontVariationAxesAfterRegistration = false
+
     /// Registers the fonts if they are not already registered with the font
     /// manager.
     ///
     /// - Parameters:
-    ///   - fontNames: The list of font names to register.
     ///   - bundle: The bundle where font is located.
-    public static func registerIfNeeded(_ fontNames: String..., bundle: Bundle = .main) throws {
+    ///   - fontNames: The list of font names to register.
+    public static func registerIfNeeded(bundle: Bundle = .main, _ fontNames: String...) throws {
         try fontNames.forEach {
             let name = $0.deletingPathExtension
             let ext = $0.pathExtension
@@ -51,7 +58,7 @@ extension UIFont {
             return
         }
 
-        _ = try register(url: fontUrl, unregisterOldFirstIfExists: false)
+        try register(url: fontUrl, unregisterOldFirstIfExists: false)
     }
 
     /// Unregister the font if it's registered with the font manager.
@@ -81,6 +88,7 @@ extension UIFont {
     ///     the font from font manager first, then registering the new font again.
     ///     The default value is `false`.
     /// - Returns: Returns the post script name of the font.
+    @discardableResult
     public static func register(
         url fontUrl: URL,
         unregisterOldFirstIfExists: Bool = false
@@ -113,6 +121,14 @@ extension UIFont {
 
             throw RegistrationError.failedToRegisterFont
         }
+
+        #if DEBUG
+        if shouldPrintFontVariationAxesAfterRegistration, let variationAxes = cgFont.variationAxes {
+            for axe in variationAxes as Array {
+                customDump(axe)
+            }
+        }
+        #endif
 
         return fontName
     }
@@ -160,8 +176,8 @@ extension UIFont {
     /// - Returns: Returns a tuple containing PostScript name of the font and
     ///   `CGFont`.
     private static func metadata(from fontUrl: URL) throws -> (postScriptName: String, cgFont: CGFont) {
-        guard fontUrl.schemeType == .file else {
-            throw RegistrationError.remoteFontUrlDetected
+        guard fontUrl.isFileURL else {
+            throw RegistrationError.remoteFontUrlNotSupported
         }
 
         guard
@@ -172,8 +188,7 @@ extension UIFont {
             throw RegistrationError.failedToCreateFont
         }
 
-        let fontName = String(describing: postScriptName)
-        return (fontName, cgFont)
+        return (postScriptName as String, cgFont)
     }
 }
 #endif
