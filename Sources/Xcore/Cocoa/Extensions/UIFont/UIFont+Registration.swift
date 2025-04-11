@@ -7,7 +7,6 @@
 #if canImport(UIKit)
 import UIKit
 import OSLog
-import CustomDump
 
 extension UIFont {
     private enum RegistrationError: Error {
@@ -18,19 +17,13 @@ extension UIFont {
         case failedToUnregisterFont
     }
 
-    /// A Boolean property indicating whether to print the variation axes
-    /// information for variable fonts after successful registration.
-    ///
-    /// - Note: Effective only in `DEBUG` mode.
-    nonisolated(unsafe) public static var shouldPrintFontVariationAxesAfterRegistration = false
-
     /// Registers the fonts if they are not already registered with the font
     /// manager.
     ///
     /// - Parameters:
-    ///   - bundle: The bundle where font is located.
     ///   - fontNames: The list of font names to register.
-    public static func registerIfNeeded(bundle: Bundle = .main, _ fontNames: String...) throws {
+    ///   - bundle: The bundle where the given list of fonts are located.
+    public static func registerIfNeeded(_ fontNames: String..., in bundle: Bundle = .main) throws {
         try fontNames.forEach {
             let name = $0.deletingPathExtension
             let ext = $0.pathExtension
@@ -121,14 +114,6 @@ extension UIFont {
 
             throw RegistrationError.failedToRegisterFont
         }
-
-        #if DEBUG
-        if shouldPrintFontVariationAxesAfterRegistration, let variationAxes = cgFont.variationAxes {
-            for axe in variationAxes as Array {
-                customDump(axe)
-            }
-        }
-        #endif
 
         return fontName
     }
