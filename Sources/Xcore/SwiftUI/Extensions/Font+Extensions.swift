@@ -7,13 +7,6 @@
 import SwiftUI
 
 extension Font {
-    /// Creates a font from a UIKit font.
-    ///
-    /// - Parameter font: A UIFont instance from which to create a font.
-    public init(uiFont font: UIFont) {
-        self.init(font as CTFont)
-    }
-
     /// Returns default app font that scales relative to the given `style`.
     ///
     /// - Parameters:
@@ -31,16 +24,16 @@ extension Font {
         trait: UIFont.Trait = .normal,
         typeface: Typeface? = nil
     ) -> Font {
-        // Temporary solution while custom fonts aren't supported on Widgets.
-        let isWidgetExtension = AppInfo.executionTarget == .widget
-
         let weight = weight.normalize(style: style)
         let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)
+
+        // Custom fonts aren't supported in Widgets.
+        let isWidgetExtension = AppInfo.executionTarget == .widget
 
         if isWidgetExtension || typeface == UIFont.Typeface.systemFontId {
             var font = system(
                 style,
-                design: trait == .monospaced ? .monospaced : .default
+                design: trait == .monospaced ? .monospaced : nil
             ).weight(weight)
 
             if trait == .italic {
@@ -81,17 +74,17 @@ extension Font {
         trait: UIFont.Trait = .normal,
         typeface: Typeface? = nil
     ) -> Font {
-        // Temporary solution while custom fonts aren't supported on Widgets.
-        let isWidgetExtension = AppInfo.executionTarget == .widget
-
         let weight = weight.normalize(style: textStyle)
         let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)
+
+        // Custom fonts aren't supported in Widgets.
+        let isWidgetExtension = AppInfo.executionTarget == .widget
 
         if isWidgetExtension || typeface == UIFont.Typeface.systemFontId {
             var font = system(
                 size: size,
                 weight: weight,
-                design: trait == .monospaced ? .monospaced : .default
+                design: trait == .monospaced ? .monospaced : nil
             )
 
             if trait == .italic {
