@@ -100,9 +100,9 @@ extension Font {
     /// Custom axes may be supported by specific fonts, with ranges defined in the
     /// font’s `fvar` table.
     ///
-    /// - Important: The font must support variable axes, and the provided tags
-    ///   should match those in the font’s `fvar` table. Invalid tags or values may
-    ///   result in undefined rendering behavior.
+    /// - Important: The font must support variable axes, and the provided variation
+    ///   settings should match those in the font’s `fvar` table. Invalid axes or
+    ///   their values may result in undefined rendering behavior.
     ///
     /// - Parameters:
     ///   - name: The name of the variable font (e.g., "InterVariable").
@@ -221,9 +221,9 @@ extension Font {
     /// Custom axes may be supported by specific fonts, with ranges defined in the
     /// font’s `fvar` table.
     ///
-    /// - Important: The font must support variable axes, and the provided tags
-    ///   should match those in the font’s `fvar` table. Invalid tags or values may
-    ///   result in undefined rendering behavior.
+    /// - Important: The font must support variable axes, and the provided variation
+    ///   settings should match those in the font’s `fvar` table. Invalid axes or
+    ///   their values may result in undefined rendering behavior.
     ///
     /// - Parameters:
     ///   - name: The name of the variable font (e.g., "InterVariable").
