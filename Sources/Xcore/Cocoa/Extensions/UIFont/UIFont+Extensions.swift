@@ -21,11 +21,11 @@ extension UIFont {
     ) -> UIFont {
         switch trait {
             case .normal:
-                return systemFont(ofSize: size, weight: weight)
+                systemFont(ofSize: size, weight: weight)
             case .italic:
-                return italicSystemFont(ofSize: size)
+                italicSystemFont(ofSize: size)
             case .monospaced:
-                return monospacedSystemFont(ofSize: size, weight: weight)
+                monospacedSystemFont(ofSize: size, weight: weight)
         }
     }
 }
@@ -55,10 +55,13 @@ extension UIFont {
         attributes[.family] = familyName
         attributes[.traits] = traits
 
-        let descriptor = UIFontDescriptor(fontAttributes: attributes)
-        return UIFont(descriptor: descriptor, size: 0)
+        return UIFont(
+            descriptor: UIFontDescriptor(fontAttributes: attributes),
+            size: 0
+        )
     }
 
+    /// The text style associated with the font.
     public var textStyle: UIFont.TextStyle? {
         fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
     }
