@@ -38,6 +38,13 @@ struct RootView: View {
 
             Section {
                 NavigationLink {
+                    QRCodeView()
+                } label: {
+                    Label("QR Codes", systemImage: "qrcode")
+                        .foregroundStyle(.foreground)
+                }
+
+                NavigationLink {
                     AddressFormView(store: .init(
                         initialState: .init(navigationTitle: "Address"),
                         reducer: {

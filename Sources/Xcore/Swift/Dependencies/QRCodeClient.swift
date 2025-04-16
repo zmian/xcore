@@ -40,23 +40,32 @@ extension QRCodeClient {
     /// Returns the live variant of `QRCodeClient`.
     public static var live: Self {
         .init { string in
-            let data = string.data(using: .ascii)
-            let context = CIContext()
-            let colorMasking: [CGFloat] = [222, 255, 222, 255, 222, 255]
-
             let qrFilter = CIFilter.qrCodeGenerator().apply {
-                $0.setValue(data, forKey: "inputMessage")
+                $0.message = Data(string.utf8)
             }
 
-            guard
-                let qrImage = qrFilter.outputImage,
-                let cgImage = context.createCGImage(qrImage, from: qrImage.extent),
-                let transparentImage = cgImage.copy(maskingColorComponents: colorMasking)
-            else {
+            guard let qrImage = qrFilter.outputImage else {
                 throw AppError.qrCodeGenerationFailed
             }
 
-            return UIImage(cgImage: transparentImage)
+            // Apply false color filter to make qr background transparent
+            let colorFilter = CIFilter.falseColor().apply {
+                $0.setValue(qrImage, forKey: kCIInputImageKey)
+                // QR code color
+                $0.setValue(CIColor.black, forKey: "inputColor0")
+                // Transparent background
+                $0.setValue(CIColor.clear, forKey: "inputColor1")
+            }
+
+            guard let outputImage = colorFilter.outputImage else {
+                throw AppError.qrCodeGenerationFailed
+            }
+
+            guard let cgImage = CIContext().createCGImage(outputImage, from: outputImage.extent) else {
+                throw AppError.qrCodeGenerationFailed
+            }
+
+            return UIImage(cgImage: cgImage)
         }
     }
 }
