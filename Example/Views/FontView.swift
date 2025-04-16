@@ -31,7 +31,7 @@ struct FontView: View {
                 Text(#"Difficult 1/3 0123"#)
                 Text(#"3*9  12:34  3–8  +8+x"#)
                 Text(#"-> --> ---> => ==> <->"#)
-                Text(#"I'm not, uhm "smol"#)
+                Text(#"I'm not, uhm "smol""#)
                 Spacer()
             }
             .font(.inter(size: size, weight: weight, opticalSize: opticalSize))
