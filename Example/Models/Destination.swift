@@ -62,6 +62,7 @@ extension Destination: @preconcurrency CaseIterable {
         dataStatusView,
         dataStatusList,
         story,
+        font,
         images,
         window,
         share,
@@ -140,6 +141,12 @@ extension Destination {
         icon: "rectangle.split.2x1",
         title: "Story",
         content: StoryPreviewView()
+    )
+
+    private static let font = Self(
+        icon: "textformat",
+        title: "Variable Fonts",
+        content: FontView()
     )
 
     private static let images = Self(

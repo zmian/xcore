@@ -14,6 +14,7 @@ struct XcoreApp: App {
     init() {
         SwizzleManager.start()
         Theme.start()
+        Font.configureDefaultAppTypeface()
     }
 
     var body: some Scene {
