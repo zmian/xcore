@@ -9,7 +9,7 @@ import SwiftUI
 /// A toolbar content item that displays a dismiss button labeled with an `X`,
 /// executing the provided action when tapped.
 ///
-/// The button appears in the navigation bar with the `.destructiveAction`
+/// The button appears in the navigation bar with the `.primaryAction`
 /// placement.
 ///
 /// **Usage**
@@ -32,7 +32,7 @@ public struct DismissToolbarItem: ToolbarContent {
     }
 
     public var body: some ToolbarContent {
-        ToolbarItem(placement: .destructiveAction) {
+        ToolbarItem(placement: .primaryAction) {
             Button.dismiss(action: action)
         }
     }

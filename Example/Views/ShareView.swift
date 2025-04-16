@@ -29,7 +29,7 @@ struct ShareView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 ShareLink("Share License Agreement", item: "License Agreement...")
             }
         }

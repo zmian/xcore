@@ -164,7 +164,7 @@ extension Font {
     ///
     /// // 2: Usage
     /// Text("Hello World")
-    ///     .font(.inter(size: 20, weight: 400, .slant(-10)))
+    ///     .font(.inter(size: 20, weight: 400, .slant: -10))
     /// ```
     ///
     /// ### Standard Axis Values
@@ -248,7 +248,7 @@ extension Font {
         features: [FeatureSetting]? = nil
     ) -> Font {
         let preferredPointSize = UIFontDescriptor.preferredFontDescriptor(
-            withTextStyle: UIFont.TextStyle(style),
+            withTextStyle: .init(style),
             compatibleWith: UIFont.compatibleWithTraitCollection()
         ).pointSize
 
