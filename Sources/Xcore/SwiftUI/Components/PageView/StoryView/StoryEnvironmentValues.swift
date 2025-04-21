@@ -51,8 +51,8 @@ extension View {
 extension EnvironmentValues {
     /// A value that represents the tint style for the story progress indicator.
     ///
-    /// The default value is `Color.accentColor`.
-    @Entry var storyProgressIndicatorTint = AnyShapeStyle(Color.accentColor)
+    /// The default value is `.tint`.
+    @Entry var storyProgressIndicatorTint = AnyShapeStyle(.tint)
 
     /// A value that represents the insets for the story progress indicator.
     ///
