@@ -186,7 +186,7 @@ extension Crypt {
     ///   - secret: Secret for obfuscation.
     /// - Returns: Obfuscated value in an array of `UInt8`.
     public static func obfuscate(_ string: String, secret: String) -> [UInt8] {
-        obfuscate(string, secret: secret.sha256Data().bytes)
+        obfuscate(string, secret: Array(secret.sha256Data()))
     }
 
     /// Obfuscates a given string with secret.
@@ -220,7 +220,7 @@ extension Crypt {
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
     public static func deobfuscate(_ value: [UInt8], secret: String) throws -> String {
-        try deobfuscateString(value, secret: secret.sha256Data().bytes)
+        try deobfuscateString(value, secret: Array(secret.sha256Data()))
     }
 
     /// Deobfucates a previously obfuscated value.

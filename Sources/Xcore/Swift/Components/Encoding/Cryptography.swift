@@ -13,10 +13,6 @@ extension Data {
     public func sha256() -> Self {
         Data(SHA256.hash(data: self))
     }
-
-    public var bytes: [UInt8] {
-        Array(self)
-    }
 }
 
 // MARK: - String
@@ -24,10 +20,6 @@ extension Data {
 extension String {
     public func sha256() -> String {
         Data(utf8).sha256().hexEncodedString()
-    }
-
-    public var bytes: [UInt8] {
-        Data(utf8).bytes
     }
 }
 

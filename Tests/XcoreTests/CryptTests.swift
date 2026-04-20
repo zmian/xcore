@@ -17,7 +17,7 @@ struct CryptTests {
         let obfuscated = Crypt.obfuscate(message, secret: secret)
         let deobfuscate = try Crypt.deobfuscate(obfuscated, secret: secret)
 
-        #expect(Data(message.utf8).sha256().bytes != obfuscated)
+        #expect(Array(Data(message.utf8).sha256()) != obfuscated)
         #expect(message == deobfuscate)
 
         // Incorrect Secret
@@ -29,8 +29,8 @@ struct CryptTests {
 
     @Test
     func obfuscateData() {
-        let secret = Crypt.generateSecureRandom().bytes
-        let message = Crypt.generateSecureRandom().bytes
+        let secret = Array(Crypt.generateSecureRandom())
+        let message = Array(Crypt.generateSecureRandom())
 
         let obfuscated = Crypt.obfuscate(message, secret: secret)
         let deobfuscate = Crypt.deobfuscate(obfuscated, secret: secret)

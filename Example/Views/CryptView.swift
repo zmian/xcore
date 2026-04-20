@@ -13,7 +13,7 @@ struct CryptView: View {
     var body: some View {
         List {
             InternalSection("Generate Secure Secret") {
-                String(describing: Crypt.generateSecureRandom().bytes)
+                String(describing: Array(Crypt.generateSecureRandom()))
             }
 
             InternalSection("Generate Random Password") {

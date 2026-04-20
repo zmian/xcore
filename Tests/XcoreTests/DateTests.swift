@@ -223,7 +223,7 @@ struct DateTest {
         #expect(tomorrow.formatted(style: relative) == "Tomorrow")
         #expect(twoMonthFromNow.formatted(style: relative) == "In 2 months")
         #expect(twoMonthAgo.formatted(style: relative) == "2 months ago")
-        #expect(year2000.formatted(style: relative) == "25 years ago")
+        #expect(year2000.formatted(style: relative) == "26 years ago")
     }
 
     @Test

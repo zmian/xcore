@@ -540,11 +540,11 @@ extension MoneyTests {
         #expect(Money(1000.0).locale(.pakistanPunjabi).formatted() == "$۱٬۰۰۰٫۰۰")
 
         // Switzerland
-        #expect(Money(-1000.0).locale(.switzerland).formatted() == "−$1’000.00")
+        #expect(Money(-1000.0).locale(.switzerland).formatted() == "−$1'000.00")
         #expect(Money(-1.0).locale(.switzerland).formatted() == "−$1.00")
         #expect(Money(0.0).locale(.switzerland).formatted() == "$0.00")
         #expect(Money(1.0).locale(.switzerland).formatted() == "$1.00")
-        #expect(Money(1000.0).locale(.switzerland).formatted() == "$1’000.00")
+        #expect(Money(1000.0).locale(.switzerland).formatted() == "$1'000.00")
 
         // Ireland
         #expect(Money(-1000.0).locale(.ireland).formatted() == "−$1,000.00")
