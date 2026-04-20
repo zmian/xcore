@@ -223,7 +223,7 @@ extension Date {
                 dateComponent.weekOfMonth = offset
             case .yearForWeekOfYear:
                 dateComponent.yearForWeekOfYear = offset
-            case .calendar, .timeZone, .isLeapMonth:
+            case .calendar, .timeZone, .isLeapMonth, .isRepeatedDay:
                 fatalError("Unsupported type \(component)")
             @unknown default:
                 fatalError("Unsupported type \(component)")
