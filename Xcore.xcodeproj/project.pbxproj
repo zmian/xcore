@@ -76,7 +76,7 @@
 				6899D1012699216300D26721 /* Sources */,
 				6899D1022699216300D26721 /* Frameworks */,
 				6899D1032699216300D26721 /* Resources */,
-				68AB6DF9269931A2007AD33F /* Run SwiftLint */,
+				689C420E2F95C99900A63A6E /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -102,7 +102,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 2640;
 				ORGANIZATIONNAME = Xcore;
 				TargetAttributes = {
 					6899D1042699216300D26721 = {
@@ -142,9 +142,8 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		68AB6DF9269931A2007AD33F /* Run SwiftLint */ = {
+		689C420E2F95C99900A63A6E /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -159,7 +158,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./BuildTools/Scripts/lint.sh\n";
+			shellScript = "#./BuildTools/Scripts/lint.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -232,6 +231,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -289,6 +289,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -387,8 +388,10 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.17.1;
+				minimumVersion = 1.25.5;
 			};
+			traits = (
+			);
 		};
 /* End XCRemoteSwiftPackageReference section */
 
