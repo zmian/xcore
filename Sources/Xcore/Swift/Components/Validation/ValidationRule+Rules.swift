@@ -15,7 +15,7 @@ extension ValidationRule {
 
 // MARK: - Input: Collection
 
-extension ValidationRule where Input: Collection {
+extension ValidationRule where Input: Collection & Sendable {
     /// A validation rule that checks whether the input length is contained within
     /// the range expression.
     ///
@@ -31,7 +31,7 @@ extension ValidationRule where Input: Collection {
     ///
     /// - Parameter length: The range expression to check against input length.
     /// - Returns: The validation rule.
-    public static func length(_ length: some RangeExpression<Int> & Sendable) -> Self{
+    public static func length(_ length: some RangeExpression<Int> & Sendable) -> Self {
         .init { length.contains($0.count) }
     }
 
