@@ -103,7 +103,7 @@ extension Device {
 
 // MARK: - Errors
 
-extension LAError: @retroactive CustomStringConvertible {
+extension LAError: Swift.CustomStringConvertible {
     public var description: String {
         switch code {
             case .appCancel:

@@ -26,14 +26,12 @@ open class UIHostingWindow<Content: View>: UIWindow {
     }
 
     public init(rootView: Content) {
-        self.hostingController = .init(rootView: rootView)
-
-        if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
-            super.init(windowScene: windowScene)
-        } else {
-            super.init(frame: Screen.main.bounds)
+        guard let windowScene = UIApplication.sharedOrNil?.firstWindowScene else {
+            fatalError(because: .windowSceneMissing)
         }
 
+        self.hostingController = .init(rootView: rootView)
+        super.init(windowScene: windowScene)
         backgroundColor = .clear
         rootViewController = hostingController
         accessibilityViewIsModal = true

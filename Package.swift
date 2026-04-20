@@ -1,10 +1,10 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.3
 
 import PackageDescription
 
 let package = Package(
     name: "Xcore",
-    platforms: [.iOS(.v17)],
+    platforms: [.iOS(.v26)],
     products: [
         .library(name: "Xcore", targets: ["Xcore"])
     ],

@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Calendar.Component: @retroactive RawRepresentable {
+extension Calendar.Component: Swift.RawRepresentable {
     public init?(rawValue: String) {
         switch rawValue {
             case Self.era.rawValue:
@@ -46,6 +46,8 @@ extension Calendar.Component: @retroactive RawRepresentable {
                 self = .timeZone
             case Self.isLeapMonth.rawValue:
                 self = .isLeapMonth
+            case Self.isRepeatedDay.rawValue:
+                self = .isRepeatedDay
             default:
                 return nil
         }
@@ -89,6 +91,8 @@ extension Calendar.Component: @retroactive RawRepresentable {
                 return "timeZone"
             case .isLeapMonth:
                 return "isLeapMonth"
+            case .isRepeatedDay:
+                return "isRepeatedDay"
             @unknown default:
                 return "unknown"
         }

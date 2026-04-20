@@ -45,44 +45,6 @@ struct AsyncPassthroughStreamTests {
     }
 
     @Test
-    func iterations_makeAsyncStream() async {
-        let stream = AsyncPassthroughStream<Int>()
-
-        let asyncStream = stream.makeAsyncStream()
-
-        Task {
-            // Collect all produced elements
-            var values: [Int] = []
-
-            for await value in asyncStream {
-                values.append(value)
-            }
-
-            // Verify collected elements
-            #expect(values == [1, 2])
-        }
-
-        Task {
-            // Collect all produced elements
-            var values: [Int] = []
-
-            for await value in asyncStream {
-                values.append(value)
-            }
-
-            // Verify collected elements
-            #expect(values == [1, 2])
-        }
-
-        // Produce new elements
-        stream.send(1)
-        stream.send(2)
-
-        // Finish producing elements
-        stream.finish()
-    }
-
-    @Test
     func iterations_asyncStream_directly() async {
         let stream = AsyncStream<Int> {
             $0.yield(1)

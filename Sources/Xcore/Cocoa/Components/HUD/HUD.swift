@@ -80,27 +80,18 @@ open class HUD: Appliable {
         set { window.accessibilityLabel = newValue }
     }
 
-    public convenience init() {
-        self.init(frame: nil)
-    }
-
-    public init(frame: CGRect? = nil) {
-        if let frame {
-            window = .init(frame: frame)
-        } else if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
-            window = .init(windowScene: windowScene)
-        } else {
-            window = .init(frame: Screen.main.bounds)
+    public init() {
+        guard let windowScene = UIApplication.sharedOrNil?.firstWindowScene else {
+            fatalError(because: .windowSceneMissing)
         }
 
-        commonInit()
-    }
-
-    private func commonInit() {
-        window.accessibilityLabel = "HUD"
-        window.backgroundColor = .clear
-        window.rootViewController = viewController
-        window.accessibilityViewIsModal = true
+        window = .init(windowScene: windowScene)
+        window.apply {
+            $0.accessibilityLabel = "HUD"
+            $0.backgroundColor = .clear
+            $0.rootViewController = viewController
+            $0.accessibilityViewIsModal = true
+        }
     }
 
     private func setDefaultWindowLevel() {

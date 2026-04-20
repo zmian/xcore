@@ -99,10 +99,7 @@ extension OpenURLClient {
                 return await environment.openURL.run(url)
             }
 
-            let vc = InAppSafariViewController(url: url).apply {
-                $0.preferredControlTintColor = environment.theme.tintColor.uiColor
-            }
-
+            let vc = InAppSafariViewController(url: url)
             // Present shows the Safari VC correctly in SwiftUI.
             vc.show()
             return true

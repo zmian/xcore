@@ -12,7 +12,7 @@ extension PushNotificationsClient {
     public static var noop: Self {
         .init(
             authorizationStatus: { .notDetermined },
-            events: { .never },
+            events: { AsyncStream<Event>.never },
             register: {},
             unregister: {},
             openAppSettings: {}

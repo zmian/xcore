@@ -16,7 +16,7 @@ extension PushNotificationsClient {
                 return .notDetermined
             },
             events: {
-                .unimplemented("\(Self.self).events")
+                AsyncStream<Event>.unimplemented("\(Self.self).events")
             },
             register: {
                 reportIssue("\(Self.self).register is unimplemented")
