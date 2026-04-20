@@ -35,8 +35,8 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             $0.resultTypes = .address
         }
 
-        let placemark = try await perform(request: request)
-        return PostalAddress(placemark)
+        let mapItem = try await perform(request: request)
+        return PostalAddress(mapItem)
     }
 
     public func updateQuery(_ query: String, id: UUID) {
@@ -46,8 +46,8 @@ public final class LiveAddressSearchClient: AddressSearchClient {
     }
 
     public func resolve(_ result: AddressSearchResult) async throws -> PostalAddress {
-        let placemark = try await perform(request: result.request())
-        return PostalAddress(placemark)
+        let mapItem = try await perform(request: result.request())
+        return PostalAddress(mapItem)
     }
 
     public func validate(_ address: PostalAddress) async throws {
@@ -70,12 +70,12 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             $0.resultTypes = .address
         }
 
-        let placemark = try await perform(request: request)
+        let mapItem = try await perform(request: request)
 
         // Check the result address corresponds to US. We check this here to avoid users
         // from selecting US as country but entering details of an address from a
         // different country.
-        try supportedRegionValidation(placemark.countryCode)
+        try supportedRegionValidation(mapItem.addressRepresentations?.region?.identifier)
     }
 
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
@@ -94,14 +94,14 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         }
     }
 
-    /// Performs a request to the maps API to obtain a placemark.
-    private func perform(request: MKLocalSearch.Request) async throws -> MKPlacemark {
+    /// Performs a request to the maps API to obtain a map item.
+    private func perform(request: MKLocalSearch.Request) async throws -> MKMapItem {
         do {
             let search = MKLocalSearch(request: request)
             let response = try await search.start()
 
-            if let placemark = response.mapItems.first?.placemark {
-                return placemark
+            if let mapItem = response.mapItems.first {
+                return mapItem
             } else {
                 throw AppError.decodingFailedInvalidData()
             }
@@ -198,119 +198,39 @@ extension LiveAddressSearchClient {
 // MARK: - Helpers
 
 extension PostalAddress {
-    init(_ item: MKPlacemark) {
-        /// Extracting the city from the "title" because "sublocality" or "locality" are
-        /// not uniquely identifying the proper city.
-        ///
-        /// For example, Brooklyn comes as a "sublocality" but Miami Beach comes as
-        /// "locality", and Long Island City doesn't come in neither of these
-        /// properties.
-        ///
-        /// However, "title" returns the correct data (e.g., "Brooklyn, NY 11217"), we
-        /// are parsing the string and taking the first component, returning "Brooklyn"
-        /// correctly as the city.
-        ///
-        /// We have to check the number of lines on the address as to know where to
-        /// fetch the city from: when 5 lines (address with apt number) are present the
-        /// city is in position #3. If only 4 lines, then the city is in position #1.
-        ///
-        /// If the address has 5 lines then we use position #1 to fill `street2`.
-        ///
-        /// ```swift
-        ///
-        /// // Brooklyn
-        ///
-        /// // Sample output from "FormattedAddressLines"
-        /// FormattedAddressLines = (
-        ///     "222 Jackson St",
-        ///     "Unit 5",
-        ///     "Brooklyn, NY 11211",
-        ///     "United States"
-        /// )
-        ///
-        /// // Complete output of "item.addressDictionary"
-        /// {
-        ///     City = "New York";
-        ///     Country = "United States";
-        ///     CountryCode = US;
-        ///     FormattedAddressLines = (
-        ///         "222 Jackson St",
-        ///         "Unit 5", // ⚠️ ← Completely omitted from properties.
-        ///         "Brooklyn, NY  11211",
-        ///         "United States"
-        ///     );
-        ///     Name = "222 Jackson St";
-        ///     State = NY;
-        ///     Street = "222 Jackson St";
-        ///     SubAdministrativeArea = "Kings County";
-        ///     SubLocality = Brooklyn; // ⚠️ ← Shown under "SubLocality".
-        ///     SubThoroughfare = 222;
-        ///     Thoroughfare = "Jackson St";
-        ///     ZIP = 11211;
-        /// }
-        ///
-        /// // Queens
-        ///
-        /// // Sample output from "FormattedAddressLines"
-        /// FormattedAddressLines = (
-        ///     "38-18 Queens Blvd",
-        ///     "Long Island City, NY 11101",
-        ///     "United States"
-        /// )
-        ///
-        /// // Complete output of "item.addressDictionary"
-        /// {
-        ///     City = "New York";
-        ///     Country = "United States";
-        ///     CountryCode = US;
-        ///     FormattedAddressLines = (
-        ///         "38-18 Queens Blvd",
-        ///         "Long Island City, NY  11101",
-        ///         "United States"
-        ///     );
-        ///     Name = "38-18 Queens Blvd";
-        ///     State = NY;
-        ///     Street = "38-18 Queens Blvd";
-        ///     SubAdministrativeArea = "Queens County";
-        ///     SubLocality = Queens; // ⚠️ ← Should of been "Long Island City" as shown under "FormattedAddressLines".
-        ///     SubThoroughfare = "38-18";
-        ///     Thoroughfare = "Queens Blvd";
-        ///     ZIP = 11101;
-        /// }
-        /// ```
-        /// - SeeAlso: http://www.openradar.appspot.com/35862589
-        func getStreet2AndCityFields() -> (String, String) {
-            if item.isoCountryCode == "US" {
-                let components = item.title?
-                    .components(separatedBy: ",") ?? []
+    init(_ item: MKMapItem) {
+        func getFields() -> (street1: String?, street2: String?, state: String?, postalCode: String?) {
+            let components = item.address?.fullAddress.components(separatedBy: ",") ?? []
 
-                // Only one field means we only have the country
-                guard components.count > 1 else {
-                    return (street2: "", city: "")
-                }
-
-                // City field is located on the 3rd from last position
-                // "222 Jackson St, Unit 5, Brooklyn, NY 11211, United States"
-                let city = components
-                    .at(components.count - 3)?
-                    .trimmed() ?? ""
-
-                let street2 = components.count > 4 ? components[1].trimmed() : ""
-                return (street2: street2, city: city)
+            // Only one field means we only have the country
+            guard components.count > 1 else {
+                return (street1: nil, street2: nil, state: nil, postalCode: nil)
             }
 
-            return (street2: "", city: item.subLocality ?? item.locality ?? "")
+            // State field is located on the 2nd from last position
+            // "222 Jackson St, Unit 5, Brooklyn, NY 11211, United States"
+            let statePostalCode = components
+                .at(components.count - 2)?
+                .trimmed()
+                .components(separatedBy: " ")
+
+            let street1 = components.first?.trimmed()
+            let street2 = components.count > 4 ? components[1].trimmed() : nil
+            return (street1, street2, state: statePostalCode?.first, postalCode: statePostalCode?.last)
         }
 
-        let (street2, city) = getStreet2AndCityFields()
+        let fields = getFields()
+        let res = item.addressRepresentations
+        let cityName = res?.cityName
+        let street1 = fields.street1 == cityName ? "" : fields.street1
 
         self.init(
-            street1: [item.subThoroughfare, item.thoroughfare].joined(separator: " "),
-            street2: street2,
-            city: city,
-            state: item.administrativeArea ?? "",
-            postalCode: item.postalCode ?? "",
-            countryCode: item.isoCountryCode ?? ""
+            street1: street1 ?? "",
+            street2: fields.street2 ?? "",
+            city: cityName ?? "",
+            state: fields.state ?? "",
+            postalCode: fields.postalCode ?? "",
+            countryCode: res?.region?.identifier ?? ""
         )
     }
 
