@@ -199,75 +199,43 @@ extension LiveAddressSearchClient {
 
 extension PostalAddress {
     init(_ item: MKMapItem) {
-        func isSecondaryAddressLine(_ line: String) -> Bool {
-            line.validate(
-                rule: .regex(
-                    "(?i)^(?:apt\\.?|apartment|unit|suite|ste\\.?|floor|fl\\.?|room|rm\\.?|building|bldg\\.?|#)\\s*\\S+.*$"
-                )
-            )
+        func secondaryAddress(_ line: String) -> String? {
+            let trimmedLine = line.trimmed()
+
+            guard trimmedLine.validate(
+                rule: .regex("(?i)^(?:apt\\.?|apartment|unit|suite|ste\\.?|floor|fl\\.?|room|rm\\.?|building|bldg\\.?|#)\\s*\\S+.*$")
+            ) else {
+                return nil
+            }
+
+            return trimmedLine
         }
 
         let representations = item.addressRepresentations
         let postalAddress = item.placemark.postalAddress
         let regionCode = representations?.region?.identifier
         let isUSA = regionCode == "US"
-        let postalStreet = postalAddress?.street
         let state = postalAddress?.state
         let postalCode = postalAddress?.postalCode
         let city = isUSA ? representations?.cityName : postalAddress?.subLocality ?? representations?.cityName
-        let regionName = representations?.regionName
+        let street2 = representations?.fullAddress(includingRegion: false, singleLine: false)?
+            .lines()
+            .dropFirst()
+            .first
+            .flatMap { line -> String? in
+                guard
+                    line.validate(rule: .regex("(?i)^(?:apt\\.?|apartment|unit|suite|ste\\.?|floor|fl\\.?|room|rm\\.?|building|bldg\\.?|#)\\s*\\S+.*$")),
+                    line != representations?.regionName
+                else {
+                    return nil
+                }                
 
-        let contextValues = [city, state, postalCode, regionName, regionCode]
-            .compactMap { $0?.trimmed() }
-            .filter { !$0.isBlank }
-
-        let lines: [String] = {
-            let postalStreetLines = postalStreet?
-                .lines()
-                .map { $0.trimmed() }
-                .filter { !$0.isBlank } ?? []
-
-            if !postalStreetLines.isEmpty {
-                return postalStreetLines
+                return line
             }
-
-            var formattedLines = (representations?.fullAddress(includingRegion: false, singleLine: false) ?? item.address?.fullAddress)?
-                .lines()
-                .map { $0.trimmed() }
-                .filter { !$0.isBlank } ?? []
-
-            func isContextLine(_ line: String) -> Bool {
-                let line = line.trimmed()
-
-                guard !line.isBlank else {
-                    return true
-                }
-
-                return contextValues.contains { token in
-                    if token.count <= 3 {
-                        let pattern = "(?i)(?:^|[^[:alnum:]])\(NSRegularExpression.escapedPattern(for: token))(?:$|[^[:alnum:]])"
-                        return line.validate(rule: .regex(pattern))
-                    }
-
-                    return line.contains(token, options: [.caseInsensitive, .diacriticInsensitive])
-                }
-            }
-
-            while let last = formattedLines.last, isContextLine(last) {
-                formattedLines.removeLast()
-            }
-
-            if formattedLines.isEmpty, let shortAddress = item.address?.shortAddress, !isContextLine(shortAddress) {
-                return [shortAddress]
-            }
-
-            return formattedLines
-        }()
-        let street2 = lines.dropFirst().first.map { isSecondaryAddressLine($0) ? $0 : "" } ?? ""
-
+        
         self.init(
-            street1: postalStreet ?? "",
-            street2: street2,
+            street1: postalAddress?.street ?? "",
+            street2: street2 ?? "",
             city: city ?? "",
             state: state ?? "",
             postalCode: postalCode ?? "",
