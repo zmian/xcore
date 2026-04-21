@@ -52,12 +52,11 @@ struct FontView: View {
         step: Double.Stride = 1
     ) -> some View {
         VStack {
-            Text(label + " ")
-                .fontWeight(.semibold)
-            +
-            Text(value.wrappedValue, format: .number)
+            let num = Text(value.wrappedValue, format: .number)
                 .monospacedDigit()
                 .foregroundStyle(.tint)
+
+            Text("\(label) \(num)")
                 .fontWeight(.semibold)
 
             SwiftUI.Slider(value: value, in: bounds, step: step) {

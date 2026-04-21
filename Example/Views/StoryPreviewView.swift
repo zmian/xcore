@@ -17,11 +17,13 @@ struct StoryPreviewView: View {
         StoryView(cycle: .once, data: data) { data in
             VStack {
                 Text("Page")
-                Text("#")
+                let hash = Text("#")
                     .baselineOffset(70)
-                    .font(.system(size: 100)) +
-                Text("\(data.id)")
+                    .font(.system(size: 100))
+                let num = Text("\(data.id)")
                     .font(.system(size: 200))
+
+                Text("\(hash)\(num)")
             }
             .frame(max: .infinity)
         } background: { data in
