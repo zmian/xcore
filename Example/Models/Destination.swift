@@ -67,7 +67,8 @@ extension Destination: @preconcurrency CaseIterable {
         window,
         share,
         hapticFeedback,
-        crypt
+        crypt,
+        scrollingStack
     ]
 }
 
@@ -177,5 +178,11 @@ extension Destination {
         icon: .lockShield,
         title: "Crypt",
         content: CryptView()
+    )
+
+    private static let scrollingStack = Self(
+        icon: .squareStack,
+        title: "Scrolling Stack",
+        content: ScrollingStack(edge: .both)
     )
 }
