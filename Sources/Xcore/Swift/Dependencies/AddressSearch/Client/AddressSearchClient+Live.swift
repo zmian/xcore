@@ -199,38 +199,78 @@ extension LiveAddressSearchClient {
 
 extension PostalAddress {
     init(_ item: MKMapItem) {
-        func getFields() -> (street1: String?, street2: String?, state: String?, postalCode: String?) {
-            let components = item.address?.fullAddress.components(separatedBy: ",") ?? []
-
-            // Only one field means we only have the country
-            guard components.count > 1 else {
-                return (street1: nil, street2: nil, state: nil, postalCode: nil)
-            }
-
-            // State field is located on the 2nd from last position
-            // "222 Jackson St, Unit 5, Brooklyn, NY 11211, United States"
-            let statePostalCode = components
-                .at(components.count - 2)?
-                .trimmed()
-                .components(separatedBy: " ")
-
-            let street1 = components.first?.trimmed()
-            let street2 = components.count > 4 ? components[1].trimmed() : nil
-            return (street1, street2, state: statePostalCode?.first, postalCode: statePostalCode?.last)
+        func isSecondaryAddressLine(_ line: String) -> Bool {
+            line.validate(
+                rule: .regex(
+                    "(?i)^(?:apt\\.?|apartment|unit|suite|ste\\.?|floor|fl\\.?|room|rm\\.?|building|bldg\\.?|#)\\s*\\S+.*$"
+                )
+            )
         }
 
-        let fields = getFields()
-        let res = item.addressRepresentations
-        let cityName = res?.cityName
-        let street1 = fields.street1 == cityName ? "" : fields.street1
+        let representations = item.addressRepresentations
+        let postalAddress = item.placemark.postalAddress
+        let postalStreet = postalAddress?.street
+        let state = postalAddress?.state
+        let postalCode = postalAddress?.postalCode
+        let city = representations?.cityName
+        let regionName = representations?.regionName
+        let regionCode = representations?.region?.identifier
+
+        let contextValues = [city, state, postalCode, regionName, regionCode]
+            .compactMap { $0?.trimmed() }
+            .filter { !$0.isBlank }
+
+        let lines: [String] = {
+            let postalStreetLines = postalStreet?
+                .lines()
+                .map { $0.trimmed() }
+                .filter { !$0.isBlank } ?? []
+
+            if !postalStreetLines.isEmpty {
+                return postalStreetLines
+            }
+
+            var formattedLines = (representations?.fullAddress(includingRegion: false, singleLine: false) ?? item.address?.fullAddress)?
+                .lines()
+                .map { $0.trimmed() }
+                .filter { !$0.isBlank } ?? []
+
+            func isContextLine(_ line: String) -> Bool {
+                let line = line.trimmed()
+
+                guard !line.isBlank else {
+                    return true
+                }
+
+                return contextValues.contains { token in
+                    if token.count <= 3 {
+                        let pattern = "(?i)(?:^|[^[:alnum:]])\(NSRegularExpression.escapedPattern(for: token))(?:$|[^[:alnum:]])"
+                        return line.validate(rule: .regex(pattern))
+                    }
+
+                    return line.contains(token, options: [.caseInsensitive, .diacriticInsensitive])
+                }
+            }
+
+            while let last = formattedLines.last, isContextLine(last) {
+                formattedLines.removeLast()
+            }
+
+            if formattedLines.isEmpty, let shortAddress = item.address?.shortAddress, !isContextLine(shortAddress) {
+                return [shortAddress]
+            }
+
+            return formattedLines
+        }()
+        let street2 = lines.dropFirst().first.map { isSecondaryAddressLine($0) ? $0 : "" } ?? ""
 
         self.init(
-            street1: street1 ?? "",
-            street2: fields.street2 ?? "",
-            city: cityName ?? "",
-            state: fields.state ?? "",
-            postalCode: fields.postalCode ?? "",
-            countryCode: res?.region?.identifier ?? ""
+            street1: postalStreet ?? "",
+            street2: street2,
+            city: city ?? "",
+            state: state ?? "",
+            postalCode: postalCode ?? "",
+            countryCode: regionCode ?? ""
         )
     }
 
