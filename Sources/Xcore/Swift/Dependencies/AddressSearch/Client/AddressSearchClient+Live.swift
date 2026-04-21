@@ -65,6 +65,13 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         // from entering the details of a US address but select a different country.
         try supportedRegionValidation(address.countryCode)
 
+        guard address.countryCode == "US" else {
+            // International addresses may fail internal validation because the house
+            // number can appear at the end. So there is no need to round-trip them and
+            // risk throwing off the parser. For example, Carrera de San Jeronimo, 34, Madrid 28014
+            return
+        }
+
         let request = MKLocalSearch.Request().apply {
             $0.naturalLanguageQuery = address.description
             $0.resultTypes = .address
