@@ -69,7 +69,7 @@ extension UIFont {
             return
         }
 
-        try unregister(url: fontUrl)
+        try unregister(url: fontUrl, fontName: name)
     }
 
     /// Registers the font at given url with the font manager.
@@ -86,14 +86,14 @@ extension UIFont {
         url fontUrl: URL,
         unregisterOldFirstIfExists: Bool = false
     ) throws -> String {
-        let (fontName, cgFont) = try metadata(from: fontUrl)
+        let (fontName, _) = try metadata(from: fontUrl)
 
         // Check if the given font is already registered with font manager.
         let exists = !fontNames(forFamilyName: fontName).isEmpty
 
         if exists {
             if unregisterOldFirstIfExists {
-                try unregister(fontName, cgFont: cgFont)
+                try unregister(url: fontUrl, fontName: fontName)
             } else {
                 #if DEBUG
                 Logger.xc.debug("\"\(fontName, privacy: .public)\" font already registered.")
@@ -103,8 +103,9 @@ extension UIFont {
         }
 
         var fontError: Unmanaged<CFError>?
+        let success = CTFontManagerRegisterFontsForURL(fontUrl as CFURL, .persistent, &fontError)
 
-        guard CTFontManagerRegisterGraphicsFont(cgFont, &fontError) else {
+        guard success else {
             if let fontError = fontError?.takeRetainedValue() {
                 let errorDescription = CFErrorCopyDescription(fontError)
                 #if DEBUG
@@ -121,15 +122,7 @@ extension UIFont {
     /// Unregisters the font at given url with the font manager.
     ///
     /// - Parameter fontUrl: The font url to be unregistered.
-    private static func unregister(url fontUrl: URL) throws {
-        let (fontName, cgFont) = try metadata(from: fontUrl)
-        try unregister(fontName, cgFont: cgFont)
-    }
-
-    /// Unregisters the specified font with the font manager.
-    ///
-    /// - Parameter fontUrl: The font to be unregistered.
-    private static func unregister(_ fontName: String, cgFont: CGFont) throws {
+    private static func unregister(url fontUrl: URL, fontName: String) throws {
         // Check if the given font is registered with font manager before attempting to
         // unregister.
         guard !fontNames(forFamilyName: fontName).isEmpty else {
@@ -140,8 +133,7 @@ extension UIFont {
         }
 
         var fontError: Unmanaged<CFError>?
-        CTFontManagerUnregisterGraphicsFont(cgFont, &fontError)
-
+        CTFontManagerUnregisterFontsForURL(fontUrl as CFURL, .persistent, &fontError)
         if let fontError = fontError?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(fontError)
             #if DEBUG
