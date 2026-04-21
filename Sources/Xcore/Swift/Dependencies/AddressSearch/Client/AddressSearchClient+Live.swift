@@ -209,12 +209,13 @@ extension PostalAddress {
 
         let representations = item.addressRepresentations
         let postalAddress = item.placemark.postalAddress
+        let regionCode = representations?.region?.identifier
+        let isUSA = regionCode == "US"
         let postalStreet = postalAddress?.street
         let state = postalAddress?.state
         let postalCode = postalAddress?.postalCode
-        let city = representations?.cityName
+        let city = isUSA ? representations?.cityName : postalAddress?.subLocality ?? representations?.cityName
         let regionName = representations?.regionName
-        let regionCode = representations?.region?.identifier
 
         let contextValues = [city, state, postalCode, regionName, regionCode]
             .compactMap { $0?.trimmed() }
