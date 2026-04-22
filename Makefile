@@ -21,15 +21,16 @@ TEST_ONLY ?=
 
 XCODEBUILD := xcodebuild
 APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
+XCODEBUILD_NOISE_FILTER := perl -ne 'print unless /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\./'
 
 define xcodebuild_run
 	@set -o pipefail; \
 	if command -v xcpretty >/dev/null 2>&1; then \
-		$(1) | xcpretty; \
+		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER) | xcpretty; \
 	elif command -v xcbeautify >/dev/null 2>&1; then \
-		$(1) | xcbeautify; \
+		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER) | xcbeautify; \
 	else \
-		$(1); \
+		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER); \
 	fi
 endef
 
