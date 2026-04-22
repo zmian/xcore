@@ -45,6 +45,13 @@ struct RootView: View {
                 }
 
                 NavigationLink {
+                    OpenURLView()
+                } label: {
+                    Label("OpenURL", systemImage: .link)
+                        .foregroundStyle(.foreground)
+                }
+
+                NavigationLink {
                     AddressFormView(store: .init(
                         initialState: .init(navigationTitle: "Address"),
                         reducer: {
