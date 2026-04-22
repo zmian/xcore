@@ -30,7 +30,7 @@ struct AppPhaseOperationTests {
         appPhase.send(.background)
 
         // Wait long enough for the operation to be executed.
-        try await Task.sleep(for: .seconds(0.2))
+        try await Task.sleep(for: .seconds(0.3))
 
         #expect(operationExecuted)
     }

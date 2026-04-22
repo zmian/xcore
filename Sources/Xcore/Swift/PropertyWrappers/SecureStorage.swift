@@ -36,7 +36,7 @@ public struct SecureStorage<Value> {
     }
 }
 
-extension SecureStorage where Value: ExpressibleByNilLiteral {
+extension SecureStorage where Value: ExpressibleByNilLiteral & Sendable {
     public init(_ key: String, store: Keychain) {
         self.store = store
         self.get = { StringConverter(store[key])?.get() }
