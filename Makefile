@@ -21,16 +21,16 @@ TEST_ONLY ?=
 
 XCODEBUILD := xcodebuild
 APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
-XCODEBUILD_NOISE_FILTER := perl -ne 'print unless /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\./'
+XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
 define xcodebuild_run
 	@set -o pipefail; \
 	if command -v xcpretty >/dev/null 2>&1; then \
-		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER) | xcpretty; \
+		$(1) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) | xcpretty; \
 	elif command -v xcbeautify >/dev/null 2>&1; then \
-		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER) | xcbeautify; \
+		$(1) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) | xcbeautify; \
 	else \
-		$(1) 2>&1 | $(XCODEBUILD_NOISE_FILTER); \
+		$(1) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER); \
 	fi
 endef
 
@@ -60,7 +60,9 @@ build: _ensure_xcode ## Build the example app and its framework dependencies
 	$(call xcodebuild_run,$(XCODEBUILD) build -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)")
 
 test: _ensure_xcode ## Run tests through the Example scheme
-	$(call xcodebuild_run,$(XCODEBUILD) test -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG))
+	@set -o pipefail; \
+	$(XCODEBUILD) test -quiet -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
+	echo "Tests passed"
 
 run: _ensure_xcode ## Build, install, and launch the app in the configured simulator
 	@xcrun simctl boot "$(SIMULATOR_NAME)" >/dev/null 2>&1 || true
