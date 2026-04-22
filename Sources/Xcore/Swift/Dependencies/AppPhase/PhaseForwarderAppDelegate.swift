@@ -66,7 +66,7 @@ import Combine
 ///                         segment.receivedRemoteNotification(userInfo)
 ///                     case let .continueUserActivity(activity, _):
 ///                         segment.continue(activity)
-///                     case let .openUrl(url, options):
+///                     case let .openURL(url, options):
 ///                         segment.open(url.maskingSensitiveQueryItems(), options: options)
 ///                     default:
 ///                         break
@@ -127,7 +127,7 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        send(.openUrl(url, options: options))
+        send(.openURL(url, options: options))
         return true
     }
 

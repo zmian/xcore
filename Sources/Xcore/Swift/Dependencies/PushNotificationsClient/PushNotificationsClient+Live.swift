@@ -124,7 +124,7 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
 //
 //        Popup.show(title: L.title, message: L.message) { $isPresented in
 //            Button(L.buttonOpenSettings) {
-//                Dependency(\.openUrl).wrappedValue(.settingsApp)
+//                Dependency(\.openURL).wrappedValue(.settingsApp)
 //                isPresented = false
 //            }
 //            .buttonStyle(.primary)

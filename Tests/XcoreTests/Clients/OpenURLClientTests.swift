@@ -14,7 +14,7 @@ struct OpenURLClientTests {
         let openedUrl = LockIsolated<URL?>(nil)
 
         let viewModel = withDependencies {
-            $0.openUrl = .init { urlDescriptor in
+            $0.openURL = .init { urlDescriptor in
                 openedUrl.setValue(urlDescriptor.url)
                 return true
             }
@@ -36,17 +36,17 @@ struct OpenURLClientTests {
 }
 
 private final class ViewModel {
-    @Dependency(\.openUrl) var openUrl
+    @Dependency(\.openURL) var openURL
 
     func openMailApp() async {
-        await openUrl(.mailApp)
+        await openURL(.mailApp)
     }
 
     func openSettingsApp() async {
-        await openUrl(.settingsApp)
+        await openURL(.settingsApp)
     }
 
     func openSomeUrl() async {
-        await openUrl(URL(string: "https://example.com"))
+        await openURL(URL(string: "https://example.com"))
     }
 }

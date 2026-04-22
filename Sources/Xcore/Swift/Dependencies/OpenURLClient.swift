@@ -13,18 +13,18 @@ private import SafariServices
 ///
 /// ```swift
 /// class ViewModel {
-///     @Dependency(\.openUrl) var openUrl
+///     @Dependency(\.openURL) var openURL
 ///
 ///     func openMailApp() {
-///         openUrl(.mailApp)
+///         openURL(.mailApp)
 ///     }
 ///
 ///     func openSettingsApp() {
-///         openUrl(.settingsApp)
+///         openURL(.settingsApp)
 ///     }
 ///
 ///     func openSomeUrl() {
-///         openUrl(URL(string: "https://example.com"))
+///         openURL(URL(string: "https://example.com"))
 ///     }
 /// }
 /// ```
@@ -80,7 +80,7 @@ extension OpenURLClient {
     /// Returns the unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
-            reportIssue(#"Unimplemented: @Dependency(\.openUrl)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.openURL)"#)
             return false
         }
     }
@@ -139,22 +139,22 @@ extension DependencyValues {
     ///
     /// ```swift
     /// class ViewModel {
-    ///     @Dependency(\.openUrl) var openUrl
+    ///     @Dependency(\.openURL) var openURL
     ///
     ///     func openMailApp() {
-    ///         openUrl(.mailApp)
+    ///         openURL(.mailApp)
     ///     }
     ///
     ///     func openSettingsApp() {
-    ///         openUrl(.settingsApp)
+    ///         openURL(.settingsApp)
     ///     }
     ///
     ///     func openSomeUrl() {
-    ///         openUrl(URL(string: "https://example.com"))
+    ///         openURL(URL(string: "https://example.com"))
     ///     }
     /// }
     /// ```
-    public var openUrl: OpenURLClient {
+    public var openURL: OpenURLClient {
         get { self[OpenURLClientKey.self] }
         set { self[OpenURLClientKey.self] = newValue }
     }

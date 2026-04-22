@@ -16,22 +16,22 @@ extension View {
     /// List {
     ///     Text("Learn more at [apple.com](https://www.apple.com)")
     /// }
-    /// .openUrlInApp()
+    /// .openURLInApp()
     /// ```
-    public func openUrlInApp() -> some View {
+    public func openURLInApp() -> some View {
         modifier(OpenURLInAppViewModifier())
     }
 }
 
 private struct OpenURLInAppViewModifier: ViewModifier {
-    @Dependency(\.openUrl) private var openUrl
+    @Dependency(\.openURL) private var openURL
 
     func body(content: Content) -> some View {
         switch AppInfo.executionTarget {
             case .app:
                 content
                     .environment(\.openURL, .init { url in
-                        openUrl(url)
+                        openURL(url)
                         return .handled
                     })
             case .widget, .appExtension:
@@ -46,5 +46,5 @@ private struct OpenURLInAppViewModifier: ViewModifier {
     List {
         Text("Learn more at [apple.com](https://www.apple.com)")
     }
-    .openUrlInApp()
+    .openURLInApp()
 }

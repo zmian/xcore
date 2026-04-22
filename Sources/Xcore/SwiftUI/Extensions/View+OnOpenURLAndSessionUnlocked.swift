@@ -29,7 +29,7 @@ extension View {
 private struct OnOpenURLSessionUnlockedViewModifier: ViewModifier {
     @Dependency(\.appStatus) private var appStatus
     @State private var isUnlocked: Bool
-    @State private var pendingOpenUrl: URL?
+    @State private var pendingOpenURL: URL?
     private let action: (URL) -> Void
 
     init(perform action: @escaping (URL) -> Void) {
@@ -44,8 +44,8 @@ private struct OnOpenURLSessionUnlockedViewModifier: ViewModifier {
                 isUnlocked = sessionState == .unlocked
 
                 // Process the pending url
-                if isUnlocked, let url = pendingOpenUrl {
-                    pendingOpenUrl = nil
+                if isUnlocked, let url = pendingOpenURL {
+                    pendingOpenURL = nil
                     action(url)
                 }
             }
@@ -54,7 +54,7 @@ private struct OnOpenURLSessionUnlockedViewModifier: ViewModifier {
                 if isUnlocked {
                     action(url)
                 } else {
-                    pendingOpenUrl = url
+                    pendingOpenURL = url
                 }
             }
     }

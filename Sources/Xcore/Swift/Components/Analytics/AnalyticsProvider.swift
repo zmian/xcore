@@ -69,7 +69,7 @@ import Foundation
 ///                         segment.receivedRemoteNotification(userInfo)
 ///                     case let .continueUserActivity(activity, _):
 ///                         segment.continue(activity)
-///                     case let .openUrl(url, options):
+///                     case let .openURL(url, options):
 ///                         segment.open(url.maskingSensitiveQueryItems(), options: options)
 ///                     default:
 ///                         break

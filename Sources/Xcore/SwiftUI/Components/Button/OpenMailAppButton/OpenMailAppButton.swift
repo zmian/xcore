@@ -40,7 +40,7 @@ extension View {
 private struct MailAppViewModifier: ViewModifier {
     private typealias L = Localized.MailApp
     @Environment(\.theme) private var theme
-    @Dependency(\.openUrl) private var openUrl
+    @Dependency(\.openURL) private var openURL
     private let apps = MailApp.available
     @Binding var isPresented: Bool
     private var isSheetPresented: Binding<Bool> {
@@ -58,7 +58,7 @@ private struct MailAppViewModifier: ViewModifier {
                     //
                     // Even if user has deleted this app, it will show as available and tapping on
                     // it will prompt the user to restore it.
-                    openUrl(apps[0].url)
+                    openURL(apps[0].url)
                     self.isPresented = false
                 }
             }
@@ -66,7 +66,7 @@ private struct MailAppViewModifier: ViewModifier {
                 CustomFittedSheetContent(L.open) {
                     ForEach(apps) { app in
                         Button(app.name) {
-                            openUrl(app.url)
+                            openURL(app.url)
                             isPresented = false
                         }
                         .foregroundStyle(theme.tintColor)

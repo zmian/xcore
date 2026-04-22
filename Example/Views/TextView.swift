@@ -32,7 +32,7 @@ struct TextView: View {
                 Text("This paragraph contains two links for testing VoiceOver and ensuring the links rotor is functioning properly. The first link is www.example.com, and the second link is a [tappable link](https://www.apple.com) has custom display text.")
             }
         }
-        .openUrlInApp()
+        .openURLInApp()
     }
 }
 

@@ -53,7 +53,7 @@ extension View {
 }
 
 private struct ErrorPopupDefaultActions<Failure: Error>: View {
-    @Dependency(\.openUrl) private var openUrl
+    @Dependency(\.openURL) private var openURL
     private let error: Binding<Failure?>
     private let action: (() -> Void)?
 
@@ -67,7 +67,7 @@ private struct ErrorPopupDefaultActions<Failure: Error>: View {
             if appError.openAppSettings {
                 Button.openAppSettings {
                     error.wrappedValue = nil
-                    openUrl(.settingsApp)
+                    openURL(.settingsApp)
                     action?()
                 }
                 .buttonStyle(.primary)

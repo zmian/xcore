@@ -49,8 +49,8 @@ public struct WebView: View {
         // Handle email, SMS, and telephone URLs natively.
         switch scheme {
             case .email, .sms, .tel:
-                @Dependency(\.openUrl) var openUrl
-                await openUrl(action.request.url)
+                @Dependency(\.openURL) var openURL
+                await openURL(action.request.url)
                 return .cancel
             default:
                 return .allow
@@ -272,7 +272,7 @@ extension WebView {
 
 extension WebView {
     private final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply {
-        @Dependency(\.openUrl) var openUrl
+        @Dependency(\.openURL) var openURL
         private var didAddLoader = false
         private let loader = UIActivityIndicatorView(style: .medium)
         private let parent: Representable
@@ -326,7 +326,7 @@ extension WebView {
 
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
             guard let webView = parent.createWebViewHandler(navigationAction.request) else {
-                openUrl(navigationAction.request.url)
+                openURL(navigationAction.request.url)
                 return nil
             }
 
