@@ -24,7 +24,7 @@ disabled_rules:
   - unused_optional_binding
   - discarded_notification_center_observer
   - unused_closure_parameter
-  - operator_whitespace
+  - function_name_whitespace
   - multiple_closures_with_trailing_closure
   - shorthand_operator
   - weak_delegate
@@ -185,12 +185,6 @@ custom_rules:
     name: "Inconsistent Coding Convention"
     regex: "\\@(Environment|SwiftUI.Environment)\\(\\\\.theme\\) private var theme: Theme"
     message: "Remove type from the right hand of the environment variable (e.g., `@Environment(\\.theme) private var theme`)."
-
-  icc_system_image:
-    included: ".*.swift"
-    name: "Inconsistent Coding Convention"
-    regex: "systemImage: \""
-    message: "Use compile time constants instead of the strings API (e.g., `Image(system: .circle))`."
 
   icc_system_image:
     included: ".*.swift"
