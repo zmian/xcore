@@ -1,6 +1,6 @@
 SCHEME_NAME := "Example"
 WORKSPACE_NAME := Xcore.xcworkspace
-TEST_DESTINATION := platform="iOS Simulator,name=iPhone 15 Pro,OS=16.0"
+TEST_DESTINATION := platform="iOS Simulator,name=iPhone 17 Pro,OS=26.0"
 
 default: test
 
