@@ -36,9 +36,7 @@ extension FatalReason: ExpressibleByStringLiteral {
 
 extension FatalReason {
     public static let windowSceneMissing: Self = "Window scene is missing."
-    
     public static let subclassMustImplement: Self = "Must be implemented by subclass."
-
     static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> Self {
         .init("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
     }

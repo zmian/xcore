@@ -235,11 +235,11 @@ extension PostalAddress {
                     line != representations?.regionName
                 else {
                     return nil
-                }                
+                }
 
                 return line
             }
-        
+
         self.init(
             street1: postalAddress?.street ?? "",
             street2: street2 ?? "",

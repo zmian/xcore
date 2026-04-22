@@ -39,7 +39,7 @@ extension UIFont {
     /// - Parameters:
     ///   - fontNames: The list of font resource names to register.
     ///   - bundle: The bundle where the given list of fonts are located.
-    public static func registerIfNeeded(_ fontNames: String...,in bundle: Bundle = .main) throws {
+    public static func registerIfNeeded(_ fontNames: String..., in bundle: Bundle = .main) throws {
         try fontNames.forEach { fontName in
             let name = fontName.deletingPathExtension
             let ext = fontName.pathExtension
