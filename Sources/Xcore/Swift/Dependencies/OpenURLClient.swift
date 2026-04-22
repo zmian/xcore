@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-private import SafariServices
 
 /// Provides functionality for opening a URL.
 ///
@@ -90,38 +89,8 @@ extension OpenURLClient {
         .init { @MainActor urlDescriptor in
             let url = urlDescriptor.url
             let environment = EnvironmentValues()
-
-            // Attempt to open standard urls using in-app Safari.
-            guard
-                [.http, .https].contains(url.schemeType),
-                UIApplication.sharedOrNil != nil
-            else {
-                return await environment.openURL.run(url)
-            }
-
-            let vc = InAppSafariViewController(url: url)
-            // Present shows the Safari VC correctly in SwiftUI.
-            vc.show()
+            environment.openURL(url, prefersInApp: true)
             return true
-        }
-    }
-
-    private final class InAppSafariViewController: SFSafariViewController {
-        private let hud = HUD().apply {
-            $0.backgroundColor = .clear
-            $0.windowLabel = "OpenURL Window"
-            $0.adjustWindowAttributes {
-                $0.makeKey()
-            }
-        }
-
-        override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-            hud.hide(animated: false)
-        }
-
-        func show() {
-            hud.present(self, animated: true)
         }
     }
 }
@@ -157,23 +126,5 @@ extension DependencyValues {
     public var openURL: OpenURLClient {
         get { self[OpenURLClientKey.self] }
         set { self[OpenURLClientKey.self] = newValue }
-    }
-}
-
-// MARK: - Helpers
-
-extension OpenURLAction {
-    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    fileprivate func run(_ url: URL) async -> Bool {
-        #if os(watchOS)
-        callAsFunction(url)
-        return true
-        #else
-        return await withCheckedContinuation { continuation in
-            callAsFunction(url) { canOpen in
-                continuation.resume(returning: canOpen)
-            }
-        }
-        #endif
     }
 }
