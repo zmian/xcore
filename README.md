@@ -28,9 +28,12 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 
 ## Makefile
 
-We use make file to provide some useful shortcuts. Run any of the below commands at the project root level.
+We use a Makefile to provide useful shortcuts. Run these commands from the project root:
 
-- `make test` Runs all tests
+- `make build` Builds the `Example` app and its `Xcore` framework dependencies
+- `make test` Runs tests through the `Example` scheme
+- `make test TEST_ONLY=XcoreTests/DataTests` Runs a single test target
+- `make run` Builds, installs, and launches the app in the configured simulator
 - `make lint` Runs SwiftLint
 - `make format` Runs SwiftFormat
 

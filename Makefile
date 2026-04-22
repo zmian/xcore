@@ -1,37 +1,77 @@
-SCHEME_NAME := "Example"
-WORKSPACE_NAME := Xcore.xcworkspace
-TEST_DESTINATION := platform="iOS Simulator,name=iPhone 17 Pro,OS=26.0"
+SHELL := /bin/bash
+.DEFAULT_GOAL := help
+.NOTPARALLEL:
 
-default: test
+XCODE_APP ?= /Applications/Xcode.app
+DEVELOPER_DIR ?= $(XCODE_APP)/Contents/Developer
+export DEVELOPER_DIR
+export PATH := $(DEVELOPER_DIR)/usr/bin:$(DEVELOPER_DIR)/Platforms/iPhoneSimulator.platform/Developer/usr/bin:$(PATH)
 
-test:
-	@xcodebuild test \
-		-allowProvisioningUpdates \
-		-configuration "Debug" \
-		-workspace $(WORKSPACE_NAME) \
-		-scheme $(SCHEME_NAME) \
-		-destination $(TEST_DESTINATION) \
-		| xcpretty
+WORKSPACE := Xcore.xcworkspace
+SCHEME := Example
+CONFIGURATION ?= Debug
+DERIVED_DATA_PATH ?= $(CURDIR)/.build/DerivedData
+APP_BUNDLE_ID ?= com.xcore.example
 
-format:
+SIMULATOR_NAME ?= iPhone 17 Pro
+SIMULATOR_OS ?= latest
+SIMULATOR_DESTINATION ?= platform=iOS Simulator,name=$(SIMULATOR_NAME),OS=$(SIMULATOR_OS)
+BUILD_DESTINATION ?= generic/platform=iOS Simulator
+TEST_ONLY ?=
+
+XCODEBUILD := xcodebuild
+APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
+
+define xcodebuild_run
+	@set -o pipefail; \
+	if command -v xcpretty >/dev/null 2>&1; then \
+		$(1) | xcpretty; \
+	elif command -v xcbeautify >/dev/null 2>&1; then \
+		$(1) | xcbeautify; \
+	else \
+		$(1); \
+	fi
+endef
+
+ifdef TEST_ONLY
+ifneq ($(strip $(TEST_ONLY)),)
+TEST_ONLY_ARG := -only-testing:$(TEST_ONLY)
+endif
+endif
+
+.PHONY: help _ensure_xcode clean build tests test run lint format
+
+_ensure_xcode:
+	@test -d "$(DEVELOPER_DIR)" || (echo "Xcode not found at $(DEVELOPER_DIR)" && exit 1)
+	@xcodebuild -version >/dev/null
+	@xcrun --find simctl >/dev/null
+
+help: ## Show available targets
+	@printf "Xcode app: %s\n" "$(XCODE_APP)"
+	@printf "Scheme: %s\n" "$(SCHEME)"
+	@printf "Simulator: %s\n\n" "$(SIMULATOR_DESTINATION)"
+	@grep -E '^[a-zA-Z0-9_-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/'
+
+clean: ## Remove local build and package state used by Make targets
+	@rm -rf "$(DERIVED_DATA_PATH)" "$(CURDIR)/.build/workspace-state.json"
+
+build: _ensure_xcode ## Build the example app and its framework dependencies
+	$(call xcodebuild_run,$(XCODEBUILD) build -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)")
+
+test: _ensure_xcode ## Run tests through the Example scheme
+	$(call xcodebuild_run,$(XCODEBUILD) test -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG))
+
+run: _ensure_xcode ## Build, install, and launch the app in the configured simulator
+	@xcrun simctl boot "$(SIMULATOR_NAME)" >/dev/null 2>&1 || true
+	@xcrun simctl bootstatus "$(SIMULATOR_NAME)" -b
+	$(call xcodebuild_run,$(XCODEBUILD) build -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)")
+	@test -d "$(APP_PATH)" || (echo "Built app not found at $(APP_PATH)" && exit 1)
+	@open -a Simulator >/dev/null 2>&1 || true
+	@xcrun simctl install booted "$(APP_PATH)"
+	@xcrun simctl launch booted "$(APP_BUNDLE_ID)"
+
+format: ## Run SwiftFormat
 	@swiftformat .
 
-lint:
+lint: ## Run SwiftLint
 	@swiftlint lint
-
-docC-disabled:
-	swift package \
-		--allow-writing-to-directory /docs-out/ \
-		generate-documentation \
-		--target Xcore \
-		--disable-indexing \
-		--transform-for-static-hosting \
-		--hosting-base-path /xcore/ \
-		--output-path /docs-out/
-
-docs-disabled:
-	xcodebuild docbuild \
-		-workspace Xcore.xcworkspace \
-		-scheme Xcore \
-		-destination generic/platform=iOS \
-		OTHER_DOCC_FLAGS="--disable-indexing --transform-for-static-hosting --hosting-base-path /xcore/ --output-path /docs-out/"
