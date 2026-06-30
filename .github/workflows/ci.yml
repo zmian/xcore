@@ -32,6 +32,9 @@ jobs:
         run: make build RAW_XCODEBUILD=1
 
       - name: Test
+        env:
+          XCORE_CI: "true"
+          SIMCTL_CHILD_XCORE_CI: "true"
         run: make test
 
       - name: Lint
