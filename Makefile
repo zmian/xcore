@@ -12,6 +12,9 @@ SCHEME := Example
 CONFIGURATION ?= Debug
 DERIVED_DATA_PATH ?= $(CURDIR)/.build/DerivedData
 APP_BUNDLE_ID ?= com.xcore.example
+DOCC_TARGET ?= Xcore
+DOCC_OUTPUT_PATH ?= $(CURDIR)/.build/docc
+DOCC_HOSTING_BASE_PATH ?= xcore
 
 SIMULATOR_NAME ?= iPhone 17 Pro
 SIMULATOR_OS ?= latest
@@ -40,7 +43,7 @@ TEST_ONLY_ARG := -only-testing:$(TEST_ONLY)
 endif
 endif
 
-.PHONY: help _ensure_xcode clean build tests test run lint format
+.PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check
 
 _ensure_xcode:
 	@test -d "$(DEVELOPER_DIR)" || (echo "Xcode not found at $(DEVELOPER_DIR)" && exit 1)
@@ -59,6 +62,17 @@ clean: ## Remove local build and package state used by Make targets
 build: _ensure_xcode ## Build the example app and its framework dependencies
 	$(call xcodebuild_run,$(XCODEBUILD) build -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)")
 
+build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_PATH
+	@rm -rf "$(DOCC_OUTPUT_PATH)"
+	@swift package \
+		--allow-writing-to-directory "$(DOCC_OUTPUT_PATH)" \
+		generate-documentation \
+		--target "$(DOCC_TARGET)" \
+		--disable-indexing \
+		--output-path "$(DOCC_OUTPUT_PATH)" \
+		--transform-for-static-hosting \
+		--hosting-base-path "$(DOCC_HOSTING_BASE_PATH)"
+
 test: _ensure_xcode ## Run tests through the Example scheme
 	@set -o pipefail; \
 	$(XCODEBUILD) test -quiet -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
@@ -75,6 +89,9 @@ run: _ensure_xcode ## Build, install, and launch the app in the configured simul
 
 format: ## Run SwiftFormat
 	@swiftformat .
+
+format-check: ## Check SwiftFormat without changing files
+	@swiftformat --lint .
 
 lint: ## Run SwiftLint
 	@swiftlint lint
