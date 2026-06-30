@@ -69,11 +69,22 @@ Test case 'URLTests/resolvingRedirectedLink()' passed (12.001 seconds)
 - If verification starts failing in weird ways after interrupted or concurrent
   builds, run `make clean` and retry.
 
+## Platform & API Standards
+
+- Target **iOS 26+ / Xcode 26+ / Swift 6.3** only. Use current SDK and SwiftUI APIs.
+- Prefer the latest framework patterns over legacy or deprecated approaches.
+- Do not add backwards-compatibility shims, `@available` fallbacks, or old API
+  workarounds unless the task explicitly asks for them.
+- Do not compromise on quality, correctness, or documentation for speed.
+- Public API changes should include the same level of inline docs as surrounding
+  code (usage examples, parameter docs, links where helpful).
+
 ## Repo-Specific Preferences
 
 - Keep fixes direct. Avoid wrappers or extra abstraction unless they are
   clearly required.
-- Preserve existing public API shape when possible.
+- Breaking API or behavior changes are acceptable when they improve correctness
+  or modernity. Do not preserve legacy behavior by default.
 - For SwiftUI and concurrency warnings, prefer a minimal fix that matches the
   framework API contract instead of adding unsafe workarounds.
 
