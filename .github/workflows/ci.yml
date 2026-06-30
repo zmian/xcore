@@ -29,7 +29,7 @@ jobs:
         run: brew install swiftlint swiftformat
 
       - name: Build
-        run: make build
+        run: make build RAW_XCODEBUILD=1
 
       - name: Test
         run: make test
