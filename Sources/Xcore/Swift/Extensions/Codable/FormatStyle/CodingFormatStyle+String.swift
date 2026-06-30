@@ -40,8 +40,8 @@ public struct StringCodingFormatStyle: CodingFormatStyle, Sendable {
         self.options = options
     }
 
-    public func decode(_ value: AnyCodable) throws -> String {
-        let value = value.value
+    public func decode(_ value: JSONValue) throws -> String {
+        let value = value.anyValue
         let result: String
 
         if let value = value as? String {
@@ -55,8 +55,8 @@ public struct StringCodingFormatStyle: CodingFormatStyle, Sendable {
         return try applyOptions(to: result)
     }
 
-    public func encode(_ value: String) throws -> AnyCodable {
-        AnyCodable(try applyOptions(to: value))
+    public func encode(_ value: String) throws -> JSONValue {
+        JSONValue(try applyOptions(to: value))
     }
 
     private func applyOptions(to value: String) throws -> String {

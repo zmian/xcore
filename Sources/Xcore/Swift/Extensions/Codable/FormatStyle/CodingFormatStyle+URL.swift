@@ -13,13 +13,13 @@ public struct URLCodingFormatStyle: CodingFormatStyle, Sendable {
         self.allowedCharacters = allowedCharacters
     }
 
-    public func decode(_ value: AnyCodable) throws -> URL {
-        if let value = value.value as? URL {
+    public func decode(_ value: JSONValue) throws -> URL {
+        if let value = value.anyValue as? URL {
             return value
         }
 
         guard
-            let value = value.value as? String,
+            let value = value.anyValue as? String,
             let value = value.removingPercentEncoding,
             !value.isBlank
         else {
@@ -41,8 +41,8 @@ public struct URLCodingFormatStyle: CodingFormatStyle, Sendable {
         throw CodingFormatStyleError.invalidValue
     }
 
-    public func encode(_ value: URL) throws -> AnyCodable {
-        AnyCodable(value.absoluteString)
+    public func encode(_ value: URL) throws -> JSONValue {
+        JSONValue(value.absoluteString)
     }
 }
 

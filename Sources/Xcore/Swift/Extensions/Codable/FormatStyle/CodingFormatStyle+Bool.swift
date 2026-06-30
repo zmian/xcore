@@ -13,8 +13,8 @@ public struct BoolCodingFormatStyle: CodingFormatStyle, Sendable {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Bool {
-        let value = value.value
+    public func decode(_ value: JSONValue) throws -> Bool {
+        let value = value.anyValue
 
         if let value = value as? Bool {
             return value
@@ -25,12 +25,12 @@ public struct BoolCodingFormatStyle: CodingFormatStyle, Sendable {
         }
     }
 
-    public func encode(_ value: Bool) throws -> AnyCodable {
+    public func encode(_ value: Bool) throws -> JSONValue {
         if encodeAsString {
-            return AnyCodable(value ? "true" : "false")
+            return JSONValue(value ? "true" : "false")
         }
 
-        return AnyCodable(value)
+        return JSONValue(value)
     }
 }
 

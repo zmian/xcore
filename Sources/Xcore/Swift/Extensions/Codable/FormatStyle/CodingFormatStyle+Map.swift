@@ -14,8 +14,8 @@ public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable {
         self.decode = decode
     }
 
-    public func decode(_ value: AnyCodable) throws -> Output {
-        guard let result = try decode(value.value) else {
+    public func decode(_ value: JSONValue) throws -> Output {
+        guard let result = try decode(value.anyValue) else {
             throw CodingFormatStyleError.invalidValue
         }
 

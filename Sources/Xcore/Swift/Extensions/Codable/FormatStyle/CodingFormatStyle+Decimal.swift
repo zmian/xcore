@@ -14,8 +14,8 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle, Sendable {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Decimal {
-        let value = value.value
+    public func decode(_ value: JSONValue) throws -> Decimal {
+        let value = value.anyValue
 
         if let value = value as? Decimal {
             return value
@@ -31,8 +31,8 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle, Sendable {
         throw CodingFormatStyleError.invalidValue
     }
 
-    public func encode(_ value: Decimal) throws -> AnyCodable {
-        AnyCodable.from(encodeAsString ? value.stringValue : value)
+    public func encode(_ value: Decimal) throws -> JSONValue {
+        JSONValue.from(encodeAsString ? value.stringValue : value)
     }
 }
 

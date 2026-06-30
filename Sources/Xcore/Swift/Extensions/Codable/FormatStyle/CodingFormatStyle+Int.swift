@@ -13,8 +13,8 @@ public struct IntCodingFormatStyle: CodingFormatStyle, Sendable {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Int {
-        let value = value.value
+    public func decode(_ value: JSONValue) throws -> Int {
+        let value = value.anyValue
 
         if let value = value as? Int {
             return value
@@ -27,8 +27,8 @@ public struct IntCodingFormatStyle: CodingFormatStyle, Sendable {
         return try Int(value, format: .number.locale(.usPosix))
     }
 
-    public func encode(_ value: Int) throws -> AnyCodable {
-        AnyCodable.from(encodeAsString ? String(format: "%i", value) : value)
+    public func encode(_ value: Int) throws -> JSONValue {
+        JSONValue.from(encodeAsString ? String(format: "%i", value) : value)
     }
 }
 

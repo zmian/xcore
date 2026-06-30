@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_exported import AnyCodable
 @_exported import KeychainAccess
 @_exported import Dependencies
 
@@ -22,8 +21,3 @@ extension Bundle {
     }
 }
 
-extension AnyCodable {
-    public static func from(_ value: any Sendable) -> Self {
-        self.init(value)
-    }
-}

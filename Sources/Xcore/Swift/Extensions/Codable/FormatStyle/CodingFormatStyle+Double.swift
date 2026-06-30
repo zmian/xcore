@@ -14,8 +14,8 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Double {
-        let value = value.value
+    public func decode(_ value: JSONValue) throws -> Double {
+        let value = value.anyValue
 
         if let value = value as? Double {
             return value
@@ -35,8 +35,8 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
         )
     }
 
-    public func encode(_ value: Double) throws -> AnyCodable {
-        AnyCodable.from(encodeAsString ? value.stringValue : value)
+    public func encode(_ value: Double) throws -> JSONValue {
+        JSONValue.from(encodeAsString ? value.stringValue : value)
     }
 }
 

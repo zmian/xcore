@@ -20,11 +20,11 @@ public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle, 
         self.options = options
     }
 
-    public func decode(_ value: AnyCodable) throws -> Output {
+    public func decode(_ value: JSONValue) throws -> Output {
         // Attempt to construct the value from the given value without any
         // transformation.
         if
-            let value = value.value as? Output.RawValue,
+            let value = value.anyValue as? Output.RawValue,
             let output = Output(rawValue: value)
         {
             return output
