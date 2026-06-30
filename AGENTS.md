@@ -1,6 +1,6 @@
 # AGENTS
 
-This repo is an iOS 26+ / Xcode 26+ / Swift 6.3 package plus example app.
+This repo targets the latest iOS, Xcode, and Swift releases plus an example app.
 
 ## Verification
 
@@ -29,7 +29,7 @@ and uses `Xcore.xcworkspace` + the `Example` scheme. That is the supported path.
 
 ## Code Standards
 
-- Use current iOS 26 / Xcode 26 / Swift 6.3 SDK and SwiftUI APIs.
+- Use the latest iOS, Xcode, Swift, and SwiftUI APIs.
 - Do not add backwards-compatibility shims, `@available` fallbacks, or legacy API
   workarounds unless explicitly requested.
 - Keep fixes direct. Add abstraction only when it removes real complexity.
