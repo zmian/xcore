@@ -21,6 +21,7 @@ SIMULATOR_OS ?= latest
 SIMULATOR_DESTINATION ?= platform=iOS Simulator,name=$(SIMULATOR_NAME),OS=$(SIMULATOR_OS)
 BUILD_DESTINATION ?= generic/platform=iOS Simulator
 TEST_ONLY ?=
+TEST_SKIP ?=
 
 XCODEBUILD := xcodebuild
 XCODEBUILD_FLAGS ?= -skipPackagePluginValidation -skipMacroValidation
@@ -45,6 +46,10 @@ ifdef TEST_ONLY
 ifneq ($(strip $(TEST_ONLY)),)
 TEST_ONLY_ARG := -only-testing:$(TEST_ONLY)
 endif
+endif
+
+ifneq ($(strip $(TEST_SKIP)),)
+TEST_SKIP_ARG := $(foreach test,$(TEST_SKIP),-skip-testing:$(test))
 endif
 
 .PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check
@@ -79,7 +84,7 @@ build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_
 
 test: _ensure_xcode ## Run tests through the Example scheme
 	@set -o pipefail; \
-	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
+	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(TEST_SKIP_ARG) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
 	echo "Tests passed"
 
 run: _ensure_xcode ## Build, install, and launch the app in the configured simulator

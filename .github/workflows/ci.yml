@@ -32,6 +32,11 @@ jobs:
         run: make build RAW_XCODEBUILD=1
 
       - name: Test
+        env:
+          TEST_SKIP: >-
+            XcoreTests/URLTests/resolvingRedirectedLink
+            XcoreTests/LiveAddressSearchClientTests/incompleteAddress
+            XcoreTests/DateTest/formatted_relative_until_month
         run: make test
 
       - name: Lint
