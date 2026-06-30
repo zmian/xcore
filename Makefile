@@ -24,6 +24,7 @@ TEST_ONLY ?=
 
 XCODEBUILD := xcodebuild
 XCODEBUILD_FLAGS ?= -skipPackagePluginValidation -skipMacroValidation
+XCODEBUILD_BUILD_SETTINGS ?=
 RAW_XCODEBUILD ?=
 APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
@@ -64,7 +65,7 @@ clean: ## Remove local build and package state used by Make targets
 	@rm -rf "$(DERIVED_DATA_PATH)" "$(CURDIR)/.build/workspace-state.json"
 
 build: _ensure_xcode ## Build the example app and its framework dependencies
-	$(call xcodebuild_run,$(XCODEBUILD) build $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)")
+	$(call xcodebuild_run,$(XCODEBUILD) build $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)" $(XCODEBUILD_BUILD_SETTINGS))
 
 build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_PATH
 	@rm -rf "$(DOCC_OUTPUT_PATH)"
@@ -79,13 +80,13 @@ build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_
 
 test: _ensure_xcode ## Run tests through the Example scheme
 	@set -o pipefail; \
-	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
+	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(XCODEBUILD_BUILD_SETTINGS) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
 	echo "Tests passed"
 
 run: _ensure_xcode ## Build, install, and launch the app in the configured simulator
 	@xcrun simctl boot "$(SIMULATOR_NAME)" >/dev/null 2>&1 || true
 	@xcrun simctl bootstatus "$(SIMULATOR_NAME)" -b
-	$(call xcodebuild_run,$(XCODEBUILD) build $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)")
+	$(call xcodebuild_run,$(XCODEBUILD) build $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(XCODEBUILD_BUILD_SETTINGS))
 	@test -d "$(APP_PATH)" || (echo "Built app not found at $(APP_PATH)" && exit 1)
 	@open -a Simulator >/dev/null 2>&1 || true
 	@xcrun simctl install booted "$(APP_PATH)"

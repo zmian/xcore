@@ -35,7 +35,7 @@ jobs:
         env:
           XCORE_CI: "true"
           SIMCTL_CHILD_XCORE_CI: "true"
-        run: make test
+        run: make test XCODEBUILD_BUILD_SETTINGS="OTHER_SWIFT_FLAGS=-DXCORE_CI"
 
       - name: Lint
         run: make lint
