@@ -76,3 +76,14 @@ Test case 'URLTests/resolvingRedirectedLink()' passed (12.001 seconds)
 - Preserve existing public API shape when possible.
 - For SwiftUI and concurrency warnings, prefer a minimal fix that matches the
   framework API contract instead of adding unsafe workarounds.
+
+## Package Layout
+
+Xcore is one Swift package target: `import Xcore`. Folders (`Swift/`, `SwiftUI/`,
+`Cocoa/`) organize code; they are not separate modules.
+
+- Do not propose splitting into submodules as a default refactor.
+- Builds are fast enough for this repo; link-time dead code stripping keeps
+  unused APIs out of app binaries.
+- Revisit splitting only for measured build-time pain or an explicit new public
+  product requirement.
