@@ -95,7 +95,7 @@ struct LiveAddressSearchClientTests {
         }
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on live geocoder results."))
     func incompleteAddress() async {
         await search("Nothing, Decatur, GA 30034, US") { postalAddress in
             #expect(postalAddress.street1 == "")
