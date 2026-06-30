@@ -226,7 +226,7 @@ struct DateTest {
         #expect(year2000.formatted(style: relative) == "26 years ago")
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on runner date/locale formatting."))
     func formatted_relative_until_month() {
         let relative = Date.Style.relative(until: .month)
 

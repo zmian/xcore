@@ -1,9 +1,10 @@
-# Build and deploy DocC to GitHub pages. Based off of @pointfreeco's work here:
-# https://github.com/pointfreeco/swift-composable-architecture/blob/main/.github/workflows/documentation.yml
 name: Documentation
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
   release:
     types: [published]
 
@@ -11,61 +12,59 @@ concurrency:
   group: docs-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  build:
-    runs-on: macos-15
-    steps:
-      - name: Select Xcode 16.2
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+permissions:
+  contents: write
 
-      - name: Checkout Package
+jobs:
+  build-and-deploy:
+    runs-on: macos-26
+    steps:
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Checkout gh-pages Branch
-        uses: actions/checkout@v4
+      - name: Select latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          ref: gh-pages
-          path: docs-out
+          xcode-version: latest-stable
 
-      - name: Build documentation
-        run: >
-          rm -rf docs-out/.git;
-          rm -rf docs-out/main;
-          git tag -l --sort=-v:refname | grep -e "\d\+\.\d\+.0" | tail -n +6 | xargs -I {} rm -rf {};
+      - name: Resolve documentation version
+        id: docs
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            version="${{ github.event.release.tag_name }}"
+          else
+            version="main"
+          fi
 
-          for tag in $(echo "main"; git tag -l --sort=-v:refname | grep -e "\d\+\.\d\+.0" | head -6);
-          do
-            if [ -d "docs-out/$tag/data/documentation/xcore" ]
-            then
-              echo "✅ Documentation for "$tag" already exists.";
-            else
-              echo "⏳ Generating documentation for Xcore @ "$tag" release.";
-              rm -rf "docs-out/$tag";
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "base_path=xcore/$version" >> "$GITHUB_OUTPUT"
 
-              git checkout .;
-              git checkout "$tag";
+      - name: Build DocC static site
+        run: |
+          make build-docc \
+            DOCC_OUTPUT_PATH="$PWD/.build/docc-site" \
+            DOCC_HOSTING_BASE_PATH="${{ steps.docs.outputs.base_path }}"
 
-              swift package \
-                --allow-writing-to-directory docs-out/"$tag" \
-                generate-documentation \
-                --target Xcore \
-                --disable-indexing \
-                --output-path docs-out/"$tag" \
-                --transform-for-static-hosting \
-                --hosting-base-path /xcore/"$tag" \
-                && echo "✅ Documentation generated for Xcore @ "$tag" release." \
-                || echo "⚠️ Documentation skipped for Xcore @ "$tag".";
-            fi;
-          done
+      - name: Add redirect
+        run: |
+          cat > "$PWD/.build/docc-site/index.html" <<'HTML'
+          <!doctype html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0; url=documentation/xcore/">
+            </head>
+            <body>
+              <a href="documentation/xcore/">Xcore documentation</a>
+            </body>
+          </html>
+          HTML
 
-      - name: Fix permissions
-        run: "sudo chown -R $USER docs-out"
-
-      - name: Publish documentation to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.7
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: docs-out
-          single-commit: true
+          folder: .build/docc-site
+          target-folder: ${{ steps.docs.outputs.version }}
+          clean: false

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-lint:
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install tools
+        run: brew install swiftlint swiftformat
+
+      - name: Build
+        run: make build RAW_XCODEBUILD=1
+
+      - name: Test
+        env:
+          XCORE_CI: "true"
+          SIMCTL_CHILD_XCORE_CI: "true"
+        run: make test XCORE_CI=1
+
+      - name: Lint
+        run: make lint

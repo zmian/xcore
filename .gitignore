@@ -15,6 +15,7 @@ xcuserdata
 DerivedData
 *.hmap
 *.ipa
+*.doccarchive
 *.xcuserstate
 .DS_Store
 
