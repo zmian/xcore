@@ -12,26 +12,6 @@ public enum Crypt: Sendable {
         case deobfuscationFailure
         case urlNotFound
     }
-
-    private static func contentsData(from url: URL?) throws -> Data {
-        guard let url else {
-            throw Error.urlNotFound
-        }
-
-        return try Data(contentsOf: url)
-    }
-
-    private static func secretData(from secret: String) -> Data {
-        Data(secret.utf8).sha256()
-    }
-
-    private static func symmetricKey(from secret: some ContiguousBytes) -> SymmetricKey {
-        SymmetricKey(data: secret)
-    }
-
-    private static func symmetricKey(fromSecret secret: String) -> SymmetricKey {
-        SymmetricKey(data: secretData(from: secret))
-    }
 }
 
 // MARK: - Decrypt
@@ -70,7 +50,11 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(contentsOf url: URL?, secret: String) throws -> Data {
-        try decrypt(try contentsData(from: url), secret: secret)
+        guard let url else {
+            throw Error.urlNotFound
+        }
+
+        return try decrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the content at the given url and verifies its authenticity.
@@ -82,7 +66,11 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(contentsOf url: URL?, secret: some ContiguousBytes) throws -> Data {
-        try decrypt(try contentsData(from: url), secret: secret)
+        guard let url else {
+            throw Error.urlNotFound
+        }
+
+        return try decrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the data and verifies its authenticity.
@@ -94,7 +82,7 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(_ data: Data, secret: String) throws -> Data {
-        try ChaChaPoly.open(.init(combined: data), using: symmetricKey(fromSecret: secret))
+        try decrypt(data, secret: secret.sha256Data())
     }
 
     /// Decrypts the data and verifies its authenticity.
@@ -106,7 +94,8 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(_ data: Data, secret: some ContiguousBytes) throws -> Data {
-        try ChaChaPoly.open(.init(combined: data), using: symmetricKey(from: secret))
+        let key = SymmetricKey(data: secret)
+        return try ChaChaPoly.open(.init(combined: data), using: key)
     }
 }
 
@@ -139,22 +128,30 @@ extension Crypt {
     /// authentication tag.
     ///
     /// - Parameters:
-    ///   - url: The url of the content to encrypt.
+    ///   - path: The url of the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(contentsOf url: URL?, secret: String) throws -> Data {
-        try encrypt(try contentsData(from: url), secret: secret)
+        guard let url else {
+            throw Error.urlNotFound
+        }
+
+        return try encrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext content at the given url with encryption and an
     /// authentication tag.
     ///
     /// - Parameters:
-    ///   - url: The url of the content to encrypt.
+    ///   - path: The url of the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(contentsOf url: URL?, secret: some ContiguousBytes) throws -> Data {
-        try encrypt(try contentsData(from: url), secret: secret)
+        guard let url else {
+            throw Error.urlNotFound
+        }
+
+        return try encrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext data with encryption and an authentication tag.
@@ -164,7 +161,7 @@ extension Crypt {
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(_ data: Data, secret: String) throws -> Data {
-        try ChaChaPoly.seal(data, using: symmetricKey(fromSecret: secret)).combined
+        try encrypt(data, secret: secret.sha256Data())
     }
 
     /// Secures the given plaintext data with encryption and an authentication tag.
@@ -174,7 +171,8 @@ extension Crypt {
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(_ data: Data, secret: some ContiguousBytes) throws -> Data {
-        try ChaChaPoly.seal(data, using: symmetricKey(from: secret)).combined
+        let key = SymmetricKey(data: secret)
+        return try ChaChaPoly.seal(data, using: key).combined
     }
 }
 
@@ -188,7 +186,7 @@ extension Crypt {
     ///   - secret: Secret for obfuscation.
     /// - Returns: Obfuscated value in an array of `UInt8`.
     public static func obfuscate(_ string: String, secret: String) -> [UInt8] {
-        obfuscate(string, secret: Array(secretData(from: secret)))
+        obfuscate(string, secret: Array(secret.sha256Data()))
     }
 
     /// Obfuscates a given string with secret.
@@ -222,7 +220,7 @@ extension Crypt {
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
     public static func deobfuscate(_ value: [UInt8], secret: String) throws -> String {
-        try deobfuscateString(value, secret: Array(secretData(from: secret)))
+        try deobfuscateString(value, secret: Array(secret.sha256Data()))
     }
 
     /// Deobfucates a previously obfuscated value.
@@ -274,5 +272,11 @@ extension Crypt {
     /// least one character from each set being present.
     public static func generateRandomPassword() -> String {
         SecCreateSharedWebCredentialPassword()! as String
+    }
+}
+
+extension String {
+    fileprivate func sha256Data() -> Data {
+        Data(utf8).sha256()
     }
 }
