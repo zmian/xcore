@@ -2,7 +2,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 .NOTPARALLEL:
 
-XCODE_APP ?= /Applications/Xcode.app
+XCODE_APP ?= $(if $(MD_APPLE_SDK_ROOT),$(MD_APPLE_SDK_ROOT),/Applications/Xcode.app)
 DEVELOPER_DIR ?= $(XCODE_APP)/Contents/Developer
 export DEVELOPER_DIR
 export PATH := $(DEVELOPER_DIR)/usr/bin:$(DEVELOPER_DIR)/Platforms/iPhoneSimulator.platform/Developer/usr/bin:$(PATH)
