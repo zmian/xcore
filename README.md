@@ -11,7 +11,6 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 ## Contents
 
 - [Requirements](#requirements)
-- [Architecture](#architecture)
 - [Makefile](#makefile)
 - [Installation](#installation)
 
@@ -20,16 +19,6 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 - iOS 26.0+
 - Xcode 26.0+
 - Swift 6.3+
-
-## Architecture
-
-Xcore is a **single Swift module** (`import Xcore`). Source is organized by
-folder (`Swift/`, `SwiftUI/`, `Cocoa/`), but the package is not split into
-submodules by design.
-
-Rationale — including notes on binary size, compile time, and when (if ever) to
-revisit splitting — is documented in [`AGENTS.md`](AGENTS.md#architecture-single-module-design)
-for contributors and agents.
 
 **Additional Requirements**
 
