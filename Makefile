@@ -29,6 +29,10 @@ RAW_XCODEBUILD ?=
 APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
+ifeq ($(XCORE_CI),1)
+XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DXCORE_CI"
+endif
+
 define xcodebuild_run
 	@set -o pipefail; \
 	if [ -n "$(RAW_XCODEBUILD)" ]; then \
