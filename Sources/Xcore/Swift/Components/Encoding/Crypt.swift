@@ -277,6 +277,6 @@ extension Crypt {
 
 extension String {
     fileprivate func sha256Data() -> Data {
-        Data(utf8).base64EncodedData().sha256()
+        Data(utf8).sha256()
     }
 }

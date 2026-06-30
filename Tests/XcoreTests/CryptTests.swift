@@ -77,4 +77,15 @@ struct CryptTests {
             try Crypt.decrypt(encryptedMessage, secret: incorrectSecret)
         }
     }
+
+    @Test
+    func stringSecretUsesSha256OfUtf8() throws {
+        let secret = "my-secret"
+        let message = Data("Hello World".utf8)
+
+        let encryptedMessage = try Crypt.encrypt(message, secret: secret)
+        let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: Data(secret.utf8).sha256())
+
+        #expect(message == decryptedMessage)
+    }
 }
