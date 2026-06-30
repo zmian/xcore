@@ -44,6 +44,7 @@ and uses `Xcore.xcworkspace` + the `Example` scheme. That is the supported path.
 - Xcore is one Swift package target: `import Xcore`. Folders (`Swift/`,
   `SwiftUI/`, `Cocoa/`) are organization only. Do not propose submodule splits
   unless asked or backed by measured build-time pain.
-- Keep `zmian/AnyCodable` on `master`. Do not pin it, replace it with `JSONValue`,
-  remove `@_exported import AnyCodable`, or rework `CodingFormatStyle` unless
-  explicitly requested.
+- Keep `zmian/AnyCodable` on `master`. Do not pin it, replace it with an in-repo
+  type, remove `@_exported import AnyCodable`, or rework `CodingFormatStyle`
+  unless a built-in Swift/Foundation feature is clearly better than the current
+  AnyCodable implementation.
