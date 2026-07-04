@@ -12,9 +12,7 @@ SCHEME := Example
 CONFIGURATION ?= Debug
 DERIVED_DATA_PATH ?= $(CURDIR)/.build/DerivedData
 APP_BUNDLE_ID ?= com.xcore.example
-DOCC_TARGET ?= Xcore
 DOCC_OUTPUT_PATH ?= $(CURDIR)/.build/docc
-DOCC_HOSTING_BASE_PATH ?= xcore
 
 SIMULATOR_NAME ?= iPhone 17 Pro
 SIMULATOR_OS ?= latest
@@ -23,14 +21,17 @@ BUILD_DESTINATION ?= generic/platform=iOS Simulator
 TEST_ONLY ?=
 
 XCODEBUILD := xcodebuild
-XCODEBUILD_FLAGS ?= -skipPackagePluginValidation -skipMacroValidation
+XCODEBUILD_FLAGS ?=
 XCODEBUILD_BUILD_SETTINGS ?=
 RAW_XCODEBUILD ?=
 APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator/Example.app
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
-ifeq ($(XCORE_CI),1)
-XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DXCORE_CI"
+ifneq ($(strip $(CI)),)
+XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation
+XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DCI"
+RAW_XCODEBUILD := 1
+export SIMCTL_CHILD_CI := true
 endif
 
 define xcodebuild_run
@@ -76,11 +77,11 @@ build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_
 	@swift package \
 		--allow-writing-to-directory "$(DOCC_OUTPUT_PATH)" \
 		generate-documentation \
-		--target "$(DOCC_TARGET)" \
+		--target Xcore \
 		--disable-indexing \
 		--output-path "$(DOCC_OUTPUT_PATH)" \
 		--transform-for-static-hosting \
-		--hosting-base-path "$(DOCC_HOSTING_BASE_PATH)"
+		--hosting-base-path "xcore$(if $(DOCC_VERSION),/$(DOCC_VERSION),)"
 
 test: _ensure_xcode ## Run tests through the Example scheme
 	@set -o pipefail; \

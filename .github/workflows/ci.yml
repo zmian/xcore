@@ -29,13 +29,10 @@ jobs:
         run: brew install swiftlint swiftformat
 
       - name: Build
-        run: make build RAW_XCODEBUILD=1
+        run: make build
 
       - name: Test
-        env:
-          XCORE_CI: "true"
-          SIMCTL_CHILD_XCORE_CI: "true"
-        run: make test XCORE_CI=1
+        run: make test
 
       - name: Lint
         run: make lint

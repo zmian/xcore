@@ -36,13 +36,12 @@ jobs:
           fi
 
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "base_path=xcore/$version" >> "$GITHUB_OUTPUT"
 
       - name: Build DocC static site
         run: |
           make build-docc \
             DOCC_OUTPUT_PATH="$PWD/.build/docc-site" \
-            DOCC_HOSTING_BASE_PATH="${{ steps.docs.outputs.base_path }}"
+            DOCC_VERSION="${{ steps.docs.outputs.version }}"
 
       - name: Add redirect
         run: |
