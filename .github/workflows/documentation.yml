@@ -26,6 +26,9 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: Export selected Xcode
+        run: echo "DEVELOPER_DIR=$(xcode-select -p)" >> "$GITHUB_ENV"
+
       - name: Resolve documentation version
         id: docs
         run: |

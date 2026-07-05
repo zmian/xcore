@@ -13,11 +13,14 @@ CONFIGURATION ?= Debug
 DERIVED_DATA_PATH ?= $(CURDIR)/.build/DerivedData
 APP_BUNDLE_ID ?= com.xcore.example
 DOCC_OUTPUT_PATH ?= $(CURDIR)/.build/docc
+DOCC_DERIVED_DATA_PATH ?= $(CURDIR)/.build/DocCDerivedData
+DOCC_ARCHIVE_PATH := $(DOCC_DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphoneos/Xcore.doccarchive
 
 SIMULATOR_NAME ?= iPhone 17 Pro
 SIMULATOR_OS ?= latest
 SIMULATOR_DESTINATION ?= platform=iOS Simulator,name=$(SIMULATOR_NAME),OS=$(SIMULATOR_OS)
 BUILD_DESTINATION ?= generic/platform=iOS Simulator
+DOCC_DESTINATION ?= generic/platform=iOS
 TEST_ONLY ?=
 
 XCODEBUILD := xcodebuild
@@ -73,14 +76,11 @@ build: _ensure_xcode ## Build the example app and its framework dependencies
 	$(call xcodebuild_run,$(XCODEBUILD) build $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(BUILD_DESTINATION)" $(XCODEBUILD_BUILD_SETTINGS))
 
 build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_PATH
-	@rm -rf "$(DOCC_OUTPUT_PATH)"
-	@swift package \
-		--allow-writing-to-directory "$(DOCC_OUTPUT_PATH)" \
-		generate-documentation \
-		--target Xcore \
-		--disable-indexing \
+	@rm -rf "$(DOCC_OUTPUT_PATH)" "$(DOCC_DERIVED_DATA_PATH)"
+	$(call xcodebuild_run,$(XCODEBUILD) docbuild $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme Xcore -configuration "$(CONFIGURATION)" -derivedDataPath "$(DOCC_DERIVED_DATA_PATH)" -destination "$(DOCC_DESTINATION)" $(XCODEBUILD_BUILD_SETTINGS))
+	@test -d "$(DOCC_ARCHIVE_PATH)" || (echo "DocC archive not found at $(DOCC_ARCHIVE_PATH)" && exit 1)
+	@xcrun docc process-archive transform-for-static-hosting "$(DOCC_ARCHIVE_PATH)" \
 		--output-path "$(DOCC_OUTPUT_PATH)" \
-		--transform-for-static-hosting \
 		--hosting-base-path "xcore$(if $(DOCC_VERSION),/$(DOCC_VERSION),)"
 
 test: _ensure_xcode ## Run tests through the Example scheme
