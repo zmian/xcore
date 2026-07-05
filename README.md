@@ -13,6 +13,7 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 - [Requirements](#requirements)
 - [Makefile](#makefile)
 - [Installation](#installation)
+- [Documentation](#documentation)
 
 ## Requirements
 
@@ -51,9 +52,9 @@ let package = Package(
 )
 ```
 
-<!-- TODO: Fix DocC script -->
-<!-- ## Documentation -->
-<!-- You can find [the documentation here](https://zmian.github.io/xcore). -->
+## Documentation
+
+The latest documentation for the Xcore package is available [here](https://zmian.github.io/xcore/main/documentation/xcore/).
 
 ## Author
 
