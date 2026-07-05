@@ -43,12 +43,12 @@ jobs:
       - name: Build DocC static site
         run: |
           make build-docc \
-            DOCC_OUTPUT_PATH="$PWD/.build/docc-site" \
+            DOCC_OUTPUT_PATH="$PWD/.build/docc/${{ steps.docs.outputs.version }}" \
             DOCC_VERSION="${{ steps.docs.outputs.version }}"
 
       - name: Add redirect
         run: |
-          cat > "$PWD/.build/docc-site/index.html" <<'HTML'
+          cat > "$PWD/.build/docc/${{ steps.docs.outputs.version }}/index.html" <<'HTML'
           <!doctype html>
           <html>
             <head>
@@ -64,6 +64,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: .build/docc-site
-          target-folder: ${{ steps.docs.outputs.version }}
-          clean: false
+          folder: .build/docc
+          clean: true
+          force: true
+          single-commit: true

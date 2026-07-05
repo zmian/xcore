@@ -14,7 +14,8 @@ DERIVED_DATA_PATH ?= $(CURDIR)/.build/DerivedData
 APP_BUNDLE_ID ?= com.xcore.example
 DOCC_OUTPUT_PATH ?= $(CURDIR)/.build/docc
 DOCC_DERIVED_DATA_PATH ?= $(CURDIR)/.build/DocCDerivedData
-DOCC_ARCHIVE_PATH := $(DOCC_DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphoneos/Xcore.doccarchive
+DOCC_SYMBOL_GRAPH_PATH := $(DOCC_DERIVED_DATA_PATH)/Build/Intermediates.noindex/Xcore.build/$(CONFIGURATION)-iphoneos/Xcore.build/symbol-graph/swift/arm64-apple-ios
+DOCC_FILTERED_SYMBOL_GRAPH_PATH := $(DOCC_DERIVED_DATA_PATH)/Build/FilteredSymbolGraphs
 
 SIMULATOR_NAME ?= iPhone 17 Pro
 SIMULATOR_OS ?= latest
@@ -78,9 +79,17 @@ build: _ensure_xcode ## Build the example app and its framework dependencies
 build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_PATH
 	@rm -rf "$(DOCC_OUTPUT_PATH)" "$(DOCC_DERIVED_DATA_PATH)"
 	$(call xcodebuild_run,$(XCODEBUILD) docbuild $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme Xcore -configuration "$(CONFIGURATION)" -derivedDataPath "$(DOCC_DERIVED_DATA_PATH)" -destination "$(DOCC_DESTINATION)" $(XCODEBUILD_BUILD_SETTINGS))
-	@test -d "$(DOCC_ARCHIVE_PATH)" || (echo "DocC archive not found at $(DOCC_ARCHIVE_PATH)" && exit 1)
-	@xcrun docc process-archive transform-for-static-hosting "$(DOCC_ARCHIVE_PATH)" \
+	@test -d "$(DOCC_SYMBOL_GRAPH_PATH)" || (echo "DocC symbol graphs not found at $(DOCC_SYMBOL_GRAPH_PATH)" && exit 1)
+	@python3 BuildTools/Scripts/filter_docc_symbol_graphs.py "$(DOCC_SYMBOL_GRAPH_PATH)" "$(DOCC_FILTERED_SYMBOL_GRAPH_PATH)"
+	@mkdir -p "$$(dirname "$(DOCC_OUTPUT_PATH)")"
+	@xcrun docc convert \
+		--additional-symbol-graph-dir "$(DOCC_FILTERED_SYMBOL_GRAPH_PATH)" \
+		--fallback-display-name Xcore \
+		--fallback-bundle-identifier com.zmian.xcore \
+		--fallback-default-module-kind Framework \
 		--output-path "$(DOCC_OUTPUT_PATH)" \
+		--transform-for-static-hosting \
+		--diagnostic-level error \
 		--hosting-base-path "xcore$(if $(DOCC_VERSION),/$(DOCC_VERSION),)"
 
 test: _ensure_xcode ## Run tests through the Example scheme
