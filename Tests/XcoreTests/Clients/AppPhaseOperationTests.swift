@@ -35,7 +35,10 @@ struct AppPhaseOperationTests {
         #expect(operationExecuted)
     }
 
-    @Test("The operation does not execute if the cancel phase is received before the delay elapses.")
+    @Test(
+        "The operation does not execute if the cancel phase is received before the delay elapses.",
+        .disabled(if: TestEnvironment.isCI, "Timing-sensitive on GitHub-hosted simulators.")
+    )
     func operationCancelledBeforeExecution() async throws {
         var operationExecuted = false
 

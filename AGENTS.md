@@ -11,7 +11,9 @@ or ad-hoc `xcodebuild`.
 - `make test` — run the full suite through the `Example` scheme.
 - `make test TEST_ONLY=XcoreTests/SomeTests/someTest` — run one relevant test.
 - `make run` — build, install, and launch the example app.
-- `make lint` / `make format` — SwiftLint / SwiftFormat.
+- `make build-docc` — generate DocC static site output under `.build/docc`.
+- `make lint` / `make format-check` — SwiftLint / SwiftFormat checks.
+- `make format` — apply SwiftFormat.
 - `make clean` — reset derived data and repo-local build state.
 
 Rules:

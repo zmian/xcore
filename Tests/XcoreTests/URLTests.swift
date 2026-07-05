@@ -287,7 +287,7 @@ struct URLTests {
         #expect(url11.maskingSensitiveQueryItems() == URL(string: "https://example.com?code=Jn3yk2x3cf23"))
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Requires external redirect/WebKit behavior."))
     func resolvingRedirectedLink() async {
         let shortUrl = URL(string: "https://git.new/swift")!
         let resolvedUrl = await shortUrl.resolvingRedirectedLink(timeout: .seconds(15))
