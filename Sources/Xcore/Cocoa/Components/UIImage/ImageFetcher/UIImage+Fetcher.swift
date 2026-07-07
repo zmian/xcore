@@ -5,6 +5,7 @@
 //
 
 #if canImport(UIKit)
+private import SDWebImage
 import UIKit
 
 // MARK: - Namespace
