@@ -55,18 +55,14 @@ open class UIHostingWindow<Content: View>: UIWindow {
 
         // iOS 18 hit testing functionality differs from iOS 17
         // - SeeAlso: https://forums.developer.apple.com/forums/thread/762292
-        if #available(iOS 18, *) {
-            for subview in rootView.subviews.reversed() {
-                let convertedPoint = subview.convert(point, from: rootView)
-                if subview.hitTest(convertedPoint, with: event) != nil {
-                    return hitView
-                }
+        for subview in rootView.subviews.reversed() {
+            let convertedPoint = subview.convert(point, from: rootView)
+            if subview.hitTest(convertedPoint, with: event) != nil {
+                return hitView
             }
-
-            return nil
-        } else {
-            return rootView == hitView ? nil : hitView
         }
+
+        return nil
     }
 
     // MARK: - Presentation
