@@ -98,7 +98,7 @@ private struct PopupPreviews: View {
             .frame(height: 300)
             .padding(.s8)
             .background(.background.tertiary)
-            .cornerRadius(AppConstants.cornerRadius)
+            .cornerRadius(AppConstants.cornerRadius, style: .continuous)
             .floatingShadow()
         }
     }
