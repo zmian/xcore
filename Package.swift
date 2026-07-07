@@ -2,6 +2,10 @@
 
 import PackageDescription
 
+let swiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("MemberImportVisibility")
+]
+
 let package = Package(
     name: "Xcore",
     platforms: [.iOS(.v26)],
@@ -24,9 +28,14 @@ let package = Package(
                 "KeychainAccess",
                 .product(name: "Dependencies", package: "swift-dependencies")
             ],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: swiftSettings
         ),
-        .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
+        .testTarget(
+            name: "XcoreTests",
+            dependencies: ["Xcore"],
+            swiftSettings: swiftSettings
+        )
     ],
     swiftLanguageModes: [.v6]
 )

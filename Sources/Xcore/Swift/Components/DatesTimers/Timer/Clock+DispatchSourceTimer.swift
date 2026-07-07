@@ -14,7 +14,6 @@ import Foundation
 /// let clock = DispatchSourceTimerClock()
 /// try await clock.sleep(for: .seconds(1))
 /// ```
-@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, visionOS 1.0, *)
 struct DispatchSourceTimerClock: Clock {
     typealias Duration = Swift.Duration
     typealias Instant = ContinuousClock.Instant
@@ -70,7 +69,6 @@ struct DispatchSourceTimerClock: Clock {
 
 // MARK: - Dot Syntax Support
 
-@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, visionOS 1.0, *)
 extension Clock where Self == DispatchSourceTimerClock {
     /// A custom `Clock` that uses `DispatchSourceTimer` for sleeping.
     ///

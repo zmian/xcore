@@ -4,10 +4,10 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
-@_exported import AnyCodable
-@_exported import KeychainAccess
-@_exported import Dependencies
+public import Foundation
+@_exported public import AnyCodable
+@_exported public import KeychainAccess
+@_exported public import Dependencies
 
 // MARK: - Bundle
 

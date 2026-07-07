@@ -17,9 +17,9 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 
 ## Requirements
 
-- iOS 26.0+
-- Xcode 26.0+
-- Swift 6.3+
+- Latest iOS SDK
+- Latest stable Xcode
+- Latest Swift toolchain
 
 **Additional Requirements**
 

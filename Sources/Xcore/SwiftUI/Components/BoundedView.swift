@@ -120,6 +120,6 @@ private struct BoundedLayout: Layout {
     .fixedSize(horizontal: false, vertical: true)
     .frame(height: 200)
     .background(.indigo)
-    .cornerRadius(AppConstants.cornerRadius)
+    .cornerRadius(AppConstants.cornerRadius, style: .continuous)
     .padding(.horizontal, .defaultSpacing)
 }

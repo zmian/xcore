@@ -57,7 +57,6 @@ extension NotificationCenter {
     ///     notification center doesn’t consider the sender as a criteria for
     ///     delivery.
     /// - Returns: An asynchronous sequence of notifications from the center.
-    @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
     public static func async(_ name: Notification.Name, object: (any AnyObject & Sendable)? = nil) -> Notifications {
         shared.notifications(named: name, object: object)
     }

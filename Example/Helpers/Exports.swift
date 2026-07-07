@@ -4,4 +4,4 @@
 // MIT license, see LICENSE file for details
 //
 
-@_exported import Xcore
+@_exported public import Xcore

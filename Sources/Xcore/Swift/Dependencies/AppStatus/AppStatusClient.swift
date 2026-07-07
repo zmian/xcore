@@ -5,6 +5,7 @@
 //
 // swiftlint:disable for_where
 
+import Combine
 import SwiftUI
 
 /// Provides functionality for evaluating and receiving events for app’s state.
