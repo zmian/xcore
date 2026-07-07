@@ -12,7 +12,6 @@ extension AsyncSequence {
     /// Used to expose an instance of `some AsyncSequence` to the client, rather
     /// than this async sequence’s actual type to preserve abstraction across API
     /// boundaries, such as different modules.
-    @available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
     public func eraseToAsyncSequence() -> some AsyncSequence<Element, Failure> {
         self
     }
@@ -28,7 +27,6 @@ extension AsyncSequence where Self: Sendable {
     ///
     /// - Returns: A publisher that emits values from the async sequence and handles
     ///   errors.
-    @available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
     public var publisher: some Publisher<Element, Failure> {
         let box = UncheckedSendable(PassthroughSubject<Element, Failure>())
 
