@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import Combine
+
 /// The operation you want to perform, encapsulated in a way that lets you
 /// schedule and cancel automatically on provided app phases.
 ///
