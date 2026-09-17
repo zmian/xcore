@@ -41,8 +41,8 @@ private struct MailAppViewModifier: ViewModifier {
     private typealias L = Localized.MailApp
     @Environment(\.theme) private var theme
     @Dependency(\.openURL) private var openURL
-    private let apps = MailApp.available
     @Environment(\.oneDisplayPixel) private var oneDisplayPixel
+    private let apps = MailApp.available
     @Binding var isPresented: Bool
     private var isSheetPresented: Binding<Bool> {
         .init(
