@@ -334,13 +334,11 @@ struct MoneyTests {
                 let components = $0.components(includeMinorUnit: true)
 
                 let sign = $0.sign
-                let formattedAmount: String
-
-                switch $0.currencySymbolPosition {
+                let formattedAmount = switch $0.currencySymbolPosition {
                     case .prefix:
-                        formattedAmount = "\($0.currencySymbol) \(sign)\(components.rawAmount)"
+                        "\($0.currencySymbol) \(sign)\(components.rawAmount)"
                     case .suffix:
-                        formattedAmount = "\(sign)\(components.rawAmount) \($0.currencySymbol)"
+                        "\(sign)\(components.rawAmount) \($0.currencySymbol)"
                 }
 
                 return .init(
