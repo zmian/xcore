@@ -160,8 +160,8 @@ struct NumbersTests {
         #expect((123 as Int).digitsCount == 3, "123 should have 3 digits")
         #expect((-1234 as Int).digitsCount == 4, "-1234 should have 4 digits")
         #expect((99999 as Int).digitsCount == 5, "99999 should have 5 digits")
-        #expect((UInt(54321)).digitsCount == 5, "54321 (UInt) should have 5 digits")
-        #expect((Int8(-12)).digitsCount == 2, "-12 (Int8) should have 2 digits")
+        #expect(UInt(54321).digitsCount == 5, "54321 (UInt) should have 5 digits")
+        #expect(Int8(-12).digitsCount == 2, "-12 (Int8) should have 2 digits")
         #expect((Int.max).digitsCount == 19, "Int.max should have 19 digits") // 9223372036854775807
     }
 }

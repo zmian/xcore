@@ -2,11 +2,11 @@
 
 # File Options
 
---exclude Pods, Generated, .build, LocalizableStrings.swift
+--exclude Pods, Generated, .build, Sources/Xcore/LocalizableStrings.swift
 
 # Rules Toggle
 
---disable sortImports, sortSwitchCases, redundantSelf, organizeDeclarations, preferForLoop, swiftTestingTestCaseNames, wrapPropertyBodies, redundantReturn, redundantSendable
+--disable sortImports, sortSwitchCases, redundantSelf, redundantStaticSelf, organizeDeclarations, preferForLoop, swiftTestingTestCaseNames, wrapPropertyBodies, redundantReturn, redundantSendable, yodaConditions
 
 # Format Options
 
@@ -42,7 +42,7 @@
 --markextensions always
 --marktypes always
 --maxwidth none
---modifierorder nonisolated, open, public, private, fileprivate(set), private(set), final, required, override, convenience, dynamic
+--modifierorder nonisolated, open, public, private, fileprivate(set), private(set), final, required, override, convenience, dynamic, indirect
 --nevertrailing
 --nospaceoperators ...,..<
 --nowrapoperators
