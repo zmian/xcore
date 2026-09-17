@@ -295,8 +295,7 @@ open class HUD: Appliable {
             do {
                 try await Task.sleep(for: delayDuration)
             } catch {
-                // A cancelled delay must not change the presentation.
-                return
+                // Fall through so a canceled delay cannot leave the presentation in an inconsistent state.
             }
             setHidden(hide, animated: animated, completion)
         }
