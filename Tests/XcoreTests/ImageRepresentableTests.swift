@@ -32,8 +32,7 @@ struct ImageRepresentableTests {
                     #expect(value == decodedValues[index])
                 case let .uiImage(expectedImage):
                     if case let .uiImage(decodedImage) = decodedValues[index] {
-                        // Double converting it to PNG so the conversion passes matches.
-                        let expectedImageData = try #require(UIImage(data: #require(expectedImage.pngData()))?.pngData())
+                        let expectedImageData = try UIImage(data: #require(expectedImage.pngData()))?.pngData()
                         let decodedImageData = try #require(decodedImage.pngData())
                         #expect(decodedImageData == expectedImageData)
                     } else {

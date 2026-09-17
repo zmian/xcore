@@ -12,7 +12,7 @@ extension EnvironmentValues {
     @Entry var popupCornerRadius: CGFloat = 16
     @Entry var popupTextAlignment: TextAlignment = .center
     @Entry var popupDismissAction: PopupDismissAction?
-    @Entry var popupPreferredWidth: CGFloat = 300
+    @Entry var popupPreferredWidth: CGFloat?
 }
 
 // MARK: - View Modifiers
@@ -25,7 +25,7 @@ extension View {
     }
 
     /// Sets popups width within the environment to the specified value.
-    public func popupPreferredWidth(_ width: CGFloat) -> some View {
+    public func popupPreferredWidth(_ width: CGFloat?) -> some View {
         environment(\.popupPreferredWidth, width)
     }
 
