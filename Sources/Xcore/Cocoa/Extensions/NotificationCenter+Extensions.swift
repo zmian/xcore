@@ -137,8 +137,8 @@ extension NotificationCenter {
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
     public static func remove(_ observers: [NSObjectProtocol?]) {
-        for observer in observers {
-            shared.remove(observer)
+        observers.forEach {
+            shared.remove($0)
         }
     }
 
