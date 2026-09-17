@@ -139,9 +139,9 @@ extension Publisher {
     ///   - publisher: A publisher to execute and return the result type of the
     ///     ``self``.
     /// - Returns: A publisher with output and failure passed down.
-    public func passthrough<T, P>(
+    public func passthrough<T, P: Publisher>(
         _ publisher: @escaping (Result<Output, Failure>) -> P?
-    ) -> AnyPublisher<Output, Failure> where T == P.Output, P: Publisher, Self.Failure == P.Failure {
+    ) -> AnyPublisher<Output, Failure> where T == P.Output, Self.Failure == P.Failure {
         catchToResult { result -> AnyPublisher<Output, Failure> in
             guard let publisher = publisher(result) else {
                 switch result {
@@ -163,7 +163,7 @@ extension Publisher {
                 }
                 .eraseToAnyPublisher()
         }
-        .flatMap { $0 }
+        .flatMap(\.self)
         .eraseToAnyPublisher()
     }
 
@@ -182,9 +182,9 @@ extension Publisher {
     ///   - publisher: A publisher to execute and return the result type of the
     ///     ``self``.
     /// - Returns: A publisher with output and failure passed down.
-    public func passthrough<T, P>(
+    public func passthrough<T, P: Publisher>(
         _ publisher: @escaping (Result<Output, Failure>) -> P?
-    ) -> AnyPublisher<Output, Failure> where T == P.Output, P: Publisher, P.Failure == Never {
+    ) -> AnyPublisher<Output, Failure> where T == P.Output, P.Failure == Never {
         passthrough {
             publisher($0)?
                 .setFailureType(to: Failure.self)
@@ -199,7 +199,7 @@ extension AnyPublisher where Failure == Error {
     /// - Parameter body: A throwing closure to evaluate.
     public init(catching body: () throws -> Output) {
         do {
-            self.init(value: try body())
+            try self.init(value: body())
         } catch {
             self.init(error: error)
         }
@@ -213,7 +213,7 @@ extension AnyPublisher where Failure == Error {
     ) -> AnyPublisher {
         .future { callback in
             do {
-                callback(.success(try body()))
+                try callback(.success(body()))
             } catch {
                 callback(.failure(error))
             }

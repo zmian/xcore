@@ -25,17 +25,17 @@ extension Date {
     ) -> String {
         switch style {
             case let .dateTime(dateStyle, timeStyle):
-                if dateStyle == .omitted && timeStyle == .omitted {
+                if dateStyle == .omitted, timeStyle == .omitted {
                     return ""
                 } else if doesRelativeDateFormatting {
                     // Date.FormatStyle does not support "doesRelativeDateFormatting" with time component.
                     // e.g., "Today at 9:41 AM" or "Today"
                     return formatted(
                         .legacy
-                        .calendar(calendar)
-                        .doesRelativeDateFormatting(doesRelativeDateFormatting)
-                        .date(dateStyle)
-                        .time(timeStyle)
+                            .calendar(calendar)
+                            .doesRelativeDateFormatting(doesRelativeDateFormatting)
+                            .date(dateStyle)
+                            .time(timeStyle)
                     )
                 } else {
                     let formatStyle = FormatStyle(
@@ -45,7 +45,6 @@ extension Date {
                     .calendarTimeZoneLocale(calendar)
                     return formatted(formatStyle)
                 }
-
             case let .relative(untilThreshold):
                 return formattedRelative(until: untilThreshold, calendar: calendar)
             case let .weekdayName(width):
@@ -104,8 +103,8 @@ extension Date {
     ) -> String {
         formatted(
             .dateTime
-            .weekday(format)
-            .calendarTimeZoneLocale(calendar)
+                .weekday(format)
+                .calendarTimeZoneLocale(calendar)
         )
     }
 
@@ -121,8 +120,8 @@ extension Date {
     ) -> String {
         formatted(
             .dateTime
-            .month(format)
-            .calendarTimeZoneLocale(calendar)
+                .month(format)
+                .calendarTimeZoneLocale(calendar)
         )
     }
 }

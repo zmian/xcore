@@ -151,7 +151,7 @@ extension Date {
         in calendar: Calendar = .default
     ) -> Bool {
         let result = compare(to: date, granularity: granularity, in: calendar)
-        return (orEqual ? (result == .orderedSame || result == .orderedAscending) : result == .orderedAscending)
+        return orEqual ? (result == .orderedSame || result == .orderedAscending) : result == .orderedAscending
     }
 
     /// Compares whether the receiver is after `date` based on their components down
@@ -172,7 +172,7 @@ extension Date {
         in calendar: Calendar = .default
     ) -> Bool {
         let result = compare(to: date, granularity: granularity, in: calendar)
-        return (orEqual ? (result == .orderedSame || result == .orderedDescending) : result == .orderedDescending)
+        return orEqual ? (result == .orderedSame || result == .orderedDescending) : result == .orderedDescending
     }
 
     /// Compares whether the receiver is after the given seconds.

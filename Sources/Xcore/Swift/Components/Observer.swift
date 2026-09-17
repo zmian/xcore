@@ -83,7 +83,7 @@ open class Observers {
     /// - Parameters:
     ///   - owner: The observing object.
     ///   - handler: A closure invoked when the observer is notified.
-    open func observe<T>(for owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
+    open func observe(for owner: some AnyObject & Equatable, _ handler: @escaping () -> Void) {
         if let existingObserverIndex = observers.firstIndex(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
@@ -94,7 +94,7 @@ open class Observers {
     /// Removes the given owner from the list of observers.
     ///
     /// - Parameter owner: The observing object to be removed.
-    open func remove<T>(_ owner: T) where T: AnyObject, T: Equatable {
+    open func remove(_ owner: some AnyObject & Equatable) {
         guard let index = observers.firstIndex(where: { $0 == owner }) else {
             return
         }
@@ -138,7 +138,7 @@ open class Observers {
     /// - Parameters:
     ///   - oldValue: The previous value.
     ///   - newValue: The new value to compare.
-    open func notifyIfNeeded<T>(_ oldValue: T, newValue: T) where T: Equatable {
+    open func notifyIfNeeded<T: Equatable>(_ oldValue: T, newValue: T) {
         guard oldValue != newValue else { return }
         notify()
     }
@@ -148,7 +148,7 @@ open class Observers {
     /// - Parameters:
     ///   - oldValue: The previous value.
     ///   - newValue: The new value to compare.
-    open func notifyIfNeeded<T>(_ oldValue: T?, newValue: T?) where T: Equatable {
+    open func notifyIfNeeded<T: Equatable>(_ oldValue: T?, newValue: T?) {
         guard oldValue != newValue else { return }
         notify()
     }
@@ -158,7 +158,7 @@ open class Observers {
     /// - Parameters:
     ///   - oldValue: The previous array value.
     ///   - newValue: The new array value to compare.
-    open func notifyIfNeeded<T>(_ oldValue: [T], newValue: [T]) where T: Equatable {
+    open func notifyIfNeeded<T: Equatable>(_ oldValue: [T], newValue: [T]) {
         guard oldValue != newValue else { return }
         notify()
     }
@@ -175,7 +175,7 @@ open class Observers {
 
 /// Represents an individual observer.
 private final class Observer {
-    fileprivate let isEqual: (AnyObject) -> Bool
+    private let isEqual: (AnyObject) -> Bool
     weak var owner: AnyObject?
     var handler: (() -> Void)?
 
@@ -208,7 +208,7 @@ extension Observer: Equatable {
         return lhs.isEqual(rhsOwner)
     }
 
-    static func == <T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
+    static func ==(lhs: Observer, rhs: some AnyObject & Equatable) -> Bool {
         lhs.isEqual(rhs)
     }
 }

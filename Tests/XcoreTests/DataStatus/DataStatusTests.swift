@@ -171,7 +171,9 @@ struct DataStatusTests {
 
     @Test
     func map() {
-        func getNextInteger() -> DataStatus<Int, AppError> { .success(5) }
+        func getNextInteger() -> DataStatus<Int, AppError> {
+            .success(5)
+        }
         let integerStatus = getNextInteger()
         #expect(integerStatus == .success(5))
 

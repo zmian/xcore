@@ -29,7 +29,7 @@ public struct ValuePublisher<Output, Failure: Error>: Publisher {
         base = subject
     }
 
-    public func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
+    public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
         base.subscribe(subscriber)
     }
 }
