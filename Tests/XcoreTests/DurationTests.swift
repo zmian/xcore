@@ -19,7 +19,7 @@ struct DurationTests {
     @Test
     func nanoseconds() {
         let ns1 = Duration.seconds(2.5).nanoseconds
-        #expect(ns1 == 2500000000)
+        #expect(ns1 == 2_500_000_000)
 
         let ns2 = Duration.nanoseconds(1929).nanoseconds
         #expect(ns2 == 1929)
