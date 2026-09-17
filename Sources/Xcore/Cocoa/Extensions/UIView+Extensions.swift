@@ -79,9 +79,9 @@ extension UIView {
     }
 
     public func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
-        for axi in axis {
-            setContentHuggingPriority(priority, for: axi)
-            setContentCompressionResistancePriority(priority, for: axi)
+        axis.forEach {
+            setContentHuggingPriority(priority, for: $0)
+            setContentCompressionResistancePriority(priority, for: $0)
         }
     }
 }
