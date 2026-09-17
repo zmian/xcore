@@ -26,34 +26,34 @@ struct DoubleTests {
     }
 
     @Test
-    func initTruncating() {
-        #expect(Double(truncating: Decimal(string: "2.5", locale: .us)!) == 2.5)
+    func initTruncating() throws {
+        #expect(try Double(truncating: #require(Decimal(string: "2.5", locale: .us))) == 2.5)
         #expect(Double(truncating: Decimal(2.5)) == 2.5)
 
-        #expect(Double(truncating: Decimal(string: "-7", locale: .us)!) == -7)
+        #expect(try Double(truncating: #require(Decimal(string: "-7", locale: .us))) == -7)
         #expect(Double(truncating: Decimal(-7)) == -7)
 
-        #expect(Double(truncating: Decimal(string: "0.07", locale: .us)!) != 0.07)
+        #expect(try Double(truncating: #require(Decimal(string: "0.07", locale: .us))) != 0.07)
         #expect(Double(truncating: Decimal(0.07)) != 0.07)
 
-        #expect(Double(truncating: Decimal(string: "315.36", locale: .us)!) == 315.36)
+        #expect(try Double(truncating: #require(Decimal(string: "315.36", locale: .us))) == 315.36)
         #expect(Double(truncating: Decimal(315.36)) == 315.3600000000001)
         #expect(Double(any: Decimal(315.36)) == 315.36)
 
-        #expect(Double(truncating: Decimal(string: "9.28", locale: .us)!) == 9.28)
+        #expect(try Double(truncating: #require(Decimal(string: "9.28", locale: .us))) == 9.28)
         #expect(Double(truncating: Decimal(9.28)) == 9.28)
 
-        #expect(Double(truncating: Decimal(string: "0.1736", locale: .us)!) == 0.1736)
+        #expect(try Double(truncating: #require(Decimal(string: "0.1736", locale: .us))) == 0.1736)
         #expect(Double(truncating: Decimal(0.1736)) == 0.1736)
 
         #expect(NSDecimalNumber(decimal: Decimal(0.07)).doubleValue == 0.07000000000000003)
-        #expect(Double(any: Decimal(string: "0.07", locale: .us)!) == 0.07)
+        #expect(try Double(any: #require(Decimal(string: "0.07", locale: .us))) == 0.07)
         #expect(Decimal(0.07) == 0.07)
-        #expect(NSDecimalNumber(decimal: Decimal(string: "0.07", locale: .us)!).doubleValue == 0.06999999999999999)
+        #expect(try NSDecimalNumber(decimal: #require(Decimal(string: "0.07", locale: .us))).doubleValue == 0.06999999999999999)
         #expect(NSNumber(value: Double(0.07)).doubleValue == 0.07)
         #expect(Double(0.07) == 0.07)
 
-        #expect(Double(truncating: Decimal(string: "0.000001466", locale: .us)!) != 0.000001466)
+        #expect(try Double(truncating: #require(Decimal(string: "0.000001466", locale: .us))) != 0.000001466)
         #expect(Double(truncating: Decimal(0.000001466)) != 0.000001466)
     }
 

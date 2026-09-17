@@ -8,7 +8,6 @@ import Testing
 import Foundation
 @testable import Xcore
 
-@Suite
 struct DoubleOrDecimalTests {}
 
 // MARK: - Precision
@@ -29,7 +28,7 @@ extension DoubleOrDecimalTests {
     }
 
     @Test
-    func decimal_calculatePrecision() {
+    func decimal_calculatePrecision() throws {
         #expect(components(Decimal(1)) == Component(range: 2...2, string: "1"))
         #expect(components(Decimal(1.234)) == Component(range: 2...2, string: "1.23"))
         #expect(components(Decimal(1.000031)) == Component(range: 2...2, string: "1"))
@@ -40,9 +39,9 @@ extension DoubleOrDecimalTests {
         #expect(components(Decimal(0.00001253)) == Component(range: 2...6, string: "0.000013"))
         #expect(components(Decimal(0.00001283)) == Component(range: 2...6, string: "0.000013"))
         #expect(components(Decimal(0.000000138)) == Component(range: 2...8, string: "0.00000014"))
-        #expect(components(Decimal(string: "-0.0000758574812982132645558836229533068")!) == Component(range: 2...6, string: "−0.000076"))
-        #expect(components(Decimal(string: "-0.0000758")!) == Component(range: 2...6, string: "−0.000076"))
-        #expect(components(Decimal(string: "-0.000075")!) == Component(range: 2...6, string: "−0.000075"))
+        #expect(try components(#require(Decimal(string: "-0.0000758574812982132645558836229533068"))) == Component(range: 2...6, string: "−0.000076"))
+        #expect(try components(#require(Decimal(string: "-0.0000758"))) == Component(range: 2...6, string: "−0.000076"))
+        #expect(try components(#require(Decimal(string: "-0.000075"))) == Component(range: 2...6, string: "−0.000075"))
     }
 
     private struct Component: Equatable {
@@ -50,11 +49,13 @@ extension DoubleOrDecimalTests {
         let string: String
     }
 
-    private func components<V>(_ value: V) -> Component where V: DoubleOrDecimalProtocol {
+    private func components(_ value: some DoubleOrDecimalProtocol) -> Component {
         Component(
             range: value.calculatePrecision(),
-            string: value.formatted(.init(type: .number)
-                .fractionLength(value.calculatePrecision()))
+            string: value.formatted(
+                .init(type: .number)
+                    .fractionLength(value.calculatePrecision())
+            )
         )
     }
 }
@@ -64,8 +65,8 @@ extension DoubleOrDecimalTests {
 extension DoubleOrDecimalTests {
     @Test
     func double() {
-        #expect(Double("20.05588")!.formatted(.asNumber) == "20.05588")
-        #expect(Double("5.04198")!.formatted(.asNumber) == "5.04198")
+        #expect(Double("20.05588")?.formatted(.asNumber) == "20.05588")
+        #expect(Double("5.04198")?.formatted(.asNumber) == "5.04198")
         #expect(Double(5.04198).formatted(.asNumber) == "5.04198")
 
         #expect(Double(0.008379).formatted(.asNumber) == "0.008379")
@@ -247,23 +248,23 @@ extension DoubleOrDecimalTests {
 extension DoubleOrDecimalTests {
     @Test
     func decimal() {
-        #expect(Decimal(string: "20.05588")!.formatted(.asNumber) == "20.05588")
-        #expect(Decimal(string: "5.04198")!.formatted(.asNumber) == "5.04198")
+        #expect(Decimal(string: "20.05588")?.formatted(.asNumber) == "20.05588")
+        #expect(Decimal(string: "5.04198")?.formatted(.asNumber) == "5.04198")
         #expect(Decimal(5.04198).formatted(.asNumber) == "5.04198")
 
-        #expect(Decimal(string: "0.008379")!.formatted(.asNumber) == "0.008379")
+        #expect(Decimal(string: "0.008379")?.formatted(.asNumber) == "0.008379")
         #expect(Decimal(0.008379).formatted(.asRounded) == "0.0084")
         #expect(Decimal(0.008379).formatted(.asPercent) == "0.84%")
         #expect(Decimal(0.008379).formatted(.asPercent.fractionLength(2)) == "0.84%")
         #expect(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred)) == "0.0084%")
         #expect(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred).fractionLength(2)) == "0.01%")
-        #expect(Decimal(string: "-0.0000758574812982132645558836229533068")!.formatted(.asPercent) == "−0.0076%")
+        #expect(Decimal(string: "-0.0000758574812982132645558836229533068")?.formatted(.asPercent) == "−0.0076%")
     }
 
     @Test
     func decimal_locale() {
-        #expect(Decimal(string: "290900.05588")!.formatted(.asNumber) == "290,900.05588")
-        #expect(Decimal(string: "290900.05588")!.formatted(.asNumber.locale(.fr)) == "290 900,05588")
+        #expect(Decimal(string: "290900.05588")?.formatted(.asNumber) == "290,900.05588")
+        #expect(Decimal(string: "290900.05588")?.formatted(.asNumber.locale(.fr)) == "290 900,05588")
         #expect(Decimal(0.019).formatted(.asPercent.locale(.fr)) == "1,90 %")
         #expect(Decimal(0.02).formatted(.asPercent.locale(.ar)) == "٢٫٠٠٪؜")
     }
@@ -277,7 +278,7 @@ extension DoubleOrDecimalTests {
         #expect(Decimal(2).formatted(.asNumber) == "2")
         #expect(Decimal(2.1345).formatted(.asNumber) == "2.1345")
         #expect(Decimal(2.1355).formatted(.asNumber) == "2.1355")
-        #expect(Decimal(string: "20024.1355")!.formatted(.asNumber) == "20,024.1355")
+        #expect(Decimal(string: "20024.1355")?.formatted(.asNumber) == "20,024.1355")
 
         // .asNumber.trimFractionalPartIfZero(false)
         #expect(Decimal(1).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)) == "1.00")
@@ -501,12 +502,12 @@ extension DoubleOrDecimalTests {
             (1000, "1K"),
             (1234, "1.2K"),
             (9000, "9K"),
-            (10_000, "10K"),
-            (-10_000, "−10K"),
-            (15_235, "15.2K"),
-            (-15_235, "−15.2K"),
-            (99_500, "99.5K"),
-            (-99_500, "−99.5K"),
+            (10000, "10K"),
+            (-10000, "−10K"),
+            (15235, "15.2K"),
+            (-15235, "−15.2K"),
+            (99500, "99.5K"),
+            (-99500, "−99.5K"),
             (100_500, "100.5K"),
             (-100_500, "−100.5K"),
             (105_000_000, "105M"),
