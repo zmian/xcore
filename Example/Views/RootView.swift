@@ -8,13 +8,11 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
-    private let items = Destination.allCases
-
     var body: some View {
         List {
             Section {
-                ForEach(items) { item in
-                    NavigationLink(destination: item.content) {
+                ForEach(Destination.allCases) { item in
+                    NavigationLink(value: item) {
                         Label {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(item.title)
@@ -69,6 +67,9 @@ struct RootView: View {
             }
         }
         .environment(\.defaultMinListRowHeight, 55)
+        .navigationDestination(for: Destination.self) { item in
+            item.content
+        }
         .navigationTitle("Showcase")
         .embedInNavigation()
     }

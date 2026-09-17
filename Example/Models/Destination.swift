@@ -6,183 +6,135 @@
 
 import SwiftUI
 
-@MainActor
-struct Destination: Identifiable {
-    let id: UUID
-    let icon: SystemAssetIdentifier
-    let title: String
-    let subtitle: String?
-    let content: AnyView
+enum Destination: Hashable, CaseIterable, Identifiable, Sendable {
+    case separators
+    case buttons
+    case capsules
+    case money
+    case labeledContent
+    case popups
+    case textFields
+    case text
+    case dataStatusView
+    case dataStatusList
+    case story
+    case font
+    case images
+    case window
+    case share
+    case hapticFeedback
+    case crypt
+    case scrollingStack
 
-    init(
-        id: UUID = UUID(),
-        icon: SystemAssetIdentifier,
-        title: String,
-        subtitle: String? = nil,
-        content: @autoclosure () -> some View
-    ) {
-        self.id = id
-        self.icon = icon
-        self.title = title
-        self.subtitle = subtitle
-        self.content = content()
-            .navigationTitle(title)
-            .eraseToAnyView()
+    var id: Self { self }
+
+    var icon: SystemAssetIdentifier {
+        metadata.icon
     }
 
-    init(
-        id: UUID = UUID(),
-        icon: SystemAssetIdentifier,
-        title: String,
-        subtitle: String? = nil,
-        @ViewBuilder content: () -> some View
-    ) {
-        self.id = id
-        self.icon = icon
-        self.title = title
-        self.subtitle = subtitle
-        self.content = content()
+    var title: String {
+        metadata.title
+    }
+
+    var subtitle: String? {
+        metadata.subtitle
+    }
+
+    @MainActor
+    var content: some View {
+        contentBody
             .navigationTitle(title)
-            .eraseToAnyView()
     }
 }
 
-// MARK: - CaseIterable
-
-extension Destination: @preconcurrency CaseIterable {
-    static let allCases: [Self] = [
-        separators,
-        buttons,
-        capsules,
-        money,
-        labeledContent,
-        popups,
-        textFields,
-        text,
-        dataStatusView,
-        dataStatusList,
-        story,
-        font,
-        images,
-        window,
-        share,
-        hapticFeedback,
-        crypt,
-        scrollingStack
-    ]
-}
-
-// MARK: - Items
+// MARK: - Content
 
 extension Destination {
-    private static let separators = Self(
-        icon: .minus,
-        title: "Separators",
-        content: SeparatorsView()
-    )
+    @MainActor
+    @ViewBuilder
+    private var contentBody: some View {
+        switch self {
+            case .separators:
+                SeparatorsView()
+            case .buttons:
+                ButtonsView()
+            case .capsules:
+                Samples.capsuleViewPreviews
+            case .money:
+                Samples.moneyPreviews
+            case .labeledContent:
+                LabeledContentView()
+            case .popups:
+                Samples.popupPreviews
+            case .textFields:
+                Samples.dynamicTextFieldPreviews
+            case .text:
+                TextView()
+            case .dataStatusView:
+                DataStatusViewPreview()
+            case .dataStatusList:
+                DataStatusListPreview()
+            case .story:
+                StoryPreviewView()
+            case .font:
+                FontView()
+            case .images:
+                ImagesView()
+            case .window:
+                Samples.OverlayScreenPreview()
+            case .share:
+                ShareView()
+            case .hapticFeedback:
+                HapticFeedbackView()
+            case .crypt:
+                CryptView()
+            case .scrollingStack:
+                ScrollingStack(edge: .both)
+        }
+    }
+}
 
-    private static let buttons = Self(
-        icon: "button.horizontal",
-        title: "Buttons",
-        content: ButtonsView()
-    )
+// MARK: - Metadata
 
-    private static let capsules = Self(
-        icon: .capsule,
-        title: "Capsule",
-        content: Samples.capsuleViewPreviews
-    )
-
-    private static let money = Self(
-        icon: .dollarsignCircle,
-        title: "Money",
-        content: Samples.moneyPreviews
-    )
-
-    private static let labeledContent = Self(
-        icon: "list.bullet.below.rectangle",
-        title: "LabeledContent",
-        content: LabeledContentView()
-    )
-
-    private static let popups = Self(
-        icon: "inset.filled.center.rectangle",
-        title: "Popups",
-        content: Samples.popupPreviews
-    )
-
-    private static let textFields = Self(
-        icon: "character.cursor.ibeam",
-        title: "TextFields",
-        content: Samples.dynamicTextFieldPreviews
-    )
-
-    private static let text = Self(
-        icon: .docRichtext,
-        title: "Text",
-        subtitle: "Built-in Markdown Support",
-        content: TextView()
-    )
-
-    private static let dataStatusView = Self(
-        icon: "rectangle.2.swap",
-        title: "Data Status View",
-        subtitle: "Custom views for each state of DataStatus",
-        content: DataStatusViewPreview()
-    )
-
-    private static let dataStatusList = Self(
-        icon: "list.bullet.rectangle.portrait",
-        title: "Data Status List",
-        subtitle: "List with support for each state of DataStatus",
-        content: DataStatusListPreview()
-    )
-
-    private static let story = Self(
-        icon: "rectangle.split.2x1",
-        title: "Story",
-        content: StoryPreviewView()
-    )
-
-    private static let font = Self(
-        icon: "textformat",
-        title: "Variable Fonts",
-        content: FontView()
-    )
-
-    private static let images = Self(
-        icon: "photo.badge.arrow.down",
-        title: "Images Loader",
-        content: ImagesView()
-    )
-
-    private static let window = Self(
-        icon: "inset.filled.rectangle",
-        title: "Window Overlay",
-        content: Samples.OverlayScreenPreview()
-    )
-
-    private static let share = Self(
-        icon: .squareAndArrowUp,
-        title: "Share",
-        content: ShareView()
-    )
-
-    private static let hapticFeedback = Self(
-        icon: .waveform,
-        title: "Haptic Feedback",
-        content: HapticFeedbackView()
-    )
-
-    private static let crypt = Self(
-        icon: .lockShield,
-        title: "Crypt",
-        content: CryptView()
-    )
-
-    private static let scrollingStack = Self(
-        icon: .squareStack,
-        title: "Scrolling Stack",
-        content: ScrollingStack(edge: .both)
-    )
+extension Destination {
+    private var metadata: (icon: SystemAssetIdentifier, title: String, subtitle: String?) {
+        switch self {
+            case .separators:
+                (.minus, "Separators", nil)
+            case .buttons:
+                ("button.horizontal", "Buttons", nil)
+            case .capsules:
+                (.capsule, "Capsule", nil)
+            case .money:
+                (.dollarsignCircle, "Money", nil)
+            case .labeledContent:
+                ("list.bullet.below.rectangle", "LabeledContent", nil)
+            case .popups:
+                ("inset.filled.center.rectangle", "Popups", nil)
+            case .textFields:
+                ("character.cursor.ibeam", "TextFields", nil)
+            case .text:
+                (.docRichtext, "Text", "Built-in Markdown Support")
+            case .dataStatusView:
+                ("rectangle.2.swap", "Data Status View", "Custom views for each state of DataStatus")
+            case .dataStatusList:
+                ("list.bullet.rectangle.portrait", "Data Status List", "List with support for each state of DataStatus")
+            case .story:
+                ("rectangle.split.2x1", "Story", nil)
+            case .font:
+                ("textformat", "Variable Fonts", nil)
+            case .images:
+                ("photo.badge.arrow.down", "Images Loader", nil)
+            case .window:
+                ("inset.filled.rectangle", "Window Overlay", nil)
+            case .share:
+                (.squareAndArrowUp, "Share", nil)
+            case .hapticFeedback:
+                (.waveform, "Haptic Feedback", nil)
+            case .crypt:
+                (.lockShield, "Crypt", nil)
+            case .scrollingStack:
+                (.squareStack, "Scrolling Stack", nil)
+        }
+    }
 }
