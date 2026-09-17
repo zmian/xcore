@@ -55,12 +55,16 @@ extension Empty: Comparable {
     /// Compares two `Empty` instances.
     ///
     /// Always returns `false` as there is no meaningful ordering.
-    public static func <(lhs: Self, rhs: Self) -> Bool { false }
+    public static func <(lhs: Self, rhs: Self) -> Bool {
+        false
+    }
 
     /// Compares two `Empty` instances.
     ///
     /// Always returns `false` as there is no meaningful ordering.
-    public static func >(lhs: Self, rhs: Self) -> Bool { false }
+    public static func >(lhs: Self, rhs: Self) -> Bool {
+        false
+    }
 }
 
 // MARK: - View

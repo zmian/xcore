@@ -277,7 +277,9 @@ struct ReloadableDataStatusTests {
 
     @Test
     func map() {
-        func getNextInteger() -> ReloadableDataStatus<Int, AppError> { .success(5) }
+        func getNextInteger() -> ReloadableDataStatus<Int, AppError> {
+            .success(5)
+        }
         let integerStatus = getNextInteger()
         #expect(integerStatus == .success(5))
 
