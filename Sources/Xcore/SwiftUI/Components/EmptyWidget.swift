@@ -25,7 +25,8 @@ private import WidgetKit
 /// }
 /// ```
 public struct EmptyWidget: Widget {
-    @inlinable public init() {}
+    @inlinable
+    public init() {}
 
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: "com.xcore.empty-widget", provider: EmptyWidgetProvider()) { _ in

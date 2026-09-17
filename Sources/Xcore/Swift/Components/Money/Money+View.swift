@@ -13,6 +13,7 @@ extension Money: View {
 }
 
 #if DEBUG
+
 // MARK: - Preview
 
 #Preview {

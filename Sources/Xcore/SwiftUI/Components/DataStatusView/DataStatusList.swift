@@ -123,7 +123,7 @@ public struct DataStatusList<Success: Equatable, Failure: Error & Equatable, Suc
 
     @ViewBuilder
     private var contentUnavailableViewIfEmpty: some View {
-        if ContentUnavailable.self != Never.self && data.isEmpty {
+        if ContentUnavailable.self != Never.self, data.isEmpty {
             contentUnavailable()
         }
     }

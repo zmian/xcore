@@ -21,7 +21,7 @@ extension KeyedDecodingContainer {
     /// - Parameter key: The key that the decoded value is associated with.
     /// - Returns: A value of the requested type, if present for the given key and
     ///   convertible to the requested type.
-    public func decode<T>(_ key: Key) throws -> T where T: Decodable {
+    public func decode<T: Decodable>(_ key: Key) throws -> T {
         try decode(T.self, forKey: key)
     }
 

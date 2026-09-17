@@ -36,7 +36,7 @@ public struct StringConverter: Sendable, Hashable {
     private let string: String
 
     /// Creates a `StringConverter` from given value.
-    public init<T: LosslessStringConvertible>(_ value: T) {
+    public init(_ value: some LosslessStringConvertible) {
         self.string = value.description
     }
 
@@ -50,7 +50,7 @@ public struct StringConverter: Sendable, Hashable {
     /// - For `URL`, uses `absoluteString`.
     ///
     /// - Parameter value: The value to convert.
-    public init?<T>(_ value: T?) {
+    public init?(_ value: (some Any)?) {
         guard let value else {
             return nil
         }

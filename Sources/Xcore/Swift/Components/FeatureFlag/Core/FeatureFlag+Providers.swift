@@ -70,7 +70,7 @@ extension FeatureFlag.Key {
     /// - Parameter defaultValue: The value returned if the providers list doesn't
     ///   contain value.
     /// - Returns: The value for the key.
-    public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
+    public func value<T: RawRepresentable<String>>(default defaultValue: @autoclosure () -> T) -> T {
         currentValue?.get() ?? defaultValue()
     }
 
@@ -82,7 +82,7 @@ extension FeatureFlag.Key {
     ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func decodedValue<T>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+    public func decodedValue<T: Decodable>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? {
         currentValue?.get(type, decoder: decoder)
     }
 }

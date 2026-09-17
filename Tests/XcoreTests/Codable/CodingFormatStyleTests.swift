@@ -284,7 +284,7 @@ struct CodingFormatStyleTests {
         #expect(example1.value == URL(string: "https://example.com"))
 
         // Encode
-        let data2 = try JSONEncoder().encode(Example(value: URL(string: "https://example.com")!))
+        let data2 = try JSONEncoder().encode(Example(value: #require(URL(string: "https://example.com"))))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         #expect(example1 == example2)
 

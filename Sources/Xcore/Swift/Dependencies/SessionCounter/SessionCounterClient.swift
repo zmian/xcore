@@ -20,7 +20,7 @@ public struct SessionCounterClient: Sendable {
     ///   - count: Returns user's current session count.
     ///   - increment: Increments user's session count.
     public init(
-        count: @escaping @Sendable() -> Int,
+        count: @escaping @Sendable () -> Int,
         increment: @escaping @Sendable () -> Void
     ) {
         self.count = count

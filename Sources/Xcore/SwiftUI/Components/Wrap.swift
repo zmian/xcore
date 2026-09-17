@@ -17,15 +17,15 @@ extension UIViewController {
     private struct Wrapper<Content: UIViewController>: UIViewControllerRepresentable {
         private let content: () -> Content
 
-        public init(_ content: @escaping () -> Content) {
+        init(_ content: @escaping () -> Content) {
             self.content = content
         }
 
-        public func makeUIViewController(context: Context) -> Content {
+        func makeUIViewController(context: Context) -> Content {
             content()
         }
 
-        public func updateUIViewController(_ uiViewController: Content, context: Context) {}
+        func updateUIViewController(_ uiViewController: Content, context: Context) {}
     }
 }
 
@@ -40,14 +40,14 @@ extension UIView {
     private struct Wrapper<Content: UIView>: UIViewRepresentable {
         private let content: () -> Content
 
-        public init(_ content: @escaping () -> Content) {
+        init(_ content: @escaping () -> Content) {
             self.content = content
         }
 
-        public func makeUIView(context: Context) -> Content {
+        func makeUIView(context: Context) -> Content {
             content()
         }
 
-        public func updateUIView(_ uiView: Content, context: Context) {}
+        func updateUIView(_ uiView: Content, context: Context) {}
     }
 }

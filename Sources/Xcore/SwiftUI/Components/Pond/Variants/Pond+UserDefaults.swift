@@ -31,7 +31,7 @@ public struct UserDefaultsPond: Pond, @unchecked Sendable {
         }
     }
 
-    public func set<T: Codable>(_ key: Key, value: T?) throws {
+    public func set(_ key: Key, value: (some Codable)?) throws {
         do {
             if value == nil {
                 remove(key)

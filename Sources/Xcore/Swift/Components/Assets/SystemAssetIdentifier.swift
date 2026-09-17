@@ -56,6 +56,7 @@ extension Image {
 }
 
 #if canImport(UIKit)
+
 // MARK: - UIImage
 
 extension UIImage {

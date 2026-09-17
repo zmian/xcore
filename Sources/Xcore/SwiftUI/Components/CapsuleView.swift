@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A stylized view, with an optional label, that is visually presented in a
 /// capsule shape.
-public struct CapsuleView<Label>: View where Label: View {
+public struct CapsuleView<Label: View>: View {
     @Environment(\.theme) private var theme
     private let image: SystemAssetIdentifier?
     private let title: Text

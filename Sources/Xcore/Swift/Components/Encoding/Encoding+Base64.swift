@@ -72,7 +72,7 @@ extension String {
 
 // MARK: - [UInt8]
 
-extension Array<UInt8> {
+extension [UInt8] {
     /// Returns a Base-64 encoded string.
     ///
     /// - Parameter options: The options to use for the encoding.

@@ -7,7 +7,7 @@
 import Foundation
 
 /// Returns the absolute value of the input.
-public struct AbsoluteValueCodingFormatStyle<Value>: CodingFormatStyle where Value: Comparable, Value: SignedNumeric {
+public struct AbsoluteValueCodingFormatStyle<Value: Comparable & SignedNumeric>: CodingFormatStyle {
     public func decode(_ value: Value) throws -> Value {
         abs(value)
     }

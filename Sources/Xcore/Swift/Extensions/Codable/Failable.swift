@@ -8,7 +8,7 @@ import Foundation
 
 /// A container that holds a failable value.
 @dynamicMemberLookup
-public struct Failable<Value>: Decodable where Value: Decodable {
+public struct Failable<Value: Decodable>: Decodable {
     public let value: Value?
 
     public init(from decoder: Decoder) throws {
@@ -92,16 +92,16 @@ extension JSONDecoder {
     /// - Throws: `DecodingError.dataCorrupted` if values requested from the payload
     ///   are corrupted, or if the given data is not valid JSON.
     /// - Throws: An error if any value throws an error during decoding.
-    public func decode<T>(
+    public func decode<T: Decodable & InitializableBySequence>(
         _ type: T.Type,
         from data: Data,
         strategy: FailableDecodingStrategy
-    ) throws -> T where T: Decodable & InitializableBySequence, T.Element: Decodable {
+    ) throws -> T where T.Element: Decodable {
         switch strategy {
             case .throw:
                 return try decode(type, from: data)
             case .lenient:
-                return T(try decode([Failable<T.Element>].self, from: data).compacted())
+                return try T(decode([Failable<T.Element>].self, from: data).compacted())
         }
     }
 }

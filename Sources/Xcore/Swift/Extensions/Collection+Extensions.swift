@@ -42,7 +42,7 @@ extension Array where Element: Hashable {
     ///
     /// - Parameter uniqueProperty: `unique` criteria is determined by the value
     ///   returned by this block.
-    public mutating func unique<T: Hashable>(_ uniqueProperty: (Element) -> T) {
+    public mutating func unique(_ uniqueProperty: (Element) -> some Hashable) {
         self = uniqued(uniqueProperty)
     }
 }

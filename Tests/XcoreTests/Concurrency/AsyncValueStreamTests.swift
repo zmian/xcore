@@ -9,7 +9,7 @@ import Testing
 
 struct AsyncValueStreamTests {
     @Test
-    func currentValue() async {
+    func currentValue() {
         let internalStream = AsyncCurrentValueStream<Int>(5)
 
         let externalStream = AsyncValueStream(internalStream)
@@ -30,7 +30,7 @@ struct AsyncValueStreamTests {
     }
 
     @Test
-    func iterations() async {
+    func iterations() {
         let internalStream = AsyncCurrentValueStream<Int>(5)
         let externalStream = AsyncValueStream(internalStream)
 

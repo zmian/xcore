@@ -9,7 +9,7 @@ import Testing
 
 struct TextFieldFormatterTests {
     @Test
-    func maskingFormatter() throws {
+    func maskingFormatter() {
         // Number
         let numberFormatter = MaskingTextFieldFormatter("###-##-####", placeholderCharacter: "#")
         #expect(numberFormatter.format("123456789") == "123-45-6789")

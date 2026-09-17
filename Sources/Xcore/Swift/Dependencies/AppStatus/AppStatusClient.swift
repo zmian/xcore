@@ -192,7 +192,7 @@ extension AppStatusClient {
                 }
             }
 
-            continuation.onTermination = { h in
+            continuation.onTermination = { _ in
                 task.cancel()
             }
         }

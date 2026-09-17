@@ -167,7 +167,7 @@ extension ConfirmOperationStatus {
     /// `.waitingConfirmation`.
     public var isWaitingConfirmation: Bool {
         switch self {
-            case .waitingConfirmation:  true
+            case .waitingConfirmation: true
             default: false
         }
     }

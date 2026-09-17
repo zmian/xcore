@@ -53,7 +53,7 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
 
     /// Returns a Boolean value indicating whether the cache contains the value for
     /// the given key.
-    /// 
+    ///
     /// - Parameter key: The key to look up in the cache.
     /// - Returns: `true` if a value is associated with the key; otherwise, `false`.
     public func contains(_ key: Key) -> Bool {
@@ -135,7 +135,7 @@ private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, Sendable 
 
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
         guard
-            let willEvictValue = willEvictValue,
+            let willEvictValue,
             let value = (obj as? ReferenceBox<Value>)?.value
         else {
             return

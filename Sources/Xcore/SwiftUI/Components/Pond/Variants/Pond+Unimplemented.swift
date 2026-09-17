@@ -16,7 +16,7 @@ public struct UnimplementedPond: Pond {
         return nil
     }
 
-    public func set<T: Codable>(_ key: Key, value: T?) {
+    public func set(_ key: Key, value: (some Codable)?) {
         reportIssue("\(Self.self).set is unimplemented")
     }
 

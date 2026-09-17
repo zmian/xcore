@@ -192,7 +192,7 @@ extension Array where Element: RawRepresentable {
 
 // MARK: - String
 
-extension Array<String?> {
+extension [String?] {
     /// Returns a new string by concatenating the elements of the sequence, adding
     /// the given separator between each element.
     ///
@@ -211,7 +211,7 @@ extension Array<String?> {
     /// - Returns: A single, concatenated string.
     public func joined(separator: String = "") -> String {
         lazy
-            .compactMap { $0 }
+            .compactMap(\.self)
             .filter { !$0.isBlank }
             .joined(separator: separator)
     }
@@ -219,7 +219,7 @@ extension Array<String?> {
 
 // MARK: - CGPoint
 
-extension Array<CGPoint> {
+extension [CGPoint] {
     /// Returns the minimum `Y` in the sequence of `CGPoint`s.
     public func minY() -> Element? {
         self.max { $0.y < $1.y }

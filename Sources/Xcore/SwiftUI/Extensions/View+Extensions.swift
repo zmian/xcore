@@ -12,7 +12,7 @@ extension View {
     /// Wraps this view with a type eraser.
     ///
     /// - Returns: An `AnyView` wrapping this view.
-    public nonisolated func eraseToAnyView() -> AnyView {
+    nonisolated public func eraseToAnyView() -> AnyView {
         AnyView(self)
     }
 
@@ -76,7 +76,7 @@ extension Text {
     ///
     /// - Parameter color: The color to use when displaying this text.
     /// - Returns: A text view that uses the color value you supply.
-    public nonisolated func foregroundStyle(_ style: () -> Color?) -> Text {
+    nonisolated public func foregroundStyle(_ style: () -> Color?) -> Text {
         if let s = style() {
             foregroundColor(s)
         } else {
@@ -134,7 +134,7 @@ extension View {
     ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
     ///   - remove: A Boolean value indicating whether to remove the view.
     @ViewBuilder
-    public nonisolated func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
+    nonisolated public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {
             if !remove {
                 self.hidden()
@@ -156,7 +156,7 @@ extension View {
     /// label that repeats information that users already have. For example, don’t
     /// use the label “Play button” because a button already has a trait that
     /// identifies it as a button.
-    public nonisolated func accessibilityLabel(_ label: String?...) -> some View {
+    nonisolated public func accessibilityLabel(_ label: String?...) -> some View {
         accessibilityLabel(Text(label.joined(separator: ", ")))
     }
 }
@@ -173,7 +173,7 @@ extension View {
     }
 
     /// Clips the content by setting offset Y by given value.
-    public nonisolated func clipped(offsetY: CGFloat) -> some View {
+    nonisolated public func clipped(offsetY: CGFloat) -> some View {
         clipShape(.rect.offset(y: offsetY))
     }
 }

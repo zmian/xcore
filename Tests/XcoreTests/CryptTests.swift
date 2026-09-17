@@ -47,7 +47,7 @@ struct CryptTests {
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)
         let decryptedMessageString = try #require(String(data: decryptedMessage, encoding: .utf8))
 
-        #expect("Hello World" == decryptedMessageString)
+        #expect(decryptedMessageString == "Hello World")
         #expect(message == decryptedMessage)
         #expect(message != encryptedMessage)
 
@@ -67,7 +67,7 @@ struct CryptTests {
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)
         let decryptedMessageString = try #require(String(data: decryptedMessage, encoding: .utf8))
 
-        #expect("Hello World" == decryptedMessageString)
+        #expect(decryptedMessageString == "Hello World")
         #expect(message == decryptedMessage)
         #expect(message != encryptedMessage)
 

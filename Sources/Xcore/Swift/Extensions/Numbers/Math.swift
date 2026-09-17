@@ -12,7 +12,7 @@ import Foundation
 ///   - base: The base value.
 ///   - exponent: The exponent.
 /// - Returns: The result of base raised to the power of exponent.
-func pow_xc<T>(_ base: T, _ exponent: Int) -> T where T: FloatingPoint {
+func pow_xc<T: FloatingPoint>(_ base: T, _ exponent: Int) -> T {
     // Handle zero base with negative exponent
     if base == 0 && exponent < 0 {
         return .infinity

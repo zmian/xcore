@@ -29,7 +29,7 @@ public enum FeatureFlag: Sendable {
     }
 
     #if DEBUG
-    public static func setDebug<T>(_ key: String, value: T) {
+    public static func setDebug(_ key: String, value: some Any) {
         ProcessInfo.Argument(rawValue: key).set(value)
     }
     #endif

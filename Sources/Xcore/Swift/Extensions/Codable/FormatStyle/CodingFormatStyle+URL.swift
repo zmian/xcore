@@ -31,7 +31,7 @@ public struct URLCodingFormatStyle: CodingFormatStyle, Sendable {
         }
 
         if
-            let allowedCharacters = allowedCharacters,
+            let allowedCharacters,
             let escapedString = value.urlEscaped(allowed: allowedCharacters),
             let url = URL(string: escapedString)
         {

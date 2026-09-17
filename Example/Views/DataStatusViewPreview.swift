@@ -16,7 +16,7 @@ struct DataStatusViewPreview: View {
                 Text(ocean.name)
             }
         } failure: { error in
-            ErrorRecoveryView(error) { error in
+            ErrorRecoveryView(error) { _ in
                 Task {
                     await fetch()
                 }

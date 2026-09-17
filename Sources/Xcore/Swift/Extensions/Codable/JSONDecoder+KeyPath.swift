@@ -43,11 +43,11 @@ extension JSONDecoder {
     ///   - data: The JSON object to decode.
     ///   - keyPath: The JSON keypath of the type.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func decode<T>(
+    public func decode<T: Decodable>(
         _ type: T.Type,
         from data: Data,
         keyPath: KeyPathRepresentation
-    ) throws -> T where T: Decodable {
+    ) throws -> T {
         userInfo[.keyPath] = ArraySlice(keyPath.rawValue.components(separatedBy: keyPath.separator))
         return try decode(ValueWrapper<T>.self, from: data).value
     }

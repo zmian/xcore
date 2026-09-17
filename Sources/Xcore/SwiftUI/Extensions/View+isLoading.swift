@@ -21,5 +21,5 @@ extension View {
 extension EnvironmentValues {
     /// A Boolean property indicating whether the view associated with this
     /// environment is in loading state.
-    @Entry public var isLoading: Bool = false
+    @Entry public var isLoading = false
 }

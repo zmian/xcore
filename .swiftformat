@@ -6,7 +6,7 @@
 
 # Rules Toggle
 
---disable sortImports, sortSwitchCases, redundantSelf, organizeDeclarations
+--disable sortImports, sortSwitchCases, redundantSelf, organizeDeclarations, preferForLoop, swiftTestingTestCaseNames, wrapPropertyBodies
 
 # Format Options
 
@@ -42,7 +42,7 @@
 --markextensions always
 --marktypes always
 --maxwidth none
---modifierorder open, public, private, final, override, convenience, dynamic
+--modifierorder nonisolated, open, public, private, fileprivate(set), private(set), final, required, override, convenience, dynamic
 --nevertrailing
 --nospaceoperators ...,..<
 --nowrapoperators

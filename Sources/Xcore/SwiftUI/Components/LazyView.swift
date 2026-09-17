@@ -18,7 +18,7 @@ import SwiftUI
 ///
 /// LazyView(SomeComplexView())
 /// ```
-public struct LazyView<Content>: View where Content: View {
+public struct LazyView<Content: View>: View {
     private let content: () -> Content
 
     public init(@ViewBuilder content: @escaping () -> Content) {

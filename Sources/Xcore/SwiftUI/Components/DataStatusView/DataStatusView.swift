@@ -157,8 +157,8 @@ public struct DataStatusView<Success, Failure: Error, SuccessView: View, Failure
         }
     }
 
-    // Returns a placeholder view instead of using EmptyView, ensuring that
-    // lifecycle events such as `onAppear` or `onDisappear` are triggered.
+    /// Returns a placeholder view instead of using EmptyView, ensuring that
+    /// lifecycle events such as `onAppear` or `onDisappear` are triggered.
     private var placeholder: some View {
         Color.clear
     }
