@@ -26,7 +26,9 @@ enum Destination: Hashable, CaseIterable, Identifiable, Sendable {
     case crypt
     case scrollingStack
 
-    var id: Self { self }
+    var id: Self {
+        self
+    }
 
     var icon: SystemAssetIdentifier {
         metadata.icon
