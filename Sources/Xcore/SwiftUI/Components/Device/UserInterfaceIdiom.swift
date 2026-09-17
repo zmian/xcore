@@ -55,27 +55,20 @@ extension UserInterfaceIdiom {
             #if targetEnvironment(macCatalyst)
             return .mac
             #elseif os(iOS) || os(tvOS) || os(visionOS)
-            switch UIDevice.current.userInterfaceIdiom {
-                case .carPlay:
-                    return .carPlay
-                case .mac:
-                    return .mac
-                case .pad:
-                    return .pad
-                case .phone:
-                    return .phone
-                case .tv:
-                    return .tv
-                case .vision:
-                    return .vision
-                case .unspecified:
-                    return .unspecified
+            return switch UIDevice.current.userInterfaceIdiom {
+                case .carPlay: .carPlay
+                case .mac: .mac
+                case .pad: .pad
+                case .phone: .phone
+                case .tv: .tv
+                case .vision: .vision
+                case .unspecified: .unspecified
                 @unknown default:
-                    #if DEBUG
-                    fatalError(because: .unknownCaseDetected(UIDevice.current.userInterfaceIdiom))
-                    #else
-                    return .unspecified
-                    #endif
+                #if DEBUG
+                fatalError(because: .unknownCaseDetected(UIDevice.current.userInterfaceIdiom))
+                #else
+                .unspecified
+                #endif
             }
             #elseif os(macOS)
             return .mac
