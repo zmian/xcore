@@ -26,7 +26,7 @@ open class PhaseForwarderSceneDelegate: NSObject, UIWindowSceneDelegate {
 
     private func forward(_ contexts: Set<UIOpenURLContext>) {
         for context in contexts {
-            send(.openURL(context.url, options: context.options))
+            send(.openURL(context.url))
         }
     }
 }

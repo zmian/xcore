@@ -146,20 +146,13 @@ public enum AppPhase: @unchecked Sendable, Hashable, CustomStringConvertible {
 
     // MARK: - Opening a URL-Specified Resource
 
-    /// Event invoked asking the app to open a resource specified by a URL, and
-    /// provides the originating scene’s URL options.
-    ///
-    /// See documentation for [more info].
+    /// Event invoked asking the app to open a resource specified by a URL.
     ///
     /// - Parameters:
     ///   - url: The URL resource to open. This resource can be a network resource
     ///     or a file. For information about the Apple-registered URL schemes, see
     ///     ``Apple URL Scheme Reference``.
-    ///   - options: The options supplied by UIKit, or `nil` when forwarding
-    ///     a SwiftUI `onOpenURL` event.
-    ///
-    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623112-application
-    case openURL(URL, options: UIScene.OpenURLOptions? = nil)
+    case openURL(URL)
 
     // MARK: - Continuing User Activity and Handling Quick Actions
 
@@ -232,8 +225,8 @@ extension AppPhase {
                 "remoteNotificationsRegistered(.failure(\(error)))"
             case .remoteNotificationReceived:
                 "remoteNotificationReceived"
-            case let .openURL(url, options):
-                "openURL(\(url), options: \(String(describing: options)))"
+            case let .openURL(url):
+                "openURL(\(url))"
             case let .continueUserActivity(userActivity, _):
                 "continueUserActivity(\(userActivity), handler: ())"
         }
@@ -297,8 +290,8 @@ extension AppPhase {
                 lhs == rhs
             case let (.remoteNotificationReceived(lhs), .remoteNotificationReceived(rhs)):
                 lhs == rhs
-            case let (.openURL(lhs, lhsOptions), .openURL(rhs, rhsOptions)):
-                lhs == rhs && lhsOptions == rhsOptions
+            case let (.openURL(lhs), .openURL(rhs)):
+                lhs == rhs
             case let (.continueUserActivity(lhsActivity, lhsBlock), .continueUserActivity(rhsActivity, rhsBlock)):
                 lhsActivity == rhsActivity && String(reflecting: lhsBlock) == String(reflecting: rhsBlock)
             default:
@@ -326,9 +319,8 @@ extension AppPhase {
                 hasher.combine(value)
             case let .remoteNotificationReceived(value):
                 hasher.combine(String(reflecting: value))
-            case let .openURL(url, options):
+            case let .openURL(url):
                 hasher.combine(url)
-                hasher.combine(options)
             case let .continueUserActivity(activity, block):
                 hasher.combine(activity)
                 hasher.combine(String(reflecting: block))
