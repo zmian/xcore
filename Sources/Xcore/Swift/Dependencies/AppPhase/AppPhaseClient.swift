@@ -285,17 +285,17 @@ extension AppPhase {
             (.memoryWarning, .memoryWarning),
             (.significantTimeChange, .significantTimeChange),
             (.protectedDataDidBecomeAvailable, .protectedDataDidBecomeAvailable):
-                true
+                return true
             case let (.remoteNotificationsRegistered(lhs), .remoteNotificationsRegistered(rhs)):
-                lhs == rhs
+                return lhs == rhs
             case let (.remoteNotificationReceived(lhs), .remoteNotificationReceived(rhs)):
-                lhs == rhs
+                return lhs == rhs
             case let (.openURL(lhs), .openURL(rhs)):
-                lhs == rhs
+                return lhs == rhs
             case let (.continueUserActivity(lhsActivity, lhsBlock), .continueUserActivity(rhsActivity, rhsBlock)):
-                lhsActivity == rhsActivity && String(reflecting: lhsBlock) == String(reflecting: rhsBlock)
+                return lhsActivity == rhsActivity && String(reflecting: lhsBlock) == String(reflecting: rhsBlock)
             default:
-                false
+                return false
         }
     }
 }
