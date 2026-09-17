@@ -103,6 +103,7 @@ struct MainActorTests {
         actor CustomActor {
             var screenScale: CGFloat {
                 MainActor.runImmediately {
+                    MainActor.preconditionIsolated()
                     return MainActorTests.mainActorValue
                 }
             }
