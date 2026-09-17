@@ -40,12 +40,14 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
     /// - Parameters:
     ///   - selection: A closure that will be called when an image is selected. The
     ///     selected `UIImage` is passed as a parameter to this closure.
-    ///   - onFailure: Called when loading or decoding fails. Cancellation is ignored.
+    ///   - onFailure: Called when loading or decoding fails. Cancellation is
+    ///     ignored.
     ///   - label: The view that describes the action of choosing an item.
     public init(
         selection: @escaping (UIImage) -> Void,
         onFailure: @escaping (Error) -> Void = { error in
-            Logger(subsystem: "Xcore", category: "PhotoPicker").error("Photo selection failed: \(error.localizedDescription)")
+            Logger(subsystem: Logger.subsystem, category: "xcore")
+                .error("Photo selection failed: \(error.localizedDescription)")
         },
         @ViewBuilder label: () -> Label
     ) {
@@ -64,6 +66,7 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
         }
         .task(id: selectedItems) {
             guard let item = selectedItems.first else { return }
+
             do {
                 guard
                     let data = try await item.loadTransferable(type: Data.self),
