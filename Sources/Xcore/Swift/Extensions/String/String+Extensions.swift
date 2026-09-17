@@ -43,13 +43,11 @@ extension StringProtocol {
             return []
         }
 
-        let normalized: String
-
-        // If all uppercase then lowercase everything.
-        if rangeOfCharacter(from: .lowercaseLetters, options: [], range: range) == nil {
-            normalized = lowercased()
+        let normalized = if rangeOfCharacter(from: .lowercaseLetters, options: [], range: range) == nil {
+            // If all uppercase then lowercase everything.
+            lowercased()
         } else {
-            normalized = replacingOccurrences(of: "(?=\\S)[A-Z]", with: " $0", options: .regularExpression, range: range).lowercased()
+            replacingOccurrences(of: "(?=\\S)[A-Z]", with: " $0", options: .regularExpression, range: range).lowercased()
         }
 
         return normalized.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
