@@ -101,12 +101,12 @@ extension Popup {
 extension Popup.Style {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.alignment == rhs.alignment &&
-        lhs.animation == rhs.animation &&
-        lhs.windowStyle == rhs.windowStyle &&
-        lhs.ignoresSafeAreaEdges == rhs.ignoresSafeAreaEdges &&
-        lhs.allowDimming == rhs.allowDimming &&
-        lhs.dismissAfter == rhs.dismissAfter &&
-        String(reflecting: lhs.transition) == String(reflecting: rhs.transition)
+            lhs.animation == rhs.animation &&
+            lhs.windowStyle == rhs.windowStyle &&
+            lhs.ignoresSafeAreaEdges == rhs.ignoresSafeAreaEdges &&
+            lhs.allowDimming == rhs.allowDimming &&
+            lhs.dismissAfter == rhs.dismissAfter &&
+            String(reflecting: lhs.transition) == String(reflecting: rhs.transition)
     }
 }
 

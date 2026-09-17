@@ -297,7 +297,7 @@ extension Decimal {
     var stringValue: String {
         Self.usPosixFormatter.string(from: self) ??
             NSDecimalNumber(decimal: self)
-                .description(withLocale: Locale.usPosix)
+            .description(withLocale: Locale.usPosix)
     }
 
     /// This is an implementation detail of `double` and `Double(any:)`.
