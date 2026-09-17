@@ -222,8 +222,7 @@ extension WebView {
                                 do {
                                     try await Task.sleep(for: .seconds(0.75))
                                 } catch {
-                                    sender.endRefreshing()
-                                    return
+                                    // Fall through so we can still handle refreshing properly.
                                 }
                                 sender.endRefreshing()
                                 webView.reload()
@@ -256,8 +255,8 @@ extension WebView {
             }
 
             // 2. Set up cookies
-            for cooky in cookies {
-                wkConfig.websiteDataStore.httpCookieStore.setCookie(cooky)
+            for cookie in cookies {
+                wkConfig.websiteDataStore.httpCookieStore.setCookie(cookie)
             }
 
             // 3. Set up user scripts
