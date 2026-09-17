@@ -164,8 +164,8 @@ extension View {
 // MARK: - Clip
 
 extension View {
-    /// Clips the content by one display pixel to hide the last
-    /// separator automatically.
+    /// Clips the content by one display pixel to hide the last separator
+    /// automatically.
     public func clipLastSeparator() -> some View {
         EnvironmentReader(\.displayScale) { scale in
             clipped(offsetY: -.onePixel(displayScale: scale))
