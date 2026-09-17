@@ -32,7 +32,7 @@ extension ExtensibleByAssociatedObject {
     ///
     /// - Parameter key: The key for the association.
     /// - Returns: The value associated with the key for object.
-    public func associatedObject<T, Result>(_ key: inout T) -> Result? {
+    public func associatedObject<Result>(_ key: inout some Any) -> Result? {
         withUnsafePointer(to: &key) {
             objc_getAssociatedObject(self, $0) as? Result
         }
@@ -47,8 +47,8 @@ extension ExtensibleByAssociatedObject {
     ///   - defaultValueAssociationPolicy: An optional value to save the
     ///     `defaultValue` so the next call will have the associated object.
     /// - Returns: The value associated with the key for object.
-    public func associatedObject<T, Result>(
-        _ key: inout T,
+    public func associatedObject<Result>(
+        _ key: inout some Any,
         default defaultValue: @autoclosure () -> Result,
         policy defaultValueAssociationPolicy: AssociationPolicy? = nil
     ) -> Result {
@@ -74,9 +74,9 @@ extension ExtensibleByAssociatedObject {
     ///     remove an existing association.
     ///   - associationPolicy: The policy for the association. The default value is
     ///     `.strong`.
-    public func setAssociatedObject<T, Result>(
-        _ key: inout T,
-        value: Result?,
+    public func setAssociatedObject(
+        _ key: inout some Any,
+        value: (some Any)?,
         policy associationPolicy: AssociationPolicy = .strong
     ) {
         withUnsafePointer(to: &key) {

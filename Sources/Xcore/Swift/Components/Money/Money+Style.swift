@@ -231,10 +231,10 @@ extension Money.Style {
 
                 let amount = $0.amount.formatted(
                     .asAbbreviated(threshold: threshold)
-                    .fractionLength(fractionLength)
-                    .locale($0.locale)
-                    // sign is appended by `string(from:)` method below.
-                    .signSymbols(.none)
+                        .fractionLength(fractionLength)
+                        .locale($0.locale)
+                        // sign is appended by `string(from:)` method below.
+                        .signSymbols(.none)
                 )
 
                 return .init(
@@ -282,7 +282,7 @@ extension Money {
         )
     }
 
-    fileprivate func format(_ amount: String) -> String {
+    private func format(_ amount: String) -> String {
         switch currencySymbolPosition {
             case .prefix:
                 "\(sign)\(currencySymbol)\(amount)"

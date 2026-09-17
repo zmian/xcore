@@ -18,9 +18,9 @@ extension PostalAddress {
 
     /// Returns a locale-aware string representation of the given state name.
     public static func stateCode(from name: String) -> String? {
-        /// The `state` can either be a code (`NY`) or a name (`New York`) so we need to
-        /// check if it's either (and if it is the latter convert to code); otherwise,
-        /// default to empty string.
+        // The `state` can either be a code (`NY`) or a name (`New York`) so we need to
+        // check if it's either (and if it is the latter convert to code); otherwise,
+        // default to empty string.
         if states.keys.contains(name) {
             return name
         } else {

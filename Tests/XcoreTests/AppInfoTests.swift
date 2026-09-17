@@ -36,7 +36,7 @@ struct AppInfoTests {
 
         #expect(
             AppInfo.userAgent ==
-            "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) en_US"
+                "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) en_US"
         )
     }
 }

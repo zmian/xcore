@@ -81,7 +81,7 @@ extension AppMonitoring {
             let nsError = error as NSError
             var errorDomain = error.id
 
-            if let customErrorId = customErrorId, error.id == AppError.general.id {
+            if let customErrorId, error.id == AppError.general.id {
                 errorDomain = customErrorId
             }
 
@@ -180,7 +180,8 @@ extension AppMonitoring {
         line: UInt = #line,
         column: UInt = #column
     ) {
-        log(.warn,
+        log(
+            .warn,
             error: error,
             id: customErrorId,
             message: message,
@@ -223,7 +224,8 @@ extension AppMonitoring {
         line: UInt = #line,
         column: UInt = #column
     ) {
-        log(.critical,
+        log(
+            .critical,
             error: error,
             id: customErrorId,
             message: message,

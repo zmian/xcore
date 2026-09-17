@@ -63,14 +63,12 @@ extension ResizeImageTransform {
             let aspectRatio = self.aspectRatio(between: newSize, and: otherSize)
 
             // Build the rectangle representing the area to be drawn
-            let scaledImageRect = CGRect(
+            return CGRect(
                 x: (newSize.width - otherSize.width * aspectRatio) / 2.0,
                 y: (newSize.height - otherSize.height * aspectRatio) / 2.0,
                 width: otherSize.width * aspectRatio,
                 height: otherSize.height * aspectRatio
             )
-
-            return scaledImageRect
         }
     }
 }

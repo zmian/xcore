@@ -55,7 +55,7 @@ extension Button<Text> {
     /// A button with `Cancel` label and given action.
     public static func cancel(action: @escaping @MainActor () -> Void) -> some View {
         Button(L.cancel, role: .cancel, action: action)
-        .accessibilityIdentifier("cancelButton")
+            .accessibilityIdentifier("cancelButton")
     }
 
     /// A button with `Enable` label and given action.

@@ -96,7 +96,7 @@ public final class MutableReferenceBox<Value>: ReferenceBox<Value> {
 // MARK: - Conditional Conformances
 
 extension ReferenceBox: Equatable where Value: Equatable {
-    public static func == (lhs: ReferenceBox<Value>, rhs: ReferenceBox<Value>) -> Bool {
+    public static func ==(lhs: ReferenceBox<Value>, rhs: ReferenceBox<Value>) -> Bool {
         lhs.value == rhs.value
     }
 }

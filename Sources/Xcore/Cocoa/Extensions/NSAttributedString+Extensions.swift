@@ -108,15 +108,11 @@ extension NSMutableAttributedString {
     /// Returns the range of a substring in the attributed string, if it exists;
     /// otherwise, returns the range of the entire attributed string.
     private func range(of stringToFind: String?) -> NSRange {
-        let range: NSRange
-
         if let stringToFind {
-            range = (string as NSString).range(of: stringToFind)
+            (string as NSString).range(of: stringToFind)
         } else {
-            range = NSRange(location: 0, length: string.count)
+            NSRange(location: 0, length: string.count)
         }
-
-        return range
     }
 
     /// Returns the range of a substring in the attributed string, if it exists.

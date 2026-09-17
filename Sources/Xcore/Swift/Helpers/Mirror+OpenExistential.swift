@@ -13,7 +13,7 @@ extension Mirror {
     /// type.
     ///
     /// - Parameter value: The value to check if it is an optional.
-    public static func isOptional<T>(_ value: T) -> Bool {
+    public static func isOptional(_ value: some Any) -> Bool {
         value is any OptionalProtocol
     }
 }
@@ -25,14 +25,14 @@ extension Mirror {
     /// `Codable` protocol.
     ///
     /// - Parameter value: The value to check if it is codable.
-    public static func isCodable<T>(_ value: T) -> Bool {
+    public static func isCodable(_ value: some Any) -> Bool {
         value is any Codable
     }
 
     /// Returns a Boolean value indicating whether the given value type is codable.
     ///
     /// - Parameter value: The value type to check if it is a codable type.
-    public static func isCodable<T>(_ value: T.Type) -> Bool {
+    public static func isCodable(_ value: (some Any).Type) -> Bool {
         value is any Codable.Type
     }
 
@@ -41,7 +41,7 @@ extension Mirror {
     /// - Parameter value: The type to attempt to cast to `Codable` type.
     /// - Returns: The `Codable` type associated with the provided type, or `nil` if
     ///   not applicable.
-    public static func asCodable<T>(_ value: T.Type) -> Codable.Type? {
+    public static func asCodable(_ value: (some Any).Type) -> Codable.Type? {
         value as? Codable.Type
     }
 }
@@ -53,7 +53,7 @@ extension Mirror {
     /// `Collection` protocol.
     ///
     /// - Parameter value: The value to check if it is a type of a collection.
-    public static func isCollection<T>(_ value: T) -> Bool {
+    public static func isCollection(_ value: some Any) -> Bool {
         value is any Collection
     }
 
@@ -61,7 +61,7 @@ extension Mirror {
     /// collection.
     ///
     /// - Parameter value: The value type to check if it is a collection type.
-    public static func isCollection<T>(_ value: T.Type) -> Bool {
+    public static func isCollection(_ value: (some Any).Type) -> Bool {
         value is any Collection.Type
     }
 }

@@ -92,13 +92,13 @@ extension RangeReplaceableCollection {
     /// Removes all elements where the referenced value has been deallocated.
     ///
     /// - Returns: A new collection without deallocated weak references.
-    public func compacted<T>() -> Self where Element == Weak<T>, T: AnyObject {
+    public func compacted<T: AnyObject>() -> Self where Element == Weak<T> {
         filter { $0.value != nil }
     }
 
     /// Mutates the collection by removing all elements where the referenced value
     /// has been deallocated.
-    public mutating func compact<T>() where Element == Weak<T>, T: AnyObject {
+    public mutating func compact<T: AnyObject>() where Element == Weak<T> {
         self = compacted()
     }
 }

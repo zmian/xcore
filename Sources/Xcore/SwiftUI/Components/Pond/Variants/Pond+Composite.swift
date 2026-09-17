@@ -31,7 +31,7 @@ public struct CompositePond: Pond {
         try pond(.get, key).get(type, key)
     }
 
-    public func set<T: Codable>(_ key: Key, value: T?) throws {
+    public func set(_ key: Key, value: (some Codable)?) throws {
         try pond(.set, key).set(key, value: value)
     }
 
