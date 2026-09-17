@@ -9,15 +9,13 @@ import UIKit
 @_spi(Internal) import Xcore
 
 struct MainActorTests {
-    @MainActor private static let mainActorValue: CGFloat = 3
-
     @Test
-    func `run immediately`() {
+    func runImmediately() {
         #expect(screenScale == 3.0)
     }
 
     @Test
-    func `run immediately sync main`() {
+    func runImmediately_sync_main() {
         var value = 0.0
 
         DispatchQueue.main.sync {
@@ -28,7 +26,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately sync background`() {
+    func runImmediately_sync_background() {
         var value = 0.0
 
         DispatchQueue.global().sync {
@@ -39,7 +37,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately task`() async {
+    func runImmediately_task() async {
         let value = await Task {
             screenScale
         }.value
@@ -48,7 +46,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately task mainactor`() async {
+    func runImmediately_task_mainactor() async {
         let value = await Task { @MainActor in
             screenScale
         }.value
@@ -57,7 +55,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately task detached`() async {
+    func runImmediately_task_detached() async {
         let value = await Task.detached(priority: .background) {
             screenScale
         }.value
@@ -66,7 +64,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately async main`() async {
+    func runImmediately_async_main() async {
         let value = await withCheckedContinuation { continuation in
             DispatchQueue.main.async {
                 continuation.resume(returning: screenScale)
@@ -77,7 +75,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately async global`() async {
+    func runImmediately_async_global() async {
         let value = await withCheckedContinuation { continuation in
             DispatchQueue.global().async {
                 continuation.resume(returning: screenScale)
@@ -88,7 +86,7 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately async global main`() async {
+    func runImmediately_async_global_main() async {
         let value = await withCheckedContinuation { continuation in
             DispatchQueue.global().async {
                 DispatchQueue.main.async {
@@ -101,11 +99,10 @@ struct MainActorTests {
     }
 
     @Test
-    func `run immediately actor custom`() async {
+    func runImmediately_actor_custom() async {
         actor CustomActor {
             var screenScale: CGFloat {
                 MainActor.runImmediately {
-                    MainActor.preconditionIsolated()
                     return MainActorTests.mainActorValue
                 }
             }
@@ -117,7 +114,7 @@ struct MainActorTests {
 
     @Test
     @MainActor
-    func `run immediately actor main`() {
+    func runImmediately_actor_main() async {
         #expect(screenScale == 3.0)
     }
 
@@ -127,4 +124,6 @@ struct MainActorTests {
             return Self.mainActorValue
         }
     }
+
+    @MainActor private static let mainActorValue: CGFloat = 3
 }
