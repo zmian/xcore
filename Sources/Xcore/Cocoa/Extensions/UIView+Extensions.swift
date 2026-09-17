@@ -43,7 +43,7 @@ extension UIView {
 @objc
 extension UIView {
     open var sizeFittingScreenWidth: CGSize {
-        sizeFitting(width: Screen.main.bounds.width)
+        sizeFitting(width: window?.bounds.width ?? bounds.width)
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
@@ -79,15 +79,15 @@ extension UIView {
     }
 
     public func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
-        axis.forEach {
-            setContentHuggingPriority(priority, for: $0)
-            setContentCompressionResistancePriority(priority, for: $0)
+        for axi in axis {
+            setContentHuggingPriority(priority, for: axi)
+            setContentCompressionResistancePriority(priority, for: axi)
         }
     }
 }
 
 @MainActor
-extension Array<UIView> {
+extension [UIView] {
     public func resistsSizeChange() {
         forEach { $0.resistsSizeChange() }
     }

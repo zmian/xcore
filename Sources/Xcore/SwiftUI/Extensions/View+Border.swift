@@ -12,16 +12,17 @@ extension View {
     ///
     /// - Parameters:
     ///   - cornerRadius: The corner radius of the border.
-    ///   - lineWidth: The thickness of the border. The default is 1 pixel.
+    ///   - lineWidth: The thickness of the border. Pass `nil` for one display pixel.
     ///   - color: The border color.
     /// - Returns: A view that adds a border with the specified corner radius, width
     ///   and color to this view.
     public func border(
         cornerRadius: CGFloat = AppConstants.cornerRadius,
-        lineWidth: CGFloat = .onePixel,
+        lineWidth: CGFloat? = nil,
         color: Color? = nil
     ) -> some View {
-        border(.rect(cornerRadius: cornerRadius),
+        border(
+            .rect(cornerRadius: cornerRadius),
             lineWidth: lineWidth,
             color: color
         )
@@ -35,19 +36,20 @@ extension View {
     ///
     /// - Parameters:
     ///   - shape: The border shape.
-    ///   - lineWidth: The thickness of the border. The default is 1 pixel.
+    ///   - lineWidth: The thickness of the border. Pass `nil` for one display pixel.
     ///   - color: The border color.
     /// - Returns: A view that adds a border with the specified shape, width and
     ///   color to this view.
     public func border(
         _ shape: some InsettableShape,
-        lineWidth: CGFloat = .onePixel,
+        lineWidth: CGFloat? = nil,
         color: Color? = nil
     ) -> some View {
         EnvironmentReader(\.theme) { theme in
-            overlay {
-                shape
-                    .strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth)
+            EnvironmentReader(\.displayScale) { scale in
+                overlay {
+                    shape.strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth ?? .onePixel(displayScale: scale))
+                }
             }
         }
     }

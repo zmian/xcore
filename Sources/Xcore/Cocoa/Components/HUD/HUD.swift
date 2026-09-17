@@ -292,7 +292,12 @@ open class HUD: Appliable {
         }
 
         Task {
-            try await Task.sleep(for: delayDuration)
+            do {
+                try await Task.sleep(for: delayDuration)
+            } catch {
+                // A cancelled delay must not change the presentation.
+                return
+            }
             setHidden(hide, animated: animated, completion)
         }
     }

@@ -12,7 +12,7 @@ extension View {
     /// Wraps this view with a type eraser.
     ///
     /// - Returns: An `AnyView` wrapping this view.
-    nonisolated public func eraseToAnyView() -> AnyView {
+    public nonisolated func eraseToAnyView() -> AnyView {
         AnyView(self)
     }
 
@@ -50,7 +50,7 @@ extension View {
     ///  relative to the containing view’s style, use one of the semantic styles,
     ///  like ``primary``.
     /// - Returns: A view that uses the given foreground style.
-    public func foregroundStyle<S: ShapeStyle>(_ style: () -> S?) -> some View {
+    public func foregroundStyle(_ style: () -> (some ShapeStyle)?) -> some View {
         unwrap(style()) { view, style in
             view.foregroundStyle(style)
         }
@@ -76,7 +76,7 @@ extension Text {
     ///
     /// - Parameter color: The color to use when displaying this text.
     /// - Returns: A text view that uses the color value you supply.
-    nonisolated public func foregroundStyle(_ style: () -> Color?) -> Text {
+    public nonisolated func foregroundStyle(_ style: () -> Color?) -> Text {
         if let s = style() {
             foregroundColor(s)
         } else {
@@ -134,7 +134,7 @@ extension View {
     ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
     ///   - remove: A Boolean value indicating whether to remove the view.
     @ViewBuilder
-    nonisolated public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
+    public nonisolated func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {
             if !remove {
                 self.hidden()
@@ -156,7 +156,7 @@ extension View {
     /// label that repeats information that users already have. For example, don’t
     /// use the label “Play button” because a button already has a trait that
     /// identifies it as a button.
-    nonisolated public func accessibilityLabel(_ label: String?...) -> some View {
+    public nonisolated func accessibilityLabel(_ label: String?...) -> some View {
         accessibilityLabel(Text(label.joined(separator: ", ")))
     }
 }
@@ -164,14 +164,16 @@ extension View {
 // MARK: - Clip
 
 extension View {
-    /// Clips the content by setting offset to `.onePixel` to hide the last
+    /// Clips the content by one display pixel to hide the last
     /// separator automatically.
     public func clipLastSeparator() -> some View {
-        clipped(offsetY: -.onePixel)
+        EnvironmentReader(\.displayScale) { scale in
+            clipped(offsetY: -.onePixel(displayScale: scale))
+        }
     }
 
     /// Clips the content by setting offset Y by given value.
-    nonisolated public func clipped(offsetY: CGFloat) -> some View {
+    public nonisolated func clipped(offsetY: CGFloat) -> some View {
         clipShape(.rect.offset(y: offsetY))
     }
 }

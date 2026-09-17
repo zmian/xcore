@@ -17,7 +17,8 @@ extension UIImageView {
     ///     the image will only fade in when fetched from a remote URL and not in
     ///     memory cache.
     ///   - callback: A closure to be invoked when finished setting the image. The
-    ///     closure receives the `UIImage` object as its parameter.
+    ///     closure receives the loaded image, or `nil` on failure. Cancelled or
+    ///     superseded requests do not call the closure.
     public func setImage(
         _ image: ImageRepresentable?,
         duration animationDuration: TimeInterval = .default,
@@ -34,24 +35,29 @@ extension UIImageView {
             return
         }
 
+        let requestID = UUID()
+        imageSetRequestID = requestID
+
         Task { @MainActor in
-            var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
-            let animated = cacheType.possiblyDelayed
+            guard imageSetRequestID == requestID else { return }
+            do {
+                var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
+                guard imageSetRequestID == requestID else { return }
+                try Task.checkCancellation()
 
-            // Ensure that we are not setting image to the incorrect image view instance in
-            // case it's being reused (e.g., `UICollectionViewCell`).
-            if let imageRepresentableSource, imageRepresentableSource != imageRepresentable.imageSource {
-                return
+                if let transform: ImageTransform = imageRepresentable.plugin() {
+                    image = image.applying(transform, source: imageRepresentable)
+                }
+
+                setUIImage(image, animationDuration: cacheType.possiblyDelayed ? animationDuration : 0)
+                callback?(image)
+            } catch is CancellationError {
+                // A cancelled request must not trigger a fallback image.
+            } catch {
+                guard imageSetRequestID == requestID, !Task.isCancelled else { return }
+                self.image = nil
+                callback?(nil)
             }
-
-            if let transform: ImageTransform = imageRepresentable.plugin() {
-                image = await Task { [image] in
-                    image.applying(transform, source: imageRepresentable)
-                }.value
-            }
-
-            setUIImage(image, animationDuration: animated ? animationDuration : 0)
-            callback?(image)
         }
     }
 
@@ -65,7 +71,8 @@ extension UIImageView {
     ///     the image will only fade in when fetched from a remote URL and not in
     ///     memory cache.
     ///   - callback: A closure to be invoked when finished setting the image. The
-    ///     closure receives the `UIImage` object as its parameter.
+    ///     closure receives the loaded image, or `nil` on failure. Cancelled or
+    ///     superseded requests do not call the closure.
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,

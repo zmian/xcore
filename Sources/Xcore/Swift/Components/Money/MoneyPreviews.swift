@@ -84,6 +84,7 @@ extension Font.CustomTextStyle {
 }
 
 extension Samples {
+    @MainActor
     public static var moneyPreviews: some View {
         MoneyPreviews()
     }

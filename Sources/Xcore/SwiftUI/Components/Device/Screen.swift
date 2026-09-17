@@ -4,93 +4,55 @@
 // MIT license, see LICENSE file for details
 //
 
-import SwiftUI
+import UIKit
 import Combine
 
-/// An object representing the device’s screen.
-public final class Screen: ObservableObject, Sendable {
-    /// Returns the screen object representing the device’s screen.
-    static let main = Screen()
+/// The display associated with a specific window scene.
+///
+/// Create a screen from the scene presenting your content. For SwiftUI layout,
+/// prefer the view's proposed size and the `displayScale` environment value.
+@MainActor
+public final class Screen: ObservableObject {
+    private let screen: UIScreen
+    private var cancellable: AnyCancellable?
 
-    /// The natural scale factor associated with the screen.
-    ///
-    /// This value reflects the scale factor needed to convert from the default
-    /// logical coordinate space into the device coordinate space of this screen.
-    /// The default logical coordinate space is measured using points. For Retina
-    /// displays, the scale factor may be `3.0` or `2.0` and one point can
-    /// represented by nine or four pixels, respectively. For standard-resolution
-    /// displays, the scale factor is `1.0` and one point equals one pixel.
-    public let scale = MainActor.runImmediately {
-        #if os(iOS) || os(tvOS)
-        return UIScreen.main.scale
-        #elseif os(watchOS)
-        return WKInterfaceDevice.current().screenScale
-        #elseif os(macOS)
-        return NSScreen.main?.backingScaleFactor ?? 1.0
-        #else
-        return 1.0
-        #endif
+    /// Creates a display wrapper for the supplied window scene.
+    public init(scene: UIWindowScene) {
+        screen = scene.screen
+        cancellable = NotificationCenter.default
+            .publisher(for: UIDevice.orientationDidChangeNotification)
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    self?.objectWillChange.send()
+                }
+            }
     }
 
-    /// The bounding rectangle of the screen, measured in points.
+    /// The number of pixels per point on this display.
+    public var scale: CGFloat {
+        screen.scale
+    }
+
+    /// The display bounds in points. Use the window bounds for window layout.
     public var bounds: CGRect {
-        MainActor.runImmediately {
-            #if os(iOS) || os(tvOS)
-            return UIScreen.main.bounds
-            #elseif os(watchOS)
-            return WKInterfaceDevice.current().screenBounds
-            #elseif os(macOS)
-            return NSScreen.main?.frame ?? .zero
-            #endif
-        }
+        screen.bounds
     }
 
-    /// The size of the screen, measured in points.
+    /// The display size in points.
     public var size: CGSize {
         bounds.size
     }
 
-    /// The reference size associated with the screen.
+    /// The reference size matching this display.
     public var referenceSize: ReferenceSize {
-        .init(screen: self)
+        .init(size: size)
     }
 
-    /// The brightness level of the screen.
+    /// The display brightness, between zero and one.
     ///
-    /// This property is only supported on the main screen. The value of this
-    /// property should be a number between `0.0` and `1.0`, inclusive.
-    ///
-    /// Brightness changes made by an app remain in effect until the device is
-    /// locked, regardless of whether the app is closed. The system brightness
-    /// (which the user can set in Settings or Control Center) is restored the next
-    /// time the display is turned on.
-    @MainActor
+    /// UIKit supports changing brightness only on the device's built-in display.
     public var brightness: CGFloat {
-        get {
-            #if os(iOS) || targetEnvironment(macCatalyst)
-            return UIScreen.main.brightness
-            #else
-            return 1.0
-            #endif
-        }
-        set {
-            #if os(iOS) || targetEnvironment(macCatalyst)
-            UIScreen.main.brightness = newValue
-            #endif
-        }
-    }
-
-    nonisolated(unsafe) private var cancellable: AnyCancellable?
-
-    private init() {
-        #if os(iOS)
-        cancellable = NotificationCenter
-            .default
-            .publisher(for: UIDevice.orientationDidChangeNotification, object: nil)
-            .receive(on: .main)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-        #endif
+        get { screen.brightness }
+        set { screen.brightness = newValue }
     }
 }

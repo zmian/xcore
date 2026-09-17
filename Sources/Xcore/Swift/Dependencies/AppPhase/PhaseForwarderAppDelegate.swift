@@ -35,6 +35,9 @@ import Combine
 ///     var body: some Scene {
 ///         WindowGroup {
 ///             ContentView()
+///                 .onOpenURL { url in
+///                     appDelegate.appPhase.send(.openURL(url))
+///                 }
 ///                 .onChange(of: scenePhase) { _, phase in
 ///                     // Forward all of the events to `AppPhaseClient`.
 ///                     AppPhase(phase).map(appDelegate.appPhase.send)
@@ -118,17 +121,6 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
     ) {
         send(.remoteNotificationReceived(userInfo: userInfo))
         completionHandler(.noData)
-    }
-
-    // MARK: - Opening a URL-Specified Resource
-
-    open func application(
-        _ application: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-    ) -> Bool {
-        send(.openURL(url, options: options))
-        return true
     }
 
     // MARK: - Continuing User Activity and Handling Quick Actions

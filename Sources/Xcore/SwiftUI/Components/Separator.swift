@@ -24,8 +24,9 @@ extension View {
 /// the separator.
 public struct Separator: View {
     @Environment(\.theme) private var theme
+    @Environment(\.displayScale) private var displayScale
     private let color: Color?
-    private let style: StrokeStyle
+    private let style: StrokeStyle?
 
     /// Creates a new separator from the given color and stroke style.
     ///
@@ -41,16 +42,17 @@ public struct Separator: View {
     ///
     /// - Parameters:
     ///   - color: The foreground color of the separator.
-    ///   - lineWidth: The thickness of the separator.
-    public init(color: Color? = nil, lineWidth: CGFloat = .onePixel) {
-        self.init(color: color, style: .init(lineWidth: lineWidth, lineJoin: .round))
+    ///   - lineWidth: The thickness in points, or `nil` for one display pixel.
+    public init(color: Color? = nil, lineWidth: CGFloat? = nil) {
+        self.color = color
+        style = lineWidth.map { StrokeStyle(lineWidth: $0, lineJoin: .round) }
     }
 
     public var body: some View {
         Divider()
             .hidden()
             .overlay(
-                SeparatorShape(style: style)
+                SeparatorShape(style: style ?? .init(lineWidth: .onePixel(displayScale: displayScale), lineJoin: .round))
                     .fill(color ?? theme.separatorColor)
             )
             .accessibilityHidden(true)

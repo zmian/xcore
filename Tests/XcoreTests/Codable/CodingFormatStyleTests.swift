@@ -394,7 +394,7 @@ struct CodingFormatStyleTests {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .map { value in
+                value = try container.decode(.value, format: .map { @Sendable value in
                     if let status = value as? String {
                         return Status(rawValue: status)
                     }
@@ -439,7 +439,7 @@ struct CodingFormatStyleTests {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .map { input in
+                value = try container.decode(.value, format: .map { @Sendable input in
                     switch input as? String {
                         case "first":
                             return .style1
@@ -482,17 +482,17 @@ struct CodingFormatStyleTests {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .string {
-                    UIColor(hex: $0)
+                value = try container.decode(.value, format: .string { @Sendable value in
+                    UIColor(hex: value)
                 })
-                isBlueColor = try container.decode(.value, format: .string { hex in
+                isBlueColor = try container.decode(.value, format: .string { @Sendable hex in
                     hex == "0000FF" || hex == "#0000FF"
                 })
             }
 
             func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: CodingKeys.self)
-                try container.encode(value, forKey: .value, format: .string { color in
+                try container.encode(value, forKey: .value, format: .string { @Sendable color in
                     color.hex
                 })
             }

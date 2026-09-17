@@ -13,9 +13,10 @@ public final class Device: ObservableObject, Sendable {
     /// An object that represents the current device.
     public static let current = Device()
 
-    /// Returns the screen object representing the device’s screen.
-    public var screen: Screen {
-        .main
+    /// Returns the display associated with the supplied scene.
+    @MainActor
+    public func screen(in scene: UIWindowScene) -> Screen {
+        Screen(scene: scene)
     }
 
     /// An enumeration that indicate the interface type for the device.
@@ -27,18 +28,7 @@ public final class Device: ObservableObject, Sendable {
         current[keyPath: keyPath]
     }
 
-    nonisolated(unsafe) private var cancellable: AnyCancellable?
-
-    private init() {
-        #if os(iOS)
-        cancellable = screen
-            .objectWillChange
-            .receive(on: .main)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-        #endif
-    }
+    private init() {}
 }
 
 // MARK: - Operating System Information
@@ -52,7 +42,6 @@ extension Device {
             #elseif os(watchOS)
             return WKInterfaceDevice.current().systemName
             #elseif os(macOS)
-            #warning("FIXME: Implement")
             return "macOS"
             #else
             return "Unknown"

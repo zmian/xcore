@@ -10,7 +10,7 @@ import OSLog
 
 final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
     /// The registered list of fetchers.
-    nonisolated(unsafe) private var fetchers: [ImageFetcher] = []
+    private nonisolated(unsafe) var fetchers: [ImageFetcher] = []
 
     init(_ fetchers: [ImageFetcher]) {
         self.fetchers = fetchers
@@ -63,7 +63,7 @@ extension CompositeImageFetcher {
     @MainActor
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output {
         // Cancel any existing in-flight image request.
-        imageView?.cancelSetImageRequest()
+        imageView?.cancelImageFetch()
 
         guard image.imageSource.isValid else {
             #if DEBUG

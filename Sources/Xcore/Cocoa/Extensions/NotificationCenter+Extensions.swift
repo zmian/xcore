@@ -119,7 +119,12 @@ extension NotificationCenter {
     ) {
         Task {
             if delayInterval > 0 {
-                try await Task.sleep(for: .seconds(delayInterval))
+                do {
+                    try await Task.sleep(for: .seconds(delayInterval))
+                } catch {
+                    // Cancellation prevents the delayed notification.
+                    return
+                }
             }
             shared.post(name: name, object: object, userInfo: userInfo)
         }
@@ -132,8 +137,8 @@ extension NotificationCenter {
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
     public static func remove(_ observers: [NSObjectProtocol?]) {
-        observers.forEach {
-            shared.remove($0)
+        for observer in observers {
+            shared.remove(observer)
         }
     }
 

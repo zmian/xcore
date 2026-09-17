@@ -6,7 +6,10 @@
 
 import SwiftUI
 
-#warning("TODO: Incorporate control size and prominence iOS 16 modifiers.")
+// A themed filled or outlined button that respects the environment control size.
+//
+// The explicit `prominence` selects the fill treatment. `defaultMinButtonHeight`
+// defines the regular control height; other control sizes scale that height.
 
 public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let id: ButtonIdentifier
@@ -41,6 +44,8 @@ extension ProminentButtonStyle {
         @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
         @Environment(\.defaultButtonFont) private var font
         @Environment(\.theme) private var theme
+        @Environment(\.controlSize) private var controlSize
+        @Environment(\.displayScale) private var displayScale
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.isLoading) private var isLoading
         let id: ButtonIdentifier
@@ -50,7 +55,7 @@ extension ProminentButtonStyle {
 
         var body: some View {
             configuration.label
-                .frame(maxWidth: .infinity, minHeight: minHeight)
+                .frame(maxWidth: .infinity, minHeight: controlHeight)
                 .padding(.horizontal)
                 .foregroundStyle(foregroundColor)
                 .background(background)
@@ -69,7 +74,18 @@ extension ProminentButtonStyle {
                 case .fill:
                     shape.fill(backgroundColor)
                 case .outline:
-                    shape.strokeBorder(borderColor, lineWidth: .onePixel)
+                    shape.strokeBorder(borderColor, lineWidth: .onePixel(displayScale: displayScale))
+            }
+        }
+
+        private var controlHeight: CGFloat {
+            switch controlSize {
+                case .mini: minHeight * 0.6
+                case .small: minHeight * 0.8
+                case .regular: minHeight
+                case .large: minHeight * 1.2
+                case .extraLarge: minHeight * 1.4
+                @unknown default: minHeight
             }
         }
 
@@ -140,6 +156,11 @@ extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
-    static var primary: Self { capsuleFill }
-    static var secondary: Self { capsuleOutline }
+    static var primary: Self {
+        capsuleFill
+    }
+
+    static var secondary: Self {
+        capsuleOutline
+    }
 }

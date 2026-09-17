@@ -63,32 +63,33 @@ extension CGAffineTransform {
 
 extension CGFloat {
     /// Spacing with the default value of `4` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s1: Self = 4
+    public nonisolated(unsafe) static var s1: Self = 4
     /// Spacing with the default value of `8` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s2: Self = 8
+    public nonisolated(unsafe) static var s2: Self = 8
     /// Spacing with the default value of `12` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s3: Self = 12
+    public nonisolated(unsafe) static var s3: Self = 12
     /// Spacing with the default value of `16` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s4: Self = 16
+    public nonisolated(unsafe) static var s4: Self = 16
     /// Spacing with the default value of `20` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s5: Self = 20
+    public nonisolated(unsafe) static var s5: Self = 20
     /// Spacing with the default value of `24` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s6: Self = 24
+    public nonisolated(unsafe) static var s6: Self = 24
     /// Spacing with the default value of `28` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s7: Self = 28
+    public nonisolated(unsafe) static var s7: Self = 28
     /// Spacing with the default value of `32` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s8: Self = 32
+    public nonisolated(unsafe) static var s8: Self = 32
 
     /// The default spacing value at a normal dynamic type setting.
-    nonisolated(unsafe) public static var defaultSpacing: Self = .s5
+    public nonisolated(unsafe) static var defaultSpacing: Self = .s5
 
     /// The default spacing value at a normal dynamic type setting for inter items
     /// in horizontal axis.
-    nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
+    public nonisolated(unsafe) static var interItemHSpacing: Self = .s3
 
-    /// Return true `1` pixel relative to the screen scale.
-    public static var onePixel: Self {
-        1 / Screen.main.scale
+    /// Returns one pixel in points for the supplied display scale.
+    public static func onePixel(displayScale: CGFloat) -> Self {
+        precondition(displayScale > 0, "Display scale must be positive")
+        return 1 / displayScale
     }
 }
 
@@ -96,7 +97,7 @@ extension CGFloat {
 
 extension EdgeInsets {
     /// The default insets for list content.
-    nonisolated(unsafe) public static var listRow = Self(.defaultSpacing)
+    public nonisolated(unsafe) static var listRow = Self(.defaultSpacing)
 }
 
 // MARK: - URL
@@ -123,7 +124,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    nonisolated(unsafe) public static var mask: Self = "•"
+    public nonisolated(unsafe) static var mask: Self = "•"
 }
 
 // MARK: - String
@@ -140,17 +141,17 @@ extension String {
 
 extension Int {
     @_disfavoredOverload
-    nonisolated(unsafe) public static var maxFractionDigits = 100
+    public nonisolated(unsafe) static var maxFractionDigits = 100
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultFractionDigits = 2
+    public nonisolated(unsafe) static var defaultFractionDigits = 2
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
+    public nonisolated(unsafe) static var defaultRandomUpperBound = 100
 }
 
 extension Double {
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
+    public nonisolated(unsafe) static var defaultRandomUpperBound = 100.0
 }
 
 extension RangeExpression where Self == ClosedRange<Int> {
@@ -167,7 +168,9 @@ extension RangeExpression where Self == ClosedRange<Int> {
 
 public enum AppConstants {
     /// The golden ratio.
-    public static var φ: CGFloat { 0.618 }
+    public static var φ: CGFloat {
+        0.618
+    }
 
     public static let statusBarHeight = MainActor.runImmediately {
         UIApplication
@@ -186,14 +189,10 @@ public enum AppConstants {
         Device.userInterfaceIdiom == .pad ? 50 : 44
     }
 
-    nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
+    public nonisolated(unsafe) static var cornerRadius: CGFloat = 15
 
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width
-    }
-
-    static var popupPreferredWidth: CGFloat {
-        min(300, Device.screen.bounds.size.min * 0.8)
     }
 }
 
@@ -208,36 +207,33 @@ extension AppConstants {
         supportsHomeIndicator ? 34 : 0
     }
 
-    public static var smallScreenSize: Bool {
-        guard Device.userInterfaceIdiom == .phone else {
-            return false
-        }
-
-        return Device.screen.referenceSize <= .iPhone5
+    /// Whether the supplied layout size is no larger than an iPhone 5 display.
+    public static func smallScreenSize(_ size: CGSize) -> Bool {
+        size.max <= Screen.ReferenceSize.iPhone5.size.max
     }
 
-    public static var mediumScreenSize: Bool {
-        Device.screen.referenceSize.size.max <= iPhoneXSScreenSize.max
+    /// Whether the supplied layout size is no larger than an iPhone XS Max display.
+    public static func mediumScreenSize(_ size: CGSize) -> Bool {
+        size.max <= iPhoneXSScreenSize.max
     }
 
     public static var iPhoneXSScreenSize: CGSize {
         Screen.ReferenceSize.iPhoneXSMax.size
     }
 
-    /// Returns relative value for the current device based on iPhone 6 width.
+    /// Scales a value to the supplied layout size relative to an iPhone XS Max.
     @MainActor
-    public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = Screen.main.bounds.size
+    public static func aspect(_ value: CGFloat, in size: CGSize, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let reference = iPhoneXSScreenSize
-        let relation = axis == .vertical ? screenSize.height / reference.height : screenSize.width / reference.width
+        let relation = axis == .vertical ? size.height / reference.height : size.width / reference.width
         return value * relation
     }
 
+    /// Returns the space beyond the reference size along the supplied axis.
     @MainActor
-    public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = Screen.main.bounds.size
+    public static func remaining(in size: CGSize, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let reference = iPhoneXSScreenSize
-        let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
+        let remaining = axis == .vertical ? size.height - reference.height : size.width - reference.width
         return max(0.0, remaining)
     }
 }

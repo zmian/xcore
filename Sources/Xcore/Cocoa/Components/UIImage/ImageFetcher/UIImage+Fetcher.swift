@@ -45,9 +45,17 @@ extension UIImage.Fetcher {
 }
 
 extension UIImageView {
+    @MainActor
     private enum AssociatedKey {
-        nonisolated(unsafe) static var imageRepresentableSource = "imageRepresentableSource"
-        nonisolated(unsafe) static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+        static var imageSetRequestID = "imageSetRequestID"
+        static var imageRepresentableSource = "imageRepresentableSource"
+        static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+    }
+
+    /// Identifies the set operation independently of its underlying fetch.
+    var imageSetRequestID: UUID? {
+        get { associatedObject(&AssociatedKey.imageSetRequestID) }
+        set { setAssociatedObject(&AssociatedKey.imageSetRequestID, value: newValue) }
     }
 
     /// The `ImageSourceType` object associated with the receiver.
@@ -67,6 +75,11 @@ extension UIImageView {
     ///
     /// - SeeAlso: `setImage(_:animationDuration:_:)`
     public func cancelSetImageRequest() {
+        imageSetRequestID = nil
+        cancelImageFetch()
+    }
+
+    func cancelImageFetch() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()
         _imageFetcherCancelBlock = nil

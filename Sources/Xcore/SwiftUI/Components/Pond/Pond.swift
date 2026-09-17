@@ -6,8 +6,6 @@
 
 import Foundation
 
-#warning("FIXME: Now Pointfree's Shared lib can be used replace Pond")
-
 /// A protocol where the conforming types provide functionality for key value
 /// storage.
 ///
@@ -27,7 +25,7 @@ public protocol Pond: Sendable {
 
     func get<T: Codable>(_ type: T.Type, _ key: Key) throws -> T?
 
-    func set<T: Codable>(_ key: Key, value: T?) throws
+    func set(_ key: Key, value: (some Codable)?) throws
 
     /// Returns a Boolean value indicating whether the store contains value for the
     /// given key.
@@ -39,7 +37,7 @@ public protocol Pond: Sendable {
 // MARK: - Helpers
 
 extension Pond {
-    public func set<T>(_ key: Key, value: T?) throws where T: RawRepresentable<String> {
+    public func set(_ key: Key, value: (some RawRepresentable<String>)?) throws {
         try set(key, value: value?.rawValue)
     }
 
@@ -52,7 +50,7 @@ extension Pond {
 
 extension Pond {
     private func value(_ key: Key) throws -> StringConverter? {
-        StringConverter(try get(String.self, key))
+        try StringConverter(get(String.self, key))
     }
 
     public func get<T: Codable>(_ key: Key) throws -> T? {
@@ -71,7 +69,7 @@ extension Pond {
         }
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
+    public func get<T: RawRepresentable<String>>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T {
         do {
             return try value(key)?.get() ?? defaultValue()
         } catch {

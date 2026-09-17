@@ -121,6 +121,7 @@ private struct PopupPreviews: View {
 }
 
 extension Samples {
+    @MainActor
     public static var popupPreviews: some View {
         PopupPreviews()
     }

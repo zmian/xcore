@@ -154,15 +154,14 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             logLevel: .error
         )
 
-        #warning("Use stringDict to properly localize")
-
         if supportedRegions.count == 1, let code = supportedRegions.first {
-            let isUSA = code == "US"
-            let regionName = isUSA ? "U.S." : PostalAddress.countryName(isoCode: code) ?? code
+            let regionName = Locale.current.localizedString(forRegionCode: code) ?? code
             invalidRegionError.title = LR.titleOne(regionName)
             invalidRegionError.message = LR.messageOne(appName, regionName, regionName)
         } else if supportedRegions.count <= 5 {
-            let regions = supportedRegions.formatted(.list(type: .and).locale(.us))
+            let regions = supportedRegions
+                .map { Locale.current.localizedString(forRegionCode: $0) ?? $0 }
+                .formatted(.list(type: .and).locale(.current))
             invalidRegionError.message = LR.messageFew(appName, regions)
         }
 

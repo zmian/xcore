@@ -219,7 +219,12 @@ extension WebView {
                         $0.addAction(.valueChanged) { sender in
                             Task {
                                 // Sleep under a second to properly show the control.
-                                try await Task.sleep(for: .seconds(0.75))
+                                do {
+                                    try await Task.sleep(for: .seconds(0.75))
+                                } catch {
+                                    sender.endRefreshing()
+                                    return
+                                }
                                 sender.endRefreshing()
                                 webView.reload()
                                 pullToRefreshHandler()
@@ -242,7 +247,7 @@ extension WebView {
             wkConfig.userContentController.removeAllScriptMessageHandlers()
 
             // 1. Set up message handlers
-            messageHandlers.forEach { name, _ in
+            for (name, _) in messageHandlers {
                 wkConfig.userContentController.addScriptMessageHandler(
                     context.coordinator,
                     contentWorld: .page,
@@ -251,12 +256,12 @@ extension WebView {
             }
 
             // 2. Set up cookies
-            cookies.forEach {
-                wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
+            for cooky in cookies {
+                wkConfig.websiteDataStore.httpCookieStore.setCookie(cooky)
             }
 
             // 3. Set up user scripts
-            localStorageItems.forEach { key, value in
+            for (key, value) in localStorageItems {
                 let script = WKUserScript(
                     source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
                     injectionTime: .atDocumentStart,
@@ -294,8 +299,8 @@ extension WebView {
             #if DEBUG
             // Dump local storage keys and values when the current value is different than
             // the expected value.
-            parent.localStorageItems.forEach { key, expectedValue in
-                webView.evaluateJavaScript("localStorage.getItem(\"\(key)\")") { (value, error) in
+            for (key, expectedValue) in parent.localStorageItems {
+                webView.evaluateJavaScript("localStorage.getItem(\"\(key)\")") { value, error in
                     if let value = value as? String {
                         if expectedValue != value {
                             Logger.xc.debug("\"\(key, privacy: .public)\" value in local storage: \(value, privacy: .public)")
@@ -356,7 +361,7 @@ extension WebView {
                 return (nil, nil)
             }
 
-            return (try? await messageHandler(message.body), nil)
+            return await (try? messageHandler(message.body), nil)
         }
 
         // MARK: - Dev environment support
