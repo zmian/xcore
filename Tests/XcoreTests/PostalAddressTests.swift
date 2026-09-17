@@ -11,12 +11,13 @@ struct PostalAddressTests {
     @Test
     func formatted() {
         let formatted = PostalAddress.sample.formatted()
-        #expect(formatted ==
-            """
-            One Apple Park Way
-            Cupertino CA 95014
-            United States
-            """
+        #expect(
+            formatted ==
+                """
+                One Apple Park Way
+                Cupertino CA 95014
+                United States
+                """
         )
     }
 }
