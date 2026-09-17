@@ -46,9 +46,9 @@ extension View {
         color: Color? = nil
     ) -> some View {
         EnvironmentReader(\.theme) { theme in
-            EnvironmentReader(\.displayScale) { scale in
+            EnvironmentReader(\.oneDisplayPixel) { oneDisplayPixel in
                 overlay {
-                    shape.strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth ?? .onePixel(displayScale: scale))
+                    shape.strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth ?? oneDisplayPixel)
                 }
             }
         }

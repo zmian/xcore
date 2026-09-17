@@ -42,7 +42,7 @@ private struct MailAppViewModifier: ViewModifier {
     @Environment(\.theme) private var theme
     @Dependency(\.openURL) private var openURL
     private let apps = MailApp.available
-    @Environment(\.displayScale) private var displayScale
+    @Environment(\.oneDisplayPixel) private var oneDisplayPixel
     @Binding var isPresented: Bool
     private var isSheetPresented: Binding<Bool> {
         .init(
@@ -79,7 +79,7 @@ private struct MailAppViewModifier: ViewModifier {
                     }
                     .buttonStyle(.secondary)
                     .padding(.allButBottom, .defaultSpacing)
-                    .padding(.bottom, .onePixel(displayScale: displayScale))
+                    .padding(.bottom, oneDisplayPixel)
                 }
             }
     }

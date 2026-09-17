@@ -85,12 +85,6 @@ extension CGFloat {
     /// The default spacing value at a normal dynamic type setting for inter items
     /// in horizontal axis.
     nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
-
-    /// Returns one pixel in points for the supplied display scale.
-    public static func onePixel(displayScale: CGFloat) -> Self {
-        precondition(displayScale > 0, "Display scale must be positive")
-        return 1 / displayScale
-    }
 }
 
 // MARK: - EdgeInsets

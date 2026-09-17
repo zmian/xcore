@@ -45,7 +45,7 @@ extension ProminentButtonStyle {
         @Environment(\.defaultButtonFont) private var font
         @Environment(\.theme) private var theme
         @Environment(\.controlSize) private var controlSize
-        @Environment(\.displayScale) private var displayScale
+        @Environment(\.oneDisplayPixel) private var oneDisplayPixel
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.isLoading) private var isLoading
         let id: ButtonIdentifier
@@ -74,7 +74,7 @@ extension ProminentButtonStyle {
                 case .fill:
                     shape.fill(backgroundColor)
                 case .outline:
-                    shape.strokeBorder(borderColor, lineWidth: .onePixel(displayScale: displayScale))
+                    shape.strokeBorder(borderColor, lineWidth: oneDisplayPixel)
             }
         }
 

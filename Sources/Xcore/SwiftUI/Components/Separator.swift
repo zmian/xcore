@@ -24,7 +24,7 @@ extension View {
 /// the separator.
 public struct Separator: View {
     @Environment(\.theme) private var theme
-    @Environment(\.displayScale) private var displayScale
+    @Environment(\.oneDisplayPixel) private var oneDisplayPixel
     private let color: Color?
     private let style: StrokeStyle?
 
@@ -52,7 +52,7 @@ public struct Separator: View {
         Divider()
             .hidden()
             .overlay(
-                SeparatorShape(style: style ?? .init(lineWidth: .onePixel(displayScale: displayScale), lineJoin: .round))
+                SeparatorShape(style: style ?? .init(lineWidth: oneDisplayPixel, lineJoin: .round))
                     .fill(color ?? theme.separatorColor)
             )
             .accessibilityHidden(true)

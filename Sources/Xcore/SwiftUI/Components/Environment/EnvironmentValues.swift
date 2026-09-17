@@ -30,6 +30,14 @@ extension EnvironmentValues {
     @Entry public var defaultOutlineButtonBorderColor: Color?
 }
 
+
+extension EnvironmentValues {
+    /// Returns one pixel in points for the supplied display scale.
+    public var oneDisplayPixel: CGFloat {
+        1 / Swift.max(displayScale, 1)
+    }
+}
+
 // MARK: - View Modifiers
 
 extension View {
