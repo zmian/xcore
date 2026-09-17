@@ -122,8 +122,7 @@ extension NotificationCenter {
                 do {
                     try await Task.sleep(for: .seconds(delayInterval))
                 } catch {
-                    // Cancellation prevents the delayed notification.
-                    return
+                    // Fall through so a canceled delay is treated as a delay of 0 when delivering notifications.
                 }
             }
             shared.post(name: name, object: object, userInfo: userInfo)
