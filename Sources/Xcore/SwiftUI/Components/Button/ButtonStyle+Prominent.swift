@@ -6,11 +6,12 @@
 
 import SwiftUI
 
-// A themed filled or outlined button that respects the environment control size.
-//
-// The explicit `prominence` selects the fill treatment. `defaultMinButtonHeight`
-// defines the regular control height; other control sizes scale that height.
-
+/// A button style that applies theme filled or outlined border based on the
+/// button's context.
+///
+/// The explicit `prominence` selects the fill treatment.
+/// `defaultMinButtonHeight` defines the regular control height; other control
+/// sizes scale that height.
 public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let id: ButtonIdentifier
     private let prominence: ButtonProminence
