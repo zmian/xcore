@@ -63,28 +63,28 @@ extension CGAffineTransform {
 
 extension CGFloat {
     /// Spacing with the default value of `4` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s1: Self = 4
+    nonisolated(unsafe) public static var s1: Self = 4
     /// Spacing with the default value of `8` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s2: Self = 8
+    nonisolated(unsafe) public static var s2: Self = 8
     /// Spacing with the default value of `12` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s3: Self = 12
+    nonisolated(unsafe) public static var s3: Self = 12
     /// Spacing with the default value of `16` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s4: Self = 16
+    nonisolated(unsafe) public static var s4: Self = 16
     /// Spacing with the default value of `20` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s5: Self = 20
+    nonisolated(unsafe) public static var s5: Self = 20
     /// Spacing with the default value of `24` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s6: Self = 24
+    nonisolated(unsafe) public static var s6: Self = 24
     /// Spacing with the default value of `28` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s7: Self = 28
+    nonisolated(unsafe) public static var s7: Self = 28
     /// Spacing with the default value of `32` at a normal dynamic type setting.
-    public nonisolated(unsafe) static var s8: Self = 32
+    nonisolated(unsafe) public static var s8: Self = 32
 
     /// The default spacing value at a normal dynamic type setting.
-    public nonisolated(unsafe) static var defaultSpacing: Self = .s5
+    nonisolated(unsafe) public static var defaultSpacing: Self = .s5
 
     /// The default spacing value at a normal dynamic type setting for inter items
     /// in horizontal axis.
-    public nonisolated(unsafe) static var interItemHSpacing: Self = .s3
+    nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
 
     /// Returns one pixel in points for the supplied display scale.
     public static func onePixel(displayScale: CGFloat) -> Self {
@@ -97,7 +97,7 @@ extension CGFloat {
 
 extension EdgeInsets {
     /// The default insets for list content.
-    public nonisolated(unsafe) static var listRow = Self(.defaultSpacing)
+    nonisolated(unsafe) public static var listRow = Self(.defaultSpacing)
 }
 
 // MARK: - URL
@@ -124,7 +124,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    public nonisolated(unsafe) static var mask: Self = "•"
+    nonisolated(unsafe) public static var mask: Self = "•"
 }
 
 // MARK: - String
@@ -141,17 +141,17 @@ extension String {
 
 extension Int {
     @_disfavoredOverload
-    public nonisolated(unsafe) static var maxFractionDigits = 100
+    nonisolated(unsafe) public static var maxFractionDigits = 100
 
     @_disfavoredOverload
-    public nonisolated(unsafe) static var defaultFractionDigits = 2
+    nonisolated(unsafe) public static var defaultFractionDigits = 2
 
     @_disfavoredOverload
-    public nonisolated(unsafe) static var defaultRandomUpperBound = 100
+    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
 }
 
 extension Double {
-    public nonisolated(unsafe) static var defaultRandomUpperBound = 100.0
+    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
 }
 
 extension RangeExpression where Self == ClosedRange<Int> {
@@ -189,7 +189,7 @@ public enum AppConstants {
         Device.userInterfaceIdiom == .pad ? 50 : 44
     }
 
-    public nonisolated(unsafe) static var cornerRadius: CGFloat = 15
+    nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
 
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width
