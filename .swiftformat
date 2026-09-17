@@ -6,7 +6,7 @@
 
 # Rules Toggle
 
---disable sortImports, sortSwitchCases, redundantSelf, redundantStaticSelf, organizeDeclarations, preferForLoop, swiftTestingTestCaseNames, wrapPropertyBodies, redundantReturn, redundantSendable, yodaConditions
+--disable sortImports, sortSwitchCases, redundantSelf, redundantStaticSelf, organizeDeclarations, preferForLoop, swiftTestingTestCaseNames, wrapPropertyBodies, redundantReturn, redundantSendable, yodaConditions, consistentSwitchCaseSpacing
 
 # Format Options
 

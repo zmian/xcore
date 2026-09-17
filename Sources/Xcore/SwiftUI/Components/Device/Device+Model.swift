@@ -102,7 +102,7 @@ extension Device {
         case iPodTouch6
         case iPodTouch7
 
-        // HomePod
+        /// HomePod
         case homePod
 
         public init(identifier: String) {
