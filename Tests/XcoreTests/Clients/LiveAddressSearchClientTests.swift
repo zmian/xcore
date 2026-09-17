@@ -6,6 +6,7 @@
 // swiftlint:disable empty_string
 
 import Testing
+import Foundation
 @testable import Xcore
 
 struct LiveAddressSearchClientTests {

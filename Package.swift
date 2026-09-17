@@ -2,6 +2,10 @@
 
 import PackageDescription
 
+let swiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("MemberImportVisibility")
+]
+
 let package = Package(
     name: "Xcore",
     platforms: [.iOS(.v26)],
@@ -12,7 +16,7 @@ let package = Package(
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.21.7"),
         .package(url: "https://github.com/zmian/AnyCodable", branch: "master"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.12.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.17.1"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0")
     ],
     targets: [
@@ -24,9 +28,14 @@ let package = Package(
                 "KeychainAccess",
                 .product(name: "Dependencies", package: "swift-dependencies")
             ],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: swiftSettings
         ),
-        .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
+        .testTarget(
+            name: "XcoreTests",
+            dependencies: ["Xcore"],
+            swiftSettings: swiftSettings
+        )
     ],
     swiftLanguageModes: [.v6]
 )

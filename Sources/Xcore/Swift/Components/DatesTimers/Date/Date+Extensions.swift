@@ -202,9 +202,7 @@ extension Date {
             case .day:
                 dateComponent.day = offset
             case .dayOfYear:
-                if #available(iOS 18, *) {
-                    dateComponent.dayOfYear = offset
-                }
+                dateComponent.dayOfYear = offset
             case .weekday:
                 dateComponent.weekday = offset
             case .weekdayOrdinal:

@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Swift
+import Foundation
 
 /// Returns the name of a `type` as a string.
 ///

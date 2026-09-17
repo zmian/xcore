@@ -144,11 +144,7 @@ extension Date {
             .capitalizationContext(.beginningOfSentence)
 
         if isToday && !isNextHour {
-            if #available(iOS 18, *) {
-                formatStyle.allowedFields = [.day]
-            } else {
-                return "Today"
-            }
+            formatStyle.allowedFields = [.day]
         }
 
         if isToday || isCurrentThreshold {

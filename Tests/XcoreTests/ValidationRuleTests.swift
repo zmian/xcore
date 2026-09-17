@@ -5,6 +5,7 @@
 //
 
 import Testing
+import Foundation
 @testable import Xcore
 
 struct ValidationRuleTests {

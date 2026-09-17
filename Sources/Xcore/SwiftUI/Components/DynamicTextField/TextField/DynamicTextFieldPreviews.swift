@@ -158,16 +158,14 @@ private struct TextFieldPreviewBox<Content: View>: View {
 
     var body: some View {
         Section {
-            if #available(iOS 18.0, *) {
-                Group(subviews: content) { subviews in
-                    if let first = subviews.first {
-                        first
-                            .background(Color.clear.onSizeChange {
-                                height = $0.height.rounded()
-                            })
-                    }
-                    subviews.dropFirst()
+            Group(subviews: content) { subviews in
+                if let first = subviews.first {
+                    first
+                        .background(Color.clear.onSizeChange {
+                            height = $0.height.rounded()
+                        })
                 }
+                subviews.dropFirst()
             }
         } header: {
             Text(title)

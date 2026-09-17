@@ -5,6 +5,7 @@
 //
 
 import Foundation
+internal import Contacts
 internal import MapKit
 
 // MARK: - Dot Syntax Support

@@ -84,12 +84,18 @@ private struct DeviceSafeAreaInsetsProviderModifier: ViewModifier {
     /// A view modifier that enables access to the `deviceSafeAreaInsets`
     /// environment value.
     ///
-    /// This modifier uses `GeometryReader` to obtain the current view's safe area
-    /// insets and sets them into the `deviceSafeAreaInsets` environment value.
+    /// This modifier reads the current view's safe area insets via
+    /// `onGeometryChange` and sets them into the `deviceSafeAreaInsets`
+    /// environment value without affecting layout the way `GeometryReader` would.
+    @State private var safeAreaInsets = EdgeInsets()
+
     func body(content: Content) -> some View {
-        GeometryReader { geometry in
-            content
-                .environment(\.deviceSafeAreaInsets, geometry.safeAreaInsets)
-        }
+        content
+            .onGeometryChange(for: EdgeInsets.self) { geometry in
+                geometry.safeAreaInsets
+            } action: { newValue in
+                safeAreaInsets = newValue
+            }
+            .environment(\.deviceSafeAreaInsets, safeAreaInsets)
     }
 }

@@ -26,7 +26,6 @@ import SwiftUI
 ///
 /// In the example above, a standard divider is inserted between each text
 /// view.
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 public struct Divided<Content: View, Separator: View>: View {
     private let content: Content
     private let separator: Separator
@@ -69,7 +68,6 @@ public struct Divided<Content: View, Separator: View>: View {
     }
 }
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 #Preview("Custom Divider") {
     VStack {
         Divided {
@@ -109,7 +107,6 @@ public struct Divided<Content: View, Separator: View>: View {
     }
 }
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 #Preview("Standard Divider") {
     VStack {
         Divided {
