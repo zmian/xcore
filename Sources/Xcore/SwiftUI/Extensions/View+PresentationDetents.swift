@@ -65,7 +65,6 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                     }
                 }
                 .presentationDetents([.height(detentHeight)])
-                .presentationCornerRadius(cornerRadius)
                 // On iPad adapt the fitted sheet to be a popup.
                 .unwrap(preferredWidth) { view, preferredWidth in
                     view.presentationBackground {
