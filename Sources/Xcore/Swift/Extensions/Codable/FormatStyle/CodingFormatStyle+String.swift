@@ -56,7 +56,7 @@ public struct StringCodingFormatStyle: CodingFormatStyle, Sendable {
     }
 
     public func encode(_ value: String) throws -> AnyCodable {
-        AnyCodable(try applyOptions(to: value))
+        try AnyCodable(applyOptions(to: value))
     }
 
     private func applyOptions(to value: String) throws -> String {

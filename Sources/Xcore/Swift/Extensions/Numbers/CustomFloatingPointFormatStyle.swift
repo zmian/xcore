@@ -540,12 +540,12 @@ private final class FormatStyleFormatter: Sendable {
         $0.negativePrefix = ""
     }
 
-    func string<Value>(
+    func string<Value: DoubleOrDecimalProtocol>(
         from value: Value,
         type: CustomFloatingPointFormatStyle<Value>.Kind,
         fractionLength: ClosedRange<Int>,
         locale: Locale
-    ) -> String where Value: DoubleOrDecimalProtocol {
+    ) -> String {
         formatter.synchronized {
             formatter.locale = locale
             formatter.fractionLength = fractionLength
@@ -560,10 +560,10 @@ private final class FormatStyleFormatter: Sendable {
                 case let .abbreviated(threshold):
                     typealias Abbreviation = (suffix: String, threshold: Value, divisor: Value)
 
-                    /// Predefined thresholds for compact number formatting.
+                    // Predefined thresholds for compact number formatting.
                     let abbreviations: [Abbreviation] = [
                         ("", 0, 1),
-                        ("K", 1_000, 1_000),
+                        ("K", 1000, 1000),
                         ("M", 499_000, 1_000_000),
                         ("M", 1_000_000, 1_000_000),
                         ("B", 1_000_000_000, 1_000_000_000),

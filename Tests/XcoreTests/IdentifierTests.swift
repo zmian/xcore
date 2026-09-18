@@ -20,7 +20,7 @@ struct IdentifierTests {
 
         let encoder = JSONEncoder()
         let data = try encoder.encode(values)
-        let encodedValue = String(data: data, encoding: .utf8)!
+        let encodedValue = try #require(String(data: data, encoding: .utf8))
         let expectedEncodedValue = "[\"1\",\"some_id\"]"
         #expect(encodedValue == expectedEncodedValue)
 

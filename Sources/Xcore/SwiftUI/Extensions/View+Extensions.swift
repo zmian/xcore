@@ -50,7 +50,7 @@ extension View {
     ///  relative to the containing view’s style, use one of the semantic styles,
     ///  like ``primary``.
     /// - Returns: A view that uses the given foreground style.
-    public func foregroundStyle<S: ShapeStyle>(_ style: () -> S?) -> some View {
+    public func foregroundStyle(_ style: () -> (some ShapeStyle)?) -> some View {
         unwrap(style()) { view, style in
             view.foregroundStyle(style)
         }
@@ -164,10 +164,12 @@ extension View {
 // MARK: - Clip
 
 extension View {
-    /// Clips the content by setting offset to `.onePixel` to hide the last
-    /// separator automatically.
+    /// Clips the content by one display pixel to hide the last separator
+    /// automatically.
     public func clipLastSeparator() -> some View {
-        clipped(offsetY: -.onePixel)
+        EnvironmentReader(\.oneDisplayPixel) { oneDisplayPixel in
+            clipped(offsetY: -oneDisplayPixel)
+        }
     }
 
     /// Clips the content by setting offset Y by given value.

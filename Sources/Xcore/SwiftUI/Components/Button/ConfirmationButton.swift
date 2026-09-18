@@ -130,7 +130,8 @@ public struct ConfirmationButton: View {
         "Sign Out",
         popupTitle: "Sign Out",
         popupMessage: "Are you sure you would like to sign out?",
-        popupConfirm: .yesOrNo) {
-            print("Handle sign out")
-        }
+        popupConfirm: .yesOrNo
+    ) {
+        print("Handle sign out")
+    }
 }

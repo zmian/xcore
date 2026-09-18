@@ -62,17 +62,15 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
     func authorizationStatus() async -> AuthorizationStatus {
         let settings = await center.notificationSettings()
 
-        let status: AuthorizationStatus
-
-        switch settings.authorizationStatus {
+        let status: AuthorizationStatus = switch settings.authorizationStatus {
             case .notDetermined:
-                status = .notDetermined
+                .notDetermined
             case .denied:
-                status = .denied
+                .denied
             case .authorized, .provisional, .ephemeral:
-                status = .authorized
+                .authorized
             @unknown default:
-                status = .notDetermined
+                .notDetermined
         }
 
         // Send the status updates to the events stream if it's different then the last
@@ -120,20 +118,26 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
     @Sendable
     func openAppSettings() {
         #warning("FIXME: Fix the open settings up. Uncommenting causes segmentation fault 11")
-//        typealias L = Localized.PushNotifications.OpenSystemSettings
-//
-//        Popup.show(title: L.title, message: L.message) { $isPresented in
-//            Button(L.buttonOpenSettings) {
-//                Dependency(\.openURL).wrappedValue(.settingsApp)
-//                isPresented = false
-//            }
-//            .buttonStyle(.primary)
-//
-//            Button.cancel {
-//                isPresented = false
-//            }
-//            .buttonStyle(.secondary)
-//        }
+        //        typealias L = Localized.PushNotifications.OpenSystemSettings
+        //
+        //        Popup.show(title: L.title, message: L.message) { $isPresented in
+        //            Button(L.buttonOpenSettings) {
+        //                Dependency(\.openURL).wrappedValue(.settingsApp)
+        //                isPresented = false
+        //            }
+        //            .buttonStyle(.primary)
+        //
+        //            Button.cancel {
+        //                isPresented = false
+        //            }
+        //            .buttonStyle(.secondary)
+        //        }
+
+        // For now, we directly open without pop up the notification settings
+        Task {
+            @Dependency(\.openURL) var openURL
+            await openURL(.notificationSettings)
+        }
     }
 
     private func registerForRemoteNotifications(_ register: Bool) {

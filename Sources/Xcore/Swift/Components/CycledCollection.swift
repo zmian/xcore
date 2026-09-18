@@ -116,7 +116,7 @@ extension CycledCollection: Collection {
             case let .position(pos):
                 base.isEmpty ? .infinity : .position(pos + 1)
             case .infinity:
-                    .infinity
+                .infinity
         }
     }
 

@@ -27,8 +27,8 @@ extension Publishers {
     /// Emits an event whenever keyboard visibility and frame changes.
     public static func keyboardCurrentHeight(safeAreaInsetsBottom: CGFloat = 0) -> some Publisher<CGFloat, Never> {
         let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
-            .merge(with:
-                notifications(for: UIApplication.keyboardWillChangeFrameNotification)
+            .merge(
+                with: notifications(for: UIApplication.keyboardWillChangeFrameNotification)
             )
             .compactMap {
                 $0.userInfo?[UIApplication.keyboardFrameEndUserInfoKey] as? CGRect

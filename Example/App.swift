@@ -6,9 +6,6 @@
 
 import SwiftUI
 
-#warning("TODO: Switch docs to DocC")
-#warning("TODO: Add watchOS support")
-
 @main
 struct XcoreApp: App {
     init() {

@@ -13,7 +13,7 @@ public enum TimerButtonStatus: Sendable, Hashable {
     case loading
     case countdown
 
-    fileprivate init<T>(_ data: DataStatus<T, some Error>) {
+    fileprivate init(_ data: DataStatus<some Any, some Error>) {
         switch data {
             case .idle, .failure:
                 self = .active
@@ -47,7 +47,7 @@ public struct TimerButton<Label: View>: View {
     @Environment(\.theme) private var theme
     @State private var state = InternalState.idle
     @State private var elapsedTime = ElapsedTime()
-    @State private var timerTask: Task<(), Never>?
+    @State private var timerTask: Task<Void, Never>?
     private let status: TimerButtonStatus
     private let countdown: Int
     private let action: () -> Void
@@ -166,9 +166,9 @@ extension TimerButton {
         self.label = label()
     }
 
-    public init<T>(
+    public init(
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<T, some Error>,
+        status: DataStatus<some Any, some Error>,
         action: @escaping () -> Void,
         @ViewBuilder label: () -> Label
     ) {
@@ -198,10 +198,10 @@ extension TimerButton<Text> {
         )
     }
 
-    public init<T>(
+    public init(
         _ title: some StringProtocol,
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<T, some Error>,
+        status: DataStatus<some Any, some Error>,
         action: @escaping () -> Void
     ) {
         self.init(
@@ -232,9 +232,9 @@ extension TimerButton<Text> {
     }
 
     /// A button with `Resend` label and given action.
-    public static func resend<T>(
+    public static func resend(
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<T, some Error>,
+        status: DataStatus<some Any, some Error>,
         action: @escaping () -> Void
     ) -> some View {
         resend(

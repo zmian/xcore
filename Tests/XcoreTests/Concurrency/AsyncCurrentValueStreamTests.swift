@@ -9,7 +9,7 @@ import Testing
 
 struct AsyncCurrentValueStreamTests {
     @Test
-    func currentValue() async {
+    func currentValue() {
         let stream = AsyncCurrentValueStream<Int>(5)
 
         // Verify current value == initial value
@@ -29,7 +29,7 @@ struct AsyncCurrentValueStreamTests {
     }
 
     @Test
-    func iterations() async {
+    func iterations() {
         let stream = AsyncCurrentValueStream<Int>(5)
 
         Task {

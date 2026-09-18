@@ -146,19 +146,13 @@ public enum AppPhase: @unchecked Sendable, Hashable, CustomStringConvertible {
 
     // MARK: - Opening a URL-Specified Resource
 
-    /// Event invoked asking the app to open a resource specified by a URL, and
-    /// provides a dictionary of launch options.
-    ///
-    /// See documentation for [more info].
+    /// Event invoked asking the app to open a resource specified by a URL.
     ///
     /// - Parameters:
     ///   - url: The URL resource to open. This resource can be a network resource
     ///     or a file. For information about the Apple-registered URL schemes, see
     ///     ``Apple URL Scheme Reference``.
-    ///   - options: A dictionary of URL handling options.
-    ///
-    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623112-application
-    case openURL(URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:])
+    case openURL(URL)
 
     // MARK: - Continuing User Activity and Handling Quick Actions
 
@@ -231,8 +225,8 @@ extension AppPhase {
                 "remoteNotificationsRegistered(.failure(\(error)))"
             case .remoteNotificationReceived:
                 "remoteNotificationReceived"
-            case let .openURL(url, options):
-                "openURL(\(url), options: \(options))"
+            case let .openURL(url):
+                "openURL(\(url))"
             case let .continueUserActivity(userActivity, _):
                 "continueUserActivity(\(userActivity), handler: ())"
         }
@@ -296,8 +290,8 @@ extension AppPhase {
                 return lhs == rhs
             case let (.remoteNotificationReceived(lhs), .remoteNotificationReceived(rhs)):
                 return lhs == rhs
-            case let (.openURL(lhs, lhsOptions), .openURL(rhs, rhsOptions)):
-                return lhs == rhs && lhsOptions == rhsOptions
+            case let (.openURL(lhs), .openURL(rhs)):
+                return lhs == rhs
             case let (.continueUserActivity(lhsActivity, lhsBlock), .continueUserActivity(rhsActivity, rhsBlock)):
                 return lhsActivity == rhsActivity && String(reflecting: lhsBlock) == String(reflecting: rhsBlock)
             default:
@@ -325,9 +319,8 @@ extension AppPhase {
                 hasher.combine(value)
             case let .remoteNotificationReceived(value):
                 hasher.combine(String(reflecting: value))
-            case let .openURL(url, options):
+            case let .openURL(url):
                 hasher.combine(url)
-                hasher.combine(String(reflecting: options))
             case let .continueUserActivity(activity, block):
                 hasher.combine(activity)
                 hasher.combine(String(reflecting: block))
@@ -366,6 +359,9 @@ extension AppPhase {
 ///     var body: some Scene {
 ///         WindowGroup {
 ///             ContentView()
+///                 .onOpenURL { url in
+///                     appDelegate.appPhase.send(.openURL(url))
+///                 }
 ///                 .onChange(of: scenePhase) { _, phase in
 ///                     // Forward all of the events to `AppPhaseClient`.
 ///                     AppPhase(phase).map(appDelegate.appPhase.send)

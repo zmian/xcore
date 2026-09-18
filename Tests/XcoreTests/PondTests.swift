@@ -28,7 +28,7 @@ struct PondTests {
         let mock = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
-        try assertBasicCases(with: .composite(id: "test") { method, key in
+        try assertBasicCases(with: .composite(id: "test") { _, key in
             if key == .testValue2 {
                 return mock
             }
@@ -56,7 +56,7 @@ struct PondTests {
         #expect(try model.pond.get(Int.self, .testValue) == nil)
     }
 
-    private func assertCases<T: Codable>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
+    private func assertCases(for value: some Codable & Equatable, pond: @autoclosure () -> Pond) throws {
         let model = withDependencies {
             $0.pond = pond()
         } operation: {

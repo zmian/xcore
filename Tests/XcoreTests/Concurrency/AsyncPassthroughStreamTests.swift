@@ -9,7 +9,7 @@ import Testing
 
 struct AsyncPassthroughStreamTests {
     @Test
-    func iterations() async {
+    func iterations() {
         let stream = AsyncPassthroughStream<Int>()
 
         Task {
@@ -45,7 +45,7 @@ struct AsyncPassthroughStreamTests {
     }
 
     @Test
-    func iterations_asyncStream_directly() async {
+    func iterations_asyncStream_directly() {
         let stream = AsyncStream<Int> {
             $0.yield(1)
             $0.yield(2)

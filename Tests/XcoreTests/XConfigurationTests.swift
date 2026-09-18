@@ -79,7 +79,7 @@ struct XConfigurationTests {
     }
 
     @Test
-    func uiLabelAttributes() {
+    func uiLabelAttributes() throws {
         let label = UILabel(text: "Hello, world!", attributes: [
             .foregroundColor: UIColor.purple
         ])
@@ -87,12 +87,12 @@ struct XConfigurationTests {
         #expect(label.text == "Hello, world!")
         #expect(label.attributedText != nil)
 
-        let attributes = label.attributedText!.attributes(at: 0, effectiveRange: nil)
+        let attributes = try #require(label.attributedText?.attributes(at: 0, effectiveRange: nil))
 
         var didFind = false
 
         for attr in attributes where attr.key == .foregroundColor {
-            #expect(attr.value as! UIColor == .purple)
+            #expect(attr.value as? UIColor == .purple)
             didFind = true
         }
 

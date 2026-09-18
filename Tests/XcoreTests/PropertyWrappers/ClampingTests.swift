@@ -11,9 +11,9 @@ struct ClampingTests {
     @Test
     func basics() {
         struct Color {
-            @Clamping(0...255) var red: Int = 127
-            @Clamping(0...255) var green: Int = 127
-            @Clamping(0...255) var blue: Int = 127
+            @Clamping(0...255) var red = 127
+            @Clamping(0...255) var green = 127
+            @Clamping(0...255) var blue = 127
             @Clamping(0...1) var alpha: Double = 1
         }
 

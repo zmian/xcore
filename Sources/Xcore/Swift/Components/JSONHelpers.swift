@@ -135,7 +135,7 @@ extension JSONHelpers {
         }
 
         return try JSONSerialization.data(
-            withJSONObject: try decode(data, keyPath: keyPath, options: options)
+            withJSONObject: decode(data, keyPath: keyPath, options: options)
         )
     }
 }

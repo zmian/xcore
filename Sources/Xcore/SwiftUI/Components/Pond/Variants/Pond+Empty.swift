@@ -15,7 +15,7 @@ public struct EmptyPond: Pond {
         nil
     }
 
-    public func set<T: Codable>(_ key: Key, value: T?) {}
+    public func set(_ key: Key, value: (some Codable)?) {}
 
     public func remove(_ key: Key) {}
 

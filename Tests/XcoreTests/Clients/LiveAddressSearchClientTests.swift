@@ -137,8 +137,8 @@ struct LiveAddressSearchClientTests {
             } catch {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
-                    #expect(error.title == "U.S. Addresses")
-                    #expect(error.message == "xctest is currently available to U.S. residents. To continue, please enter your U.S. residential address.")
+                    #expect(error.title == "United States Addresses")
+                    #expect(error.message == "xctest is currently available to United States residents. To continue, please enter your United States residential address.")
                     #expect(error.logLevel == .error)
                 } else {
                     Issue.record("Unexpected error type")
@@ -185,7 +185,7 @@ struct LiveAddressSearchClientTests {
                 if let error = error as? AppError {
                     #expect(error.id == "address_validation_failed_invalid_region")
                     #expect(error.title == "Unsupported Region")
-                    #expect(error.message == "xctest is currently available to only US, PT, and GB residents. To continue, please enter your residential address in one of the supported regions.")
+                    #expect(error.message == "xctest is currently available to only United States, Portugal, and United Kingdom residents. To continue, please enter your residential address in one of the supported regions.")
                     #expect(error.logLevel == .error)
                 } else {
                     Issue.record("Unexpected error type")

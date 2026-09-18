@@ -36,8 +36,8 @@ extension View {
 
     /// Displays popup with the title and message provided by the error with "OK"
     /// labeled button to dismiss the popup.
-    func popup<Failure: Error>(
-        _ error: Binding<Failure?>,
+    func popup(
+        _ error: Binding<(some Error)?>,
         dismissMethods: Popup.DismissMethods = [],
         action: (() -> Void)? = nil
     ) -> some View {

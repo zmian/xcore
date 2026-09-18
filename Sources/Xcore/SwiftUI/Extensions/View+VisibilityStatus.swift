@@ -44,7 +44,7 @@ private struct VisibilityModifier: ViewModifier {
         self.action = action
     }
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         content
             .onAppear {
                 updateStatusIfNeeded()

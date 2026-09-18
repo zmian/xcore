@@ -103,7 +103,8 @@ struct MainActorTests {
         actor CustomActor {
             var screenScale: CGFloat {
                 MainActor.runImmediately {
-                    UIScreen.main.scale
+                    MainActor.preconditionIsolated()
+                    return MainActorTests.mainActorValue
                 }
             }
         }
@@ -114,13 +115,16 @@ struct MainActorTests {
 
     @Test
     @MainActor
-    func runImmediately_actor_main() async {
+    func runImmediately_actor_main() {
         #expect(screenScale == 3.0)
     }
 
     private var screenScale: CGFloat {
         MainActor.runImmediately {
-            UIScreen.main.scale
+            MainActor.preconditionIsolated()
+            return Self.mainActorValue
         }
     }
+
+    @MainActor private static let mainActorValue: CGFloat = 3
 }

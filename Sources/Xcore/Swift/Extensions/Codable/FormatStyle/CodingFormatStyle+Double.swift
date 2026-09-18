@@ -29,9 +29,11 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
             throw CodingFormatStyleError.invalidValue
         }
 
-        return try Double(value, format: .number
-            .locale(.usPosix)
-            .precision(.fractionLength(.maxFractionDigits))
+        return try Double(
+            value,
+            format: .number
+                .locale(.usPosix)
+                .precision(.fractionLength(.maxFractionDigits))
         )
     }
 

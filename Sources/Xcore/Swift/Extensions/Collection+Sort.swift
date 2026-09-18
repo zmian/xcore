@@ -37,7 +37,7 @@ extension Array {
     /// - Returns: A sorted array of the sequence's elements.
     ///
     /// - Complexity: O(*n* log *n*), where *n* is the length of the sequence.
-    public func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, ascending: Bool = false) -> [Element] {
+    public func sorted(by keyPath: KeyPath<Element, some Comparable>, ascending: Bool = false) -> [Element] {
         sorted {
             let lhs = $0[keyPath: keyPath]
             let rhs = $1[keyPath: keyPath]
@@ -75,7 +75,7 @@ extension Array {
     /// - Returns: A sorted array of the sequence's elements.
     ///
     /// - Complexity: O(*n* log *n*), where *n* is the length of the sequence.
-    public func sorted<T: Comparable>(by keyPath: KeyPath<Element, T?>, ascending: Bool = false) -> [Element] {
+    public func sorted(by keyPath: KeyPath<Element, (some Comparable)?>, ascending: Bool = false) -> [Element] {
         sorted {
             guard
                 let lhs = $0[keyPath: keyPath],

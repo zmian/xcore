@@ -25,7 +25,7 @@ struct MirrorTests {
 
     @Test
     func isCodable() {
-        #expect(Mirror.isCodable(Array<String>.self) == true)
+        #expect(Mirror.isCodable([String].self) == true)
 
         #expect(Mirror.isCodable(Array(["Hello"])) == true)
         #expect(Mirror.isCodable(Set(["Hello"])) == true)
@@ -52,7 +52,7 @@ struct MirrorTests {
 
     @Test
     func asCodable() {
-        #expect(Mirror.asCodable(Array<String>.self) != nil)
+        #expect(Mirror.asCodable([String].self) != nil)
         #expect(Mirror.asCodable(Set<String>.self) != nil)
         #expect(Mirror.asCodable([String: String].self) != nil)
 
@@ -69,7 +69,7 @@ struct MirrorTests {
 
     @Test
     func isCollection() {
-        #expect(Mirror.isCollection(Array<String>.self) == true)
+        #expect(Mirror.isCollection([String].self) == true)
 
         #expect(Mirror.isCollection(Array(["Hello"])) == true)
         #expect(Mirror.isCollection(Set(["Hello"])) == true)
@@ -91,7 +91,8 @@ struct MirrorTests {
         #expect(Mirror.isCollection(CollectionOfOne(1)) == true)
     }
 
-    @Test func isEmpty() {
+    @Test
+    func isEmpty() {
         var anyValue: Any = Array("Hello")
         #expect(Mirror.isEmpty(anyValue) == false)
 
@@ -108,7 +109,8 @@ struct MirrorTests {
         #expect(Mirror.isEmpty(anyValue) == true)
     }
 
-    @Test func isEqual() {
+    @Test
+    func isEqual() {
         var lhs: Any = Array("Hello")
         var rhs: Any = Array("Hello")
 

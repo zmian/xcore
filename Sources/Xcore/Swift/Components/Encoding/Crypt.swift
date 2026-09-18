@@ -54,7 +54,7 @@ extension Crypt {
             throw Error.urlNotFound
         }
 
-        return try decrypt(try Data(contentsOf: url), secret: secret)
+        return try decrypt(Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the content at the given url and verifies its authenticity.
@@ -70,7 +70,7 @@ extension Crypt {
             throw Error.urlNotFound
         }
 
-        return try decrypt(try Data(contentsOf: url), secret: secret)
+        return try decrypt(Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the data and verifies its authenticity.
@@ -136,7 +136,7 @@ extension Crypt {
             throw Error.urlNotFound
         }
 
-        return try encrypt(try Data(contentsOf: url), secret: secret)
+        return try encrypt(Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext content at the given url with encryption and an
@@ -151,7 +151,7 @@ extension Crypt {
             throw Error.urlNotFound
         }
 
-        return try encrypt(try Data(contentsOf: url), secret: secret)
+        return try encrypt(Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext data with encryption and an authentication tag.

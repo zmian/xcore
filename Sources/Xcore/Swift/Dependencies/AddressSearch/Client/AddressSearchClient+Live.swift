@@ -129,12 +129,12 @@ public final class LiveAddressSearchClient: AddressSearchClient {
     }
 
     private func supportedRegionValidation(_ countryCode: String?) throws {
-        guard !Self.supportedRegions.isEmpty else {
+        let supportedRegions = Self.supportedRegions.map(\.identifier)
+
+        guard !supportedRegions.isEmpty else {
             // No region restrictions
             return
         }
-
-        let supportedRegions = Self.supportedRegions.map(\.identifier)
 
         guard let countryCode else {
             throw AppError.decodingFailed(message: L.invalid)
@@ -154,16 +154,18 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             logLevel: .error
         )
 
-        #warning("Use stringDict to properly localize")
+        if supportedRegions.count <= 5 {
+            let regions = supportedRegions.map {
+                PostalAddress.countryName(isoCode: $0) ?? $0
+            }
 
-        if supportedRegions.count == 1, let code = supportedRegions.first {
-            let isUSA = code == "US"
-            let regionName = isUSA ? "U.S." : PostalAddress.countryName(isoCode: code) ?? code
-            invalidRegionError.title = LR.titleOne(regionName)
-            invalidRegionError.message = LR.messageOne(appName, regionName, regionName)
-        } else if supportedRegions.count <= 5 {
-            let regions = supportedRegions.formatted(.list(type: .and).locale(.us))
-            invalidRegionError.message = LR.messageFew(appName, regions)
+            if regions.count == 1, let region = regions.first {
+                invalidRegionError.title = LR.titleOne(region)
+                invalidRegionError.message = LR.messageOne(appName, region, region)
+            } else {
+                let names = regions.formatted(.list(type: .and).locale(.current))
+                invalidRegionError.message = LR.messageFew(appName, names)
+            }
         }
 
         throw invalidRegionError

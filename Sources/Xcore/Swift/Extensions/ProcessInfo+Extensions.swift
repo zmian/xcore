@@ -61,9 +61,9 @@ extension ProcessInfo {
         private var currentValue: String? {
             guard
                 let storedValue =
-                    ProcessInfo.processInfo.inMemoryEnvironmentStorage[rawValue]
+                ProcessInfo.processInfo.inMemoryEnvironmentStorage[rawValue]
                     ?? ProcessInfo.processInfo.environment[rawValue],
-                !storedValue.isBlank
+                    !storedValue.isBlank
             else {
                 return nil
             }
@@ -74,7 +74,7 @@ extension ProcessInfo {
         /// Retrieves the value of the argument, automatically converting it to the desired type.
         public func get<T>() -> T? {
             guard let value = currentValue else {
-                if T.self == Bool.self || T.self == Optional<Bool>.self, exists {
+                if T.self == Bool.self || T.self == Bool?.self, exists {
                     return true as? T
                 }
 
@@ -87,7 +87,7 @@ extension ProcessInfo {
         /// Stores a given value in memory for the argument.
         ///
         /// - Parameter value: The value to store in-memory.
-        public func set<T>(_ value: T?) {
+        public func set(_ value: (some Any)?) {
             ProcessInfo.processInfo.inMemoryEnvironmentStorage[rawValue] = value.map { String(describing: $0) }
         }
     }
@@ -112,7 +112,7 @@ extension ProcessInfo.Argument {
     ///
     /// - Parameter defaultValue: The fallback value if conversion fails.
     /// - Returns: The resolved enum value or the fallback.
-    public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
+    public func get<T: RawRepresentable<String>>(default defaultValue: @autoclosure () -> T) -> T {
         if let rawValue: String = get(), let value = T(rawValue: rawValue) {
             return value
         }

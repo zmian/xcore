@@ -75,7 +75,7 @@ struct DataStatusListPreview: View {
         } contentUnavailable: {
             contentUnavailableView
         } failure: { error in
-            ErrorRecoveryView(error) { error in
+            ErrorRecoveryView(error) { _ in
                 Task {
                     await fetch()
                 }

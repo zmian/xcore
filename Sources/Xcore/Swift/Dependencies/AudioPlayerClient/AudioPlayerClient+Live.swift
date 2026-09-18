@@ -23,7 +23,7 @@ extension AudioPlayerClient {
 private final class LiveAudioClient: Sendable {
     nonisolated(unsafe) private var audioPlayer: AVAudioPlayer?
 
-    public func play(_ file: AudioFile) {
+    func play(_ file: AudioFile) {
         guard
             let url = file.url,
             let audioPlayer = try? AVAudioPlayer(contentsOf: url)

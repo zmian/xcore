@@ -29,7 +29,7 @@ extension Result where Failure == AppError {
         catching body: @Sendable () async throws -> Success
     ) async {
         do {
-            self = .success(try await body())
+            self = try await .success(body())
         } catch {
             self = .failure(error.asAppError(or: fallbackError()))
         }

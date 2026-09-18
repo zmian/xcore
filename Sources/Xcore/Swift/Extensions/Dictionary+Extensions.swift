@@ -110,7 +110,7 @@ extension Dictionary {
     /// - Parameter key: The key to find in the dictionary.
     /// - Returns: The value associated with `key` if `key` is in the dictionary;
     ///   otherwise, `nil`.
-    public subscript<T: RawRepresentable<Key>>(key: T) -> Value? {
+    public subscript(key: some RawRepresentable<Key>) -> Value? {
         get { self[key.rawValue] }
         set { self[key.rawValue] = newValue }
     }
@@ -201,7 +201,7 @@ extension Dictionary {
     ///   or of a different type.
     /// - Returns: A dictionary containing the transformed key value pairs.
     public func mapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)) rethrows -> [K: T] {
-        [K: T](uniqueKeysWithValues: try map(transform))
+        try [K: T](uniqueKeysWithValues: map(transform))
     }
 
     /// Returns an array containing the non-nil results of calling the given
@@ -241,7 +241,7 @@ extension Dictionary {
     ///   its argument and returns an optional value.
     /// - Returns: A dictionary containing the transformed key value pairs.
     public func compactMapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)?) rethrows -> [K: T] {
-        [K: T](uniqueKeysWithValues: try compactMap(transform))
+        try [K: T](uniqueKeysWithValues: compactMap(transform))
     }
 
     /// Returns a dictionary containing, in order, the elements of the sequence that
@@ -271,7 +271,7 @@ extension Dictionary {
     /// - Returns: An array of the elements that `isIncluded` allowed.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func filterPairs(_ includeElement: (Element) throws -> Bool) rethrows -> [Key: Value] {
-        Dictionary(uniqueKeysWithValues: try filter(includeElement))
+        try Dictionary(uniqueKeysWithValues: filter(includeElement))
     }
 }
 

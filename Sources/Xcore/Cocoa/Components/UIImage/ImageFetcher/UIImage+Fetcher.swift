@@ -45,9 +45,24 @@ extension UIImage.Fetcher {
 }
 
 extension UIImageView {
+    @MainActor
     private enum AssociatedKey {
-        nonisolated(unsafe) static var imageRepresentableSource = "imageRepresentableSource"
-        nonisolated(unsafe) static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+        static var imageSetTask = "imageSetTask"
+        static var imageSetRequestID = "imageSetRequestID"
+        static var imageRepresentableSource = "imageRepresentableSource"
+        static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+    }
+
+    /// The task performing the current fetch, transform, and image assignment.
+    var imageSetTask: Task<Void, Never>? {
+        get { associatedObject(&AssociatedKey.imageSetTask) }
+        set { setAssociatedObject(&AssociatedKey.imageSetTask, value: newValue) }
+    }
+
+    /// Identifies the set operation independently of its underlying fetch.
+    var imageSetRequestID: UUID? {
+        get { associatedObject(&AssociatedKey.imageSetRequestID) }
+        set { setAssociatedObject(&AssociatedKey.imageSetRequestID, value: newValue) }
     }
 
     /// The `ImageSourceType` object associated with the receiver.
@@ -62,11 +77,20 @@ extension UIImageView {
         set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
     }
 
-    /// Cancel any pending or in-flight image fetch/set request dispatched via
-    /// `setImage(_:animationDuration:_:)` method.
+    /// Cancels the current image load and prevents its result from being applied.
     ///
-    /// - SeeAlso: `setImage(_:animationDuration:_:)`
+    /// A synchronous transform already in progress may finish, but its result is
+    /// discarded without invoking the completion callback or loading a fallback.
+    ///
+    /// - SeeAlso: `setImage(_:duration:_:)`
     public func cancelSetImageRequest() {
+        imageSetRequestID = nil
+        imageSetTask?.cancel()
+        imageSetTask = nil
+        cancelImageFetch()
+    }
+
+    func cancelImageFetch() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()
         _imageFetcherCancelBlock = nil

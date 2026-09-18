@@ -10,6 +10,9 @@ import UIKit
 extension UIImageView {
     /// Automatically detects and loads the image from a local or remote URL.
     ///
+    /// Image transforms execute off the main actor. Image assignment and the
+    /// completion callback execute on the main actor.
+    ///
     /// - Parameters:
     ///   - image: The image to be displayed.
     ///   - animationDuration: The total duration of the animation. If the specified
@@ -17,7 +20,8 @@ extension UIImageView {
     ///     the image will only fade in when fetched from a remote URL and not in
     ///     memory cache.
     ///   - callback: A closure to be invoked when finished setting the image. The
-    ///     closure receives the `UIImage` object as its parameter.
+    ///     closure receives the loaded image, or `nil` on failure. Cancelled or
+    ///     superseded requests do not call the closure.
     public func setImage(
         _ image: ImageRepresentable?,
         duration animationDuration: TimeInterval = .default,
@@ -34,24 +38,38 @@ extension UIImageView {
             return
         }
 
-        Task { @MainActor in
-            var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
-            let animated = cacheType.possiblyDelayed
+        let requestID = UUID()
+        imageSetRequestID = requestID
 
-            // Ensure that we are not setting image to the incorrect image view instance in
-            // case it's being reused (e.g., `UICollectionViewCell`).
-            if let imageRepresentableSource, imageRepresentableSource != imageRepresentable.imageSource {
-                return
+        imageSetTask = Task { @MainActor in
+            guard imageSetRequestID == requestID else { return }
+            defer {
+                if imageSetRequestID == requestID {
+                    imageSetTask = nil
+                }
             }
 
-            if let transform: ImageTransform = imageRepresentable.plugin() {
-                image = await Task { [image] in
-                    image.applying(transform, source: imageRepresentable)
-                }.value
-            }
+            do {
+                var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
+                guard imageSetRequestID == requestID else { return }
+                try Task.checkCancellation()
 
-            setUIImage(image, animationDuration: animated ? animationDuration : 0)
-            callback?(image)
+                if let transform: ImageTransform = imageRepresentable.plugin() {
+                    image = try await applyingImageTransform(transform, to: image, source: imageRepresentable)
+                }
+
+                guard imageSetRequestID == requestID else { return }
+                try Task.checkCancellation()
+
+                setUIImage(image, animationDuration: cacheType.possiblyDelayed ? animationDuration : 0)
+                callback?(image)
+            } catch is CancellationError {
+                // A cancelled request must not trigger a fallback image.
+            } catch {
+                guard imageSetRequestID == requestID, !Task.isCancelled else { return }
+                self.image = nil
+                callback?(nil)
+            }
         }
     }
 
@@ -65,7 +83,8 @@ extension UIImageView {
     ///     the image will only fade in when fetched from a remote URL and not in
     ///     memory cache.
     ///   - callback: A closure to be invoked when finished setting the image. The
-    ///     closure receives the `UIImage` object as its parameter.
+    ///     closure receives the loaded image, or `nil` on failure. Cancelled or
+    ///     superseded requests do not call the closure.
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,
@@ -88,5 +107,19 @@ extension UIImageView {
             setImage(defaultImage, duration: animationDuration, callback)
         }
     }
+}
+
+/// Keeps synchronous image processing on the concurrent executor while retaining
+/// the loading task's cancellation state and task-local values.
+@concurrent
+private func applyingImageTransform(
+    _ transform: ImageTransform,
+    to image: UIImage,
+    source: ImageRepresentable
+) async throws -> UIImage {
+    try Task.checkCancellation()
+    let result = image.applying(transform, source: source)
+    try Task.checkCancellation()
+    return result
 }
 #endif

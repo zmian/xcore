@@ -13,7 +13,7 @@ import SwiftUI
 ///     theme.backgroundColor
 /// }
 /// ```
-public struct EnvironmentReader<Value, Content>: View where Content: View {
+public struct EnvironmentReader<Value, Content: View>: View {
     @Environment private var value: Value
     private let content: (Value) -> Content
 

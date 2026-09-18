@@ -10,7 +10,7 @@ import Foundation
 
 struct StringConverterTests {
     @Test
-    func getValue() {
+    func getValue() throws {
         #expect(ConvertItem.validBool.value(default: false) == true)
         #expect(ConvertItem.invalidBool.value(default: false) == false)
 
@@ -26,7 +26,7 @@ struct StringConverterTests {
         #expect(ConvertItem.validNsNumber.value(default: NSNumber(value: 0)) == NSNumber(value: 10))
         #expect(ConvertItem.invalidNsNumber.value(default: NSNumber(value: 0)) == NSNumber(value: 0))
 
-        let defaultUrl = URL(string: "https://github.com/zmian/xcore.swift")!
+        let defaultUrl = try #require(URL(string: "https://github.com/zmian/xcore.swift"))
         #expect(ConvertItem.validUrl.value(default: defaultUrl) == URL(string: "https://swift.org/"))
         #expect(ConvertItem.validUrl2.value(default: defaultUrl) == URL(string: "message://"))
         #expect(ConvertItem.invalidUrl.value(default: defaultUrl) == defaultUrl)
@@ -175,7 +175,7 @@ extension ConvertItem {
         storageValue?.get() ?? defaultValue()
     }
 
-    fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
+    fileprivate func value<T: RawRepresentable<String>>(default defaultValue: @autoclosure () -> T) -> T {
         storageValue?.get() ?? defaultValue()
     }
 }

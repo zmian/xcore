@@ -10,7 +10,7 @@ import Foundation
 
 struct FeatureFlagTests {
     @Test
-    func getValue() {
+    func getValue() throws {
         #expect(TestFeature.flag(.validBool).value(default: false) == true)
         #expect(TestFeature.flag(.invalidBool).value(default: false) == false)
 
@@ -23,7 +23,7 @@ struct FeatureFlagTests {
         #expect(TestFeature.flag(.validDouble).value(default: 0) == Double(100.76))
         #expect(TestFeature.flag(.invalidDouble).value(default: 0) == Double(0))
 
-        let defaultUrl = URL(string: "https://github.com/zmian/xcore.swift")!
+        let defaultUrl = try #require(URL(string: "https://github.com/zmian/xcore.swift"))
         #expect(TestFeature.flag(.validUrl).value(default: defaultUrl) == URL(string: "https://swift.org/"))
         #expect(TestFeature.flag(.invalidUrl).value(default: defaultUrl) == defaultUrl)
 
@@ -153,7 +153,7 @@ extension FeatureFlag.Key {
         storageValue?.get() ?? defaultValue()
     }
 
-    fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable<String> {
+    fileprivate func value<T: RawRepresentable<String>>(default defaultValue: @autoclosure () -> T) -> T {
         storageValue?.get() ?? defaultValue()
     }
 }

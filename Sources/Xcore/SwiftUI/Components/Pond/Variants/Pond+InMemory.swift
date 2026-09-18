@@ -29,7 +29,7 @@ public struct InMemoryPond: Pond, Sendable {
         }
     }
 
-    public func set<T: Codable>(_ key: Key, value: T?) throws {
+    public func set(_ key: Key, value: (some Codable)?) throws {
         if value == nil {
             remove(key)
         } else if let value = value as? Data {

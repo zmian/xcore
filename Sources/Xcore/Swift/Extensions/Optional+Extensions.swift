@@ -35,7 +35,7 @@ extension Optional: OptionalProtocol {
 
 // MARK: - isEqual
 
-extension Optional<EncodableDictionary> {
+extension EncodableDictionary? {
     func isEqual(_ other: Self) -> Bool {
         switch (self, other) {
             case (.none, .none):
@@ -51,7 +51,7 @@ extension Optional<EncodableDictionary> {
     }
 }
 
-extension Dictionary<String, Encodable & Sendable> {
+extension [String: Encodable & Sendable] {
     func isEqual(_ other: Self) -> Bool {
         if isEmpty, other.isEmpty {
             // Fast pass

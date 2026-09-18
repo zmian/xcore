@@ -19,7 +19,7 @@ struct ImageRepresentableTests {
 
         let encoder = JSONEncoder()
         let data = try encoder.encode(values)
-        let encodedValue = String(data: data, encoding: .utf8)!
+        let encodedValue = try #require(String(data: data, encoding: .utf8))
         let expectedEncodedValue = "[\"arrow\",\"http:\\/\\/example.com\\/avatar.png\",\"iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW\\/AAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAADYAAAAAQAAANgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAOgAwAEAAAAAQAAAAMAAAAAGuc7vgAAAAlwSFlzAAAhOAAAITgBRZYxYAAAABxpRE9UAAAAAgAAAAAAAAACAAAAKAAAAAIAAAABAAAARxQf8tcAAAATSURBVBgZYvjPwPAfhhlgDBANAAAA\\/\\/9N3En5AAAADElEQVRj+M\\/A8B+GAV3XEe9euoaRAAAAAElFTkSuQmCC\"]"
         #expect(encodedValue == expectedEncodedValue)
 
@@ -32,9 +32,8 @@ struct ImageRepresentableTests {
                     #expect(value == decodedValues[index])
                 case let .uiImage(expectedImage):
                     if case let .uiImage(decodedImage) = decodedValues[index] {
-                        // Double converting it to PNG so the conversion passes matches.
-                        let expectedImageData = UIImage(data: expectedImage.pngData()!)!.pngData()!
-                        let decodedImageData = decodedImage.pngData()!
+                        let expectedImageData = try UIImage(data: #require(expectedImage.pngData()))?.pngData()
+                        let decodedImageData = try #require(decodedImage.pngData())
                         #expect(decodedImageData == expectedImageData)
                     } else {
                         Issue.record("Failed to convert UIImage to Data.")

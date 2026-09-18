@@ -23,20 +23,20 @@ extension MainActor {
     /// ```swift
     /// // Before
     /// struct Model {
-    ///     /// Return true `1` pixel relative to the screen scale.
+    ///     /// Returns the current device name.
     ///     @MainActor // 👈 ← Requires @MainActor attribute
-    ///     var onePixel: CGFloat {
-    ///         1 / UIScreen.main.scale
+    ///     var deviceName: String {
+    ///         UIDevice.current.name
     ///     }
     /// }
     ///
     /// // After
     /// struct Model {
-    ///     /// Return true `1` pixel relative to the screen scale.
-    ///     var onePixel: CGFloat {
+    ///     /// Returns the current device name.
+    ///     var deviceName: String {
     ///         // ✅ No longer requires @MainActor attribute as the body has been isolated to MainActor directly.
     ///         MainActor.runImmediately {
-    ///             1 / UIScreen.main.scale
+    ///             UIDevice.current.name
     ///         }
     ///     }
     /// }

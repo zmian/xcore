@@ -21,8 +21,8 @@ extension Screen {
         case iPhoneXSMax
         case unknown
 
-        init(screen: Screen) {
-            switch screen.size.max {
+        init(size: CGSize) {
+            switch size.max {
                 case 480:
                     self = .iPhone4
                 case 568:

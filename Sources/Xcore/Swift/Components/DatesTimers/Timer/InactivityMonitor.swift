@@ -55,7 +55,7 @@ public final class InactivityMonitor {
     /// Indicates whether the inactivity timeout has been reached.
     ///
     /// This property automatically notifies SwiftUI when its value changes.
-    public private(set) var isInactive: Bool = false
+    public private(set) var isInactive = false
 
     /// Creates an instance of `InactivityMonitor` with a specified timeout
     /// duration.

@@ -76,15 +76,15 @@ extension BinaryInteger {
     ///
     /// - Complexity: `O(log n)`, where `n` is the absolute value of `self`.
     public var digitsCount: Int {
-        /// Special case: Zero has exactly **one** digit.
+        // Special case: Zero has exactly **one** digit.
         guard self != 0 else {
             return 1
         }
 
-        /// Ignore the negative sign by working with the magnitude.
+        // Ignore the negative sign by working with the magnitude.
         var number = magnitude
 
-        /// Counter to keep track of the number of digits.
+        // Counter to keep track of the number of digits.
         var count = 0
 
         // Iteratively divide `number` by 10, increasing `count` each time,
@@ -140,7 +140,7 @@ extension Sequence {
     /// ```
     public func sum<T: AdditiveArithmetic>(_ transform: (Element) throws -> T) rethrows -> T {
         try reduce(T.zero) { sum, element in
-            sum + (try transform(element))
+            try sum + transform(element)
         }
     }
 }
@@ -216,7 +216,7 @@ extension FloatingPoint {
     /// // 120 - integral part
     /// // 30 - fractional part
     /// ```
-    public  var fractionalPart: Self {
+    public var fractionalPart: Self {
         self - integralPart
     }
 

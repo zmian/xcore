@@ -9,9 +9,7 @@ import Foundation
 // MARK: - Decoding
 
 /// A structure to decode string to output using block based format style.
-public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable
-    where Output: RawRepresentable<String>
-{
+public struct RawRepresentableDecodingFormatStyle<Output: RawRepresentable<String>>: DecodingFormatStyle, Sendable {
     public typealias Options = StringCodingFormatStyle.Options
 
     private let options: Options
@@ -31,7 +29,7 @@ public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle, 
         }
 
         let format = StringCodingFormatStyle(options: options)
-        guard let output = Output(rawValue: try format.decode(value)) else {
+        guard let output = try Output(rawValue: format.decode(value)) else {
             throw CodingFormatStyleError.invalidValue
         }
 

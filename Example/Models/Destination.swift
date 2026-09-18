@@ -19,7 +19,7 @@ struct Destination: Identifiable {
         icon: SystemAssetIdentifier,
         title: String,
         subtitle: String? = nil,
-        content: @autoclosure () -> some View
+        content: @autoclosure @MainActor () -> some View
     ) {
         self.id = id
         self.icon = icon
@@ -35,7 +35,7 @@ struct Destination: Identifiable {
         icon: SystemAssetIdentifier,
         title: String,
         subtitle: String? = nil,
-        @ViewBuilder content: () -> some View
+        @ViewBuilder content: @MainActor () -> some View
     ) {
         self.id = id
         self.icon = icon
@@ -49,7 +49,7 @@ struct Destination: Identifiable {
 
 // MARK: - CaseIterable
 
-extension Destination: @preconcurrency CaseIterable {
+extension Destination: @MainActor CaseIterable {
     static let allCases: [Self] = [
         separators,
         buttons,
@@ -87,17 +87,21 @@ extension Destination {
         content: ButtonsView()
     )
 
-    private static let capsules = Self(
-        icon: .capsule,
-        title: "Capsule",
-        content: Samples.capsuleViewPreviews
-    )
+    private static var capsules: Self {
+        Self(
+            icon: .capsule,
+            title: "Capsule",
+            content: Samples.capsuleViewPreviews
+        )
+    }
 
-    private static let money = Self(
-        icon: .dollarsignCircle,
-        title: "Money",
-        content: Samples.moneyPreviews
-    )
+    private static var money: Self {
+        Self(
+            icon: .dollarsignCircle,
+            title: "Money",
+            content: Samples.moneyPreviews
+        )
+    }
 
     private static let labeledContent = Self(
         icon: "list.bullet.below.rectangle",
@@ -105,17 +109,21 @@ extension Destination {
         content: LabeledContentView()
     )
 
-    private static let popups = Self(
-        icon: "inset.filled.center.rectangle",
-        title: "Popups",
-        content: Samples.popupPreviews
-    )
+    private static var popups: Self {
+        Self(
+            icon: "inset.filled.center.rectangle",
+            title: "Popups",
+            content: Samples.popupPreviews
+        )
+    }
 
-    private static let textFields = Self(
-        icon: "character.cursor.ibeam",
-        title: "TextFields",
-        content: Samples.dynamicTextFieldPreviews
-    )
+    private static var textFields: Self {
+        Self(
+            icon: "character.cursor.ibeam",
+            title: "TextFields",
+            content: Samples.dynamicTextFieldPreviews
+        )
+    }
 
     private static let text = Self(
         icon: .docRichtext,

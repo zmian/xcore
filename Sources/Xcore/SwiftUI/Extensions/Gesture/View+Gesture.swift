@@ -99,8 +99,8 @@ extension View {
         maximumDistance: Double = .greatestFiniteMagnitude,
         perform action: @escaping (_ isPressing: Bool) -> Void
     ) -> some View {
-        /// A ``Task`` is used to avoid flickering (``true`` and ``false`` values sent)
-        /// on scroll gesture.
+        // A ``Task`` is used to avoid flickering (``true`` and ``false`` values sent)
+        // on scroll gesture.
         var task: Task<Void, Error>?
 
         func debounce(isPressing: Bool) {
@@ -114,9 +114,9 @@ extension View {
         }
 
         return self
-            /// In order to properly work inside a scroll view a `onTapGesture` has to be
-            /// also added. Adding tap gesture prevents "LongPressGesture" from disabling
-            /// scroll view's swipe gesture.
+            // In order to properly work inside a scroll view a `onTapGesture` has to be
+            // also added. Adding tap gesture prevents "LongPressGesture" from disabling
+            // scroll view's swipe gesture.
             .onTapGesture {}
             .onLongPressGesture(minimumDuration: minimumDuration, maximumDistance: maximumDistance) {
                 debounce(isPressing: false)

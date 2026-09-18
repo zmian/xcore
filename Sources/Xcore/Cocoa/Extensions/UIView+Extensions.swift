@@ -43,7 +43,7 @@ extension UIView {
 @objc
 extension UIView {
     open var sizeFittingScreenWidth: CGSize {
-        sizeFitting(width: Screen.main.bounds.width)
+        sizeFitting(width: window?.bounds.width ?? bounds.width)
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
@@ -87,7 +87,7 @@ extension UIView {
 }
 
 @MainActor
-extension Array<UIView> {
+extension [UIView] {
     public func resistsSizeChange() {
         forEach { $0.resistsSizeChange() }
     }

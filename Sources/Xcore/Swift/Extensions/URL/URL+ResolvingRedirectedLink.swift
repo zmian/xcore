@@ -66,7 +66,7 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     private let url: URL
     private let webView = WKWebView()
     private var continuation: CheckedContinuation<URL?, Never>?
-    private var timeoutTask: Task<(), any Error>?
+    private var timeoutTask: Task<Void, any Error>?
 
     /// Initializes the resolver with a URL and a completion handler.
     ///

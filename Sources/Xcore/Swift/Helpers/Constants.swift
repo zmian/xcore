@@ -85,11 +85,6 @@ extension CGFloat {
     /// The default spacing value at a normal dynamic type setting for inter items
     /// in horizontal axis.
     nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
-
-    /// Return true `1` pixel relative to the screen scale.
-    public static var onePixel: Self {
-        1 / Screen.main.scale
-    }
 }
 
 // MARK: - EdgeInsets
@@ -123,7 +118,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    nonisolated(unsafe) public static var mask: Self = "•"
+    public static let mask: Self = "•"
 }
 
 // MARK: - String
@@ -167,7 +162,9 @@ extension RangeExpression where Self == ClosedRange<Int> {
 
 public enum AppConstants {
     /// The golden ratio.
-    public static var φ: CGFloat { 0.618 }
+    public static var φ: CGFloat {
+        0.618
+    }
 
     public static let statusBarHeight = MainActor.runImmediately {
         UIApplication
@@ -178,23 +175,7 @@ public enum AppConstants {
             .statusBarFrame.height ?? 44
     }
 
-    public static var statusBarPlusNavBarHeight: CGFloat {
-        statusBarHeight + navBarHeight
-    }
-
-    public static var navBarHeight: CGFloat {
-        Device.userInterfaceIdiom == .pad ? 50 : 44
-    }
-
     nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
-
-    public static var preferredMaxWidth: CGFloat {
-        iPhoneXSScreenSize.width
-    }
-
-    static var popupPreferredWidth: CGFloat {
-        min(300, Device.screen.bounds.size.min * 0.8)
-    }
 }
 
 // MARK: - Device
@@ -202,42 +183,5 @@ public enum AppConstants {
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
         Device.capability.contains(.homeIndicator)
-    }
-
-    public static var homeIndicatorHeightIfPresent: CGFloat {
-        supportsHomeIndicator ? 34 : 0
-    }
-
-    public static var smallScreenSize: Bool {
-        guard Device.userInterfaceIdiom == .phone else {
-            return false
-        }
-
-        return Device.screen.referenceSize <= .iPhone5
-    }
-
-    public static var mediumScreenSize: Bool {
-        Device.screen.referenceSize.size.max <= iPhoneXSScreenSize.max
-    }
-
-    public static var iPhoneXSScreenSize: CGSize {
-        Screen.ReferenceSize.iPhoneXSMax.size
-    }
-
-    /// Returns relative value for the current device based on iPhone 6 width.
-    @MainActor
-    public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = Screen.main.bounds.size
-        let reference = iPhoneXSScreenSize
-        let relation = axis == .vertical ? screenSize.height / reference.height : screenSize.width / reference.width
-        return value * relation
-    }
-
-    @MainActor
-    public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let screenSize = Screen.main.bounds.size
-        let reference = iPhoneXSScreenSize
-        let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
-        return max(0.0, remaining)
     }
 }

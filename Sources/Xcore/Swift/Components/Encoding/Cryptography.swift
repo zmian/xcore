@@ -25,7 +25,7 @@ extension String {
 
 // MARK: - [UInt8]
 
-extension Array<UInt8> {
+extension [UInt8] {
     public func sha256() -> Self {
         Array(SHA256.hash(data: self))
     }

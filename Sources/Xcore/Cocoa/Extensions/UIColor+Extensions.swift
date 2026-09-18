@@ -222,7 +222,7 @@ extension UIColor {
 
 // MARK: - CGColor
 
-extension Array<UIColor> {
+extension [UIColor] {
     /// The Quartz color reference that corresponds to the receiver’s color.
     public var cgColor: [CGColor] {
         map(\.cgColor)

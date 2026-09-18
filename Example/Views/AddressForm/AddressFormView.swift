@@ -47,8 +47,10 @@ extension AddressFormView where Footer == Never {
     /// - Parameters:
     ///   - store: The store holding `AddressForm` state.
     ///   - confirmation: A closure that transforms a view into confirmed content.
-    public init(store: StoreOf<AddressForm>,
-                confirmation: @escaping (any View) -> Content) {
+    public init(
+        store: StoreOf<AddressForm>,
+        confirmation: @escaping (any View) -> Content
+    ) {
         self.init(store: store, confirmation: confirmation) {
             fatalError()
         }

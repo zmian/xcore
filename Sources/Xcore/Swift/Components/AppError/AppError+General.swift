@@ -170,7 +170,7 @@ extension AppError {
     /// // Session Expired
     /// // Your session has expired. Please sign in again.
     /// ```
-
+    ///
     /// Returns a new instance with updated `id` and all other properties are same
     /// as `sessionExpired` error.
     private static func sessionExpired(_ id: String = #function) -> Self {

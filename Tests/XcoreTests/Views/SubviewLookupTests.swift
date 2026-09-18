@@ -15,7 +15,7 @@ final class SubviewLookupTests: ViewControllerTestCase {
         view.addSubview(searchBar)
         searchBar.layoutIfNeeded()
 
-        #expect(searchBar.firstSubview(withClass: UITextField.self) != nil )
+        #expect(searchBar.firstSubview(withClass: UITextField.self) != nil)
         #expect(searchBar.firstSubview(withClassName: "UISearchBarTextField") != nil)
 
         #expect(searchBar.firstSubview(withClass: UITextField.self, comparison: .typeOf) == nil)

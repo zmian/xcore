@@ -14,6 +14,7 @@ public struct PopupAlertContent<Content: View>: View {
     @Environment(\.popupCornerRadius) private var cornerRadius
     @Environment(\.popupTextAlignment) private var textAlignment
     @Environment(\.popupDismissAction) private var dismiss
+    @State private var resolvedPreferredWidth = 300.0
     private let content: () -> Content
 
     public init(@ViewBuilder content: @escaping () -> Content) {
@@ -29,7 +30,7 @@ public struct PopupAlertContent<Content: View>: View {
             }
             .padding(.defaultSpacing)
             .padding(.top, .defaultSpacing)
-            .frame(width: preferredWidth)
+            .frame(width: resolvedPreferredWidth)
             .background(colorScheme == .dark ? theme.groupedBackgroundTertiaryColor : theme.backgroundColor)
             .cornerRadius(cornerRadius, style: .continuous)
             .floatingShadow()
@@ -41,6 +42,9 @@ public struct PopupAlertContent<Content: View>: View {
                 }
                 .padding(.defaultSpacing)
             }
+        }
+        .onWindowBoundsChange { bounds in
+            resolvedPreferredWidth = min(300, bounds.size.min * 0.8)
         }
     }
 }

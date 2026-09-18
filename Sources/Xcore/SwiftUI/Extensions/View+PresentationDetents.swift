@@ -65,7 +65,6 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                     }
                 }
                 .presentationDetents([.height(detentHeight)])
-                .presentationCornerRadius(cornerRadius)
                 // On iPad adapt the fitted sheet to be a popup.
                 .unwrap(preferredWidth) { view, preferredWidth in
                     view.presentationBackground {
@@ -91,7 +90,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
     }
 
     private var preferredWidth: CGFloat? {
-        isPopup ? AppConstants.preferredMaxWidth : nil
+        isPopup ? 414 : nil
     }
 
     /// On iPad, the fitted sheet is displayed as a popup.

@@ -102,7 +102,7 @@ extension Device {
         case iPodTouch6
         case iPodTouch7
 
-        // HomePod
+        /// HomePod
         case homePod
 
         public init(identifier: String) {
@@ -420,8 +420,7 @@ extension Device.Model {
             #elseif os(watchOS)
             return WKInterfaceDevice.current().model
             #elseif os(macOS)
-            #warning("FIXME: Implement")
-            return ""
+            return "Mac"
             #endif
         }
     }

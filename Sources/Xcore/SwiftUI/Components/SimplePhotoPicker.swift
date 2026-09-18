@@ -6,6 +6,7 @@
 
 import SwiftUI
 import PhotosUI
+import OSLog
 
 /// A view that displays a Photos picker for choosing a single image from the
 /// photo library.
@@ -30,20 +31,28 @@ import PhotosUI
 /// ```
 public struct SimplePhotoPicker<Label: View & Sendable>: View {
     private let label: Label
-    @State var selectedItems: [PhotosPickerItem] = []
+    @State private var selectedItems: [PhotosPickerItem] = []
     private let selection: (UIImage) -> Void
+    private let onFailure: (Error) -> Void
 
     /// Creates a simple image picker view.
     ///
     /// - Parameters:
     ///   - selection: A closure that will be called when an image is selected. The
     ///     selected `UIImage` is passed as a parameter to this closure.
+    ///   - onFailure: Called when loading or decoding fails. Cancellation is
+    ///     ignored.
     ///   - label: The view that describes the action of choosing an item.
     public init(
         selection: @escaping (UIImage) -> Void,
+        onFailure: @escaping (Error) -> Void = { error in
+            Logger(subsystem: Logger.subsystem, category: "xcore")
+                .error("Photo selection failed: \(error.localizedDescription)")
+        },
         @ViewBuilder label: () -> Label
     ) {
         self.selection = selection
+        self.onFailure = onFailure
         self.label = label()
     }
 
@@ -55,13 +64,23 @@ public struct SimplePhotoPicker<Label: View & Sendable>: View {
         ) {
             label
         }
-        .onChange(of: selectedItems) { _, selectedItems in
-            Task {
-                if
-                    let data = try await selectedItems.first?.loadTransferable(type: Data.self),
-                    let image = UIImage(data: data) {
-                    selection(image)
+        .task(id: selectedItems) {
+            guard let item = selectedItems.first else { return }
+
+            do {
+                guard
+                    let data = try await item.loadTransferable(type: Data.self),
+                    let image = UIImage(data: data)
+                else {
+                    throw CocoaError(.fileReadCorruptFile)
                 }
+                try Task.checkCancellation()
+                selection(image)
+            } catch is CancellationError {
+                // A new selection or dismissal cancels the previous load.
+            } catch {
+                guard !Task.isCancelled else { return }
+                onFailure(error)
             }
         }
     }

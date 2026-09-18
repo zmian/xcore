@@ -29,7 +29,6 @@ extension View {
     ///   - data: A `DataStatus` where the value is collection indicating whether to
     ///     present the content unavailable view when the value is empty.
     ///   - message: A string to display when content is unavailable.
-    @ViewBuilder
     public func contentUnavailable(_ data: DataStatus<some Collection, Error>, message: String) -> some View {
         contentUnavailable(data.value?.isEmpty == true, message: message)
     }
@@ -56,7 +55,6 @@ extension View {
     ///   - unavailable: A Boolean value indicating whether to present content
     ///     unavailable view.
     ///   - message: A string to display when content is unavailable.
-    @ViewBuilder
     public func contentUnavailable(_ unavailable: Bool, message: String) -> some View {
         contentUnavailable(unavailable) {
             EnvironmentReader(\.theme) { theme in
@@ -93,7 +91,6 @@ extension View {
     ///   - unavailable: A Boolean value indicating whether to present content
     ///     unavailable view.
     ///   - content: A closure returning the view when content is unavailable.
-    @ViewBuilder
     public func contentUnavailable(_ unavailable: Bool, @ViewBuilder content: () -> some View) -> some View {
         ZStack {
             content()

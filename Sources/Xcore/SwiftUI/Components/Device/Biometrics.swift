@@ -79,17 +79,7 @@ public struct Biometrics: Sendable {
     ///   If you need to check if biometrics authentication is available then use
     ///   `Device.biometrics.isAvailable`.
     public var kind: Kind {
-        let kind = Kind()
-
-        guard kind == .none else {
-            return kind
-        }
-
-        if UserInterfaceIdiom.current == .vision {
-            return .opticID
-        }
-
-        return Device.screen.referenceSize.iPhoneXSeries ? .faceID : .touchID
+        Kind()
     }
 }
 

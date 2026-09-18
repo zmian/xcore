@@ -44,11 +44,11 @@ private final class LiveSessionCounterClient: @unchecked Sendable {
         }
     }
 
-    public var count: Int {
+    var count: Int {
         pond.sessionCount
     }
 
-    public func increment() {
+    func increment() {
         pond.incrementSessionCount()
         requestReviewIfNeeded()
     }
