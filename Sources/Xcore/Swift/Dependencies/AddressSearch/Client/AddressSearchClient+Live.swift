@@ -155,12 +155,12 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         )
 
         if supportedRegions.count == 1, let code = supportedRegions.first {
-            let regionName = Locale.current.localizedString(forRegionCode: code) ?? code
+            let regionName = PostalAddress.countryName(isoCode: code) ?? code
             invalidRegionError.title = LR.titleOne(regionName)
             invalidRegionError.message = LR.messageOne(appName, regionName, regionName)
         } else if supportedRegions.count <= 5 {
             let regions = supportedRegions
-                .map { Locale.current.localizedString(forRegionCode: $0) ?? $0 }
+                .map { PostalAddress.countryName(isoCode: $0) ?? $0 }
                 .formatted(.list(type: .and).locale(.current))
             invalidRegionError.message = LR.messageFew(appName, regions)
         }
