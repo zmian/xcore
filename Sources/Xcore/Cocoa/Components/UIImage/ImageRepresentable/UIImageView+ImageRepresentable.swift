@@ -10,6 +10,9 @@ import UIKit
 extension UIImageView {
     /// Automatically detects and loads the image from a local or remote URL.
     ///
+    /// Image transforms execute off the main actor. Image assignment and the
+    /// completion callback execute on the main actor.
+    ///
     /// - Parameters:
     ///   - image: The image to be displayed.
     ///   - animationDuration: The total duration of the animation. If the specified
@@ -38,8 +41,13 @@ extension UIImageView {
         let requestID = UUID()
         imageSetRequestID = requestID
 
-        Task { @MainActor in
+        imageSetTask = Task { @MainActor in
             guard imageSetRequestID == requestID else { return }
+            defer {
+                if imageSetRequestID == requestID {
+                    imageSetTask = nil
+                }
+            }
 
             do {
                 var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
@@ -47,8 +55,11 @@ extension UIImageView {
                 try Task.checkCancellation()
 
                 if let transform: ImageTransform = imageRepresentable.plugin() {
-                    image = image.applying(transform, source: imageRepresentable)
+                    image = try await applyingImageTransform(transform, to: image, source: imageRepresentable)
                 }
+
+                guard imageSetRequestID == requestID else { return }
+                try Task.checkCancellation()
 
                 setUIImage(image, animationDuration: cacheType.possiblyDelayed ? animationDuration : 0)
                 callback?(image)
@@ -96,5 +107,19 @@ extension UIImageView {
             setImage(defaultImage, duration: animationDuration, callback)
         }
     }
+}
+
+// Keeps synchronous image processing on the concurrent executor while retaining
+// the loading task's cancellation state and task-local values.
+@concurrent
+private func applyingImageTransform(
+    _ transform: ImageTransform,
+    to image: UIImage,
+    source: ImageRepresentable
+) async throws -> UIImage {
+    try Task.checkCancellation()
+    let result = image.applying(transform, source: source)
+    try Task.checkCancellation()
+    return result
 }
 #endif
