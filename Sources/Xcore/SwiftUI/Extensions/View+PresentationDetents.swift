@@ -91,7 +91,7 @@ private struct PresentationDetentsViewModifier: ViewModifier {
     }
 
     private var preferredWidth: CGFloat? {
-        isPopup ? AppConstants.preferredMaxWidth : nil
+        isPopup ? 414 : nil
     }
 
     /// On iPad, the fitted sheet is displayed as a popup.

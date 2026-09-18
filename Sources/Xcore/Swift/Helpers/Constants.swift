@@ -118,7 +118,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    nonisolated(unsafe) public static var mask: Self = "•"
+    public static let mask: Self = "•"
 }
 
 // MARK: - String
@@ -175,19 +175,7 @@ public enum AppConstants {
             .statusBarFrame.height ?? 44
     }
 
-    public static var statusBarPlusNavBarHeight: CGFloat {
-        statusBarHeight + navBarHeight
-    }
-
-    public static var navBarHeight: CGFloat {
-        Device.userInterfaceIdiom == .pad ? 50 : 44
-    }
-
     nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
-
-    public static var preferredMaxWidth: CGFloat {
-        iPhoneXSScreenSize.width
-    }
 }
 
 // MARK: - Device
@@ -195,39 +183,5 @@ public enum AppConstants {
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
         Device.capability.contains(.homeIndicator)
-    }
-
-    public static var homeIndicatorHeightIfPresent: CGFloat {
-        supportsHomeIndicator ? 34 : 0
-    }
-
-    /// Whether the supplied layout size is no larger than an iPhone 5 display.
-    public static func smallScreenSize(_ size: CGSize) -> Bool {
-        size.max <= Screen.ReferenceSize.iPhone5.size.max
-    }
-
-    /// Whether the supplied layout size is no larger than an iPhone XS Max display.
-    public static func mediumScreenSize(_ size: CGSize) -> Bool {
-        size.max <= iPhoneXSScreenSize.max
-    }
-
-    public static var iPhoneXSScreenSize: CGSize {
-        Screen.ReferenceSize.iPhoneXSMax.size
-    }
-
-    /// Scales a value to the supplied layout size relative to an iPhone XS Max.
-    @MainActor
-    public static func aspect(_ value: CGFloat, in size: CGSize, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let reference = iPhoneXSScreenSize
-        let relation = axis == .vertical ? size.height / reference.height : size.width / reference.width
-        return value * relation
-    }
-
-    /// Returns the space beyond the reference size along the supplied axis.
-    @MainActor
-    public static func remaining(in size: CGSize, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
-        let reference = iPhoneXSScreenSize
-        let remaining = axis == .vertical ? size.height - reference.height : size.width - reference.width
-        return max(0.0, remaining)
     }
 }
