@@ -40,6 +40,7 @@ extension UIImageView {
 
         Task { @MainActor in
             guard imageSetRequestID == requestID else { return }
+
             do {
                 var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
                 guard imageSetRequestID == requestID else { return }
