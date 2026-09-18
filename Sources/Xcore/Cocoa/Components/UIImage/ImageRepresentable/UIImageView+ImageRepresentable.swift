@@ -109,8 +109,8 @@ extension UIImageView {
     }
 }
 
-// Keeps synchronous image processing on the concurrent executor while retaining
-// the loading task's cancellation state and task-local values.
+/// Keeps synchronous image processing on the concurrent executor while retaining
+/// the loading task's cancellation state and task-local values.
 @concurrent
 private func applyingImageTransform(
     _ transform: ImageTransform,
