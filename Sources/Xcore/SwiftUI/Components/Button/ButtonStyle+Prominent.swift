@@ -255,4 +255,3 @@ extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
         capsuleOutline
     }
 }
-

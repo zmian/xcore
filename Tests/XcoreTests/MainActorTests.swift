@@ -115,7 +115,7 @@ struct MainActorTests {
 
     @Test
     @MainActor
-    func runImmediately_actor_main() async {
+    func runImmediately_actor_main() {
         #expect(screenScale == 3.0)
     }
 
