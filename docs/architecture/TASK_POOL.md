@@ -7,6 +7,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
+| T-039 | Consolidate `CodingFormatStyle.defaultEncodeAsString` (Decimal/Double) | Concurrency −2; confirm apps do not mutate |
 
 ## Pending confirmation
 
@@ -49,3 +50,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-035 | `COCOA_COMPONENT_INDEX.md` + audit |
 | T-036 | `Theme.listRowInsets` + `EdgeInsets.listRow` forwarder; concurrency −1 |
 | T-037 | `FORMATTING_DEFAULTS.md` + freeze mask/fraction/random; concurrency −5 |
+| T-038 | `LAYER_IMPORTS.md` + `audit_cocoa_swiftui_imports.sh` |

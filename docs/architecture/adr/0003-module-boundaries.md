@@ -27,10 +27,11 @@ Xcore uses folder conventions (`Swift/`, `SwiftUI/`, `Cocoa/`) without separate 
 - Other unimplemented test doubles (e.g. `UnimplementedAnalyticsProvider`) use `reportIssue` with `#"Unimplemented: Type.method"#`.
 - Do not use `IssueReporting.unimplemented` in `Sources/Xcore`.
 
-### UI coupling (documented, not fully automated)
+### UI coupling
 
 - Prefer UIKit/AppKit APIs in `Cocoa/`, SwiftUI in `SwiftUI/`.
 - `Swift/Components/` may import SwiftUI for types shared with views (e.g. `Money`); new UIKit-only code should not land there without justification.
+- `import SwiftUI` under `Cocoa/` is limited to the allowlist in `LAYER_IMPORTS.md`; enforced by `audit_cocoa_swiftui_imports.sh`.
 
 ## Consequences
 

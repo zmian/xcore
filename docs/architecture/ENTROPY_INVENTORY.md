@@ -41,6 +41,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | --- | --- |
 | Dependency keys | `audit_dependency_keys.sh` |
 | Module placement / unimplemented copy | `audit_module_placement.sh` |
+| Cocoa → SwiftUI imports | `audit_cocoa_swiftui_imports.sh` |
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |

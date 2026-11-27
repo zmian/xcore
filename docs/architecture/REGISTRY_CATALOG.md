@@ -28,12 +28,13 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [TASK_POOL.md](./TASK_POOL.md) | Ready / pending / done tasks |
 | [PROGRESS.md](./PROGRESS.md) | Round log |
 | [ARCHITECTURE_MAP.md](./ARCHITECTURE_MAP.md) | Layers and boundaries |
+| [LAYER_IMPORTS.md](./LAYER_IMPORTS.md) | Cocoa → SwiftUI allowlist (4) |
 | [AUDIT_INDEX.md](./AUDIT_INDEX.md) | All `make audit-architecture` scripts |
 | [adr/README.md](./adr/README.md) | Accepted decisions |
 
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 13 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 14 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```

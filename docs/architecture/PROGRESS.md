@@ -191,6 +191,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_formatting_defaults.sh`; concurrency 50→45.
 - **Verify:** `make audit-architecture` (13 scripts).
 
+### Round 25 — Cocoa SwiftUI import allowlist (2026-11-27)
+
+- **Document:** `LAYER_IMPORTS.md` (4 allowed Cocoa files).
+- **Enforce:** `audit_cocoa_swiftui_imports.sh` (ADR 0003).
+- **Verify:** `make audit-architecture` (14 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

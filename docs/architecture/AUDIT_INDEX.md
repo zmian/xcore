@@ -11,6 +11,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_dependency_keys.sh` | Every `DependencyKey` has `testValue`; `previewValue` when `noop`/`empty` exists (see ADR 0001–0002). |
 | `BuildTools/Scripts/audit_concurrency_inventory.sh` | `nonisolated(unsafe)` count matches `CONCURRENCY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_module_placement.sh` | `DependencyKey` under `Swift/Dependencies/` (Pond excepted); no `IssueReporting`; canonical `Unimplemented:` strings (ADR 0003). |
+| `BuildTools/Scripts/audit_cocoa_swiftui_imports.sh` | `import SwiftUI` in `Cocoa/` matches `LAYER_IMPORTS.md` allowlist (ADR 0003). |
 | `BuildTools/Scripts/audit_compiler_warnings.sh` | `#warning` count matches `ENTROPY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_layout_ssot.sh` | `Theme.cornerRadius` canonical; no direct `AppConstants.cornerRadius` in sources (ADR 0005). |
 | `BuildTools/Scripts/audit_spacing_scale.sh` | Frozen `CGFloat.s1`…`s8` match `SPACING_SCALE.md`. |

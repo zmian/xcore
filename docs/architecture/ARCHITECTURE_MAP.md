@@ -35,7 +35,7 @@ flowchart TB
 | UIKit | `Cocoa/*` | Swift components | Image pipeline, HUD; [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) |
 | SwiftUI | `SwiftUI/*` | Swift + Cocoa | UI domains: [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) |
 
-**Dependency direction:** SwiftUI → Cocoa/UIKit → Swift components → Helpers. No target-level enforcement today; convention only.
+**Dependency direction:** SwiftUI → Cocoa/UIKit → Swift components → Helpers. Cocoa→SwiftUI import allowlist: [LAYER_IMPORTS.md](./LAYER_IMPORTS.md).
 
 ### Module boundary conventions (T-013 baseline)
 
