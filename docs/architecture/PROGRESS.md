@@ -197,6 +197,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_cocoa_swiftui_imports.sh` (ADR 0003).
 - **Verify:** `make audit-architecture` (14 scripts).
 
+### Round 26 — Coding numeric encode default SSOT (2026-11-27)
+
+- **Migrate:** `CodingFormatStyleDefaults.defaultEncodeAsString`; Decimal/Double forwarders.
+- **Enforce:** `audit_coding_defaults.sh`, `CODING_DEFAULTS.md`; concurrency 45→44.
+- **Verify:** `make audit-architecture` (15 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

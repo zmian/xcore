@@ -7,7 +7,6 @@
 import Foundation
 
 public struct DecimalCodingFormatStyle: CodingFormatStyle, Sendable {
-    nonisolated(unsafe) public static var defaultEncodeAsString = false
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {
@@ -40,16 +39,24 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle, Sendable {
 
 extension DecodingFormatStyle where Self == DecimalCodingFormatStyle {
     public static var decimal: Self {
-        .init(encodeAsString: Self.defaultEncodeAsString)
+        .init(encodeAsString: CodingFormatStyleDefaults.defaultEncodeAsString)
     }
 }
 
 extension EncodingFormatStyle where Self == DecimalCodingFormatStyle {
     public static var decimal: Self {
-        .init(encodeAsString: Self.defaultEncodeAsString)
+        .init(encodeAsString: CodingFormatStyleDefaults.defaultEncodeAsString)
     }
 
     public static func decimal(asString: Bool) -> Self {
         .init(encodeAsString: asString)
+    }
+}
+
+extension DecimalCodingFormatStyle {
+    /// Forwards to ``CodingFormatStyleDefaults/defaultEncodeAsString``.
+    public static var defaultEncodeAsString: Bool {
+        get { CodingFormatStyleDefaults.defaultEncodeAsString }
+        set { CodingFormatStyleDefaults.defaultEncodeAsString = newValue }
     }
 }

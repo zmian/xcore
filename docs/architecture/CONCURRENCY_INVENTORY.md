@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 45 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 44 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -12,7 +12,7 @@ Snapshot for reducing concurrency entropy. **Total: 45 annotations** (regenerate
 | `Locale+Extensions.swift` | Default locale for numbers |
 | `Theme+Default.swift` | Default SwiftUI theme |
 | `UIFont+App.swift` | Default app typeface |
-| `CodingFormatStyle+Decimal/Double` | JSON encode-as-string toggles |
+| `CodingFormatStyle+Defaults.swift` | JSON encode-as-string default (`Decimal`/`Double` forward) |
 | `AddressSearchClient+Live.swift` | `supportedRegions` configuration |
 
 **Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Future work: narrow public mutation surface or move to injected configuration.

@@ -12,6 +12,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) | 3 `Cocoa/Components` domains |
 | [SPACING_SCALE.md](./SPACING_SCALE.md) | Theme layout + frozen `s1`…`s8` |
 | [FORMATTING_DEFAULTS.md](./FORMATTING_DEFAULTS.md) | Mask, fraction digits, random bounds |
+| [CODING_DEFAULTS.md](./CODING_DEFAULTS.md) | JSON numeric encode-as-string default |
 
 ## Inventories (budgets enforced in CI)
 
@@ -35,6 +36,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 14 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 15 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```

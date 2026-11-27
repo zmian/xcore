@@ -16,6 +16,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_layout_ssot.sh` | `Theme.cornerRadius` canonical; no direct `AppConstants.cornerRadius` in sources (ADR 0005). |
 | `BuildTools/Scripts/audit_spacing_scale.sh` | Frozen `CGFloat.s1`…`s8` match `SPACING_SCALE.md`. |
 | `BuildTools/Scripts/audit_formatting_defaults.sh` | Frozen masking/fraction/random defaults match `FORMATTING_DEFAULTS.md`. |
+| `BuildTools/Scripts/audit_coding_defaults.sh` | Single `CodingFormatStyleDefaults.defaultEncodeAsString` (see `CODING_DEFAULTS.md`). |
 | `BuildTools/Scripts/audit_composite_registration.sh` | Provider/fetcher composites dedupe by `id` (ADR 0004; ImageTransform exempt). |
 | `BuildTools/Scripts/audit_audit_index.sh` | `AUDIT_INDEX.md` matches `Makefile` `audit-architecture` script list. |
 

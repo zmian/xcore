@@ -609,6 +609,22 @@ struct CodingFormatStyleTests {
         let example4 = try JSONDecoder().decode(Example.self, from: data4)
         #expect(example1 == example4)
     }
+
+    @Test func numericEncodeAsStringDefaultsAreShared() {
+        let original = CodingFormatStyleDefaults.defaultEncodeAsString
+        defer {
+            CodingFormatStyleDefaults.defaultEncodeAsString = original
+            DecimalCodingFormatStyle.defaultEncodeAsString = original
+            DoubleCodingFormatStyle.defaultEncodeAsString = original
+        }
+
+        DecimalCodingFormatStyle.defaultEncodeAsString = true
+        #expect(DoubleCodingFormatStyle.defaultEncodeAsString == true)
+        #expect(CodingFormatStyleDefaults.defaultEncodeAsString == true)
+
+        CodingFormatStyleDefaults.defaultEncodeAsString = false
+        #expect(DecimalCodingFormatStyle.defaultEncodeAsString == false)
+    }
 }
 
 extension CodingFormatStyleTests {
