@@ -130,6 +130,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Test:** `ThemeLayoutTests`; concurrency inventory 62→61.
 - **Verify:** `make audit-architecture` local.
 
+### Round 15 — Layout SSOT enforcement (2026-11-27)
+
+- **Enforce:** `audit_layout_ssot.sh` (Theme `cornerRadius`; no stray `AppConstants.cornerRadius`).
+- **Document:** `AUDIT_INDEX`, `ARCHITECTURE_MAP`, ADR 0005.
+- **Verify:** `make audit-architecture` (6 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

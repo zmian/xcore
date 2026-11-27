@@ -32,4 +32,5 @@ Prefer `@Dependency` or constructor injection for *new* cross-cutting configurat
 ## Consequences
 
 - Entropy inventory tracks global hotspots.
-- No automated ban on `AppConstants` mutation yet; concurrency audit tracks annotation count.
+- `audit_layout_ssot.sh` bans direct `AppConstants.cornerRadius` use outside `Constants.swift`.
+- No automated ban on other `AppConstants` spacing mutations yet; concurrency audit tracks annotation count.

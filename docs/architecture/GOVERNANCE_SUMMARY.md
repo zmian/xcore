@@ -20,12 +20,13 @@ Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (
 | Keys live under `Swift/Dependencies/` (except `Pond`) | 0003 |
 | `reportIssue` for unimplemented; no `IssueReporting` | 0003 |
 | Registration composites dedupe by `id` | 0004 |
-| Metadata: `UserInfoContainer`, `AppConstants`, `FeatureFlag.provider` | 0005 |
+| Metadata: `UserInfoContainer`, `Theme` layout, `FeatureFlag.provider` | 0005 |
+| `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
 
 ## Inventories
 
-- [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (5)
-- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (62)
+- [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (3)
+- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (61)
 - [PROGRESS.md](./PROGRESS.md) — completed rounds
 
 ## macOS verification

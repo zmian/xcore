@@ -40,3 +40,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-025 | GOVERNANCE_SUMMARY + pasteboard dependency default test |
 | T-026 | DEPENDENCY_REGISTRY + audit script |
 | T-027 | Theme `cornerRadius` SSOT; `AppConstants` forwarder; library call sites |
+| T-028 | `audit_layout_ssot.sh` + CI wiring |

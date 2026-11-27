@@ -9,6 +9,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_concurrency_inventory.sh` | `nonisolated(unsafe)` count matches `CONCURRENCY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_module_placement.sh` | `DependencyKey` under `Swift/Dependencies/` (Pond excepted); no `IssueReporting`; canonical `Unimplemented:` strings (ADR 0003). |
 | `BuildTools/Scripts/audit_compiler_warnings.sh` | `#warning` count matches `ENTROPY_INVENTORY.md`. |
+| `BuildTools/Scripts/audit_layout_ssot.sh` | `Theme.cornerRadius` canonical; no direct `AppConstants.cornerRadius` in sources (ADR 0005). |
 
 Related docs: `PROGRESS.md`, `TASK_POOL.md`, `ARCHITECTURE_MAP.md`, `adr/*`.
 

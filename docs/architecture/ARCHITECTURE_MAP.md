@@ -58,7 +58,7 @@ flowchart TB
 | Dependency defaults | `DependencyKey` live/test/preview | `*/Dependencies/*` |
 | Localized copy | Generated `LocalizableStrings` | SwiftGen + `Resources/` |
 | Typed metadata bags | `UserInfoContainer` | `UserInfoKey.swift` (ADR 0005) |
-| Layout / theme defaults | `AppConstants`, `Theme.default` | `Constants.swift`, `Theme+Default.swift` (ADR 0005) |
+| Layout / theme defaults | `Theme.default` (`cornerRadius`); `AppConstants` forwards + spacing | `Theme.swift`, `Constants.swift` (ADR 0005; `audit_layout_ssot.sh`) |
 
 ## Duplicate / parallel implementations
 
