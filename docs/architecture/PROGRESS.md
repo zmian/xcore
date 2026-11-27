@@ -104,6 +104,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Test:** `DependencyKeyDefaultsTests` guards ADR 0001 `testValue` behavior for SessionCounter and OpenURL.
 - **Verify:** `make audit-architecture` passes.
 
+### Round 11 — Agent quick start + pasteboard test guard (2026-11-27)
+
+- **Document:** `GOVERNANCE_SUMMARY.md` for one-page agent onboarding.
+- **Test:** `pasteboardTestValueDoesNotMutateSystemPasteboard` strengthens ADR 0001.
+- **Verify:** audits local; pasteboard test on macOS CI.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

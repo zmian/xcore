@@ -6,6 +6,9 @@
 
 import Testing
 @testable import Xcore
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Regression tests for ADR 0001: production `DependencyKey` types must default to safe test values.
 struct DependencyKeyDefaultsTests {
@@ -23,4 +26,15 @@ struct DependencyKeyDefaultsTests {
         let opened = await openURL(URL(string: "https://example.com"))
         #expect(opened == false)
     }
+
+    #if canImport(UIKit)
+    @Test
+    func pasteboardTestValueDoesNotMutateSystemPasteboard() {
+        let marker = "xcore-governance-pasteboard-test"
+        UIPasteboard.general.string = marker
+        @Dependency(\.pasteboard) var pasteboard
+        pasteboard.copy("should-not-replace")
+        #expect(UIPasteboard.general.string == marker)
+    }
+    #endif
 }

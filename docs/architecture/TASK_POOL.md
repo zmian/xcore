@@ -37,3 +37,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-022 | ADR 0005 metadata/theme SSOT; ImageFetcherCompositeTests; README |
 | T-023 | AUDIT_INDEX + FeatureFlag composite dedupe test + ADR 0004 exception |
 | T-024 | Remove ProminentButtonStyle `#warning`; DependencyKeyDefaultsTests |
+| T-025 | GOVERNANCE_SUMMARY + pasteboard dependency default test |
