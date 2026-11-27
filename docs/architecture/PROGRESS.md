@@ -171,6 +171,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_audit_index.sh` (Makefile ↔ `AUDIT_INDEX.md` parity).
 - **Verify:** `make audit-architecture` (11 scripts).
 
+### Round 22 — Cocoa component index (2026-11-27)
+
+- **Document:** `COCOA_COMPONENT_INDEX.md` (3 domains: HUD, Swizzle, UIImage).
+- **Enforce:** `audit_cocoa_component_index.sh`; `ARCHITECTURE_MAP` link.
+- **Verify:** `make audit-architecture` (12 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

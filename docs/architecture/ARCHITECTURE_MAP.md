@@ -32,7 +32,7 @@ flowchart TB
 | Foundation helpers | `Swift/Extensions`, `Swift/Helpers`, `Swift/Protocols` | Foundation, re-exported deps | Includes `Collection.uniqued`, `Xcore.swift` exports |
 | Components | `Swift/Components/*` | Helpers | See [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (`audit_component_index.sh`) |
 | DI clients | `Swift/Dependencies/*` | Components + Cocoa/SwiftUI as needed | `@Dependency` keys; prefer struct + variants |
-| UIKit | `Cocoa/*` | Swift components | Image pipeline, HUD |
+| UIKit | `Cocoa/*` | Swift components | Image pipeline, HUD; [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) |
 | SwiftUI | `SwiftUI/*` | Swift + Cocoa | UI domains: [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) |
 
 **Dependency direction:** SwiftUI → Cocoa/UIKit → Swift components → Helpers. No target-level enforcement today; convention only.

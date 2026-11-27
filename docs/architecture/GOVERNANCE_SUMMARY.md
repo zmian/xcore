@@ -5,14 +5,14 @@
 ## Before you edit
 
 1. Read [ADR 0002](./adr/0002-dependency-client-template.md) when adding `@Dependency` clients.
-2. Run `make audit-architecture` (Linux-safe, 11 checks) before push.
+2. Run `make audit-architecture` (Linux-safe, 12 checks) before push.
 3. Catalog of registries and inventories: [REGISTRY_CATALOG.md](./REGISTRY_CATALOG.md).
 4. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
 
 ## Single source of truth
 
 Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).  
-Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 Swift), [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) (21 SwiftUI).
+Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 Swift), [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) (21 SwiftUI), [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) (3 Cocoa).
 
 ## Rules enforced in CI
 

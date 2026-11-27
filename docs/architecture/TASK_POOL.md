@@ -7,7 +7,6 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-035 | `COCOA_COMPONENT_INDEX.md` + audit (mirror Swift/SwiftUI indexes) | Layer boundary visibility |
 
 ## Pending confirmation
 
@@ -47,3 +46,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-032 | `COMPONENT_INDEX.md` + `audit_component_index.sh`; registry key names |
 | T-033 | `SWIFTUI_COMPONENT_INDEX.md` + audit |
 | T-034 | `REGISTRY_CATALOG.md`, `adr/README.md`, `audit_audit_index.sh` |
+| T-035 | `COCOA_COMPONENT_INDEX.md` + audit |
