@@ -186,7 +186,11 @@ public enum AppConstants {
         Device.userInterfaceIdiom == .pad ? 50 : 44
     }
 
-    nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
+    /// Forwards to ``Theme/default``; prefer ``EnvironmentValues/theme`` in SwiftUI.
+    public static var cornerRadius: CGFloat {
+        get { Theme.cornerRadius }
+        set { Theme.cornerRadius = newValue }
+    }
 
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width

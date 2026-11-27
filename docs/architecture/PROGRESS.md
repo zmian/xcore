@@ -123,6 +123,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Fix:** Remove warnings; `family` returns `"Mac"` on macOS.
 - **Verify:** ENTROPY total 5→3; `make audit-architecture` local.
 
+### Round 14 — Theme corner radius SSOT (2026-11-27)
+
+- **Migrate:** `Theme.cornerRadius`; `AppConstants.cornerRadius` forwards (drops one `nonisolated(unsafe)`).
+- **Call sites:** Prominent button/text field factories, `View+Border`, previews.
+- **Test:** `ThemeLayoutTests`; concurrency inventory 62→61.
+- **Verify:** `make audit-architecture` local.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

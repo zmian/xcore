@@ -77,6 +77,9 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
     /// The color for placeholder text in controls or text views.
     public var placeholderTextColor: Color
 
+    /// The default corner radius for controls and containers.
+    public var cornerRadius: CGFloat
+
     // MARK: - Sentiment Color
 
     /// The color for representing positive sentiment.
@@ -160,6 +163,7 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         toggleColor: Color,
         linkColor: Color,
         placeholderTextColor: Color,
+        cornerRadius: CGFloat = 15,
 
         // Sentiment
         positiveSentimentColor: Color,
@@ -199,6 +203,7 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         self.toggleColor = toggleColor
         self.linkColor = linkColor
         self.placeholderTextColor = placeholderTextColor
+        self.cornerRadius = cornerRadius
 
         // Sentiment
         self.positiveSentimentColor = positiveSentimentColor

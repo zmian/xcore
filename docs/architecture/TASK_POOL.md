@@ -6,7 +6,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-016a | Migrate specific `AppConstants` consumers to injected theme (incremental) | ADR 0005; avoid breaking public API |
+| T-016b | Migrate spacing (`Spacing`) defaults toward theme or documented SSOT | ADR 0005; larger surface |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 
 ## Pending confirmation
@@ -39,3 +39,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-024 | Remove ProminentButtonStyle `#warning`; DependencyKeyDefaultsTests |
 | T-025 | GOVERNANCE_SUMMARY + pasteboard dependency default test |
 | T-026 | DEPENDENCY_REGISTRY + audit script |
+| T-027 | Theme `cornerRadius` SSOT; `AppConstants` forwarder; library call sites |

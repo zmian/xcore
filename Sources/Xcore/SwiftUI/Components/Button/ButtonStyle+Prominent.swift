@@ -119,11 +119,11 @@ extension ButtonStyle {
 
 extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
     public static var rectFill: Self {
-        .fill(shape: .rect(cornerRadius: AppConstants.cornerRadius))
+        .fill(shape: .rect(cornerRadius: Theme.cornerRadius))
     }
 
     public static var rectOutline: Self {
-        .outline(shape: .rect(cornerRadius: AppConstants.cornerRadius))
+        .outline(shape: .rect(cornerRadius: Theme.cornerRadius))
     }
 }
 
