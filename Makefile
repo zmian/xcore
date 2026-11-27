@@ -57,7 +57,7 @@ TEST_ONLY_ARG := -only-testing:$(TEST_ONLY)
 endif
 endif
 
-.PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check
+.PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check audit-architecture
 
 _ensure_xcode:
 	@test -d "$(DEVELOPER_DIR)" || (echo "Xcode not found at $(DEVELOPER_DIR)" && exit 1)
@@ -114,3 +114,6 @@ format-check: ## Check SwiftFormat without changing files
 
 lint: ## Run SwiftLint
 	@swiftlint lint
+
+audit-architecture: ## Run architecture governance checks (no Xcode required)
+	@bash BuildTools/Scripts/audit_dependency_keys.sh

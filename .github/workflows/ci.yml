@@ -36,3 +36,6 @@ jobs:
 
       - name: Lint
         run: make lint
+
+      - name: Architecture audit
+        run: make audit-architecture

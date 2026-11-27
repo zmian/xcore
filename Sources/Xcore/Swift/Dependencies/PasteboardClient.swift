@@ -67,6 +67,8 @@ extension PasteboardClient {
 extension DependencyValues {
     private enum PasteboardClientKey: DependencyKey {
         static let liveValue: PasteboardClient = .live
+        static let testValue: PasteboardClient = .unimplemented
+        static let previewValue: PasteboardClient = .noop
     }
 
     /// Provides functionality for copying a string to pasteboard.
