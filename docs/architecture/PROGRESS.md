@@ -232,6 +232,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_extensions_index.sh`, `audit_dependency_layout.sh`; metrics + audit count **19**.
 - **Verify:** `make audit-architecture` (19 scripts).
 
+### Round 32 — Platform extension indexes (2026-11-27)
+
+- **Document:** `COCOA_EXTENSIONS_INDEX.md`, `SWIFTUI_EXTENSIONS_INDEX.md`.
+- **Enforce:** `audit_cocoa_extensions_index.sh`, `audit_swiftui_extensions_index.sh`; audits **21**.
+- **Verify:** `make audit-architecture`.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

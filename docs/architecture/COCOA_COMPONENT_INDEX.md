@@ -20,7 +20,7 @@ Sibling areas (`Blocks/`, `Extensions/`, `Protocols/`) are documented below but 
 | Area | Role |
 | --- | --- |
 | Blocks | Block-based `UIControl` / gesture / mail compose targets (`Cocoa/Blocks/`) |
-| Extensions | UIKit / AppKit / AVFoundation category extensions |
+| Extensions | UIKit / AVFoundation extensions — [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md) |
 | Protocols | Associated-object extensibility |
 
 Place new **image / HUD / swizzle** domains under `Components/`; add a table row before merging substantial features.

@@ -57,3 +57,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-042 | `GOVERNANCE_METRICS.md` + `audit_governance_metrics.sh`; registry path check |
 | T-044 | `DEPENDENCY_LAYOUT.md` + `GOVERNANCE_SUMMARY` sync |
 | T-045 | `EXTENSIONS_INDEX.md` + `audit_dependency_layout.sh`; audits **19** |
+| T-046 | Cocoa + SwiftUI extension indexes; audits **21** |

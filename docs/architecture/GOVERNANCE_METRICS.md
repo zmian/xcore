@@ -5,13 +5,17 @@ Headline budgets agents should not regress without updating source inventories a
 
 | Metric | Value |
 | --- | --- |
-| Architecture audit scripts | 19 |
+| Architecture audit scripts | 21 |
 | Production dependency keys | 14 |
 | nonisolated(unsafe) in Sources/Xcore | 44 |
 | #warning in Sources/Xcore | 3 |
 | Swift/Components domains | 14 |
 | SwiftUI/Components domains | 21 |
 | Cocoa/Components domains | 3 |
+| Cocoa/Extensions folders | 1 |
+| Cocoa/Extensions root files | 23 |
+| SwiftUI/Extensions folders | 2 |
+| SwiftUI/Extensions root files | 35 |
 | Swift/Helpers files | 9 |
 | Swift/Extensions domains | 4 |
 | Swift/Extensions root files | 24 |

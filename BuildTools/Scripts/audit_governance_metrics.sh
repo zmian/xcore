@@ -39,7 +39,9 @@ for pair in \
   "Cocoa/Components domains:COCOA_COMPONENT_INDEX.md:Total:" \
   "Swift/Helpers files:HELPERS_INDEX.md:Total:" \
   "Swift/Extensions domains:EXTENSIONS_INDEX.md:Total:" \
-  "Swift/Dependencies subfolders:DEPENDENCY_LAYOUT.md:Total subfolders:"; do
+  "Swift/Dependencies subfolders:DEPENDENCY_LAYOUT.md:Total subfolders:" \
+  "Cocoa/Extensions folders:COCOA_EXTENSIONS_INDEX.md:Total:" \
+  "SwiftUI/Extensions folders:SWIFTUI_EXTENSIONS_INDEX.md:Total:"; do
   IFS=':' read -r label file marker <<< "$pair"
   doc_path="$ROOT/docs/architecture/$file"
   if [[ "$marker" == "Total subfolders" ]]; then
@@ -60,6 +62,18 @@ ext_root_doc="$(expected_metric 'Swift/Extensions root files')"
   echo "Swift/Extensions root files: EXTENSIONS_INDEX $ext_root_live, GOVERNANCE_METRICS $ext_root_doc"
   exit 1
 }
+
+for pair in \
+  "Cocoa/Extensions root files:COCOA_EXTENSIONS_INDEX.md:Root" \
+  "SwiftUI/Extensions root files:SWIFTUI_EXTENSIONS_INDEX.md:Root"; do
+  IFS=':' read -r label file _ <<< "$pair"
+  live="$(rg -o 'Root files: [0-9]+' "$ROOT/docs/architecture/$file" | head -1 | rg -o '[0-9]+')"
+  doc="$(expected_metric "$label")"
+  [[ "$live" == "$doc" ]] || {
+    echo "$label: $file says $live, GOVERNANCE_METRICS $doc"
+    exit 1
+  }
+done
 
 imports_doc="$ROOT/docs/architecture/LAYER_IMPORTS.md"
 cocoa_allow="$(rg -o 'Allowlist count: [0-9]+' "$imports_doc" | sed -n '1p' | rg -o '[0-9]+')"
