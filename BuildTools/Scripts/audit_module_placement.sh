@@ -9,6 +9,11 @@ DEPENDENCY_KEY_ALLOWLIST=(
   "Sources/Xcore/SwiftUI/Components/Pond/Pond.swift"
 )
 
+UNIMPLEMENTED_STYLE_PATHS=(
+  "$SOURCES/Swift/Dependencies"
+  "$SOURCES/SwiftUI/Components/Pond"
+)
+
 failures=()
 
 mapfile -t key_files < <(rg --no-heading -l '^\s*(private\s+)?enum\s+\w+.*:\s*DependencyKey' "$SOURCES" || true)
@@ -45,15 +50,16 @@ if rg -q 'IssueReporting\.' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/de
   failures+=("Use reportIssue for unimplemented dependency clients (see ADR 0003)")
 fi
 
-if rg -q 'reportIssue\("\$\(Self\.self\)' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
-  rg -n 'reportIssue\("\$\(Self\.self\)' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
-  failures+=('Use raw #\"Unimplemented: @Dependency(...)\"# strings (see ADR 0003)')
-fi
-
-if rg -q ' is unimplemented' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
-  rg -n ' is unimplemented' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
-  failures+=("Replace legacy unimplemented message wording in Swift/Dependencies")
-fi
+for path in "${UNIMPLEMENTED_STYLE_PATHS[@]}"; do
+  if rg -q 'reportIssue\("\$\(Self\.self\)' "$path" --glob '*.swift' 2>/dev/null; then
+    rg -n 'reportIssue\("\$\(Self\.self\)' "$path" --glob '*.swift' || true
+    failures+=('Use raw #\"Unimplemented: @Dependency(...)\"# strings (see ADR 0003)')
+  fi
+  if rg -q ' is unimplemented' "$path" --glob '*.swift' 2>/dev/null; then
+    rg -n ' is unimplemented' "$path" --glob '*.swift' || true
+    failures+=("Replace legacy unimplemented message wording (see ADR 0003)")
+  fi
+done
 
 if ((${#failures[@]} > 0)); then
   echo "Module placement audit failed:"
