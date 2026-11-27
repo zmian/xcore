@@ -51,3 +51,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-037 | `FORMATTING_DEFAULTS.md` + freeze mask/fraction/random; concurrency −5 |
 | T-038 | `LAYER_IMPORTS.md` + `audit_cocoa_swiftui_imports.sh` |
 | T-039 | `CodingFormatStyleDefaults` SSOT + `audit_coding_defaults.sh` |
+| T-040 | Swift/Components UIKit allowlist + unified `audit_layer_imports.sh` |

@@ -203,6 +203,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_coding_defaults.sh`, `CODING_DEFAULTS.md`; concurrency 45→44.
 - **Verify:** `make audit-architecture` (15 scripts).
 
+### Round 27 — Swift/Components UIKit allowlist (2026-11-27)
+
+- **Document:** `LAYER_IMPORTS.md` Swift/Components→UIKit (3 files).
+- **Enforce:** merged `audit_layer_imports.sh` (replaces cocoa-only script).
+- **Verify:** `make audit-architecture` (15 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

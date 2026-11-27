@@ -31,7 +31,7 @@ Xcore uses folder conventions (`Swift/`, `SwiftUI/`, `Cocoa/`) without separate 
 
 - Prefer UIKit/AppKit APIs in `Cocoa/`, SwiftUI in `SwiftUI/`.
 - `Swift/Components/` may import SwiftUI for types shared with views (e.g. `Money`); new UIKit-only code should not land there without justification.
-- `import SwiftUI` under `Cocoa/` is limited to the allowlist in `LAYER_IMPORTS.md`; enforced by `audit_cocoa_swiftui_imports.sh`.
+- Cross-layer imports are limited to `LAYER_IMPORTS.md`; enforced by `audit_layer_imports.sh` (Cocoa→SwiftUI, Swift/Components→UIKit).
 
 ## Consequences
 

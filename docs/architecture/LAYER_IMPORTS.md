@@ -1,10 +1,10 @@
 # Layer import boundaries
 
-ADR 0003: UIKit/AppKit code lives under `Cocoa/`; SwiftUI under `SwiftUI/`. Cross-layer imports are exceptions, not defaults.
+ADR 0003: UIKit/AppKit code lives under `Cocoa/`; SwiftUI under `SwiftUI/`. Cross-layer imports are exceptions, not defaults. Enforced by `audit_layer_imports.sh`.
 
 ## Cocoa importing SwiftUI
 
-**Total: 4** allowed files (`audit_cocoa_swiftui_imports.sh`).
+**Allowlist count: 4**
 
 | File | Rationale |
 | --- | --- |
@@ -13,4 +13,14 @@ ADR 0003: UIKit/AppKit code lives under `Cocoa/`; SwiftUI under `SwiftUI/`. Cros
 | `Cocoa/Extensions/UIColor+Extensions.swift` | `Color` / SwiftUI interop |
 | `Cocoa/Extensions/UIFont/UIFont+Typeface.swift` | `Font` bridging for typeface |
 
-New `import SwiftUI` under `Sources/Xcore/Cocoa/` requires updating this table and the audit allowlist.
+## Swift/Components importing UIKit
+
+**Allowlist count: 3**
+
+| File | Rationale |
+| --- | --- |
+| `Swift/Components/Assets/SystemAssetIdentifier.swift` | Asset catalog / symbol resolution |
+| `Swift/Components/Combine/Publishers.swift` | UIKit notification publishers |
+| `Swift/Components/Configuration/Configuration.swift` | UI appearance configuration hooks |
+
+Update the relevant section, allowlist in `audit_layer_imports.sh`, and ADR 0003 before adding new cross-layer imports.
