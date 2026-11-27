@@ -14,7 +14,12 @@ final class StoryTimer {
     private let cycle: Count<UInt>
     private var pagesCount: Int
     private var cyclesCompleted = 0
-    private var isPaused = false
+    private enum RunPhase: Equatable {
+        case idle
+        case running(isPaused: Bool)
+    }
+
+    private var runPhase = RunPhase.idle
     private var timerTask: Task<Void, any Error>?
     var onCycleComplete: ((_ remainingCycles: Count<UInt>) -> Void)?
     var progress: Double
@@ -28,6 +33,7 @@ final class StoryTimer {
 
     func start() {
         timerTask?.cancel()
+        runPhase = .running(isPaused: false)
         timerTask = Task {
             while !Task.isCancelled {
                 try await Task.sleep(for: tick)
@@ -39,14 +45,23 @@ final class StoryTimer {
     func stop() {
         timerTask?.cancel()
         timerTask = nil
+        runPhase = .idle
     }
 
     func resume() {
-        isPaused = false
+        guard case let .running(isPaused) = runPhase, isPaused else {
+            return
+        }
+
+        runPhase = .running(isPaused: false)
     }
 
     func pause() {
-        isPaused = true
+        guard case .running = runPhase else {
+            return
+        }
+
+        runPhase = .running(isPaused: true)
     }
 
     func advance(by number: Int) {
@@ -62,7 +77,7 @@ final class StoryTimer {
     }
 
     private func updateProgress() {
-        guard !isPaused else {
+        guard case let .running(isPaused: false) = runPhase else {
             return
         }
 

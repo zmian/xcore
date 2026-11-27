@@ -62,7 +62,12 @@ extension URL {
 /// - Note: This is useful when resolving URLs that require JavaScript execution
 ///   (e.g., some tracking URLs that depend on client-side redirection).
 private final class URLRedirectResolver: UIView, WKNavigationDelegate {
-    private var isCancelled = false
+    private enum ResolutionPhase {
+        case inProgress
+        case finished
+    }
+
+    private var phase = ResolutionPhase.inProgress
     private let url: URL
     private let webView = WKWebView()
     private var continuation: CheckedContinuation<URL?, Never>?
@@ -107,19 +112,19 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        guard !isCancelled else { return }
+        guard phase == .inProgress else { return }
         completeResolution(with: webView.url)
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        guard !isCancelled else { return }
+        guard phase == .inProgress else { return }
         reportIssue(error, "didFailNavigation")
         completeResolution(with: webView.url)
     }
 
     /// Cancels the resolution process.
     private func cancel() {
-        guard !isCancelled else { return }
+        guard phase == .inProgress else { return }
         completeResolution(with: nil)
     }
 
@@ -130,10 +135,10 @@ private final class URLRedirectResolver: UIView, WKNavigationDelegate {
     ///   process failed.
     private func completeResolution(with resolvedUrl: URL?) {
         timeoutTask?.cancel()
-        // Mark "isCancelled" as true to prevent further events being send to
+        // Mark the phase as finished to prevent further events from reaching the
         // continuation. This avoids potential crashes due to multiple resumptions of
         // the continuation.
-        isCancelled = true
+        phase = .finished
 
         // Resume the awaiting task with the resolved URL.
         continuation?.resume(returning: resolvedUrl)

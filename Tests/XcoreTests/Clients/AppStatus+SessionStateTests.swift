@@ -27,4 +27,11 @@ struct AppStatusSessionStateTests {
         #expect(state.canTransition(to: .unlocked))
         #expect(!state.canTransition(to: .signedOut))
     }
+
+    @Test
+    func stateMachineWrapper() throws {
+        var machine = StateMachine(AppStatus.SessionState.locked)
+        try machine.transition(to: .unlocked)
+        #expect(machine.state == .unlocked)
+    }
 }

@@ -40,8 +40,8 @@ import UIKit
 /// ```
 @MainActor
 open class HUD: Appliable {
-    public private(set) var isHidden = true
-    private var isTemporarilySuppressed = false
+    private var presentation = PresentationState.hidden
+    public var isHidden: Bool { presentation.isHidden }
     private let window: UIWindow
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
@@ -223,7 +223,7 @@ open class HUD: Appliable {
     /// permission then splash screen is suppressed when system permission dialog
     /// appears.
     open func suppressTemporarily() {
-        isTemporarilySuppressed = true
+        presentation.armSuppression()
     }
 
     private func _setHidden(_ hide: Bool, animated: Bool, _ completion: (() -> Void)?) {
@@ -232,17 +232,16 @@ open class HUD: Appliable {
             return
         }
 
-        // If `hide` is `false` and `isTemporarilySuppressed` flag is `true`. Then, call
-        // completion handler and return to respect `isTemporarilySuppressed` flag.
-        if !hide, isTemporarilySuppressed {
-            isTemporarilySuppressed = false
+        if !hide, !presentation.beginShow() {
             completion?()
             return
         }
 
-        let duration = (hide ? animationDuration.hide : animationDuration.show).seconds
+        if hide {
+            presentation.beginHide()
+        }
 
-        isHidden = hide
+        let duration = (hide ? animationDuration.hide : animationDuration.show).seconds
 
         if hide {
             guard animated else {
@@ -294,6 +293,65 @@ open class HUD: Appliable {
         Task {
             try await Task.sleep(for: delayDuration)
             setHidden(hide, animated: animated, completion)
+        }
+    }
+}
+
+// MARK: - PresentationState
+
+extension HUD {
+    /// Visibility and one-shot show suppression modeled as a single explicit state.
+    enum PresentationState: Equatable, Sendable {
+        case hidden
+        case visible
+        case hiddenSuppressingNextShow
+        case visibleSuppressingNextShow
+
+        var isHidden: Bool {
+            switch self {
+                case .hidden, .hiddenSuppressingNextShow:
+                    true
+                case .visible, .visibleSuppressingNextShow:
+                    false
+            }
+        }
+
+        mutating func armSuppression() {
+            switch self {
+                case .hidden:
+                    self = .hiddenSuppressingNextShow
+                case .visible:
+                    self = .visibleSuppressingNextShow
+                case .hiddenSuppressingNextShow, .visibleSuppressingNextShow:
+                    break
+            }
+        }
+
+        /// Updates state for a show request.
+        ///
+        /// - Returns: Whether the HUD should become visible.
+        mutating func beginShow() -> Bool {
+            switch self {
+                case .hidden:
+                    self = .visible
+                    return true
+                case .hiddenSuppressingNextShow:
+                    self = .hidden
+                    return false
+                case .visible, .visibleSuppressingNextShow:
+                    return false
+            }
+        }
+
+        mutating func beginHide() {
+            switch self {
+                case .visible:
+                    self = .hidden
+                case .visibleSuppressingNextShow:
+                    self = .hiddenSuppressingNextShow
+                case .hidden, .hiddenSuppressingNextShow:
+                    break
+            }
         }
     }
 }
