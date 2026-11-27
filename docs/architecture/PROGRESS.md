@@ -226,6 +226,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `DEPENDENCY_LAYOUT.md`; fix stale concurrency counts in agent quick start.
 - **Verify:** `make audit-architecture` (unchanged).
 
+### Round 31 — Extension + dependency layout audits (2026-11-27)
+
+- **Document:** `EXTENSIONS_INDEX.md` (4 folders, 24 root files).
+- **Enforce:** `audit_extensions_index.sh`, `audit_dependency_layout.sh`; metrics + audit count **19**.
+- **Verify:** `make audit-architecture` (19 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

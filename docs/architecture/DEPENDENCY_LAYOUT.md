@@ -3,6 +3,8 @@
 All production `@Dependency` keys (except `pond`) live under `Sources/Xcore/Swift/Dependencies/`.  
 Canonical key list: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md).
 
+**Total subfolders: 9** · **Total production root clients: 4** (`audit_dependency_layout.sh`).
+
 ## Subfolders (domain clients)
 
 | Folder | Keys |
