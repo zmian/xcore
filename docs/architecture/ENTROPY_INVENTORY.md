@@ -5,15 +5,16 @@ Pair with `TASK_POOL.md` for execution status.
 
 ## Compiler warnings in sources
 
-**Total: 6** `#warning` directives (`make audit-architecture`).
+**Total: 5** `#warning` directives (`make audit-architecture`).
 
 | File | Note |
 | --- | --- |
 | `PushNotificationsClient+Live.swift` | Settings URL segfault when enabled |
 | `Pond.swift` | Future migration to Point-Free Shared |
 | `AddressSearchClient+Live.swift` | Localization via stringsdict |
-| `ButtonStyle+Prominent.swift` | iOS 16 control size APIs |
 | `Device.swift` / `Device+Model.swift` | Unimplemented device paths |
+
+Resolved (Round 10): removed stale `ProminentButtonStyle` `#warning` (iOS 26 target; control size deferred to T-019).
 
 ## Multiple implementations (same semantics)
 

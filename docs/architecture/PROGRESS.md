@@ -98,6 +98,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Test:** `FeatureFlagTests.compositeInitDeduplicatesProvidersWithSameId` (registration composite baseline).
 - **Verify:** audits local; feature flag + image fetcher composite tests on macOS CI.
 
+### Round 10 — Warning reduction + dependency test defaults (2026-11-27)
+
+- **Delete:** Stale `ProminentButtonStyle` `#warning` (5 warnings remain).
+- **Test:** `DependencyKeyDefaultsTests` guards ADR 0001 `testValue` behavior for SessionCounter and OpenURL.
+- **Verify:** `make audit-architecture` passes.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

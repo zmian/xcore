@@ -27,4 +27,5 @@ An architecture scan found inconsistent `DependencyKey` implementations: most cl
 
 - Automated: `make audit-architecture` / `BuildTools/Scripts/audit_dependency_keys.sh`
 - CI: runs audit on every PR alongside build/test/lint
+- Behavioral: `DependencyKeyDefaultsTests` (production keys use inert `testValue` in the test runner)
 - File template: [ADR 0002](./0002-dependency-client-template.md)

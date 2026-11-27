@@ -6,8 +6,6 @@
 
 import SwiftUI
 
-#warning("TODO: Incorporate control size and prominence iOS 16 modifiers.")
-
 public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let id: ButtonIdentifier
     private let prominence: ButtonProminence
