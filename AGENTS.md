@@ -41,6 +41,15 @@ and uses `Xcore.xcworkspace` + the `Example` scheme. That is the supported path.
 - For SwiftUI and concurrency warnings, follow the framework API contract; do not
   add unsafe workarounds.
 
+## Architecture governance
+
+Ongoing entropy reduction is tracked under `docs/architecture/` (progress log,
+task pool, architecture map). Before adding a `@Dependency` client, read
+`docs/architecture/adr/0002-dependency-client-template.md`.
+
+Verification without Xcode: `make audit-architecture` (dependency keys, module
+placement, concurrency inventory counts).
+
 ## Fixed Decisions
 
 - Xcore is one Swift package target: `import Xcore`. Folders (`Swift/`,

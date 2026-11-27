@@ -39,6 +39,8 @@ extension ExampleClient {
         }
     }
 
+    // Use `reportIssue`, not `IssueReporting.unimplemented` (see ADR 0003).
+
     public static var live: Self {
         .init { /* real implementation */ }
     }

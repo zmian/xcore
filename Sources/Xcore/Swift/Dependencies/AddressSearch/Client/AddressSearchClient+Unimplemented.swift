@@ -8,28 +8,28 @@ import Foundation
 
 public struct UnimplementedAddressSearchClient: AddressSearchClient {
     public func query(_ query: String) async throws -> PostalAddress {
-        IssueReporting.unimplemented("\(AddressSearchClient.self).search")
+        reportIssue(#"Unimplemented: @Dependency(\.addressSearch).query"#)
         throw CancellationError()
     }
 
     public func updateQuery(_ query: String, id: UUID) {
-        IssueReporting.unimplemented("\(AddressSearchClient.self).updateQuery")
+        reportIssue(#"Unimplemented: @Dependency(\.addressSearch).updateQuery"#)
     }
 
     public func resolve(_ result: AddressSearchResult) async throws -> PostalAddress {
-        IssueReporting.unimplemented("\(AddressSearchClient.self).resolve")
+        reportIssue(#"Unimplemented: @Dependency(\.addressSearch).resolve"#)
         throw CancellationError()
     }
 
     public func validate(_ address: PostalAddress) async throws {
-        IssueReporting.unimplemented("\(AddressSearchClient.self).validate")
+        reportIssue(#"Unimplemented: @Dependency(\.addressSearch).validate"#)
         throw CancellationError()
     }
 
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
-        .init {
-            IssueReporting.unimplemented("\(AddressSearchClient.self).observe")
-            $0.finish()
+        .init { continuation in
+            reportIssue(#"Unimplemented: @Dependency(\.addressSearch).observe"#)
+            continuation.finish()
         }
     }
 }

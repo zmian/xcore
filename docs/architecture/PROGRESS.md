@@ -61,6 +61,14 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_concurrency_inventory.sh` wired into `make audit-architecture`.
 - **Verify:** audit passes against documented total.
 
+### Round 4 — Module boundaries + canonical unimplemented diagnostics (2026-11-27)
+
+- **Discover:** `AddressSearchClient+Unimplemented` used `IssueReporting.unimplemented` (and mislabeled `.search`); only parallel implementation in `Swift/Dependencies/`.
+- **Migrate:** Standardized on `reportIssue` with `@Dependency(\.addressSearch).*` messages.
+- **Enforce:** `audit_module_placement.sh` (DependencyKey placement, client paths, no `IssueReporting` in Dependencies).
+- **Document:** ADR 0003; `AGENTS.md` links governance docs (T-014).
+- **Verify:** `make audit-architecture` passes.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

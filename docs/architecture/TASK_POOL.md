@@ -6,8 +6,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-013 | SwiftLint opt-in rule or expanded audit for file placement (`Dependencies/` vs `Components/`) | Enforceable boundaries |
-| T-014 | Align `EventsClient` hosted-client doc with ADR 0002 in DocC or README cross-link | Agents discover template from code |
+| T-017 | Standardize `SessionCounter` / `PushNotifications` unimplemented strings to raw `#"Unimplemented: @Dependency(...)"#` | Match ADR 0003 messaging |
 | T-016 | Reduce mutable globals in `Constants.swift` / `FeatureFlag.provider` via injection | Concurrency inventory hotspots |
 
 ## Pending confirmation
@@ -29,3 +28,5 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-011 | ADR 0002 dependency client template |
 | T-012 | Composite registration API deletion test (no removals) |
 | T-015 | `CONCURRENCY_INVENTORY.md` + count audit script |
+| T-013 | `audit_module_placement.sh` + ADR 0003 |
+| T-014 | `AGENTS.md` architecture governance section |
