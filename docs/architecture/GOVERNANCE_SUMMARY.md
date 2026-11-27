@@ -5,8 +5,9 @@
 ## Before you edit
 
 1. Read [ADR 0002](./adr/0002-dependency-client-template.md) when adding `@Dependency` clients.
-2. Run `make audit-architecture` (Linux-safe) before push.
-3. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
+2. Run `make audit-architecture` (Linux-safe, 11 checks) before push.
+3. Catalog of registries and inventories: [REGISTRY_CATALOG.md](./REGISTRY_CATALOG.md).
+4. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
 
 ## Single source of truth
 

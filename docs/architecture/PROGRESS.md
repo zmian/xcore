@@ -165,6 +165,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_swiftui_component_index.sh`; README/AGENTS links.
 - **Verify:** `make audit-architecture` (10 scripts).
 
+### Round 21 — Governance catalog + audit meta-check (2026-11-27)
+
+- **Document:** `REGISTRY_CATALOG.md`, `adr/README.md`.
+- **Enforce:** `audit_audit_index.sh` (Makefile ↔ `AUDIT_INDEX.md` parity).
+- **Verify:** `make audit-architecture` (11 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
