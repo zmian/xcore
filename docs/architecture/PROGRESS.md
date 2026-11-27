@@ -76,6 +76,14 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_module_placement.sh` rejects `IssueReporting`, `Self.self` wording, and legacy ` is unimplemented` strings.
 - **Verify:** `make audit-architecture` passes.
 
+### Round 7 — Entropy inventory + composite dedupe (2026-11-27)
+
+- **Discover:** `CompositeImageFetcher` inits did not `uniqued(\.id)` unlike `CompositeFeatureFlagProvider`; 6 tracked `#warning` directives.
+- **Migrate:** ImageFetcher composite inits dedupe by id (ADR 0004).
+- **Document:** `ENTROPY_INVENTORY.md`, ADR 0004 composite registration pattern.
+- **Enforce:** `audit_compiler_warnings.sh` for `#warning` count regression.
+- **Verify:** `make audit-architecture` passes.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

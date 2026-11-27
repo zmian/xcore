@@ -13,11 +13,11 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
     nonisolated(unsafe) private var fetchers: [ImageFetcher] = []
 
     init(_ fetchers: [ImageFetcher]) {
-        self.fetchers = fetchers
+        self.fetchers = fetchers.uniqued(\.id)
     }
 
     init(arrayLiteral elements: ImageFetcher...) {
-        self.fetchers = elements
+        self.fetchers = elements.uniqued(\.id)
     }
 
     /// Add given fetcher if it's not already included in the collection.

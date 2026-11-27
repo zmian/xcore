@@ -6,8 +6,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-018 | Align `Pond+Unimplemented` messages with ADR 0003 (`@Dependency(\.pond)`) | SwiftUI storage client |
 | T-016 | Reduce mutable globals in `Constants.swift` / `FeatureFlag.provider` via injection | Concurrency inventory hotspots |
+| T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 
 ## Pending confirmation
 
@@ -32,3 +32,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-014 | `AGENTS.md` architecture governance section |
 | T-017 | Canonical `Unimplemented:` messages in all `Swift/Dependencies` clients |
 | T-018 | Pond unimplemented messages + audit scope |
+| T-020 | ENTROPY_INVENTORY + ADR 0004 composite registration; ImageFetcher init dedupe |
