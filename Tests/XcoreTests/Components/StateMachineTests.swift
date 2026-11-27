@@ -30,8 +30,8 @@ struct StateMachineTests {
         let locked = machine.transitionIfAllowed(to: .locked)
         #expect(locked)
         #expect(machine.state == .locked)
-        let unlocked = machine.transitionIfAllowed(to: .unlocked)
-        #expect(!unlocked)
+        let lockedAgain = machine.transitionIfAllowed(to: .locked)
+        #expect(!lockedAgain)
         #expect(machine.state == .locked)
     }
 }
