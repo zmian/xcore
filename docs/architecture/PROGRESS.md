@@ -221,6 +221,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_governance_metrics.sh`; dependency registry location dirs exist.
 - **Verify:** `make audit-architecture` (17 scripts).
 
+### Round 30 — Doc sync (2026-11-27)
+
+- **Document:** `DEPENDENCY_LAYOUT.md`; fix stale concurrency counts in agent quick start.
+- **Verify:** `make audit-architecture` (unchanged).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

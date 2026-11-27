@@ -7,6 +7,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | What |
 | --- | --- |
 | [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) | 14 production `@Dependency` keys |
+| [DEPENDENCY_LAYOUT.md](./DEPENDENCY_LAYOUT.md) | Folder layout for dependency clients |
 | [HELPERS_INDEX.md](./HELPERS_INDEX.md) | 9 `Swift/Helpers` files |
 | [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) | 14 `Swift/Components` domains |
 | [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) | 21 `SwiftUI/Components` domains |
@@ -20,7 +21,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | Budget |
 | --- | --- |
 | [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) | 3 `#warning`s in `Sources/Xcore` |
-| [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 51 `nonisolated(unsafe)` |
+| [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 44 `nonisolated(unsafe)` |
 
 ## Process
 

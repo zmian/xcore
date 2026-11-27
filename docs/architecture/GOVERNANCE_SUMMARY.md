@@ -25,12 +25,16 @@ Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 Swift), [SWIFT
 | Registration composites dedupe by `id` | 0004 + `audit_composite_registration.sh` |
 | Metadata: `UserInfoContainer`, `Theme` layout, `FeatureFlag.provider` | 0005 |
 | `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
+| Layer import allowlists | 0003 + `audit_layer_imports.sh` |
+| Headline metrics match inventories | `audit_governance_metrics.sh` |
 
 ## Inventories
 
+- [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) — enforced snapshot of all headline budgets
 - [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (3)
-- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (51)
-- [SPACING_SCALE.md](./SPACING_SCALE.md) — spacing tokens + theme forwards
+- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (44)
+- [SPACING_SCALE.md](./SPACING_SCALE.md) · [FORMATTING_DEFAULTS.md](./FORMATTING_DEFAULTS.md) · [CODING_DEFAULTS.md](./CODING_DEFAULTS.md)
+- [HELPERS_INDEX.md](./HELPERS_INDEX.md) · [LAYER_IMPORTS.md](./LAYER_IMPORTS.md)
 - [PROGRESS.md](./PROGRESS.md) — completed rounds
 
 ## macOS verification

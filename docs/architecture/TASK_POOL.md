@@ -7,6 +7,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
+| T-043 | Batch PR pushes; confirm green macOS CI on latest head before next merge push | CI stability on #153 |
 
 ## Pending confirmation
 
@@ -54,3 +55,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-040 | Swift/Components UIKit allowlist + unified `audit_layer_imports.sh` |
 | T-041 | `HELPERS_INDEX.md` + audit |
 | T-042 | `GOVERNANCE_METRICS.md` + `audit_governance_metrics.sh`; registry path check |
+| T-044 | `DEPENDENCY_LAYOUT.md` + `GOVERNANCE_SUMMARY` sync |
