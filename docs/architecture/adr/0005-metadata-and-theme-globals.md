@@ -1,0 +1,35 @@
+# ADR 0005: Metadata and theme global state
+
+## Status
+
+Accepted (2026-11-27)
+
+## Context
+
+Xcore uses `UserInfoContainer` for typed metadata bags (analytics, errors, feature flags, pond keys) and `AppConstants` / `Theme.default` for shared layout and theme defaults. These use `nonisolated(unsafe)` mutable statics (see `CONCURRENCY_INVENTORY.md`). Agents need a single documented owner for each concern.
+
+## Decision
+
+### Typed metadata
+
+- **`UserInfoContainer`** (`UserInfoKey.swift`) is the only pattern for `[Key: any Sendable]` metadata on domain types.
+- Do not introduce parallel userInfo dictionaries or `[String: Any]` bags on public types.
+
+### Feature flags
+
+- **`FeatureFlag.provider`** (composite) is the single registration point; apps call `FeatureFlag.register` only.
+
+### Layout and theme defaults
+
+- **`AppConstants`** in `Constants.swift` owns spacing, corner radius, and formatting defaults.
+- **`Theme.default`** owns SwiftUI theme defaults.
+- Mutating these at launch is supported for app branding; new globals must be added here (not scattered), and `CONCURRENCY_INVENTORY.md` updated when `nonisolated(unsafe)` count changes.
+
+### Future injection (T-016)
+
+Prefer `@Dependency` or constructor injection for *new* cross-cutting configuration. Migrating existing `AppConstants` mutators is optional and breaking-sensitive; document before moving.
+
+## Consequences
+
+- Entropy inventory tracks global hotspots.
+- No automated ban on `AppConstants` mutation yet; concurrency audit tracks annotation count.

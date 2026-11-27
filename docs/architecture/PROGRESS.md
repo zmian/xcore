@@ -84,6 +84,14 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_compiler_warnings.sh` for `#warning` count regression.
 - **Verify:** `make audit-architecture` passes.
 
+### Round 8 — Unimplemented analytics + metadata SSOT (2026-11-27)
+
+- **Discover:** `UnimplementedAnalyticsProvider` still used `IssueReporting`; metadata/theme globals lacked a single documented owner.
+- **Migrate:** Analytics unimplemented methods use `reportIssue`; audit bans `IssueReporting` across `Sources/Xcore`.
+- **Document:** ADR 0005 (`UserInfoContainer`, `AppConstants`, `FeatureFlag.provider`); README governance section.
+- **Test:** `ImageFetcherCompositeTests` for init deduplication by fetcher id.
+- **Verify:** `make audit-architecture` passes; `make test TEST_ONLY=...ImageFetcherCompositeTests` on macOS CI.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

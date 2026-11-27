@@ -45,9 +45,9 @@ while IFS= read -r -d '' file; do
   fi
 done < <(find "$SOURCES" -name '*Client*.swift' -print0 2>/dev/null)
 
-if rg -q 'IssueReporting\.' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
-  rg -n 'IssueReporting\.' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
-  failures+=("Use reportIssue for unimplemented dependency clients (see ADR 0003)")
+if rg -q 'IssueReporting\.' "$SOURCES" --glob '*.swift' 2>/dev/null; then
+  rg -n 'IssueReporting\.' "$SOURCES" --glob '*.swift' || true
+  failures+=("Use reportIssue for unimplemented types (see ADR 0003)")
 fi
 
 for path in "${UNIMPLEMENTED_STYLE_PATHS[@]}"; do

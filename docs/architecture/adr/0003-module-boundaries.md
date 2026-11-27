@@ -21,9 +21,11 @@ Xcore uses folder conventions (`Swift/`, `SwiftUI/`, `Cocoa/`) without separate 
 - Files named `*Client.swift` that extend `DependencyValues` must live under `Swift/Dependencies/`.
 - App-specific clients belong in the app target, following ADR 0002.
 
-### Unimplemented client diagnostics
+### Unimplemented diagnostics
 
-- Dependency `unimplemented` variants use `reportIssue` with a `#"Unimplemented: @Dependency(\.key)"#` string (or method-qualified suffix), not `IssueReporting.unimplemented`, so diagnostics match the rest of the module.
+- Dependency `unimplemented` variants use `reportIssue` with a `#"Unimplemented: @Dependency(\.key)"#` string (or method-qualified suffix).
+- Other unimplemented test doubles (e.g. `UnimplementedAnalyticsProvider`) use `reportIssue` with `#"Unimplemented: Type.method"#`.
+- Do not use `IssueReporting.unimplemented` in `Sources/Xcore`.
 
 ### UI coupling (documented, not fully automated)
 

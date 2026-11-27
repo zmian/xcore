@@ -6,7 +6,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-016 | Reduce mutable globals in `Constants.swift` / `FeatureFlag.provider` via injection | Concurrency inventory hotspots |
+| T-016a | Migrate specific `AppConstants` consumers to injected theme (incremental) | ADR 0005; avoid breaking public API |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 
 ## Pending confirmation
@@ -33,3 +33,5 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-017 | Canonical `Unimplemented:` messages in all `Swift/Dependencies` clients |
 | T-018 | Pond unimplemented messages + audit scope |
 | T-020 | ENTROPY_INVENTORY + ADR 0004 composite registration; ImageFetcher init dedupe |
+| T-021 | UnimplementedAnalyticsProvider + repo-wide IssueReporting ban |
+| T-022 | ADR 0005 metadata/theme SSOT; ImageFetcherCompositeTests; README |

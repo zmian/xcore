@@ -57,6 +57,8 @@ flowchart TB
 | Image fetcher registration | `UIImage` namespace / composite | `ImageFetcher/*` |
 | Dependency defaults | `DependencyKey` live/test/preview | `*/Dependencies/*` |
 | Localized copy | Generated `LocalizableStrings` | SwiftGen + `Resources/` |
+| Typed metadata bags | `UserInfoContainer` | `UserInfoKey.swift` (ADR 0005) |
+| Layout / theme defaults | `AppConstants`, `Theme.default` | `Constants.swift`, `Theme+Default.swift` (ADR 0005) |
 
 ## Duplicate / parallel implementations
 
