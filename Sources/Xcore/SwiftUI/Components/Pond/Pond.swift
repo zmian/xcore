@@ -86,6 +86,7 @@ extension DependencyValues {
     private enum PondKey: DependencyKey {
         static let liveValue: Pond = .unimplemented
         static let testValue: Pond = .unimplemented
+        static let previewValue: Pond = .empty
     }
 
     /// Provide functionality for key value storage.

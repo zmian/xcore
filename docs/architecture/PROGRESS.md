@@ -46,6 +46,14 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `BuildTools/Scripts/audit_dependency_keys.sh` + `make audit-architecture` in CI.
 - **Verify:** CI `make build` / `make test` (on macOS runner).
 
+### Round 2 — Preview values + client template (2026-11-27)
+
+- **Discover:** `AudioPlayerClient`, `RequestReviewClient`, `AddressSearchClient`, and `Pond` lacked `previewValue` despite `noop`/`empty` variants.
+- **Migrate:** Added canonical `previewValue` on those keys; `Pond` uses `.empty` for side-effect-free previews.
+- **Document:** ADR 0002 (file template); updated `EventsClient` usage doc; tightened audit for `previewValue` when `noop`/`empty` exists in the client directory.
+- **Audit (T-012):** `Analytics.register` variadic overload, `FeatureFlag.register(at:)`, and `ImageFetcher.register` are thin ergonomics over array/composite APIs — deletion test: removing them would push array-literal noise to every caller; **no removal**.
+- **Verify:** `make audit-architecture` passes (14 keys).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

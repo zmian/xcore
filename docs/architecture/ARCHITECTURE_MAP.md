@@ -37,6 +37,17 @@ flowchart TB
 
 **Dependency direction:** SwiftUI → Cocoa/UIKit → Swift components → Helpers. No target-level enforcement today; convention only.
 
+### Module boundary conventions (T-013 baseline)
+
+| Belongs in | Examples | Avoid |
+| --- | --- | --- |
+| `Swift/Dependencies/` | `OpenURLClient`, `AppPhaseClient`, service structs | Heavy SwiftUI view code |
+| `Swift/Components/` | `FeatureFlag`, `Analytics`, `Cache` | Direct `UIApplication` calls without Cocoa layer |
+| `SwiftUI/Components/` | `Pond`, `DataStatusView` | Business rules duplicated from `Swift/Components` |
+| `Cocoa/Components/` | `ImageFetcher`, `HUD` | SwiftUI-only types |
+
+`Pond` remains under SwiftUI because storage keys tie to SwiftUI previews and environment; dependency key is still audited like other clients.
+
 ## State ownership
 
 | Concern | Owner | Location |

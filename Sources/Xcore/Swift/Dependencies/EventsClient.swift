@@ -25,6 +25,8 @@
 /// extension DependencyValues {
 ///     private enum MyEventClientKey: DependencyKey {
 ///         static let liveValue: MyEventClient = .live
+///         static let testValue: MyEventClient = .unimplemented
+///         static let previewValue: MyEventClient = .noop
 ///     }
 ///
 ///     var myEvent: MyEventClient {

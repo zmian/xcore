@@ -6,10 +6,9 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-010 | Add `previewValue` to clients that have `.noop` but omit preview (`AudioPlayerClient`, `RequestReviewClient`, `AddressSearchClient`) | Align with SessionCounter / HapticFeedback pattern |
-| T-011 | Document canonical `@Dependency` client template in ADR | Single source for new clients |
-| T-012 | Audit `FeatureFlag` / `Analytics` / `ImageFetcher` composite APIs for redundant surface area | Deletion test on registration overloads |
 | T-013 | SwiftLint opt-in rule or expanded audit for file placement (`Dependencies/` vs `Components/`) | Enforceable boundaries |
+| T-014 | Align `EventsClient` hosted-client doc with ADR 0002 in DocC or README cross-link | Agents discover template from code |
+| T-015 | Inventory `@preconcurrency import` / `nonisolated(unsafe)` for concurrency entropy | Locality of change for Swift 6 |
 
 ## Pending confirmation
 
@@ -26,3 +25,6 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-001 | Governance docs + worktree setup |
 | T-002 | Normalize `testValue` / `previewValue` on four dependency clients |
 | T-003 | `audit_dependency_keys.sh` + CI wiring |
+| T-010 | `previewValue` on AudioPlayer, RequestReview, AddressSearch, Pond |
+| T-011 | ADR 0002 dependency client template |
+| T-012 | Composite registration API deletion test (no removals) |

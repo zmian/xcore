@@ -87,6 +87,7 @@ extension DependencyValues {
     private enum AddressSearchClientKey: DependencyKey {
         static let liveValue: AddressSearchClient = .live
         static let testValue: AddressSearchClient = .unimplemented
+        static let previewValue: AddressSearchClient = .noop
     }
 
     /// Provides functionality for address search completion based on partial search
