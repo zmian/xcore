@@ -31,3 +31,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-013 | `audit_module_placement.sh` + ADR 0003 |
 | T-014 | `AGENTS.md` architecture governance section |
 | T-017 | Canonical `Unimplemented:` messages in all `Swift/Dependencies` clients |
+| T-018 | Pond unimplemented messages + audit scope |
