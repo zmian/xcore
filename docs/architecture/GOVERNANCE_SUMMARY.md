@@ -19,7 +19,7 @@ Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (
 | Dependency keys: `live` + `test` + `preview` when `noop` exists | 0001, 0002 |
 | Keys live under `Swift/Dependencies/` (except `Pond`) | 0003 |
 | `reportIssue` for unimplemented; no `IssueReporting` | 0003 |
-| Registration composites dedupe by `id` | 0004 |
+| Registration composites dedupe by `id` | 0004 + `audit_composite_registration.sh` |
 | Metadata: `UserInfoContainer`, `Theme` layout, `FeatureFlag.provider` | 0005 |
 | `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
 

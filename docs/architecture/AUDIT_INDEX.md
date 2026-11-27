@@ -11,6 +11,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_compiler_warnings.sh` | `#warning` count matches `ENTROPY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_layout_ssot.sh` | `Theme.cornerRadius` canonical; no direct `AppConstants.cornerRadius` in sources (ADR 0005). |
 | `BuildTools/Scripts/audit_spacing_scale.sh` | Frozen `CGFloat.s1`…`s8` match `SPACING_SCALE.md`. |
+| `BuildTools/Scripts/audit_composite_registration.sh` | Provider/fetcher composites dedupe by `id` (ADR 0004; ImageTransform exempt). |
 
 Related docs: `PROGRESS.md`, `TASK_POOL.md`, `ARCHITECTURE_MAP.md`, `adr/*`.
 

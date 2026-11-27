@@ -148,6 +148,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_spacing_scale.sh`; concurrency 59→51.
 - **Verify:** `make audit-architecture` (7 scripts).
 
+### Round 18 — Composite registration audit (2026-11-27)
+
+- **Enforce:** `audit_composite_registration.sh` (ADR 0004 + ImageTransform exception).
+- **Verify:** `make audit-architecture` (8 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

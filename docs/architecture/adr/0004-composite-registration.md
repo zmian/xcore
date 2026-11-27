@@ -33,4 +33,5 @@ Event multiplexing for app lifecycle uses `EventsClient<Event>` with `AppPhaseCl
 ## Compliance
 
 - Documented in `ENTROPY_INVENTORY.md`
+- `audit_composite_registration.sh` checks init `uniqued(\.id)` and `add` guards; `CompositeImageTransform` exempt.
 - Regression: composite init behavior covered by existing fetcher/feature tests where present; audits do not replace behavioral tests for fetch ordering

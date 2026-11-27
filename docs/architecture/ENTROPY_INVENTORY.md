@@ -43,3 +43,5 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Module placement / unimplemented copy | `audit_module_placement.sh` |
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |
 | `#warning` count | `audit_compiler_warnings.sh` |
+| Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
+| Composite dedupe | `audit_composite_registration.sh` |
