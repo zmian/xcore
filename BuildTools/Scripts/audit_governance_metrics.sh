@@ -65,9 +65,18 @@ ext_root_doc="$(expected_metric 'Swift/Extensions root files')"
 
 for pair in \
   "Cocoa/Extensions root files:COCOA_EXTENSIONS_INDEX.md:Root" \
-  "SwiftUI/Extensions root files:SWIFTUI_EXTENSIONS_INDEX.md:Root"; do
-  IFS=':' read -r label file _ <<< "$pair"
-  live="$(rg -o 'Root files: [0-9]+' "$ROOT/docs/architecture/$file" | head -1 | rg -o '[0-9]+')"
+  "SwiftUI/Extensions root files:SWIFTUI_EXTENSIONS_INDEX.md:Root" \
+  "Cocoa/Blocks files:COCOA_SUPPORTING_INDEX.md:Blocks" \
+  "Cocoa/Protocols files:COCOA_SUPPORTING_INDEX.md:Protocols"; do
+  IFS=':' read -r label file marker <<< "$pair"
+  doc_path="$ROOT/docs/architecture/$file"
+  if [[ "$marker" == "Blocks" ]]; then
+    live="$(rg -o 'Blocks files: [0-9]+' "$doc_path" | head -1 | rg -o '[0-9]+')"
+  elif [[ "$marker" == "Protocols" ]]; then
+    live="$(rg -o 'Protocols files: [0-9]+' "$doc_path" | head -1 | rg -o '[0-9]+')"
+  else
+    live="$(rg -o 'Root files: [0-9]+' "$doc_path" | head -1 | rg -o '[0-9]+')"
+  fi
   doc="$(expected_metric "$label")"
   [[ "$live" == "$doc" ]] || {
     echo "$label: $file says $live, GOVERNANCE_METRICS $doc"

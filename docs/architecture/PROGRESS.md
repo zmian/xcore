@@ -238,6 +238,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_cocoa_extensions_index.sh`, `audit_swiftui_extensions_index.sh`; audits **21**.
 - **Verify:** `make audit-architecture`.
 
+### Round 33 — Cocoa Blocks/Protocols index (2026-11-27)
+
+- **Document:** `COCOA_SUPPORTING_INDEX.md`; refresh `ARCHITECTURE_MAP.md` index links.
+- **Enforce:** `audit_cocoa_supporting_index.sh`; audits **22**.
+- **Verify:** `make audit-architecture`. Push deferred per T-043 until green CI on prior head.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

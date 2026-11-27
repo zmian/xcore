@@ -10,6 +10,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [DEPENDENCY_LAYOUT.md](./DEPENDENCY_LAYOUT.md) | Folder layout for dependency clients |
 | [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) | Swift/Extensions folders and root files |
 | [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md) | Cocoa/Extensions layout |
+| [COCOA_SUPPORTING_INDEX.md](./COCOA_SUPPORTING_INDEX.md) | Cocoa/Blocks and Protocols |
 | [SWIFTUI_EXTENSIONS_INDEX.md](./SWIFTUI_EXTENSIONS_INDEX.md) | SwiftUI/Extensions layout |
 | [HELPERS_INDEX.md](./HELPERS_INDEX.md) | 9 `Swift/Helpers` files |
 | [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) | 14 `Swift/Components` domains |

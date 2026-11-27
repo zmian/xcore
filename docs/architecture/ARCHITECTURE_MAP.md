@@ -29,11 +29,11 @@ flowchart TB
 
 | Layer | Directory | Depends on | Notes |
 | --- | --- | --- | --- |
-| Foundation helpers | `Swift/Extensions`, `Swift/Helpers`, `Swift/Protocols` | Foundation, re-exported deps | [HELPERS_INDEX.md](./HELPERS_INDEX.md); `Xcore.swift` re-exports |
-| Components | `Swift/Components/*` | Helpers | See [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (`audit_component_index.sh`) |
-| DI clients | `Swift/Dependencies/*` | Components + Cocoa/SwiftUI as needed | `@Dependency` keys; prefer struct + variants |
-| UIKit | `Cocoa/*` | Swift components | Image pipeline, HUD; [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) |
-| SwiftUI | `SwiftUI/*` | Swift + Cocoa | UI domains: [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) |
+| Foundation helpers | `Swift/Extensions`, `Swift/Helpers` | Foundation, re-exported deps | [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md), [HELPERS_INDEX.md](./HELPERS_INDEX.md) |
+| Components | `Swift/Components/*` | Helpers | [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) |
+| DI clients | `Swift/Dependencies/*` | Components + Cocoa/SwiftUI as needed | [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md), [DEPENDENCY_LAYOUT.md](./DEPENDENCY_LAYOUT.md) |
+| UIKit | `Cocoa/*` | Swift components | [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md), [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md), [COCOA_SUPPORTING_INDEX.md](./COCOA_SUPPORTING_INDEX.md) |
+| SwiftUI | `SwiftUI/*` | Swift + Cocoa | [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md), [SWIFTUI_EXTENSIONS_INDEX.md](./SWIFTUI_EXTENSIONS_INDEX.md) |
 
 **Dependency direction:** SwiftUI → Cocoa/UIKit → Swift components → Helpers. Cocoa→SwiftUI import allowlist: [LAYER_IMPORTS.md](./LAYER_IMPORTS.md).
 
@@ -76,4 +76,4 @@ flowchart TB
 | `make build` | Compile Example + Xcore |
 | `make test` | Full test suite |
 | `make lint` | SwiftLint |
-| `make audit-architecture` | Dependency key & governance scripts (no Xcode) |
+| `make audit-architecture` | Governance audits — [AUDIT_INDEX.md](./AUDIT_INDEX.md), [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) (no Xcode) |
