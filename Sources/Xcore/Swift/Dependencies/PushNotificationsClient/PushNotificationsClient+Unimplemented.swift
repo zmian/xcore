@@ -12,20 +12,20 @@ extension PushNotificationsClient {
     public static var unimplemented: Self {
         .init(
             authorizationStatus: {
-                reportIssue("\(Self.self).authorizationStatus is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.pushNotifications).authorizationStatus"#)
                 return .notDetermined
             },
             events: {
-                AsyncStream<Event>.unimplemented("\(Self.self).events")
+                AsyncStream<Event>.unimplemented(#"Unimplemented: @Dependency(\.pushNotifications).events"#)
             },
             register: {
-                reportIssue("\(Self.self).register is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.pushNotifications).register"#)
             },
             unregister: {
-                reportIssue("\(Self.self).unregister is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.pushNotifications).unregister"#)
             },
             openAppSettings: {
-                reportIssue("\(Self.self).openAppSettings is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.pushNotifications).openAppSettings"#)
             }
         )
     }

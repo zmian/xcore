@@ -39,10 +39,10 @@ extension SessionCounterClient {
     /// Returns the unimplemented variant of `SessionCounterClient`.
     public static var unimplemented: Self {
         .init {
-            reportIssue("\(Self.self).count is unimplemented")
+            reportIssue(#"Unimplemented: @Dependency(\.sessionCounter).count"#)
             return 0
         } increment: {
-            reportIssue("\(Self.self).increment is unimplemented")
+            reportIssue(#"Unimplemented: @Dependency(\.sessionCounter).increment"#)
         }
     }
 }

@@ -42,7 +42,17 @@ done < <(find "$SOURCES" -name '*Client*.swift' -print0 2>/dev/null)
 
 if rg -q 'IssueReporting\.' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
   rg -n 'IssueReporting\.' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
-  failures+=("Use reportIssue for unimplemented dependency clients (see ADR 0002)")
+  failures+=("Use reportIssue for unimplemented dependency clients (see ADR 0003)")
+fi
+
+if rg -q 'reportIssue\("\$\(Self\.self\)' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
+  rg -n 'reportIssue\("\$\(Self\.self\)' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
+  failures+=('Use raw #\"Unimplemented: @Dependency(...)\"# strings (see ADR 0003)')
+fi
+
+if rg -q ' is unimplemented' "$SOURCES/Swift/Dependencies" --glob '*.swift' 2>/dev/null; then
+  rg -n ' is unimplemented' "$SOURCES/Swift/Dependencies" --glob '*.swift' || true
+  failures+=("Replace legacy unimplemented message wording in Swift/Dependencies")
 fi
 
 if ((${#failures[@]} > 0)); then

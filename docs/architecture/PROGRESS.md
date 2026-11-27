@@ -69,6 +69,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** ADR 0003; `AGENTS.md` links governance docs (T-014).
 - **Verify:** `make audit-architecture` passes.
 
+### Round 5 — Unimplemented diagnostic canon (2026-11-27)
+
+- **Discover:** Mixed `IssueReporting`, `"\(Self.self)...is unimplemented"`, and `@Dependency` raw strings across dependency clients.
+- **Migrate:** All `Swift/Dependencies` unimplemented paths now use `reportIssue(#"Unimplemented: ..."#)`.
+- **Enforce:** `audit_module_placement.sh` rejects `IssueReporting`, `Self.self` wording, and legacy ` is unimplemented` strings.
+- **Verify:** `make audit-architecture` passes.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
