@@ -44,3 +44,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-030 | Freeze `s1`…`s8` + `audit_spacing_scale.sh` |
 | T-031 | `audit_composite_registration.sh` (ADR 0004) |
 | T-032 | `COMPONENT_INDEX.md` + `audit_component_index.sh`; registry key names |
+| T-033 | `SWIFTUI_COMPONENT_INDEX.md` + audit |

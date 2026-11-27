@@ -117,6 +117,7 @@ lint: ## Run SwiftLint
 
 audit-architecture: ## Run architecture governance checks (no Xcode required)
 	@bash BuildTools/Scripts/audit_component_index.sh
+	@bash BuildTools/Scripts/audit_swiftui_component_index.sh
 	@bash BuildTools/Scripts/audit_dependency_registry.sh
 	@bash BuildTools/Scripts/audit_dependency_keys.sh
 	@bash BuildTools/Scripts/audit_concurrency_inventory.sh

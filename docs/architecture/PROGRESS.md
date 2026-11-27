@@ -159,6 +159,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_component_index.sh`; registry audit checks each dependency key name.
 - **Verify:** `make audit-architecture` (9 scripts).
 
+### Round 20 — SwiftUI component index (2026-11-27)
+
+- **Document:** `SWIFTUI_COMPONENT_INDEX.md` (21 folders).
+- **Enforce:** `audit_swiftui_component_index.sh`; README/AGENTS links.
+- **Verify:** `make audit-architecture` (10 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

@@ -11,7 +11,7 @@
 ## Single source of truth
 
 Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).  
-Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 folders).
+Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 Swift), [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) (21 SwiftUI).
 
 ## Rules enforced in CI
 

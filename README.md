@@ -30,7 +30,7 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 ## Architecture governance
 
 Agent-oriented structure, ADRs, and CI audits live under [`docs/architecture/`](docs/architecture/).  
-Run `make audit-architecture` for dependency, placement, concurrency, and warning checks (no Xcode required).
+Run `make audit-architecture` for dependency keys, module indexes, layout SSOT, composites, concurrency, and warning budgets (no Xcode required). See [`AUDIT_INDEX.md`](docs/architecture/AUDIT_INDEX.md).
 
 ## Makefile
 

@@ -44,7 +44,8 @@ and uses `Xcore.xcworkspace` + the `Example` scheme. That is the supported path.
 ## Architecture governance
 
 Ongoing entropy reduction is tracked under `docs/architecture/` — start with
-`docs/architecture/GOVERNANCE_SUMMARY.md`. Before adding a `@Dependency` client,
+`docs/architecture/GOVERNANCE_SUMMARY.md`. Registries: `DEPENDENCY_REGISTRY.md`,
+`COMPONENT_INDEX.md`, `SWIFTUI_COMPONENT_INDEX.md`. Before adding a `@Dependency` client,
 read `docs/architecture/adr/0002-dependency-client-template.md`.
 
 Verification without Xcode: `make audit-architecture` (see
