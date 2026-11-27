@@ -27,6 +27,12 @@ import Combine
 @MainActor
 public final class AppPhaseOperation {
     @Dependency(\.appPhase) private var appPhase
+    private enum SchedulingPhase: Equatable {
+        case idle
+        case scheduled
+    }
+
+    private var schedulingPhase = SchedulingPhase.idle
     private var appPhaseTask: Task<Void, Never>?
     private var scheduledTask: Task<Void, any Error>?
     private let delay: Duration
@@ -74,18 +80,19 @@ public final class AppPhaseOperation {
 
     private func shouldSchedule(_ schedule: Bool) {
         guard schedule else {
-            // Cancel any existing scheduled task.
             scheduledTask?.cancel()
             scheduledTask = nil
+            schedulingPhase = .idle
             return
         }
 
-        if scheduledTask?.isCancelled == false {
+        guard schedulingPhase == .idle else {
             return
         }
 
-        // Schedule the operation to be executed after the specified delay.
+        schedulingPhase = .scheduled
         scheduledTask = Task {
+            defer { schedulingPhase = .idle }
             try await Task.sleep(for: delay, tolerance: .zero)
             try Task.checkCancellation()
             operation()

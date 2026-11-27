@@ -52,10 +52,19 @@ public final class InactivityMonitor {
     /// The duration of inactivity after which the app is considered inactive.
     private let timeout: Duration
 
+    private enum ActivityPhase: Equatable {
+        case active
+        case inactive
+    }
+
+    private var activityPhase = ActivityPhase.active
+
     /// Indicates whether the inactivity timeout has been reached.
     ///
     /// This property automatically notifies SwiftUI when its value changes.
-    public private(set) var isInactive: Bool = false
+    public var isInactive: Bool {
+        activityPhase == .inactive
+    }
 
     /// Creates an instance of `InactivityMonitor` with a specified timeout
     /// duration.
@@ -133,8 +142,8 @@ public final class InactivityMonitor {
     /// If the elapsed time since the last detected activity exceeds the timeout,
     /// the `isInactive` property is set to `true`.
     private func checkInactivity() {
-        if !isInactive, lastActivityTime.hasElapsed(timeout) {
-            isInactive = true
+        if activityPhase == .active, lastActivityTime.hasElapsed(timeout) {
+            activityPhase = .inactive
             stopTimer()
         }
     }
@@ -144,7 +153,7 @@ public final class InactivityMonitor {
     /// If user activity is detected and the app is not inactive, this method
     /// updates the last recorded activity time to postpone the timeout.
     private func onActivityDetected() {
-        guard !isInactive else {
+        guard activityPhase == .active else {
             return
         }
 
@@ -157,7 +166,7 @@ public final class InactivityMonitor {
     /// Updates the last recorded activity time to now and ensures the timer
     /// continues monitoring from the reset point.
     public func reset() {
-        isInactive = false
+        activityPhase = .active
         lastActivityTime.reset()
         startTimer()
     }

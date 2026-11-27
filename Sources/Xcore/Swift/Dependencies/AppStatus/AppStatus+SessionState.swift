@@ -8,7 +8,7 @@ import Foundation
 
 extension AppStatus {
     /// An enumeration representing session state of the app.
-    public enum SessionState: Sendable, Hashable {
+    public enum SessionState: StateMachineState, Sendable, Hashable {
         /// Keychain has fully authorized access token and user must re-authenticate
         /// using biometrics or device passcode to unlock it.
         case locked
