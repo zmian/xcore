@@ -35,3 +35,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-020 | ENTROPY_INVENTORY + ADR 0004 composite registration; ImageFetcher init dedupe |
 | T-021 | UnimplementedAnalyticsProvider + repo-wide IssueReporting ban |
 | T-022 | ADR 0005 metadata/theme SSOT; ImageFetcherCompositeTests; README |
+| T-023 | AUDIT_INDEX + FeatureFlag composite dedupe test + ADR 0004 exception |

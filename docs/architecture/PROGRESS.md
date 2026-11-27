@@ -92,6 +92,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Test:** `ImageFetcherCompositeTests` for init deduplication by fetcher id.
 - **Verify:** `make audit-architecture` passes; `make test TEST_ONLY=...ImageFetcherCompositeTests` on macOS CI.
 
+### Round 9 — Audit index + composite test coverage (2026-11-27)
+
+- **Document:** `AUDIT_INDEX.md`; ADR 0004 exception for `CompositeImageTransform`.
+- **Test:** `FeatureFlagTests.compositeInitDeduplicatesProvidersWithSameId` (registration composite baseline).
+- **Verify:** audits local; feature flag + image fetcher composite tests on macOS CI.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

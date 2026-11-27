@@ -21,10 +21,14 @@ Composites that register types with `id: String`:
 
 Event multiplexing for app lifecycle uses `EventsClient<Event>` with `AppPhaseClient` as a typealias — not a second event bus implementation.
 
+## Exceptions
+
+- **`CompositeImageTransform`** intentionally allows duplicate transform steps with the same `id` (e.g. applying alpha twice). Pipeline semantics differ from provider registration; do not apply init deduplication there.
+
 ## Consequences
 
 - `CompositeImageFetcher` inits dedupe like `CompositeFeatureFlagProvider`.
-- New composites in Xcore should copy this checklist; variadic `register` overloads are optional ergonomics only.
+- New registration-style composites in Xcore should copy this checklist; variadic `register` overloads are optional ergonomics only.
 
 ## Compliance
 

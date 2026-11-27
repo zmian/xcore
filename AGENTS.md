@@ -47,8 +47,8 @@ Ongoing entropy reduction is tracked under `docs/architecture/` (progress log,
 task pool, architecture map). Before adding a `@Dependency` client, read
 `docs/architecture/adr/0002-dependency-client-template.md`.
 
-Verification without Xcode: `make audit-architecture` (dependency keys, module
-placement, concurrency inventory counts).
+Verification without Xcode: `make audit-architecture` (see
+`docs/architecture/AUDIT_INDEX.md`).
 
 ## Fixed Decisions
 
