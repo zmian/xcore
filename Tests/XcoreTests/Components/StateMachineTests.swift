@@ -27,9 +27,11 @@ struct StateMachineTests {
     @Test
     func transitionIfAllowed() {
         var machine = StateMachine(AppStatus.SessionState.unlocked)
-        #expect(machine.transitionIfAllowed(to: .locked))
+        let locked = machine.transitionIfAllowed(to: .locked)
+        #expect(locked)
         #expect(machine.state == .locked)
-        #expect(!machine.transitionIfAllowed(to: .unlocked))
+        let unlocked = machine.transitionIfAllowed(to: .unlocked)
+        #expect(!unlocked)
         #expect(machine.state == .locked)
     }
 }
@@ -38,7 +40,8 @@ struct HUDPresentationStateTests {
     @Test
     func beginShowConsumesSuppression() {
         var state = HUD.PresentationState.hiddenSuppressingNextShow
-        #expect(!state.beginShow())
+        let shouldShow = state.beginShow()
+        #expect(!shouldShow)
         #expect(state == .hidden)
         #expect(state.isHidden)
     }
@@ -48,7 +51,8 @@ struct HUDPresentationStateTests {
         var state = HUD.PresentationState.visibleSuppressingNextShow
         state.beginHide()
         #expect(state == .hiddenSuppressingNextShow)
-        #expect(!state.beginShow())
+        let shouldShow = state.beginShow()
+        #expect(!shouldShow)
         #expect(state == .hidden)
     }
 
