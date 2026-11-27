@@ -184,6 +184,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** extended `audit_layout_ssot.sh`; `ThemeLayoutTests.listRowInsetsFollowDefaultSpacing`.
 - **Verify:** `make audit-architecture`.
 
+### Round 24 — Formatting defaults SSOT (2026-11-27)
+
+- **Document:** `FORMATTING_DEFAULTS.md`.
+- **Migrate:** freeze `Character.mask`, fraction digits, random bounds (`static let`).
+- **Enforce:** `audit_formatting_defaults.sh`; concurrency 50→45.
+- **Verify:** `make audit-architecture` (13 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

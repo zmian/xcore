@@ -130,7 +130,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    nonisolated(unsafe) public static var mask: Self = "•"
+    public static let mask: Self = "•"
 }
 
 // MARK: - String
@@ -147,17 +147,17 @@ extension String {
 
 extension Int {
     @_disfavoredOverload
-    nonisolated(unsafe) public static var maxFractionDigits = 100
+    public static let maxFractionDigits = 100
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultFractionDigits = 2
+    public static let defaultFractionDigits = 2
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
+    public static let defaultRandomUpperBound = 100
 }
 
 extension Double {
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
+    public static let defaultRandomUpperBound = 100.0
 }
 
 extension RangeExpression where Self == ClosedRange<Int> {

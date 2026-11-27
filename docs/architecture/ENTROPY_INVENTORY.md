@@ -44,4 +44,5 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
+| Formatting defaults | `audit_formatting_defaults.sh` |
 | Composite dedupe | `audit_composite_registration.sh` |

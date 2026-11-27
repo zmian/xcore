@@ -11,6 +11,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) | 21 `SwiftUI/Components` domains |
 | [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) | 3 `Cocoa/Components` domains |
 | [SPACING_SCALE.md](./SPACING_SCALE.md) | Theme layout + frozen `s1`…`s8` |
+| [FORMATTING_DEFAULTS.md](./FORMATTING_DEFAULTS.md) | Mask, fraction digits, random bounds |
 
 ## Inventories (budgets enforced in CI)
 
@@ -33,6 +34,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 12 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 13 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```
