@@ -19,6 +19,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_formatting_defaults.sh` | Frozen masking/fraction/random defaults match `FORMATTING_DEFAULTS.md`. |
 | `BuildTools/Scripts/audit_coding_defaults.sh` | Single `CodingFormatStyleDefaults.defaultEncodeAsString` (see `CODING_DEFAULTS.md`). |
 | `BuildTools/Scripts/audit_composite_registration.sh` | Provider/fetcher composites dedupe by `id` (ADR 0004; ImageTransform exempt). |
+| `BuildTools/Scripts/audit_governance_metrics.sh` | `GOVERNANCE_METRICS.md` matches live inventory totals. |
 | `BuildTools/Scripts/audit_audit_index.sh` | `AUDIT_INDEX.md` matches `Makefile` `audit-architecture` script list. |
 
 Related docs: `PROGRESS.md`, `TASK_POOL.md`, `ARCHITECTURE_MAP.md`, `adr/*`.

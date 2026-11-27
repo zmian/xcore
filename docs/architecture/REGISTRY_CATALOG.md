@@ -27,6 +27,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | Use |
 | --- | --- |
 | [GOVERNANCE_SUMMARY.md](./GOVERNANCE_SUMMARY.md) | Quick start |
+| [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) | Headline budgets (enforced) |
 | [TASK_POOL.md](./TASK_POOL.md) | Ready / pending / done tasks |
 | [PROGRESS.md](./PROGRESS.md) | Round log |
 | [ARCHITECTURE_MAP.md](./ARCHITECTURE_MAP.md) | Layers and boundaries |
@@ -37,6 +38,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 16 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 17 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```

@@ -215,6 +215,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_helpers_index.sh`.
 - **Verify:** `make audit-architecture` (16 scripts).
 
+### Round 29 — Governance metrics + registry paths (2026-11-27)
+
+- **Document:** `GOVERNANCE_METRICS.md` headline budgets.
+- **Enforce:** `audit_governance_metrics.sh`; dependency registry location dirs exist.
+- **Verify:** `make audit-architecture` (17 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

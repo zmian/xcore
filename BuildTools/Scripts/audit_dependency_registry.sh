@@ -33,4 +33,21 @@ if [[ "$missing" -ne 0 ]]; then
   exit 1
 fi
 
+path_errors=0
+while IFS= read -r rel; do
+  [[ -z "$rel" ]] && continue
+  rel="${rel//\`/}"
+  rel="${rel%% (*}"
+  rel="${rel// /}"
+  dir="$ROOT/Sources/Xcore/$rel"
+  if [[ ! -d "$dir" ]]; then
+    echo "DEPENDENCY_REGISTRY location missing on disk: Sources/Xcore/$rel"
+    path_errors=1
+  fi
+done < <(rg '^\| `[^`]+` \|' "$REGISTRY" | awk -F'|' '{gsub(/^ +| +$/, "", $4); print $4}')
+
+if [[ "$path_errors" -ne 0 ]]; then
+  exit 1
+fi
+
 echo "Dependency registry audit passed ($live_count production keys)."
