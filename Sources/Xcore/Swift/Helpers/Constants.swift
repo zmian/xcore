@@ -63,21 +63,21 @@ extension CGAffineTransform {
 
 extension CGFloat {
     /// Spacing with the default value of `4` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s1: Self = 4
+    public static let s1: Self = 4
     /// Spacing with the default value of `8` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s2: Self = 8
+    public static let s2: Self = 8
     /// Spacing with the default value of `12` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s3: Self = 12
+    public static let s3: Self = 12
     /// Spacing with the default value of `16` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s4: Self = 16
+    public static let s4: Self = 16
     /// Spacing with the default value of `20` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s5: Self = 20
+    public static let s5: Self = 20
     /// Spacing with the default value of `24` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s6: Self = 24
+    public static let s6: Self = 24
     /// Spacing with the default value of `28` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s7: Self = 28
+    public static let s7: Self = 28
     /// Spacing with the default value of `32` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s8: Self = 32
+    public static let s8: Self = 32
 
     /// Forwards to ``Theme/default``; prefer ``EnvironmentValues/theme`` in SwiftUI.
     public static var defaultSpacing: Self {

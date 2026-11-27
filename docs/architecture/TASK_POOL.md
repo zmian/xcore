@@ -6,7 +6,6 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-016c | `s1`…`s8` spacing scale: freeze or theme bundle (see SPACING_SCALE.md) | Many `nonisolated(unsafe)` sites |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 
 ## Pending confirmation
@@ -42,3 +41,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-027 | Theme `cornerRadius` SSOT; `AppConstants` forwarder; library call sites |
 | T-028 | `audit_layout_ssot.sh` + CI wiring |
 | T-029 | Theme `defaultSpacing` / `interItemHSpacing`; SPACING_SCALE.md |
+| T-030 | Freeze `s1`…`s8` + `audit_spacing_scale.sh` |

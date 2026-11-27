@@ -142,6 +142,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `SPACING_SCALE.md`; concurrency 61→59.
 - **Verify:** layout audit + tests local.
 
+### Round 17 — Freeze spacing scale (2026-11-27)
+
+- **Migrate:** `CGFloat.s1`…`s8` → `static let` (no in-repo mutators).
+- **Enforce:** `audit_spacing_scale.sh`; concurrency 59→51.
+- **Verify:** `make audit-architecture` (7 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

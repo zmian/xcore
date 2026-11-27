@@ -25,4 +25,4 @@ Enforced by `audit_layout_ssot.sh`. Prefer `@Environment(\.theme)` in SwiftUI.
 | `s7` | 28 |
 | `s8` | 32 |
 
-Still defined on `CGFloat` in `Constants.swift` (`nonisolated(unsafe)`). Future work: **T-016c** — optional theme scale or freeze + audit.
+Frozen as `public static let` on `CGFloat` in `Constants.swift`. Enforced by `audit_spacing_scale.sh`.

@@ -122,3 +122,4 @@ audit-architecture: ## Run architecture governance checks (no Xcode required)
 	@bash BuildTools/Scripts/audit_module_placement.sh
 	@bash BuildTools/Scripts/audit_compiler_warnings.sh
 	@bash BuildTools/Scripts/audit_layout_ssot.sh
+	@bash BuildTools/Scripts/audit_spacing_scale.sh

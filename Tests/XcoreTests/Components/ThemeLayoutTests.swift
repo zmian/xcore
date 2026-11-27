@@ -26,4 +26,10 @@ struct ThemeLayoutTests {
         #expect(Theme.defaultSpacing == 24)
         CGFloat.defaultSpacing = original
     }
+
+    @Test func spacingScaleMatchesDocumentation() {
+        #expect(CGFloat.s1 == 4)
+        #expect(CGFloat.s5 == CGFloat.defaultSpacing)
+        #expect(CGFloat.s3 == CGFloat.interItemHSpacing)
+    }
 }
