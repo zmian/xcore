@@ -1,0 +1,28 @@
+# Spacing scale (layout SSOT)
+
+Canonical spacing tokens for Xcore UI. **Theme-owned** metrics forward through `CGFloat` for source compatibility.
+
+## Theme-owned (mutable at launch)
+
+| Key | Default | `CGFloat` forwarder |
+| --- | --- | --- |
+| `cornerRadius` | 15 | `AppConstants.cornerRadius` |
+| `defaultSpacing` | 20 (was `.s5`) | `CGFloat.defaultSpacing` |
+| `interItemHSpacing` | 12 (was `.s3`) | `CGFloat.interItemHSpacing` |
+
+Enforced by `audit_layout_ssot.sh`. Prefer `@Environment(\.theme)` in SwiftUI.
+
+## Fixed scale (`CGFloat.s1`…`s8`)
+
+| Token | Points |
+| --- | --- |
+| `s1` | 4 |
+| `s2` | 8 |
+| `s3` | 12 |
+| `s4` | 16 |
+| `s5` | 20 |
+| `s6` | 24 |
+| `s7` | 28 |
+| `s8` | 32 |
+
+Still defined on `CGFloat` in `Constants.swift` (`nonisolated(unsafe)`). Future work: **T-016c** — optional theme scale or freeze + audit.

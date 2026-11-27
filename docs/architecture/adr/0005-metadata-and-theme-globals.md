@@ -21,8 +21,9 @@ Xcore uses `UserInfoContainer` for typed metadata bags (analytics, errors, featu
 
 ### Layout and theme defaults
 
-- **`AppConstants`** in `Constants.swift` owns spacing and formatting defaults; `cornerRadius` forwards to `Theme.default.cornerRadius`.
-- **`Theme.default`** owns SwiftUI theme defaults, including layout `cornerRadius` for controls.
+- **`AppConstants`** / `CGFloat` layout forwarders in `Constants.swift` delegate `cornerRadius`, `defaultSpacing`, and `interItemHSpacing` to `Theme.default`.
+- **`Theme.default`** owns SwiftUI theme defaults, including those layout metrics.
+- Fixed scale `s1`…`s8` remains on `CGFloat`; see `SPACING_SCALE.md`.
 - Mutating these at launch is supported for app branding; new globals must be added here (not scattered), and `CONCURRENCY_INVENTORY.md` updated when `nonisolated(unsafe)` count changes.
 
 ### Future injection (T-016)

@@ -17,4 +17,13 @@ struct ThemeLayoutTests {
         Theme.cornerRadius = 12
         #expect(AppConstants.cornerRadius == 12)
     }
+
+    @Test func defaultSpacingForwardsToDefaultTheme() {
+        let original = Theme.defaultSpacing
+        defer { Theme.defaultSpacing = original }
+
+        CGFloat.defaultSpacing = 24
+        #expect(Theme.defaultSpacing == 24)
+        CGFloat.defaultSpacing = original
+    }
 }

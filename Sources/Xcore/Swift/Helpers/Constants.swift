@@ -79,12 +79,17 @@ extension CGFloat {
     /// Spacing with the default value of `32` at a normal dynamic type setting.
     nonisolated(unsafe) public static var s8: Self = 32
 
-    /// The default spacing value at a normal dynamic type setting.
-    nonisolated(unsafe) public static var defaultSpacing: Self = .s5
+    /// Forwards to ``Theme/default``; prefer ``EnvironmentValues/theme`` in SwiftUI.
+    public static var defaultSpacing: Self {
+        get { Theme.defaultSpacing }
+        set { Theme.defaultSpacing = newValue }
+    }
 
-    /// The default spacing value at a normal dynamic type setting for inter items
-    /// in horizontal axis.
-    nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
+    /// Forwards to ``Theme/default``.
+    public static var interItemHSpacing: Self {
+        get { Theme.interItemHSpacing }
+        set { Theme.interItemHSpacing = newValue }
+    }
 
     /// Return true `1` pixel relative to the screen scale.
     public static var onePixel: Self {

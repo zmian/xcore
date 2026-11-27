@@ -26,7 +26,8 @@ Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (
 ## Inventories
 
 - [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (3)
-- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (61)
+- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (59)
+- [SPACING_SCALE.md](./SPACING_SCALE.md) — spacing tokens + theme forwards
 - [PROGRESS.md](./PROGRESS.md) — completed rounds
 
 ## macOS verification

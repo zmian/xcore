@@ -6,7 +6,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 | ID | Task | Rationale |
 | --- | --- | --- |
-| T-016b | Migrate spacing (`Spacing`) defaults toward theme or documented SSOT | ADR 0005; larger surface |
+| T-016c | `s1`…`s8` spacing scale: freeze or theme bundle (see SPACING_SCALE.md) | Many `nonisolated(unsafe)` sites |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 
 ## Pending confirmation
@@ -41,3 +41,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-026 | DEPENDENCY_REGISTRY + audit script |
 | T-027 | Theme `cornerRadius` SSOT; `AppConstants` forwarder; library call sites |
 | T-028 | `audit_layout_ssot.sh` + CI wiring |
+| T-029 | Theme `defaultSpacing` / `interItemHSpacing`; SPACING_SCALE.md |

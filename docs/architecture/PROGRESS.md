@@ -136,6 +136,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `AUDIT_INDEX`, `ARCHITECTURE_MAP`, ADR 0005.
 - **Verify:** `make audit-architecture` (6 scripts).
 
+### Round 16 — Theme spacing forwards (2026-11-27)
+
+- **Migrate:** `defaultSpacing`, `interItemHSpacing` on `Theme`; `CGFloat` forwarders.
+- **Document:** `SPACING_SCALE.md`; concurrency 61→59.
+- **Verify:** layout audit + tests local.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

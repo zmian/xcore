@@ -7,15 +7,19 @@ SOURCES="$ROOT/Sources/Xcore"
 CONSTANTS="$SOURCES/Swift/Helpers/Constants.swift"
 THEME="$SOURCES/SwiftUI/Components/Theme/Theme.swift"
 
-if ! rg -q 'public var cornerRadius: CGFloat' "$THEME"; then
-  echo "Theme must declare public cornerRadius (ADR 0005)."
-  exit 1
-fi
+for prop in cornerRadius defaultSpacing interItemHSpacing; do
+  if ! rg -q "public var ${prop}: CGFloat" "$THEME"; then
+    echo "Theme must declare public ${prop} (ADR 0005)."
+    exit 1
+  fi
+done
 
-if rg -q 'nonisolated\(unsafe\).*cornerRadius' "$CONSTANTS" 2>/dev/null; then
-  echo "AppConstants.cornerRadius must not use nonisolated(unsafe); forward to Theme."
-  exit 1
-fi
+for prop in cornerRadius defaultSpacing interItemHSpacing; do
+  if rg -q "nonisolated\\(unsafe\\).*var ${prop}" "$CONSTANTS" 2>/dev/null; then
+    echo "${prop} must forward to Theme, not use nonisolated(unsafe)."
+    exit 1
+  fi
+done
 
 direct_use_count="$(rg -l 'AppConstants\.cornerRadius' "$SOURCES" --glob '*.swift' 2>/dev/null | rg -vc 'Swift/Helpers/Constants\.swift$' || true)"
 if [[ "$direct_use_count" -gt 0 ]]; then
@@ -24,4 +28,4 @@ if [[ "$direct_use_count" -gt 0 ]]; then
   exit 1
 fi
 
-echo "Layout SSOT audit passed (Theme.cornerRadius canonical)."
+echo "Layout SSOT audit passed (Theme layout metrics canonical)."

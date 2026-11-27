@@ -80,6 +80,12 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
     /// The default corner radius for controls and containers.
     public var cornerRadius: CGFloat
 
+    /// The default spacing between sections and containers.
+    public var defaultSpacing: CGFloat
+
+    /// The default horizontal spacing between items in a row.
+    public var interItemHSpacing: CGFloat
+
     // MARK: - Sentiment Color
 
     /// The color for representing positive sentiment.
@@ -164,6 +170,8 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         linkColor: Color,
         placeholderTextColor: Color,
         cornerRadius: CGFloat = 15,
+        defaultSpacing: CGFloat = 20,
+        interItemHSpacing: CGFloat = 12,
 
         // Sentiment
         positiveSentimentColor: Color,
@@ -204,6 +212,8 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         self.linkColor = linkColor
         self.placeholderTextColor = placeholderTextColor
         self.cornerRadius = cornerRadius
+        self.defaultSpacing = defaultSpacing
+        self.interItemHSpacing = interItemHSpacing
 
         // Sentiment
         self.positiveSentimentColor = positiveSentimentColor
