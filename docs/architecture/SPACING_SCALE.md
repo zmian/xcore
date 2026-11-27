@@ -9,6 +9,7 @@ Canonical spacing tokens for Xcore UI. **Theme-owned** metrics forward through `
 | `cornerRadius` | 15 | `AppConstants.cornerRadius` |
 | `defaultSpacing` | 20 (was `.s5`) | `CGFloat.defaultSpacing` |
 | `interItemHSpacing` | 12 (was `.s3`) | `CGFloat.interItemHSpacing` |
+| `listRowInsets` | uniform `defaultSpacing` | `EdgeInsets.listRow` |
 
 Enforced by `audit_layout_ssot.sh`. Prefer `@Environment(\.theme)` in SwiftUI.
 

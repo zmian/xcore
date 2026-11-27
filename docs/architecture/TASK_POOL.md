@@ -47,3 +47,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-033 | `SWIFTUI_COMPONENT_INDEX.md` + audit |
 | T-034 | `REGISTRY_CATALOG.md`, `adr/README.md`, `audit_audit_index.sh` |
 | T-035 | `COCOA_COMPONENT_INDEX.md` + audit |
+| T-036 | `Theme.listRowInsets` + `EdgeInsets.listRow` forwarder; concurrency −1 |

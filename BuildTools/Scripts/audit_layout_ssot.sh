@@ -14,12 +14,22 @@ for prop in cornerRadius defaultSpacing interItemHSpacing; do
   fi
 done
 
+if ! rg -q 'public var listRowInsets: EdgeInsets' "$THEME"; then
+  echo "Theme must declare listRowInsets (ADR 0005)."
+  exit 1
+fi
+
 for prop in cornerRadius defaultSpacing interItemHSpacing; do
   if rg -q "nonisolated\\(unsafe\\).*var ${prop}" "$CONSTANTS" 2>/dev/null; then
     echo "${prop} must forward to Theme, not use nonisolated(unsafe)."
     exit 1
   fi
 done
+
+if rg -q 'nonisolated\\(unsafe\\).*var listRow' "$CONSTANTS" 2>/dev/null; then
+  echo "EdgeInsets.listRow must forward to Theme, not use nonisolated(unsafe)."
+  exit 1
+fi
 
 direct_use_count="$(rg -l 'AppConstants\.cornerRadius' "$SOURCES" --glob '*.swift' 2>/dev/null | rg -vc 'Swift/Helpers/Constants\.swift$' || true)"
 if [[ "$direct_use_count" -gt 0 ]]; then

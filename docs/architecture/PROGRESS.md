@@ -177,6 +177,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_cocoa_component_index.sh`; `ARCHITECTURE_MAP` link.
 - **Verify:** `make audit-architecture` (12 scripts).
 
+### Round 23 — List row insets SSOT (2026-11-27)
+
+- **Migrate:** `Theme.listRowInsets` (derived from `defaultSpacing`); `EdgeInsets.listRow` forwarder.
+- **Remove:** `nonisolated(unsafe)` on `EdgeInsets.listRow` (concurrency 51→50).
+- **Enforce:** extended `audit_layout_ssot.sh`; `ThemeLayoutTests.listRowInsetsFollowDefaultSpacing`.
+- **Verify:** `make audit-architecture`.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

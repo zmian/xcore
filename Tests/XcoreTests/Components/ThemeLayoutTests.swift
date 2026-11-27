@@ -32,4 +32,13 @@ struct ThemeLayoutTests {
         #expect(CGFloat.s5 == CGFloat.defaultSpacing)
         #expect(CGFloat.s3 == CGFloat.interItemHSpacing)
     }
+
+    @Test func listRowInsetsFollowDefaultSpacing() {
+        let original = Theme.defaultSpacing
+        defer { Theme.defaultSpacing = original }
+
+        Theme.defaultSpacing = 16
+        #expect(EdgeInsets.listRow == EdgeInsets(16))
+        #expect(Theme.listRowInsets == EdgeInsets(16))
+    }
 }

@@ -100,8 +100,10 @@ extension CGFloat {
 // MARK: - EdgeInsets
 
 extension EdgeInsets {
-    /// The default insets for list content.
-    nonisolated(unsafe) public static var listRow = Self(.defaultSpacing)
+    /// The default insets for list content; forwards to ``Theme/listRowInsets``.
+    public static var listRow: Self {
+        Theme.listRowInsets
+    }
 }
 
 // MARK: - URL

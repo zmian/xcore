@@ -86,6 +86,11 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
     /// The default horizontal spacing between items in a row.
     public var interItemHSpacing: CGFloat
 
+    /// The default insets applied to list rows (derived from ``defaultSpacing``).
+    public var listRowInsets: EdgeInsets {
+        EdgeInsets(defaultSpacing)
+    }
+
     // MARK: - Sentiment Color
 
     /// The color for representing positive sentiment.
