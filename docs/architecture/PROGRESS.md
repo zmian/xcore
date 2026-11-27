@@ -153,6 +153,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_composite_registration.sh` (ADR 0004 + ImageTransform exception).
 - **Verify:** `make audit-architecture` (8 scripts).
 
+### Round 19 — Component index SSOT (2026-11-27)
+
+- **Document:** `COMPONENT_INDEX.md` (14 domain folders).
+- **Enforce:** `audit_component_index.sh`; registry audit checks each dependency key name.
+- **Verify:** `make audit-architecture` (9 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

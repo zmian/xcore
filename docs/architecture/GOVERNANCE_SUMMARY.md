@@ -10,7 +10,8 @@
 
 ## Single source of truth
 
-Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).
+Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).  
+Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 folders).
 
 ## Rules enforced in CI
 

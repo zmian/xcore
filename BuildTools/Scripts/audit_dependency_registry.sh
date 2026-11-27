@@ -20,4 +20,17 @@ if [[ "$live_count" != "$doc_count" ]]; then
   exit 1
 fi
 
+missing=0
+while IFS= read -r key; do
+  [[ -z "$key" ]] && continue
+  if ! rg -q "var ${key}:" "$SOURCES" --glob '*.swift'; then
+    echo "DEPENDENCY_REGISTRY lists '\`${key}\`' but no DependencyValues property found"
+    missing=1
+  fi
+done < <(rg '^\| `[^`]+` \|' "$REGISTRY" | sed -n 's/^| `\([^`]*\)`.*/\1/p')
+
+if [[ "$missing" -ne 0 ]]; then
+  exit 1
+fi
+
 echo "Dependency registry audit passed ($live_count production keys)."
