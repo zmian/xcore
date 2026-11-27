@@ -52,7 +52,6 @@ extension Device {
             #elseif os(watchOS)
             return WKInterfaceDevice.current().systemName
             #elseif os(macOS)
-            #warning("FIXME: Implement")
             return "macOS"
             #else
             return "Unknown"

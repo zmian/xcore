@@ -117,6 +117,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_dependency_registry.sh`; ADR 0001 rule 0.
 - **Verify:** `make audit-architecture` passes (5 audit scripts).
 
+### Round 13 — Device macOS warning cleanup (2026-11-27)
+
+- **Discover:** `Device` / `Device+Model` emitted `#warning` despite implemented macOS fallbacks.
+- **Fix:** Remove warnings; `family` returns `"Mac"` on macOS.
+- **Verify:** ENTROPY total 5→3; `make audit-architecture` local.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
