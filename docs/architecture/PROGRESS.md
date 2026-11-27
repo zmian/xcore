@@ -54,6 +54,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Audit (T-012):** `Analytics.register` variadic overload, `FeatureFlag.register(at:)`, and `ImageFetcher.register` are thin ergonomics over array/composite APIs — deletion test: removing them would push array-literal noise to every caller; **no removal**.
 - **Verify:** `make audit-architecture` passes (14 keys).
 
+### Round 3 — Concurrency inventory baseline (2026-11-27)
+
+- **Discover:** 58 `nonisolated(unsafe)` uses across 28 files (globals, associated objects, mocks, UI bridges).
+- **Document:** `CONCURRENCY_INVENTORY.md` grouped by intent.
+- **Enforce:** `audit_concurrency_inventory.sh` wired into `make audit-architecture`.
+- **Verify:** audit passes against documented total.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
