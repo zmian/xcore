@@ -7,6 +7,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | What |
 | --- | --- |
 | [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) | 14 production `@Dependency` keys |
+| [HELPERS_INDEX.md](./HELPERS_INDEX.md) | 9 `Swift/Helpers` files |
 | [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) | 14 `Swift/Components` domains |
 | [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) | 21 `SwiftUI/Components` domains |
 | [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) | 3 `Cocoa/Components` domains |
@@ -36,6 +37,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 15 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 16 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```

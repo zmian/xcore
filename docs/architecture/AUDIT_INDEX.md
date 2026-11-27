@@ -5,6 +5,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | Script | Enforces |
 | --- | --- |
 | `BuildTools/Scripts/audit_cocoa_component_index.sh` | `COCOA_COMPONENT_INDEX.md` matches `Cocoa/Components/` domain folders. |
+| `BuildTools/Scripts/audit_helpers_index.sh` | `HELPERS_INDEX.md` matches `Swift/Helpers/*.swift` count. |
 | `BuildTools/Scripts/audit_component_index.sh` | `COMPONENT_INDEX.md` total matches `Swift/Components/` domain folders. |
 | `BuildTools/Scripts/audit_swiftui_component_index.sh` | `SWIFTUI_COMPONENT_INDEX.md` matches `SwiftUI/Components/` folders. |
 | `BuildTools/Scripts/audit_dependency_registry.sh` | `DEPENDENCY_REGISTRY.md` total + each key has `DependencyValues` property. |

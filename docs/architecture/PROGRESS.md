@@ -209,6 +209,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** merged `audit_layer_imports.sh` (replaces cocoa-only script).
 - **Verify:** `make audit-architecture` (15 scripts).
 
+### Round 28 — Helpers index (2026-11-27)
+
+- **Document:** `HELPERS_INDEX.md` (9 `Swift/Helpers` sources).
+- **Enforce:** `audit_helpers_index.sh`.
+- **Verify:** `make audit-architecture` (16 scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
