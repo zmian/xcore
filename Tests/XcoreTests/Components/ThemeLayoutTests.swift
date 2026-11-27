@@ -1,3 +1,4 @@
+import SwiftUI
 import Testing
 import Xcore
 

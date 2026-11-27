@@ -242,7 +242,8 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `COCOA_SUPPORTING_INDEX.md`; refresh `ARCHITECTURE_MAP.md` index links.
 - **Enforce:** `audit_cocoa_supporting_index.sh`; audits **22**.
-- **Verify:** `make audit-architecture`. Push deferred per T-043 until green CI on prior head.
+- **Verify:** `make audit-architecture` (22 scripts).
+- **CI:** #113 on `c1ad8cc8` failed `ThemeLayoutTests` (missing `import SwiftUI`); fixed before push.
 
 ## Next scheduled work (task pool excerpt)
 
