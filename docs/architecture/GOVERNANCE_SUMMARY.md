@@ -8,6 +8,10 @@
 2. Run `make audit-architecture` (Linux-safe) before push.
 3. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
 
+## Single source of truth
+
+Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).
+
 ## Rules enforced in CI
 
 | Rule | ADR |

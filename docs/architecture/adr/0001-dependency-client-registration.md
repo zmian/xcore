@@ -12,6 +12,7 @@ An architecture scan found inconsistent `DependencyKey` implementations: most cl
 
 ## Decision
 
+0. **Every production `DependencyKey` must appear in [DEPENDENCY_REGISTRY.md](../DEPENDENCY_REGISTRY.md)** when added or removed.
 1. **Every production `DependencyKey` in `Sources/Xcore` must declare `testValue`.**
 2. **Default test value** is the client's `.unimplemented` variant when one exists; otherwise `.noop` or a documented exception.
 3. **When a client exposes `.noop`, also declare `previewValue: .noop`** for SwiftUI previews (matches SessionCounter, HapticFeedback, PushNotifications).

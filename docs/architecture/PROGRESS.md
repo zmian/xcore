@@ -110,6 +110,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Test:** `pasteboardTestValueDoesNotMutateSystemPasteboard` strengthens ADR 0001.
 - **Verify:** audits local; pasteboard test on macOS CI.
 
+### Round 12 — Dependency registry SSOT (2026-11-27)
+
+- **Discover:** No single manifest of production `DependencyValues` keys for agents.
+- **Document:** `DEPENDENCY_REGISTRY.md` (14 keys).
+- **Enforce:** `audit_dependency_registry.sh`; ADR 0001 rule 0.
+- **Verify:** `make audit-architecture` passes (5 audit scripts).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
