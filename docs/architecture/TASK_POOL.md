@@ -117,3 +117,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-105 | `audit_dependency_client_shapes.sh` + ENTROPY enforcement (**30** audits) |
 | T-106 | `ADDRESS_SEARCH_CLIENT.md` + conformer allowlist in shape audit |
 | T-107 | P-001: `AddressSearchClient` protocol → struct; delete noop/unimplemented types |
+| T-108 | Example `AddressFormReducer` closure call labels after P-001 |

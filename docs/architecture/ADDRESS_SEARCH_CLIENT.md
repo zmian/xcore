@@ -12,6 +12,8 @@ Single source of truth for `AddressSearchClient` (canonical struct client per AD
 
 Closure fields: `query`, `updateQuery`, `resolve`, `validate`, `observe`.
 
+Call sites use unlabeled closure invocation (e.g. `observe(sessionID)`, `updateQuery(text, sessionID)`), not the former protocol argument labels `observe(id:)` / `updateQuery(_:id:)`.
+
 ## Live implementation
 
 `LiveAddressSearchClient` in `AddressSearchClient+Live.swift` is the MapKit/Contacts engine wired by `AddressSearchClient.live`. It is **not** a protocol conformer; it remains public so tests can configure `LiveAddressSearchClient.supportedRegions`.

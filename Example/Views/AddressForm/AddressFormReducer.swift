@@ -117,7 +117,7 @@ public struct AddressForm: Sendable {
             switch action {
                 case .onAppear:
                     return addressSearch
-                        .observe(id: state.id)
+                        .observe(state.id)
                         .map(Action.searchResult)
                         .cancellable(id: CancelID.search)
 
@@ -130,7 +130,7 @@ public struct AddressForm: Sendable {
                     }
 
                     addressSearch
-                        .updateQuery(state.search, id: state.id)
+                        .updateQuery(state.search, state.id)
 
                     return .none
 
