@@ -542,6 +542,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Delete:** `RegexValidationPattern`; `regex(Regex<Output>)` requires `Output: Sendable`.
 - **Enforce:** `@unchecked` budget **20**.
 
+### Round 95 — Publisher.done cancellable storage (T-117)
+
+- **Migrate:** `LockIsolated<Set<AnyCancellable>>` replaces `DoneSubscriberCancellables`.
+- **Enforce:** `@unchecked` budget **19**.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

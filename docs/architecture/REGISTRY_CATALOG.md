@@ -32,7 +32,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | --- | --- |
 | [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) | 0 `#warning`s in `Sources/Xcore` |
 | [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 0 `nonisolated(unsafe)` |
-| [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) | 20 `@unchecked Sendable` |
+| [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) | 19 `@unchecked Sendable` |
 | [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md) | Reduction queue (ADR 0007) |
 
 ## Product gates

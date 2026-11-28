@@ -127,3 +127,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-114 | `UNCHECKED_SENDABLE_ROADMAP` + inventory audit parity |
 | T-115 | `UserDefaultsPond` plain `Sendable` attempt (reverted; CI) |
 | T-116 | Delete `RegexValidationPattern`; `regex(Regex)` + `Output: Sendable` (21→20) |
+| T-117 | `Publisher.done` → `LockIsolated<Set<AnyCancellable>>` (20→19) |

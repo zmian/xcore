@@ -1,7 +1,7 @@
 # `@unchecked Sendable` reduction roadmap
 
 Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) (ADR 0007).  
-**Open annotations: 20** (must match `make audit-architecture`).
+**Open annotations: 19** (must match `make audit-architecture`).
 
 ## Primitives (keep conditional `@unchecked`)
 
@@ -29,7 +29,6 @@ Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHE
 | --- | --- | --- |
 | `Cache.swift` | `Cache`, `DelegateWrapper` | `NSCache` / delegate |
 | `SessionAwareCache.swift` | main class | observation `Task` |
-| `Publisher+Extensions.swift` | `DoneSubscriberCancellables` | `AnyCancellable` set |
 | `Popup.swift` | `TransitionStorage` | `AnyTransition` (plain `Sendable` reverted T-088) |
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` | `Formatter` bridge |
 | `PondKey.swift` | `Storage` | `AuthenticationPolicy` |
@@ -37,6 +36,7 @@ Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHE
 
 ## Resolved in this PR
 
+- `Publisher+Extensions.swift` (T-117) — `LockIsolated` cancellable set
 - `ValidationRule+Rules.swift` (T-116) — `regex(Regex<Output>)` + `Output: Sendable`
 - `AddressSearchResult.swift` (T-113) — struct `Sendable`
 

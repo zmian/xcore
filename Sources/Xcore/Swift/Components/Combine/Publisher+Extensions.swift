@@ -22,13 +22,13 @@ extension Publisher where Failure == Never {
         cancellable = sink { output in
             receiveValue(output)
             if let token = cancellable {
-                doneSubscriberCancellables.remove(token)
+                doneSubscriberCancellables.withValue { $0.remove(token) }
                 cancellable = nil
             }
         }
 
         if let cancellable {
-            doneSubscriberCancellables.insert(cancellable)
+            doneSubscriberCancellables.withValue { $0.insert(cancellable) }
         }
     }
 }
@@ -66,18 +66,5 @@ extension Publisher {
     }
 }
 
-private final class DoneSubscriberCancellables: @unchecked Sendable {
-    private let lock = NSRecursiveLock()
-    private var storage = Set<AnyCancellable>()
-
-    func insert(_ cancellable: AnyCancellable) {
-        lock.withLock { storage.insert(cancellable) }
-    }
-
-    func remove(_ cancellable: AnyCancellable) {
-        lock.withLock { storage.remove(cancellable) }
-    }
-}
-
-private let doneSubscriberCancellables = DoneSubscriberCancellables()
+private let doneSubscriberCancellables = LockIsolated(Set<AnyCancellable>())
 #endif
