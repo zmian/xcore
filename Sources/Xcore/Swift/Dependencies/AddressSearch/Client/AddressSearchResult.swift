@@ -9,7 +9,7 @@ internal import MapKit
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.
-public final class AddressSearchResult: Sendable, Hashable {
+public final class AddressSearchResult: @unchecked Sendable, Hashable {
     public let title: String
     public let subtitle: String
     private let completion = LockIsolated<MKLocalSearchCompletion?>(nil)

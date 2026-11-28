@@ -176,7 +176,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 // MARK: - Delegate
 
 extension LiveAddressSearchClient {
-    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, Sendable {
+    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, @unchecked Sendable {
         private let searchCompleter = LockIsolated(MKLocalSearchCompleter())
         private let onResults: @Sendable ([AddressSearchResult]) -> Void
 
@@ -198,7 +198,7 @@ extension LiveAddressSearchClient {
         }
 
         var query: String {
-            get { searchCompleter.value.queryFragment }
+            get { searchCompleter.withValue { $0.queryFragment } }
             set {
                 searchCompleter.withValue { $0.queryFragment = newValue }
             }

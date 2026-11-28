@@ -443,6 +443,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `AssociatedObjectKey` → `@unchecked Sendable`; `ImageDownloader` cancel via `LockIsolated`. Budget **12**.
 
+### Round 76 — MapKit/Regex strict concurrency (T-093)
+
+- **Fix:** `ValidationRule` regex via `LockIsolated.withValue`; Address Search `@unchecked` + query accessor. Budget **14**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

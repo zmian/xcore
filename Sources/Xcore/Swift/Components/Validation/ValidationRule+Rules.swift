@@ -128,7 +128,7 @@ extension ValidationRule<String> {
     public static func regex<Output>(_ pattern: Regex<Output>) -> Self {
         let pattern = LockIsolated(pattern)
         return .init { input in
-            input.wholeMatch(of: pattern.value) != nil
+            pattern.withValue { input.wholeMatch(of: $0) != nil }
         }
     }
 

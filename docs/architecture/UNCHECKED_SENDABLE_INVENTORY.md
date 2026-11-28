@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 12 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 14 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -17,6 +17,8 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 
 | Location | Role |
 | --- | --- |
+| `AddressSearchClient+Live.swift` | `Delegate` (`NSObject` + `MKLocalSearchCompleter`) |
+| `AddressSearchResult.swift` | `MKLocalSearchCompletion` in `LockIsolated` |
 | `PushNotificationsClient+Live.swift` | `NSObject` live client |
 | `PushNotificationsClient.swift` | `NotificationReceivedHandler` (non-Sendable closure storage) |
 | `AppPhaseClient.swift` | `AppPhase` enum payloads |
