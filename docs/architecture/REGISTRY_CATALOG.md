@@ -34,6 +34,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 0 `nonisolated(unsafe)` |
 | [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) | 21 `@unchecked Sendable` |
 | [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md) | Reduction queue (ADR 0007) |
+| [UNCHECKED_SENDABLE_CI_EVIDENCE.md](./UNCHECKED_SENDABLE_CI_EVIDENCE.md) | macOS CI failed patterns (ADR 0009) |
 
 ## Product gates
 

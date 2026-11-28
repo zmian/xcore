@@ -47,9 +47,9 @@ Ongoing entropy reduction is tracked under `docs/architecture/` — start with
 `docs/architecture/GOVERNANCE_SUMMARY.md` and `docs/architecture/REGISTRY_CATALOG.md`.
 Registries: `DEPENDENCY_REGISTRY.md`, `COMPONENT_INDEX.md`, `SWIFTUI_COMPONENT_INDEX.md`.
 Before adding a `@Dependency` client, read `docs/architecture/adr/0002-dependency-client-template.md`.
-Concurrency: no `nonisolated(unsafe)` in `Sources/Xcore`; associated keys use `UInt8` tokens (`adr/0006-concurrency-and-associated-keys.md`). New `@unchecked Sendable` requires `UNCHECKED_SENDABLE_INVENTORY.md` (`adr/0007-unchecked-sendable-inventory.md`).
+Concurrency: no `nonisolated(unsafe)` in `Sources/Xcore`; associated keys use `AssociatedObjectKey` (`adr/0006-concurrency-and-associated-keys.md`). New `@unchecked Sendable` requires `UNCHECKED_SENDABLE_INVENTORY.md` (`adr/0007-unchecked-sendable-inventory.md`). Do not re-apply macOS-failed reductions listed in `UNCHECKED_SENDABLE_CI_EVIDENCE.md` (`adr/0009-unchecked-sendable-ci-holds.md`).
 
-Verification without Xcode: `make audit-architecture` (**32** checks; see
+Verification without Xcode: `make audit-architecture` (**33** checks; see
 `docs/architecture/AUDIT_INDEX.md`). macOS CI needs Homebrew `ripgrep`; audit shell scripts
 target Bash 3.2 (no `mapfile` / `declare -A`).
 

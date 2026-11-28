@@ -583,7 +583,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 102 — ADR 0009 CI holds (T-125)
 
 - **Document:** ADR 0009; cross-link ADR 0007 preference order.
-- **Verify:** macOS CI pending on `ba59661a` (docs).
+
+### Round 103 — Agent SSOT sync (T-126)
+
+- **Document:** `AGENTS.md` **33** audits, ADR 0009 + `AssociatedObjectKey` note; `REGISTRY_CATALOG` CI evidence row.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
