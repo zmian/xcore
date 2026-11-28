@@ -47,5 +47,5 @@ extension ValuePublisher {
     }
 }
 
-extension ValuePublisher: @unchecked Sendable where Output: Sendable {}
+extension ValuePublisher: Sendable where Output: Sendable, Failure: Sendable {}
 #endif

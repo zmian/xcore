@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 18 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 17 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006). Reduction queue: [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md).
 
@@ -10,7 +10,6 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | --- | --- |
 | `ReferenceBox.swift` | `ReferenceBox` / `MutableReferenceBox` when `Value: Sendable` |
 | `Weak.swift` | `Weak` when `Value: Sendable` |
-| `ValuePublisher.swift` | `ValuePublisher` when `Output: Sendable` |
 
 ## Dependency clients (live + handlers)
 
@@ -44,6 +43,8 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 **Resolved (Round 95):** `Publisher.done` uses `LockIsolated<Set<AnyCancellable>>`; deleted `DoneSubscriberCancellables` (T-117).
 
 **Resolved (Round 96):** `AssociatedObjectKey` is plain `Sendable` (`UnsafeRawPointer` token) (T-118).
+
+**Resolved (Round 97):** `ValuePublisher` conditional `Sendable` (`Output` + `Failure`) (T-119).
 
 **Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
 

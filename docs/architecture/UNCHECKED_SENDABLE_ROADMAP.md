@@ -1,7 +1,7 @@
 # `@unchecked Sendable` reduction roadmap
 
 Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) (ADR 0007).  
-**Open annotations: 18** (must match `make audit-architecture`).
+**Open annotations: 17** (must match `make audit-architecture`).
 
 ## Primitives (keep conditional `@unchecked`)
 
@@ -9,7 +9,6 @@ Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHE
 | --- | --- |
 | `ReferenceBox.swift` | `ReferenceBox` / `MutableReferenceBox` extensions |
 | `Weak.swift` | `Weak` extension |
-| `ValuePublisher.swift` | `ValuePublisher` extension |
 
 ## Dependency / live clients
 
@@ -35,6 +34,7 @@ Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHE
 
 ## Resolved in this PR
 
+- `ValuePublisher.swift` (T-119) — conditional `Sendable` without `@unchecked`
 - `ExtensibleByAssociatedObject.swift` (T-118) — `AssociatedObjectKey` plain `Sendable`
 - `Publisher+Extensions.swift` (T-117) — `LockIsolated` cancellable set
 - `ValidationRule+Rules.swift` (T-116) — `regex(Regex<Output>)` + `Output: Sendable`

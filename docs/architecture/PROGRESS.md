@@ -552,6 +552,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `AssociatedObjectKey: Sendable` (stable `UnsafeRawPointer` token).
 - **Enforce:** `@unchecked` budget **18**.
+- **Verify:** macOS CI pending on stacked commits through `54a9cbba`.
+
+### Round 97 — ValuePublisher Sendable (T-119)
+
+- **Migrate:** `Sendable where Output: Sendable, Failure: Sendable` (no `@unchecked`).
+- **Enforce:** `@unchecked` budget **17**.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
