@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct UserDefaultsPond: Pond, Sendable {
+public struct UserDefaultsPond: Pond, @unchecked Sendable {
     private let userDefaults: UserDefaults
     public let id = "userDefaults"
 
