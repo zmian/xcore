@@ -495,6 +495,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** `AddressSearchClient` → closure struct; delete noop/unimplemented conformers; `LiveAddressSearchClient` `@unchecked Sendable` for `.live` wiring.
 - **Enforce:** protocol client count **0**; `@unchecked` budget **22**.
 
+### Round 86b — Example + CI (T-108)
+
+- **Fix:** `AddressFormReducer` uses closure call syntax (`observe(_:)`, `updateQuery(_:_:)`).
+- **Verify:** macOS CI **green** on `a3d58634` (build-test-lint).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
