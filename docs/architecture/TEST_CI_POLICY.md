@@ -21,7 +21,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 
 `Theme.defaultSpacing` and `Theme.interItemHSpacing` are process-wide SSOT values. Under parallel `make test`, another test can mutate them before `ThemeLayoutTests` runs.
 
-**Canonical reset:** `resetThemeSpacingSSOTForParallelTesting()` in `ThemeLayoutTests.swift` (`Theme.defaultSpacing = 20`, `Theme.interItemHSpacing = 12`). Enforced by `audit_theme_test_isolation.sh`.
+**Canonical reset:** `resetThemeSpacingSSOTForParallelTesting()` in `ThemeLayoutTests.swift` (`Theme.defaultSpacing = .s5`, `Theme.interItemHSpacing = .s3`, aligned with [SPACING_SCALE.md](./SPACING_SCALE.md)). Enforced by `audit_theme_test_isolation.sh`.
 
 | File | Tests calling reset |
 | --- | --- |

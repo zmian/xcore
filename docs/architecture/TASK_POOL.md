@@ -147,3 +147,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-134 | Green macOS CI on #153 (`d070fa20`, T-132 fix) |
 | T-135 | Theme parallel-reset helper + audit SSOT |
 | T-136 | Green macOS CI on #153 (`7dd0d122`, T-135) |
+| T-137 | Theme test reset via `s5`/`s3`; audit ↔ `SPACING_SCALE.md` |

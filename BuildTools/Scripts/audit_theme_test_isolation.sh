@@ -4,6 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 POLICY="$ROOT/docs/architecture/TEST_CI_POLICY.md"
+SCALE_DOC="$ROOT/docs/architecture/SPACING_SCALE.md"
 TEST_FILE="$ROOT/Tests/XcoreTests/Components/ThemeLayoutTests.swift"
 
 if [[ ! -f "$TEST_FILE" ]]; then
@@ -20,13 +21,31 @@ reset_func="$(
   sed -n '/func resetThemeSpacingSSOTForParallelTesting/,/^}/p' "$TEST_FILE" | sed '$d'
 )"
 
-echo "$reset_func" | rg -q 'Theme\.defaultSpacing = 20' || {
-  echo "resetThemeSpacingSSOTForParallelTesting must set Theme.defaultSpacing = 20"
+if ! echo "$reset_func" | rg -q 'Theme\.defaultSpacing = \.s5'; then
+  echo "resetThemeSpacingSSOTForParallelTesting must set Theme.defaultSpacing = .s5 (SPACING_SCALE.md)"
+  exit 1
+fi
+
+if ! echo "$reset_func" | rg -q 'Theme\.interItemHSpacing = \.s3'; then
+  echo "resetThemeSpacingSSOTForParallelTesting must set Theme.interItemHSpacing = .s3 (SPACING_SCALE.md)"
+  exit 1
+fi
+
+if [[ ! -f "$SCALE_DOC" ]]; then
+  echo "Missing docs/architecture/SPACING_SCALE.md"
+  exit 1
+fi
+
+doc_default="$(awk -F'|' '/\| `defaultSpacing` \|/ { gsub(/^ +| +$/, "", $3); print $3; exit }' "$SCALE_DOC" | awk '{print $1}')"
+doc_inter="$(awk -F'|' '/\| `interItemHSpacing` \|/ { gsub(/^ +| +$/, "", $3); print $3; exit }' "$SCALE_DOC" | awk '{print $1}')"
+
+[[ "$doc_default" == "20" ]] || {
+  echo "SPACING_SCALE.md defaultSpacing must be 20 (got ${doc_default:-empty})"
   exit 1
 }
 
-echo "$reset_func" | rg -q 'Theme\.interItemHSpacing = 12' || {
-  echo "resetThemeSpacingSSOTForParallelTesting must set Theme.interItemHSpacing = 12"
+[[ "$doc_inter" == "12" ]] || {
+  echo "SPACING_SCALE.md interItemHSpacing must be 12 (got ${doc_inter:-empty})"
   exit 1
 }
 

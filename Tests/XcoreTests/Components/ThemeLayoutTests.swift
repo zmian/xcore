@@ -2,10 +2,10 @@ import SwiftUI
 import Testing
 import Xcore
 
-/// Frozen baseline for `Theme.defaultSpacing` / `interItemHSpacing` under parallel `make test`.
+/// Baseline for `Theme.defaultSpacing` / `interItemHSpacing` under parallel `make test` (see `SPACING_SCALE.md`).
 private func resetThemeSpacingSSOTForParallelTesting() {
-    Theme.defaultSpacing = 20
-    Theme.interItemHSpacing = 12
+    Theme.defaultSpacing = .s5
+    Theme.interItemHSpacing = .s3
 }
 
 @Suite

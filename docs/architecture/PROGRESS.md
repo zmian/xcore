@@ -635,6 +635,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `7dd0d122` green — [run 46142712195](https://github.com/zmian/xcore/actions/runs/46142712195) (`build-test-lint` after T-135).
 
+### Round 114 — Theme reset ↔ spacing scale (T-137)
+
+- **Migrate:** Parallel test reset uses `CGFloat.s5` / `.s3` instead of literals.
+- **Enforce:** `audit_theme_test_isolation.sh` cross-checks `SPACING_SCALE.md` defaults.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
