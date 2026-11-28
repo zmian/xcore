@@ -325,6 +325,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** Push notifications open settings via `URL.notificationSettings`; drop Pond/AddressSearch `#warning` in favor of ENTROPY “tracked product debt”.
 - **Enforce:** `GOVERNANCE_METRICS.md` / `ENTROPY_INVENTORY.md` **Total: 0** `#warning`.
 
+### Round 48 — governance doc sync (post–T-019 / CI hardening)
+
+- **Migrate:** Align `REGISTRY_CATALOG`, `GOVERNANCE_SUMMARY` with zero `#warning`; document macOS audit runner + Swift Testing dependency pattern in `TEST_CI_POLICY.md`, `AUDIT_INDEX.md`, ADR 0001 (T-063).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

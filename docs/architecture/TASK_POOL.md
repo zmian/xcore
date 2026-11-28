@@ -73,3 +73,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-043 | Green macOS CI on #153 ([#127](https://github.com/zmian/xcore/actions/runs/46118732024) `ade46764`) |
 | T-019 | Clear all tracked `#warning` in Sources/Xcore |
 | T-062 | Audit scripts tolerate zero `#warning` (`rg` exit 1) |
+| T-063 | Doc sync: catalogs + TEST_CI_POLICY + ADR 0001 testing notes |

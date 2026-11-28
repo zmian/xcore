@@ -2,6 +2,8 @@
 
 Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/workflows/ci.yml`.
 
+**macOS CI:** requires Homebrew `ripgrep`; scripts target **Bash 3.2** (no `mapfile`, no associative arrays). Linux agents may use newer Bash — keep scripts portable.
+
 | Script | Enforces |
 | --- | --- |
 | `BuildTools/Scripts/audit_cocoa_component_index.sh` | `COCOA_COMPONENT_INDEX.md` matches `Cocoa/Components/` domain folders. |
