@@ -137,3 +137,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-124 | Green macOS CI on #153 (`48043ae1`, build-test-lint after T-122/T-123) |
 | T-125 | ADR 0009 unchecked Sendable CI holds |
 | T-126 | `AGENTS.md` + `REGISTRY_CATALOG` sync (33 audits, CI evidence) |
+| T-127 | Registry audit CI evidence row + `GOVERNANCE_SUMMARY` sync |

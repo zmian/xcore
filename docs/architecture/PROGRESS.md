@@ -588,6 +588,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `AGENTS.md` **33** audits, ADR 0009 + `AssociatedObjectKey` note; `REGISTRY_CATALOG` CI evidence row.
 
+### Round 104 — Registry catalog CI evidence (T-127)
+
+- **Enforce:** `audit_registry_catalog.sh` requires `UNCHECKED_SENDABLE_CI_EVIDENCE.md` row.
+- **Document:** `GOVERNANCE_SUMMARY.md` **33** audits + ADR 0009 rule row.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

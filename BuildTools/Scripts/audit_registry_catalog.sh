@@ -55,4 +55,9 @@ if [[ "$unchecked_catalog" != "$unchecked_metric" || "$unchecked_catalog" != "$u
   exit 1
 fi
 
+if ! rg -q 'UNCHECKED_SENDABLE_CI_EVIDENCE\.md' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must list UNCHECKED_SENDABLE_CI_EVIDENCE.md (ADR 0009)"
+  exit 1
+fi
+
 echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog, unchecked $unchecked_catalog)."

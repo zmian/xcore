@@ -5,7 +5,7 @@
 ## Before you edit
 
 1. Read [ADR 0002](./adr/0002-dependency-client-template.md) when adding `@Dependency` clients.
-2. Run `make audit-architecture` (**31** Linux-safe checks; see `AUDIT_INDEX.md`) before push.
+2. Run `make audit-architecture` (**33** Linux-safe checks; see `AUDIT_INDEX.md`) before push.
 3. Headline budgets: [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md).
 4. Catalog of registries and inventories: [REGISTRY_CATALOG.md](./REGISTRY_CATALOG.md).
 5. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
@@ -29,8 +29,9 @@ Extensions: [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) (4 folders, 24 root fil
 | `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
 | Layer import allowlists | 0003 + `audit_layer_imports.sh` |
 | Headline metrics match inventories | `audit_governance_metrics.sh` |
-| Zero `nonisolated(unsafe)`; UInt8 associated keys | 0006 + `audit_concurrency_inventory.sh`, `audit_associated_object_keys.sh` |
+| Zero `nonisolated(unsafe)`; `AssociatedObjectKey` tokens | 0006 + `audit_concurrency_inventory.sh`, `audit_associated_object_keys.sh` |
 | `@unchecked Sendable` inventory parity | 0007 + `audit_unchecked_sendable_inventory.sh` |
+| macOS CI `@unchecked` holds | 0009 + `audit_unchecked_sendable_ci_holds.sh` |
 
 ## Inventories
 
