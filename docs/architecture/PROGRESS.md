@@ -626,6 +626,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `d070fa20` green — #153 head includes T-131 Theme isolation + T-132 audit guard.
 
+### Round 112 — Theme test reset SSOT (T-135)
+
+- **Migrate:** `resetThemeSpacingSSOTForParallelTesting()`; three tests call helper.
+- **Enforce:** `audit_theme_test_isolation.sh` checks helper + call sites.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

@@ -2,6 +2,12 @@ import SwiftUI
 import Testing
 import Xcore
 
+/// Frozen baseline for `Theme.defaultSpacing` / `interItemHSpacing` under parallel `make test`.
+private func resetThemeSpacingSSOTForParallelTesting() {
+    Theme.defaultSpacing = 20
+    Theme.interItemHSpacing = 12
+}
+
 @Suite
 struct ThemeLayoutTests {
     @Test func cornerRadiusAppConstantsForwardsToDefaultTheme() {
@@ -27,8 +33,7 @@ struct ThemeLayoutTests {
             Theme.interItemHSpacing = originalInter
         }
 
-        Theme.defaultSpacing = 20
-        Theme.interItemHSpacing = 12
+        resetThemeSpacingSSOTForParallelTesting()
 
         CGFloat.defaultSpacing = 24
         #expect(Theme.defaultSpacing == 24)
@@ -36,9 +41,7 @@ struct ThemeLayoutTests {
     }
 
     @Test func spacingScaleMatchesDocumentation() {
-        // Reset theme metrics so parallel tests cannot pollute forwarder reads.
-        Theme.defaultSpacing = 20
-        Theme.interItemHSpacing = 12
+        resetThemeSpacingSSOTForParallelTesting()
 
         #expect(CGFloat.s1 == 4)
         #expect(CGFloat.s5 == CGFloat.defaultSpacing)
@@ -49,9 +52,7 @@ struct ThemeLayoutTests {
         let original = Theme.defaultSpacing
         defer { Theme.defaultSpacing = original }
 
-        // Reset theme metrics so parallel tests cannot pollute forwarder reads.
-        Theme.defaultSpacing = 20
-        Theme.interItemHSpacing = 12
+        resetThemeSpacingSSOTForParallelTesting()
 
         Theme.defaultSpacing = 16
         #expect(EdgeInsets.listRow == EdgeInsets(16))
