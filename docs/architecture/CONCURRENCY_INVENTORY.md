@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 34 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 32 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -32,14 +32,6 @@ Snapshot for reducing concurrency entropy. **Total: 34 annotations** (regenerate
 
 **Intent:** Test-only mutation without actor isolation; acceptable in mock types.
 
-## Media / UI runtime handles
-
-| Location |
-| --- |
-| `Cache.swift` |
-
-**Intent:** Bridge non-Sendable UIKit/AVFoundation/MapKit types. Candidates for actor-isolated facades if warnings increase.
-
 **Resolved (Round 50):** `CompositeImageFetcher` uses `LockIsolated` for fetcher list (was `nonisolated(unsafe)`).
 
 **Resolved (Round 51):** `FeatureFlag` global provider registry uses `LockIsolated` (was `nonisolated(unsafe)`).
@@ -57,6 +49,8 @@ Snapshot for reducing concurrency entropy. **Total: 34 annotations** (regenerate
 **Resolved (Round 57):** `LiveAddressSearchClient.supportedRegions` uses `LockIsolated` storage (was `nonisolated(unsafe)` static).
 
 **Resolved (Round 58):** `ValidationRule.regex(Regex)` captures pattern in `LockIsolated` (was `nonisolated(unsafe)` local).
+
+**Resolved (Round 59):** `Cache` `NSCache` storage behind `LockIsolated` (was `nonisolated(unsafe)`).
 
 ## Animation / presentation
 

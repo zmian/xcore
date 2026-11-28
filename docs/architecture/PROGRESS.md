@@ -369,6 +369,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Typed `Regex` held in `LockIsolated` for `@Sendable` validate closure; concurrency budget **34** (T-073).
 
+### Round 59 — `Cache` NSCache storage (T-074)
+
+- **Migrate:** All cache operations through `LockIsolated<NSCache>`; concurrency budget **32** (T-074).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
