@@ -722,6 +722,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** all `@Suite(.serialized)` files in `TEST_CI_POLICY.md`.
 - **Enforce:** `audit_ci_test_policy.sh` count + per-file listing; `ENTROPY_INVENTORY` row.
+- **CI:** green `b67732f0` ([run 46154549854](https://github.com/zmian/xcore/actions/runs/46154549854)).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
