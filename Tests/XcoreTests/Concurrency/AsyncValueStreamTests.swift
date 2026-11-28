@@ -42,6 +42,8 @@ struct AsyncValueStreamTests {
             return values
         }
 
+        await Task.yield()
+
         internalStream.send(1)
         internalStream.send(2)
         internalStream.finish()

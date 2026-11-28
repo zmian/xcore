@@ -281,6 +281,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#118](https://github.com/zmian/xcore/actions/runs/46107017127) **Test** hit 30m step timeout after T-053 (serial suite under `-parallel-testing-enabled NO`).
 - **Migrate:** Restore default parallel testing on CI; add `-maximum-test-execution-time-allowance 300`; unfiltered `make test` on CI; job/step timeouts 60m / 45m (T-054).
 
+### Round 39 — CI test failures on #119 (2026-11-28)
+
+- **CI:** [#119](https://github.com/zmian/xcore/actions/runs/46110239691) failed in ~10m: `AsyncValueStreamTests.iterations` (300s allowance), `DependencyKeyDefaultsTests` (live deps without `withDependencies`), `DateTest.timeZone` (EST vs EDT).
+- **Migrate:** `Task.yield` before stream mutations; scope dependency default tests with `withDependencies` + harness types; align US Eastern offset with `Calendar` (T-055).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

@@ -48,6 +48,8 @@ struct AsyncCurrentValueStreamTests {
             return values
         }
 
+        await Task.yield()
+
         stream.send(1)
         stream.send(2)
         stream.finish()
