@@ -32,7 +32,8 @@ APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
 ifneq ($(strip $(CI)),)
-XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO
+XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation \
+	-test-timeouts-enabled YES -maximum-test-execution-time-allowance 300
 XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DCI"
 RAW_XCODEBUILD := 1
 export SIMCTL_CHILD_CI := true
@@ -93,9 +94,14 @@ build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_
 		--hosting-base-path "xcore$(if $(DOCC_VERSION),/$(DOCC_VERSION),)"
 
 test: _ensure_xcode ## Run tests through the Example scheme
+ifneq ($(strip $(CI)),)
+	$(call xcodebuild_run,$(XCODEBUILD) test $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(XCODEBUILD_BUILD_SETTINGS))
+	@echo "Tests passed"
+else
 	@set -o pipefail; \
 	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(XCODEBUILD_BUILD_SETTINGS) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
 	echo "Tests passed"
+endif
 
 run: _ensure_xcode ## Build, install, and launch the app in the configured simulator
 	@xcrun simctl boot "$(SIMULATOR_NAME)" >/dev/null 2>&1 || true

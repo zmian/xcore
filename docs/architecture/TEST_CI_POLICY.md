@@ -28,7 +28,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 
 ## Workflow guards
 
-- `Makefile`: `-parallel-testing-enabled NO` when `CI` is set.
-- `.github/workflows/ci.yml`: job timeout 45 minutes; Test step timeout 30 minutes.
+- `Makefile`: per-test execution allowance (5 minutes) when `CI` is set; `make test` uses unfiltered `xcodebuild` output on CI.
+- `.github/workflows/ci.yml`: job timeout 60 minutes; Test step timeout 45 minutes.
 
 Related: T-050, T-051 in `TASK_POOL.md`.

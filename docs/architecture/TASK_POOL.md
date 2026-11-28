@@ -7,8 +7,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after T-053 stream test fix | CI stability on #153 |
-| T-053 | Fix concurrency stream tests that hung CI (await tasks; single AsyncStream consumer) | Push with Round 37 |
+| T-043 | Confirm green macOS CI after T-054 CI throughput fix | CI stability on #153 |
+| T-054 | Restore parallel testing on CI; add per-test time allowance; longer workflow timeouts | `#118` step timeout (~30m serial) |
 
 ## Pending confirmation
 
@@ -65,3 +65,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-050 | Skip live `LiveAddressSearchClientTests` on CI (`4f4a493f`) |
 | T-051 | CI test hardening: `#if !CI` live address tests, phase timing skips, job timeouts |
 | T-052 | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` |
+| T-053 | Concurrency stream tests: await collection tasks; single `AsyncStream` consumer (`1f0bfccc`) |

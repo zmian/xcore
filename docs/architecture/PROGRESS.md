@@ -276,6 +276,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Root cause:** `AsyncPassthroughStreamTests.iterations_asyncStream_directly` used two `for await` consumers on a single `AsyncStream` (single-consumer); unstructured `Task` work in stream tests never awaited → runner wait forever.
 - **Migrate:** Await collection tasks; single consumer for `AsyncStream`; same pattern in `AsyncCurrentValueStreamTests` / `AsyncValueStreamTests` (T-053).
 
+### Round 38 — CI test throughput (2026-11-28)
+
+- **CI:** [#118](https://github.com/zmian/xcore/actions/runs/46107017127) **Test** hit 30m step timeout after T-053 (serial suite under `-parallel-testing-enabled NO`).
+- **Migrate:** Restore default parallel testing on CI; add `-maximum-test-execution-time-allowance 300`; unfiltered `make test` on CI; job/step timeouts 60m / 45m (T-054).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
