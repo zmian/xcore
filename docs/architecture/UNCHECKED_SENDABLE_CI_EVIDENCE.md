@@ -11,4 +11,4 @@ SSOT for reduction attempts that **failed** `build-test-lint` on GitHub Actions 
 | E-005 | `ValidationRule.regex(Regex)` | delete `RegexValidationPattern` | `Regex<Output>` capture in `@Sendable` closure | T-116, T-121 |
 | E-006 | `Publisher.done` | `LockIsolated<Set<AnyCancellable>>` | `AnyCancellable` not `Sendable` in `@Sendable` closure | T-117, T-122 |
 
-**Enforced:** `audit_unchecked_sendable_ci_holds.sh` (canonical holders / annotations for E-003–E-006).
+**Enforced:** `audit_unchecked_sendable_ci_holds.sh` (ADR 0009; canonical holders / annotations for E-003–E-006).

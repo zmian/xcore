@@ -580,6 +580,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_unchecked_sendable_ci_holds.sh` (**33** audits).
 - **Verify:** macOS CI **green** on `48043ae1`.
 
+### Round 102 — ADR 0009 CI holds (T-125)
+
+- **Document:** ADR 0009; cross-link ADR 0007 preference order.
+- **Verify:** macOS CI pending on `ba59661a` (docs).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

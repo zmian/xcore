@@ -10,5 +10,6 @@
 | [0006](./0006-concurrency-and-associated-keys.md) | Zero `nonisolated(unsafe)`; LockIsolated; UInt8 associated keys |
 | [0007](./0007-unchecked-sendable-inventory.md) | `@unchecked Sendable` inventory + preference order |
 | [0008](./0008-product-gates-index.md) | `PRODUCT_GATES.md` index + audits for P-00x gates |
+| [0009](./0009-unchecked-sendable-ci-holds.md) | macOS CI-proven `@unchecked` holds + `UNCHECKED_SENDABLE_CI_EVIDENCE.md` |
 
 Add a new ADR when introducing cross-cutting rules agents must not rediscover.
