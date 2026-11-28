@@ -60,4 +60,19 @@ if ! rg -q 'UNCHECKED_SENDABLE_CI_EVIDENCE\.md' "$CATALOG"; then
   exit 1
 fi
 
+SUMMARY="$ROOT/docs/architecture/GOVERNANCE_SUMMARY.md"
+ARCH_MAP="$ROOT/docs/architecture/ARCHITECTURE_MAP.md"
+
+for script in audit_spacing_scale audit_theme_test_isolation; do
+  if ! rg -q "${script}" "$SUMMARY"; then
+    echo "GOVERNANCE_SUMMARY.md must reference ${script}.sh (layout SSOT chain)"
+    exit 1
+  fi
+done
+
+if ! rg -q 'audit_theme_test_isolation' "$ARCH_MAP"; then
+  echo "ARCHITECTURE_MAP.md must reference audit_theme_test_isolation.sh for layout ownership"
+  exit 1
+fi
+
 echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog, unchecked $unchecked_catalog)."

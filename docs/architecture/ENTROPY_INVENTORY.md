@@ -58,6 +58,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Associated-object keys | `audit_associated_object_keys.sh` (ADR 0006) |
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
+| Parallel Theme test spacing | `audit_theme_test_isolation.sh` (`TEST_CI_POLICY.md`) |
 | Formatting defaults | `audit_formatting_defaults.sh` |
 | Legacy date format | `audit_date_legacy_format.sh` (P-002) |
 | Coding numeric defaults | `audit_coding_defaults.sh` |

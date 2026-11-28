@@ -58,7 +58,7 @@ flowchart TB
 | Dependency defaults | `DependencyKey` live/test/preview | `*/Dependencies/*` |
 | Localized copy | Generated `LocalizableStrings` | SwiftGen + `Resources/` |
 | Typed metadata bags | `UserInfoContainer` | `UserInfoKey.swift` (ADR 0005) |
-| Layout / theme defaults | `Theme.default` (`cornerRadius`); `AppConstants` forwards + spacing | `Theme.swift`, `Constants.swift` (ADR 0005; `audit_layout_ssot.sh`) |
+| Layout / theme defaults | `Theme.default` (spacing via `s5`/`s3` at init); frozen scale on `CGFloat`; forwarders in `AppConstants` | `Theme.swift`, `Constants.swift` (ADR 0005; `audit_layout_ssot.sh`, `audit_spacing_scale.sh`, `audit_theme_test_isolation.sh`) |
 
 ## Duplicate / parallel implementations
 

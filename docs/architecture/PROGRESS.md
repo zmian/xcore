@@ -657,6 +657,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** Theme init + parallel test reset linked to `s5`/`s3` and theme isolation audits.
 
+### Round 119 — Agent map SSOT sync (T-142)
+
+- **Document:** `GOVERNANCE_SUMMARY`, `ARCHITECTURE_MAP`, `ENTROPY_INVENTORY` list spacing + parallel test audits.
+- **Enforce:** `audit_registry_catalog.sh` guards summary + map references.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
