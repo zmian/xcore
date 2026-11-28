@@ -306,6 +306,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#124](https://github.com/zmian/xcore/actions/runs/46116163691) — **Test** and **Lint** passed; **Architecture audit** failed (`rg: command not found` in index scripts).
 - **Migrate:** `brew install ripgrep` in CI workflow; restore `import Foundation` in defaults test (T-059).
 
+### Round 44 — Bash 3.2 `mapfile` on macOS CI (#125)
+
+- **CI:** [#125](https://github.com/zmian/xcore/actions/runs/46117082088) — tests/lint green; `audit_dependency_keys.sh` failed (`mapfile: command not found` under `/bin/bash` 3.2).
+- **Migrate:** Replace `mapfile` with portable `while read` loops in audit scripts (T-060).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

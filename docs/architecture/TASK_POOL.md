@@ -7,8 +7,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after T-059 | CI stability on #153 |
-| T-059 | CI install `ripgrep` for architecture audits (#124) | Push after T-058 |
+| T-043 | Confirm green macOS CI after T-060 | CI stability on #153 |
+| T-060 | Portable audit scripts (no `mapfile`) for macOS Bash 3.2 | Push after T-059 |
 
 ## Pending confirmation
 
@@ -71,3 +71,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-056 | Dependency defaults: `.test` + `withExpectedIssue` (`a1a53212`) |
 | T-057 | Serialize dependency defaults suite (`1833af47`) |
 | T-058 | Pasteboard default test without `UIPasteboard` (`722a220e`) |
+| T-059 | CI `ripgrep` + Foundation import (`773403ff`) |

@@ -13,7 +13,10 @@ check_allowlist() {
   shift 4
   local -a allowlist=("$@")
 
-  mapfile -t importers < <(rg -l "$import_pattern" "$search_root" --glob '*.swift' | sort)
+  importers=()
+  while IFS= read -r line; do
+    importers+=("$line")
+  done < <(rg -l "$import_pattern" "$search_root" --glob '*.swift' | sort)
 
   if [[ "${#importers[@]}" != "$expected" ]]; then
     echo "$label: found ${#importers[@]} importer(s), allowlist count $expected"
@@ -39,7 +42,10 @@ check_allowlist() {
   echo "$label import audit passed ($expected files)."
 }
 
-mapfile -t allowlist_counts < <(rg -o 'Allowlist count: [0-9]+' "$DOC" | rg -o '[0-9]+')
+allowlist_counts=()
+while IFS= read -r line; do
+  allowlist_counts+=("$line")
+done < <(rg -o 'Allowlist count: [0-9]+' "$DOC" | rg -o '[0-9]+')
 if [[ "${#allowlist_counts[@]}" != 2 ]]; then
   echo "LAYER_IMPORTS.md must declare two Allowlist count lines"
   exit 1

@@ -16,7 +16,10 @@ UNIMPLEMENTED_STYLE_PATHS=(
 
 failures=()
 
-mapfile -t key_files < <(rg --no-heading -l '^\s*(private\s+)?enum\s+\w+.*:\s*DependencyKey' "$SOURCES" || true)
+key_files=()
+while IFS= read -r line; do
+  key_files+=("$line")
+done < <(rg --no-heading -l '^\s*(private\s+)?enum\s+\w+.*:\s*DependencyKey' "$SOURCES" || true)
 
 for file in "${key_files[@]}"; do
   rel="${file#"$ROOT/"}"

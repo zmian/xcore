@@ -6,8 +6,14 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 MAKEFILE="$ROOT/Makefile"
 INDEX="$ROOT/docs/architecture/AUDIT_INDEX.md"
 
-mapfile -t makefile_scripts < <(rg -o 'audit_[a-z0-9_]+\.sh' "$MAKEFILE" | sort -u)
-mapfile -t index_scripts < <(rg -o 'audit_[a-z0-9_]+\.sh' "$INDEX" | sort -u)
+makefile_scripts=()
+while IFS= read -r line; do
+  makefile_scripts+=("$line")
+done < <(rg -o 'audit_[a-z0-9_]+\.sh' "$MAKEFILE" | sort -u)
+index_scripts=()
+while IFS= read -r line; do
+  index_scripts+=("$line")
+done < <(rg -o 'audit_[a-z0-9_]+\.sh' "$INDEX" | sort -u)
 
 missing_in_index=()
 for script in "${makefile_scripts[@]}"; do
