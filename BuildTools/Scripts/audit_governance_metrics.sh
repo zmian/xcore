@@ -115,6 +115,16 @@ doc_swift="$(expected_metric 'Swift/Components→UIKit allowlist')"
   exit 1
 }
 
+compile_live="$(
+  rg -l '#if !CI' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | wc -l | tr -d ' '
+)"
+doc_compile="$(expected_metric 'compile-excluded test suites')"
+policy_compile="$(rg -o 'Compile-excluded suites: [0-9]+' "$POLICY" | head -1 | rg -o '[0-9]+' || true)"
+[[ "$compile_live" == "$doc_compile" && "$doc_compile" == "$policy_compile" ]] || {
+  echo "Compile-excluded suites: live $compile_live, GOVERNANCE_METRICS $doc_compile, TEST_CI_POLICY $policy_compile"
+  exit 1
+}
+
 runtime_live="$(
   rg -c 'disabled\(if: TestEnvironment\.isCI' "$ROOT/Tests" --glob '*.swift' 2>/dev/null \
     | rg -v 'LiveAddressSearchClientTests\.swift' \

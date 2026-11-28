@@ -79,12 +79,14 @@ if ! rg -q 'serialized suites' "$CATALOG"; then
   exit 1
 fi
 
+compile_metric="$(metric_value 'compile-excluded test suites')"
 runtime_metric="$(metric_value 'Runtime CI test skips')"
 serialized_metric="$(metric_value 'Serialized Swift Testing suites')"
+policy_compile="$(rg -o 'Compile-excluded suites: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
 policy_runtime="$(rg -o 'Runtime CI skips: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
 policy_serialized="$(rg -o 'Serialized suites: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
-[[ "$runtime_metric" == "$policy_runtime" && "$serialized_metric" == "$policy_serialized" ]] || {
-  echo "REGISTRY_CATALOG: GOVERNANCE_METRICS CI budgets ($runtime_metric runtime, $serialized_metric serialized) != TEST_CI_POLICY ($policy_runtime, $policy_serialized)"
+[[ "$compile_metric" == "$policy_compile" && "$runtime_metric" == "$policy_runtime" && "$serialized_metric" == "$policy_serialized" ]] || {
+  echo "REGISTRY_CATALOG: GOVERNANCE_METRICS CI budgets (compile $compile_metric, runtime $runtime_metric, serialized $serialized_metric) != TEST_CI_POLICY ($policy_compile, $policy_runtime, $policy_serialized)"
   exit 1
 }
 

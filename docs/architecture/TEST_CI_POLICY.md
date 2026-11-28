@@ -10,7 +10,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 | `@Test(.disabled(if: TestEnvironment.isCI))` | 4 | See table below |
 | `@Suite(.serialized)` | 4 | Global/shared state under parallel `make test` |
 
-**Runtime CI skips: 4** (`audit_ci_test_policy.sh`). **Serialized suites: 4** (same audit).
+**Compile-excluded suites: 1** (`audit_ci_test_policy.sh`). **Runtime CI skips: 4** (same audit). **Serialized suites: 4** (same audit).
 
 ## Compile exclusion (`#if !CI`)
 

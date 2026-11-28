@@ -6,6 +6,7 @@ Headline budgets agents should not regress without updating source inventories a
 | Metric | Value |
 | --- | --- |
 | Architecture audit scripts | 33 |
+| `#if !CI` compile-excluded test suites | 1 |
 | Runtime CI test skips (`TestEnvironment.isCI`) | 4 |
 | Serialized Swift Testing suites (`@Suite(.serialized)`) | 4 |
 | Production dependency keys | 14 |

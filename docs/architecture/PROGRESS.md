@@ -740,6 +740,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `AGENTS.md` CI test policy + serialized suites; ADR 0005 `.serialized` note.
 - **Enforce:** `audit_registry_catalog.sh` `AGENTS` + `ARCHITECTURE_MAP` guards.
+- **CI:** green `a3585886` ([run 46158874315](https://github.com/zmian/xcore/actions/runs/46158874315)).
+
+### Round 136 — Compile-excluded suite budget (T-159)
+
+- **Metric:** `#if !CI` suite count on `GOVERNANCE_METRICS.md`.
+- **Enforce:** `audit_ci_test_policy.sh` + `audit_governance_metrics.sh` + registry catalog parity.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

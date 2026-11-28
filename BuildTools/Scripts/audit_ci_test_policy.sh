@@ -33,6 +33,27 @@ if ! rg -q 'struct LiveAddressSearchClientTests' "$LIVE_ADDRESS_TESTS"; then
   exit 1
 fi
 
+compile_live="$(
+  rg -l '#if !CI' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | wc -l | tr -d ' '
+)"
+doc_compile="$(rg -o 'Compile-excluded suites: [0-9]+' "$POLICY" | head -1 | rg -o '[0-9]+' || true)"
+if [[ -z "$doc_compile" ]]; then
+  echo "Could not read Compile-excluded suites from TEST_CI_POLICY.md"
+  exit 1
+fi
+if [[ "$compile_live" != "$doc_compile" ]]; then
+  echo "Compile-excluded suites: Tests have $compile_live files with #if !CI, TEST_CI_POLICY says $doc_compile"
+  exit 1
+fi
+
+compile_rows="$(
+  awk '/^## Compile exclusion/,/^## Global Theme SSOT/' "$POLICY" | rg -c '^\| `Tests/' || true
+)"
+if [[ "$compile_rows" != "$doc_compile" ]]; then
+  echo "TEST_CI_POLICY compile table has $compile_rows rows, Compile-excluded suites says $doc_compile"
+  exit 1
+fi
+
 table_rows="$(
   awk '/^## Runtime skips$/,/^## Workflow guards$/' "$POLICY" | rg -c '^\| `Tests/' || true
 )"
@@ -94,4 +115,4 @@ while IFS= read -r suite_file; do
   fi
 done < <(rg -l '@Suite\(\.serialized\)' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | sort)
 
-echo "CI test policy audit passed ($doc_runtime runtime skips, $doc_serialized serialized suites, LiveAddress #if !CI, Theme reset documented)."
+echo "CI test policy audit passed ($doc_compile compile-excluded, $doc_runtime runtime skips, $doc_serialized serialized suites, Theme reset documented)."
