@@ -631,6 +631,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** `resetThemeSpacingSSOTForParallelTesting()`; three tests call helper.
 - **Enforce:** `audit_theme_test_isolation.sh` checks helper + call sites.
 
+### Round 113 — macOS CI (T-136)
+
+- **Verify:** `7dd0d122` green — [run 46142712195](https://github.com/zmian/xcore/actions/runs/46142712195) (`build-test-lint` after T-135).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
