@@ -592,7 +592,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_registry_catalog.sh` requires `UNCHECKED_SENDABLE_CI_EVIDENCE.md` row.
 - **Document:** `GOVERNANCE_SUMMARY.md` **33** audits + ADR 0009 rule row.
-- **Verify:** macOS CI **failed** `1e39f319` — `ThemeLayoutTests.listRowInsetsFollowDefaultSpacing` (parallel Theme pollution).
+- **Verify:** Superseded by T-128/T-129; green on `f025d663`.
 
 ### Round 105 — Theme list-row test isolation (T-128)
 
@@ -602,7 +602,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 106 — Theme audit Bash 3.2 (T-129)
 
 - **Fix:** Replace `head -n -1` in theme isolation audit (macOS CI / Bash 3.2).
-- **Verify:** macOS CI pending after push.
+- **Verify:** macOS CI **green** on `f025d663` (build-test-lint + 33 audits).
+
+### Round 107 — CI verification (T-130)
+
+- **Verify:** `f025d663` confirms T-128 (Theme test) + T-127/T-123 governance stack on #153.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
