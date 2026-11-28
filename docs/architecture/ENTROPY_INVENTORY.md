@@ -54,6 +54,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Layer import allowlists | `audit_layer_imports.sh` |
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |
 | `@unchecked Sendable` count | `audit_unchecked_sendable_inventory.sh` (ADR 0007) |
+| `@unchecked` CI-proven holds | `audit_unchecked_sendable_ci_holds.sh` (`UNCHECKED_SENDABLE_CI_EVIDENCE.md`) |
 | Associated-object keys | `audit_associated_object_keys.sh` (ADR 0006) |
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
