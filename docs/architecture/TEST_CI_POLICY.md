@@ -8,8 +8,9 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 | --- | ---: | --- |
 | `#if !CI` compile exclusion | 1 suite | `LiveAddressSearchClientTests` (5 methods) |
 | `@Test(.disabled(if: TestEnvironment.isCI))` | 4 | See table below |
+| `@Suite(.serialized)` | 4 | Global/shared state under parallel `make test` |
 
-**Runtime CI skips: 4** (`audit_ci_test_policy.sh`).
+**Runtime CI skips: 4** (`audit_ci_test_policy.sh`). **Serialized suites: 4** (same audit).
 
 ## Compile exclusion (`#if !CI`)
 
@@ -26,6 +27,17 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 | File | Tests calling reset |
 | --- | --- |
 | `Tests/XcoreTests/Components/ThemeLayoutTests.swift` (`@Suite(.serialized)`, T-153) | All tests call `resetThemeSpacingSSOTForParallelTesting()` before spacing assertions (T-135) |
+
+## Serialized test suites
+
+Parallel `make test` can interleave mutations of process-wide state. Suites that touch globals or shared storage use `@Suite(.serialized)` (precedent: T-057 `DependencyKeyDefaultsTests` pattern for UIKit pasteboard).
+
+| File | Reason |
+| --- | --- |
+| `Tests/XcoreTests/Components/ThemeLayoutTests.swift` | Global `Theme` spacing SSOT (T-153) |
+| `Tests/XcoreTests/DateTests.swift` | `Calendar.default` in suite `init` |
+| `Tests/XcoreTests/Clients/PasteboardClientTests.swift` | Pasteboard / simulator stability (T-058) |
+| `Tests/XcoreTests/PondTests.swift` | Shared `Pond` / Keychain fixtures |
 
 ## Runtime skips
 

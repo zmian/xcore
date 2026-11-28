@@ -64,4 +64,34 @@ if ! rg -q '@Suite\(\.serialized\)' "$POLICY"; then
   exit 1
 fi
 
-echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI, Theme reset + serialized documented)."
+serialized_live="$(
+  rg -l '@Suite\(\.serialized\)' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | wc -l | tr -d ' '
+)"
+doc_serialized="$(rg -o 'Serialized suites: [0-9]+' "$POLICY" | head -1 | rg -o '[0-9]+' || true)"
+if [[ -z "$doc_serialized" ]]; then
+  echo "Could not read Serialized suites count from TEST_CI_POLICY.md"
+  exit 1
+fi
+if [[ "$serialized_live" != "$doc_serialized" ]]; then
+  echo "Serialized suites: Tests have $serialized_live, TEST_CI_POLICY says $doc_serialized"
+  exit 1
+fi
+
+serialized_rows="$(
+  awk '/^## Serialized test suites$/,/^## Runtime skips$/' "$POLICY" | rg -c '^\| `Tests/' || true
+)"
+if [[ "$serialized_rows" != "$doc_serialized" ]]; then
+  echo "TEST_CI_POLICY serialized table has $serialized_rows rows, Serialized suites says $doc_serialized"
+  exit 1
+fi
+
+while IFS= read -r suite_file; do
+  [[ -z "$suite_file" ]] && continue
+  rel="${suite_file#"$ROOT"/}"
+  if ! rg -qF "$rel" "$POLICY"; then
+    echo "TEST_CI_POLICY.md must list serialized suite $rel"
+    exit 1
+  fi
+done < <(rg -l '@Suite\(\.serialized\)' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | sort)
+
+echo "CI test policy audit passed ($doc_runtime runtime skips, $doc_serialized serialized suites, LiveAddress #if !CI, Theme reset documented)."

@@ -716,6 +716,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_ci_test_policy.sh` requires `@Suite(.serialized)` in `TEST_CI_POLICY.md`.
 - **Doc:** `GOVERNANCE_SUMMARY` + Theme SSOT table row (T-153).
+- **CI:** green `228fbe00` ([run 46153366922](https://github.com/zmian/xcore/actions/runs/46153366922)).
+
+### Round 132 — Serialized suite catalog (T-155)
+
+- **Document:** all `@Suite(.serialized)` files in `TEST_CI_POLICY.md`.
+- **Enforce:** `audit_ci_test_policy.sh` count + per-file listing; `ENTROPY_INVENTORY` row.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
