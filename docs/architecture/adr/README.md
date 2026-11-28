@@ -9,5 +9,6 @@
 | [0005](./0005-metadata-and-theme-globals.md) | Metadata, theme, layout SSOT |
 | [0006](./0006-concurrency-and-associated-keys.md) | Zero `nonisolated(unsafe)`; LockIsolated; UInt8 associated keys |
 | [0007](./0007-unchecked-sendable-inventory.md) | `@unchecked Sendable` inventory + preference order |
+| [0008](./0008-product-gates-index.md) | `PRODUCT_GATES.md` index + audits for P-00x gates |
 
 Add a new ADR when introducing cross-cutting rules agents must not rediscover.

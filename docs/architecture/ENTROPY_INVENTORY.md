@@ -61,3 +61,4 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Legacy date format | `audit_date_legacy_format.sh` (P-002) |
 | Coding numeric defaults | `audit_coding_defaults.sh` |
 | Composite dedupe | `audit_composite_registration.sh` |
+| Product gates | `audit_product_gates.sh` (ADR 0008) |

@@ -35,7 +35,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 | E-003 | Pattern divergence | `AppPhaseClient` uses `testValue: .live` (intentional for lifecycle tests?) | Pending confirmation |
 | E-004 | Duplication | Provider/fetcher registration uses shared `uniqued` but separate composite types (Analytics, FeatureFlag, ImageFetcher) | Accepted — composites wrap different protocols |
 | E-005 | Enforceable architecture | No automated check for dependency registration consistency | **Round 1 — audit script + CI** |
-| E-006 | Date formatting | `Date.LegacyFormatStyle` marked for eventual removal in-source | Pending product decision |
+| E-006 | Date formatting | `Date.LegacyFormatStyle` marked for eventual removal in-source | Pending **P-002** — [DATE_LEGACY_FORMAT.md](./DATE_LEGACY_FORMAT.md) |
 
 ## Rounds
 
@@ -514,6 +514,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `PRODUCT_GATES.md` centralizes P-001–P-003 SSOT links.
 - **Enforce:** `audit_product_gates.sh` (**32** audits).
+- **Verify:** macOS CI **green** on `3d075861`.
+
+### Round 90 — ADR 0008 (T-112)
+
+- **Document:** ADR 0008 product gates index; ENTROPY enforcement row.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
