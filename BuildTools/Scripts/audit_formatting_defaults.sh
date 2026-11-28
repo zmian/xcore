@@ -12,12 +12,6 @@ if rg -q 'nonisolated\\(unsafe\\).*(mask|defaultFractionDigits|maxFractionDigits
   exit 1
 fi
 
-declare -A expected=(
-  [mask]='"•"'
-  [defaultFractionDigits]='2'
-  [maxFractionDigits]='100'
-)
-
 for name in mask defaultFractionDigits maxFractionDigits; do
   if ! rg -q "public static let ${name}" "$CONSTANTS"; then
     echo "Missing public static let ${name} in Constants.swift"

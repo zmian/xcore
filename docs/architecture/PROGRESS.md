@@ -311,6 +311,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#125](https://github.com/zmian/xcore/actions/runs/46117082088) — tests/lint green; `audit_dependency_keys.sh` failed (`mapfile: command not found` under `/bin/bash` 3.2).
 - **Migrate:** Replace `mapfile` with portable `while read` loops in audit scripts (T-060).
 
+### Round 45 — spacing audit on Bash 3.2 (#126)
+
+- **CI:** [#126](https://github.com/zmian/xcore/actions/runs/46118072855) — `audit_spacing_scale.sh` failed (`declare -A` unsupported; `s1: unbound variable`).
+- **Migrate:** Parallel arrays in spacing audit; drop unused associative array in formatting audit (T-061).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
