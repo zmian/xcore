@@ -463,6 +463,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `NSLock` storage for `AVAudioPlayer` (avoid `@Sendable` `LockIsolated` capture).
 
+### Round 79 — Cache direct NSCache (T-098)
+
+- **Fix:** Drop `LockIsolated` around `NSCache` (thread-safe; non-`Sendable` values).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
