@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 37 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 36 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -52,6 +52,8 @@ Snapshot for reducing concurrency entropy. **Total: 37 annotations** (regenerate
 **Resolved (Round 54):** `LiveAudioClient` retains `AVAudioPlayer` in `LockIsolated` (was `nonisolated(unsafe)`).
 
 **Resolved (Round 55):** `AddressSearchResult` stores `MKLocalSearchCompletion` in `LockIsolated` (was `nonisolated(unsafe)`).
+
+**Resolved (Round 56):** `LiveAddressSearchClient.Delegate` holds `MKLocalSearchCompleter` in `LockIsolated` (was `nonisolated(unsafe)`).
 
 ## Animation / presentation
 

@@ -81,3 +81,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-068 | `Device` / `Screen` Combine tokens → `LockIsolated` (concurrency 41→39) |
 | T-069 | `LiveAudioClient` → `LockIsolated<AVAudioPlayer?>` (concurrency 39→38) |
 | T-070 | `AddressSearchResult` → `LockIsolated` MapKit completion (concurrency 38→37) |
+| T-071 | `LiveAddressSearchClient.Delegate` completer → `LockIsolated` (concurrency 37→36) |

@@ -172,14 +172,16 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 
 extension LiveAddressSearchClient {
     private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, Sendable {
-        nonisolated(unsafe) private let searchCompleter = MKLocalSearchCompleter()
+        private let searchCompleter = LockIsolated(MKLocalSearchCompleter())
         private let onResults: @Sendable ([AddressSearchResult]) -> Void
 
         init(onResults: @escaping @Sendable ([AddressSearchResult]) -> Void) {
             self.onResults = onResults
             super.init()
-            searchCompleter.delegate = self
-            searchCompleter.resultTypes = .address
+            searchCompleter.withValue { completer in
+                completer.delegate = self
+                completer.resultTypes = .address
+            }
         }
 
         func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
@@ -191,12 +193,14 @@ extension LiveAddressSearchClient {
         }
 
         var query: String {
-            get { searchCompleter.queryFragment }
-            set { searchCompleter.queryFragment = newValue }
+            get { searchCompleter.value.queryFragment }
+            set {
+                searchCompleter.withValue { $0.queryFragment = newValue }
+            }
         }
 
         deinit {
-            searchCompleter.cancel()
+            searchCompleter.withValue { $0.cancel() }
         }
     }
 }

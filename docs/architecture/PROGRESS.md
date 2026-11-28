@@ -357,6 +357,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `MKLocalSearchCompletion` via `LockIsolated`; concurrency budget **37** (T-070).
 
+### Round 56 — `MKLocalSearchCompleter` delegate (T-071)
+
+- **Migrate:** Completer in `LiveAddressSearchClient.Delegate` behind `LockIsolated`; concurrency budget **36** (T-071).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
