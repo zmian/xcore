@@ -250,6 +250,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `SWIFT_PROTOCOLS_INDEX.md` (4 files).
 - **Enforce:** `audit_swift_protocols_index.sh`; audits **23**; agent quick-start index links.
 - **Verify:** `make audit-architecture`. Push after green CI on `855473cb`.
+- **CI:** [#114](https://github.com/zmian/xcore/actions/runs/46085331639) build OK; **Test** in progress >2h (ET) as of 2026-11-27 — unusual vs #113 (~9m fail).
 
 ### Round 35 — Swift PropertyWrappers index (2026-11-27)
 
