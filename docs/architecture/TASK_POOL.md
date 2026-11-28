@@ -99,3 +99,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-086 | `LiveSessionCounterClient` Sendable (13→12) |
 | T-087 | `Money.Appearance` LockIsolated (12→11) |
 | T-088 | `Popup.TransitionStorage` Sendable (11→10; push gated on CI) |
+| T-089 | `LivePushNotificationsClient` LockIsolated (hygiene; NSObject) |

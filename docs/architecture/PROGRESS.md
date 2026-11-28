@@ -425,6 +425,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `Popup.TransitionStorage` → `Sendable`. Budget **10** (commit local; push after green CI #153).
 
+### Round 73b — Push live client isolation (T-089)
+
+- **Migrate:** `LivePushNotificationsClient` mutable state → `LockIsolated` (NSObject delegate; `@unchecked` retained).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
