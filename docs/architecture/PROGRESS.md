@@ -349,6 +349,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Retain orientation/screen Combine tokens in `LockIsolated`; concurrency budget **39** (T-068).
 
+### Round 54 — `LiveAudioClient` player handle (T-069)
+
+- **Migrate:** `AVAudioPlayer` retention via `LockIsolated`; concurrency budget **38** (T-069).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

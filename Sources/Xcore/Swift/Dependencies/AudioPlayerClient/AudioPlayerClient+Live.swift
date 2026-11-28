@@ -21,18 +21,18 @@ extension AudioPlayerClient {
 // MARK: - Implementation
 
 private final class LiveAudioClient: Sendable {
-    nonisolated(unsafe) private var audioPlayer: AVAudioPlayer?
+    private let audioPlayer = LockIsolated<AVAudioPlayer?>(nil)
 
     public func play(_ file: AudioFile) {
         guard
             let url = file.url,
-            let audioPlayer = try? AVAudioPlayer(contentsOf: url)
+            let player = try? AVAudioPlayer(contentsOf: url)
         else {
             return
         }
 
         try? AVAudioSession.sharedInstance().setCategory(file.category)
-        self.audioPlayer = audioPlayer
-        audioPlayer.play()
+        audioPlayer.setValue(player)
+        player.play()
     }
 }
