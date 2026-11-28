@@ -13,7 +13,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_swift_protocols_index.sh` | `SWIFT_PROTOCOLS_INDEX.md` matches `Swift/Protocols/` file count. |
 | `BuildTools/Scripts/audit_swift_property_wrappers_index.sh` | `SWIFT_PROPERTY_WRAPPERS_INDEX.md` matches `Swift/PropertyWrappers/` file count. |
 | `BuildTools/Scripts/audit_ci_test_policy.sh` | `TEST_CI_POLICY.md` matches CI compile/runtime test guards in `Tests/`. |
-| `BuildTools/Scripts/audit_theme_test_isolation.sh` | `ThemeLayoutTests.spacingScaleMatchesDocumentation` resets Theme spacing SSOT (parallel CI). |
+| `BuildTools/Scripts/audit_theme_test_isolation.sh` | `resetThemeSpacingSSOTForParallelTesting()` (`.s5`/`.s3`) + call sites (`TEST_CI_POLICY.md`). |
 | `BuildTools/Scripts/audit_extensions_index.sh` | `EXTENSIONS_INDEX.md` matches `Swift/Extensions/` folders and root file count. |
 | `BuildTools/Scripts/audit_component_index.sh` | `COMPONENT_INDEX.md` total matches `Swift/Components/` domain folders. |
 | `BuildTools/Scripts/audit_swiftui_component_index.sh` | `SWIFTUI_COMPONENT_INDEX.md` matches `SwiftUI/Components/` folders. |
@@ -29,8 +29,8 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_module_placement.sh` | `DependencyKey` under `Swift/Dependencies/` (Pond excepted); no `IssueReporting`; canonical `Unimplemented:` strings (ADR 0003). |
 | `BuildTools/Scripts/audit_layer_imports.sh` | Cross-layer imports match `LAYER_IMPORTS.md` (Cocoa→SwiftUI, Swift/Components→UIKit; ADR 0003). |
 | `BuildTools/Scripts/audit_compiler_warnings.sh` | `#warning` count matches `ENTROPY_INVENTORY.md`. |
-| `BuildTools/Scripts/audit_layout_ssot.sh` | `Theme.cornerRadius` canonical; no direct `AppConstants.cornerRadius` in sources (ADR 0005). |
-| `BuildTools/Scripts/audit_spacing_scale.sh` | Frozen `CGFloat.s1`…`s8` match `SPACING_SCALE.md`. |
+| `BuildTools/Scripts/audit_layout_ssot.sh` | Layout on `Theme`; `AppConstants.cornerRadius` forwarder only; `Theme.init` spacing uses `.s5`/`.s3` (ADR 0005). |
+| `BuildTools/Scripts/audit_spacing_scale.sh` | Frozen `CGFloat.s1`…`s8`; `s3`/`s5` parity with theme-owned defaults in `SPACING_SCALE.md`. |
 | `BuildTools/Scripts/audit_formatting_defaults.sh` | Frozen masking/fraction/random defaults match `FORMATTING_DEFAULTS.md`. |
 | `BuildTools/Scripts/audit_date_legacy_format.sh` | `DATE_LEGACY_FORMAT.md` — single `.legacy` call site until P-002. |
 | `BuildTools/Scripts/audit_coding_defaults.sh` | Single `CodingFormatStyleDefaults.defaultEncodeAsString` (see `CODING_DEFAULTS.md`). |

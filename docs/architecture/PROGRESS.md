@@ -662,6 +662,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `GOVERNANCE_SUMMARY`, `ARCHITECTURE_MAP`, `ENTROPY_INVENTORY` list spacing + parallel test audits.
 - **Enforce:** `audit_registry_catalog.sh` guards summary + map references.
 
+### Round 120 — Spacing scale ↔ theme parity (T-143)
+
+- **Enforce:** `audit_spacing_scale.sh` ties `s3`/`s5` to theme-owned defaults in `SPACING_SCALE.md`.
+- **Document:** `AUDIT_INDEX.md` layout audit descriptions.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
