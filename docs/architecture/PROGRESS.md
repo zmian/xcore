@@ -417,6 +417,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `LiveSessionCounterClient` → `Sendable` with `LockIsolated` task. Budget **12**.
 
+### Round 72 — Money appearance Sendable (T-087)
+
+- **Migrate:** `Money.Appearance` styling behind `LockIsolated`. Budget **11**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

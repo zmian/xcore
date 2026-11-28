@@ -97,3 +97,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-084 | Timing presets + `SessionAwareCache` Sendable (16→14) |
 | T-085 | `Analytics` → `LockIsolated` hub (14→13) |
 | T-086 | `LiveSessionCounterClient` Sendable (13→12) |
+| T-087 | `Money.Appearance` LockIsolated (12→11) |
