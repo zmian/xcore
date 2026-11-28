@@ -29,7 +29,7 @@ flowchart TB
 
 | Layer | Directory | Depends on | Notes |
 | --- | --- | --- | --- |
-| Foundation helpers | `Swift/Extensions`, `Swift/Helpers`, `Swift/Protocols` | Foundation, re-exported deps | [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md), [HELPERS_INDEX.md](./HELPERS_INDEX.md), [SWIFT_PROTOCOLS_INDEX.md](./SWIFT_PROTOCOLS_INDEX.md) |
+| Foundation helpers | `Swift/Extensions`, `Swift/Helpers`, `Swift/Protocols`, `Swift/PropertyWrappers` | Foundation, re-exported deps | [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md), [HELPERS_INDEX.md](./HELPERS_INDEX.md), [SWIFT_PROTOCOLS_INDEX.md](./SWIFT_PROTOCOLS_INDEX.md), [SWIFT_PROPERTY_WRAPPERS_INDEX.md](./SWIFT_PROPERTY_WRAPPERS_INDEX.md) |
 | Components | `Swift/Components/*` | Helpers | [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) |
 | DI clients | `Swift/Dependencies/*` | Components + Cocoa/SwiftUI as needed | [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md), [DEPENDENCY_LAYOUT.md](./DEPENDENCY_LAYOUT.md) |
 | UIKit | `Cocoa/*` | Swift components | [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md), [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md), [COCOA_SUPPORTING_INDEX.md](./COCOA_SUPPORTING_INDEX.md) |

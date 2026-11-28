@@ -251,6 +251,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_swift_protocols_index.sh`; audits **23**; agent quick-start index links.
 - **Verify:** `make audit-architecture`. Push after green CI on `855473cb`.
 
+### Round 35 — Swift PropertyWrappers index (2026-11-27)
+
+- **Document:** `SWIFT_PROPERTY_WRAPPERS_INDEX.md` (6 files).
+- **Enforce:** `audit_swift_property_wrappers_index.sh`; audits **24**; map + catalog links.
+- **Verify:** `make audit-architecture`. Hold push until CI green on published Round 34 (`7d095f7b`).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

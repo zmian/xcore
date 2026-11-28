@@ -7,7 +7,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Batch PR pushes; confirm green macOS CI on latest head before next merge push | CI stability on #153 — push `57364908` + test fix; await green #114 |
+| T-043 | Confirm green macOS CI on `855473cb` (#114); push only `7d095f7b` (23 audits); then await next green before Round 35 push | CI stability on #153 |
 
 ## Pending confirmation
 
@@ -60,3 +60,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-046 | Cocoa + SwiftUI extension indexes; audits **21** |
 | T-047 | `COCOA_SUPPORTING_INDEX` + `ARCHITECTURE_MAP` sync; audits **22** |
 | T-048 | `SWIFT_PROTOCOLS_INDEX` + audit; audits **23** |
+| T-049 | `SWIFT_PROPERTY_WRAPPERS_INDEX` + audit; audits **24** (local; unpushed with Round 34) |
