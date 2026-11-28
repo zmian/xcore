@@ -758,6 +758,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** raw `16`/`24` → `.s4`/`.s6` in theme layout tests.
 - **Enforce:** `audit_theme_test_isolation.sh` bans bare spacing literals.
+- **CI:** green `4425578e` ([run 46162107336](https://github.com/zmian/xcore/actions/runs/46162107336)).
+
+### Round 139 — ThemeLayoutTests corner radius tokens (T-162)
+
+- **Migrate:** corner-radius mutations `20`/`12` → `.s5`/`.s3`.
+- **Enforce:** audit bans bare `cornerRadius` literals in `ThemeLayoutTests`.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

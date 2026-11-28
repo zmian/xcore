@@ -6,7 +6,7 @@ Canonical spacing tokens for Xcore UI. **Theme-owned** metrics forward through `
 
 | Key | Default | `CGFloat` forwarder |
 | --- | --- | --- |
-| `cornerRadius` | 15 | `AppConstants.cornerRadius` |
+| `cornerRadius` | 15 (product default; tests may use `s3`/`s5` for mutations) | `AppConstants.cornerRadius` |
 | `defaultSpacing` | 20 (was `.s5`) | `CGFloat.defaultSpacing` |
 | `interItemHSpacing` | 12 (was `.s3`) | `CGFloat.interItemHSpacing` |
 | `listRowInsets` | uniform `defaultSpacing` | `EdgeInsets.listRow` |

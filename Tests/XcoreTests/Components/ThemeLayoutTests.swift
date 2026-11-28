@@ -17,12 +17,12 @@ struct ThemeLayoutTests {
             #expect(AppConstants.cornerRadius == original)
         }
 
-        AppConstants.cornerRadius = 20
-        #expect(Theme.cornerRadius == 20)
-        #expect(Theme.default.cornerRadius == 20)
+        AppConstants.cornerRadius = .s5
+        #expect(Theme.cornerRadius == .s5)
+        #expect(Theme.default.cornerRadius == .s5)
 
-        Theme.cornerRadius = 12
-        #expect(AppConstants.cornerRadius == 12)
+        Theme.cornerRadius = .s3
+        #expect(AppConstants.cornerRadius == .s3)
     }
 
     @Test func defaultSpacingForwardsToDefaultTheme() {
