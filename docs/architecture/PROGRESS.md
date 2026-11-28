@@ -615,11 +615,16 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 ### Round 109 — Audit script Bash portability (T-132)
 
-- **Enforce:** `audit_ci_test_policy.sh` bans `head -n -` in audit scripts.
+- **Enforce:** `audit_ci_test_policy.sh` bans `head -n -` in audit scripts (self-exclude fix on `d070fa20`).
+- **Verify:** macOS CI **green** on `d070fa20`.
 
 ### Round 110 — CI verification (T-133)
 
 - **Verify:** `a77cbce1` green after full ThemeLayoutTests isolation suite.
+
+### Round 111 — Stack CI (T-134)
+
+- **Verify:** `d070fa20` green — #153 head includes T-131 Theme isolation + T-132 audit guard.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
