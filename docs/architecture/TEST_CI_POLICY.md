@@ -25,7 +25,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 
 | File | Tests calling reset |
 | --- | --- |
-| `Tests/XcoreTests/Components/ThemeLayoutTests.swift` | `defaultSpacingForwardsToDefaultTheme`, `spacingScaleMatchesDocumentation`, `listRowInsetsFollowDefaultSpacing` (T-135) |
+| `Tests/XcoreTests/Components/ThemeLayoutTests.swift` (`@Suite(.serialized)`, T-153) | All tests call `resetThemeSpacingSSOTForParallelTesting()` before spacing assertions (T-135) |
 
 ## Runtime skips
 

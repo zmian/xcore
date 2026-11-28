@@ -712,6 +712,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_theme_test_isolation.sh` + `TEST_CI_POLICY.md`.
 - **CI:** green `7ccd8510` ([run 46152198493](https://github.com/zmian/xcore/actions/runs/46152198493)).
 
+### Round 131 — CI policy cross-check for serialized Theme suite (T-154)
+
+- **Enforce:** `audit_ci_test_policy.sh` requires `@Suite(.serialized)` in `TEST_CI_POLICY.md`.
+- **Doc:** `GOVERNANCE_SUMMARY` + Theme SSOT table row (T-153).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

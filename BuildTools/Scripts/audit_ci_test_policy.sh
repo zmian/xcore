@@ -59,4 +59,9 @@ if ! rg -q 'audit_theme_test_isolation' "$POLICY"; then
   exit 1
 fi
 
-echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI, Theme reset documented)."
+if ! rg -q '@Suite\(\.serialized\)' "$POLICY"; then
+  echo "TEST_CI_POLICY.md must document ThemeLayoutTests @Suite(.serialized)"
+  exit 1
+fi
+
+echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI, Theme reset + serialized documented)."
