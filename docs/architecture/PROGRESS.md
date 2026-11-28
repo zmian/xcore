@@ -697,6 +697,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** Frozen tokens document Theme launch-default SSOT in `Constants.swift`.
 
+### Round 128 — macOS CI (T-151)
+
+- **Verify:** `ae2eb580` green — [run 46149268367](https://github.com/zmian/xcore/actions/runs/46149268367) (`build-test-lint` after T-150).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
