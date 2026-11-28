@@ -644,6 +644,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `d467cc82` green — [run 46144076165](https://github.com/zmian/xcore/actions/runs/46144076165) (`build-test-lint` after T-137).
 
+### Round 116 — Theme.init spacing SSOT (T-139)
+
+- **Migrate:** `Theme.init` default spacing uses `CGFloat.s5` / `.s3`.
+- **Enforce:** `audit_layout_ssot.sh` guards init defaults.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

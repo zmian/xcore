@@ -38,4 +38,14 @@ if [[ "$direct_use_count" -gt 0 ]]; then
   exit 1
 fi
 
+if ! rg -q 'defaultSpacing: CGFloat = \.s5' "$THEME"; then
+  echo "Theme init defaultSpacing must use CGFloat.s5 (SPACING_SCALE.md)"
+  exit 1
+fi
+
+if ! rg -q 'interItemHSpacing: CGFloat = \.s3' "$THEME"; then
+  echo "Theme init interItemHSpacing must use CGFloat.s3 (SPACING_SCALE.md)"
+  exit 1
+fi
+
 echo "Layout SSOT audit passed (Theme layout metrics canonical)."

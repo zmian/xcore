@@ -11,7 +11,7 @@ Canonical spacing tokens for Xcore UI. **Theme-owned** metrics forward through `
 | `interItemHSpacing` | 12 (was `.s3`) | `CGFloat.interItemHSpacing` |
 | `listRowInsets` | uniform `defaultSpacing` | `EdgeInsets.listRow` |
 
-Enforced by `audit_layout_ssot.sh`. Prefer `@Environment(\.theme)` in SwiftUI.
+Enforced by `audit_layout_ssot.sh` (`Theme.init` defaults use `CGFloat.s5` / `.s3`). Prefer `@Environment(\.theme)` in SwiftUI.
 
 ## Fixed scale (`CGFloat.s1`…`s8`)
 

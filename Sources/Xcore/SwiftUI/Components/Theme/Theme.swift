@@ -175,8 +175,8 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         linkColor: Color,
         placeholderTextColor: Color,
         cornerRadius: CGFloat = 15,
-        defaultSpacing: CGFloat = 20,
-        interItemHSpacing: CGFloat = 12,
+        defaultSpacing: CGFloat = .s5,
+        interItemHSpacing: CGFloat = .s3,
 
         // Sentiment
         positiveSentimentColor: Color,
