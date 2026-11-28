@@ -699,7 +699,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 ### Round 128 — macOS CI (T-151)
 
-- **Verify:** `ae2eb580` green — [run 46149268367](https://github.com/zmian/xcore/actions/runs/46149268367) (`build-test-lint` after T-150).
+- **Verify:** `ae2eb580` green — [run 46149268367](https://github.com/zmian/xcore/actions/runs/46149268367) (`build-test-lint` after T-149–T-150; `cf72f836` run cancelled by stack).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
