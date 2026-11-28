@@ -7,8 +7,6 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after T-061 | CI stability on #153 |
-| T-061 | Bash 3.2-safe spacing/formatting audits | Push after T-060 |
 
 ## Pending confirmation
 
@@ -73,3 +71,5 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-058 | Pasteboard default test without `UIPasteboard` (`722a220e`) |
 | T-059 | CI `ripgrep` + Foundation import (`773403ff`) |
 | T-060 | Audit scripts without `mapfile` (`c8512d80`) |
+| T-061 | Bash 3.2-safe spacing/formatting audits (`ade46764`) |
+| T-043 | Green macOS CI on #153 ([#127](https://github.com/zmian/xcore/actions/runs/46118732024) `ade46764`) |

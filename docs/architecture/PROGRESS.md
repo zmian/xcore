@@ -316,6 +316,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#126](https://github.com/zmian/xcore/actions/runs/46118072855) — `audit_spacing_scale.sh` failed (`declare -A` unsupported; `s1: unbound variable`).
 - **Migrate:** Parallel arrays in spacing audit; drop unused associative array in formatting audit (T-061).
 
+### Round 46 — green CI #127 (2026-11-28)
+
+- **CI:** [#127](https://github.com/zmian/xcore/actions/runs/46118732024) **success** on `ade46764` (build, test, lint, 25 architecture audits). **T-043 done.**
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
