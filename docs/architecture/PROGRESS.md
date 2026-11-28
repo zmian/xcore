@@ -505,6 +505,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `DATE_LEGACY_FORMAT.md` (P-002 gate; single `.legacy` call site).
 - **Enforce:** `audit_date_legacy_format.sh` (**31** audits).
 
+### Round 88 — App phase client SSOT (T-110)
+
+- **Document:** `APP_PHASE_CLIENT.md` (P-003 live test/preview defaults).
+- **Enforce:** `audit_dependency_keys.sh` requires doc + registry parity.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

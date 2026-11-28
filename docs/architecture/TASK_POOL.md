@@ -12,7 +12,7 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | --- | --- | --- |
 | P-001 | Converge `AddressSearchClient` to struct client | **Done** (T-107). |
 | P-002 | Remove `Date.LegacyFormatStyle` per in-file note | Any apps still depend on legacy phrasing? See [DATE_LEGACY_FORMAT.md](./DATE_LEGACY_FORMAT.md). |
-| P-003 | `AppPhaseClient` testValue uses `.live` | Keep for integration tests or switch to `.unimplemented`? |
+| P-003 | `AppPhaseClient` testValue uses `.live` | Keep for integration tests or switch to `.unimplemented`? See [APP_PHASE_CLIENT.md](./APP_PHASE_CLIENT.md). |
 
 ## Done
 
@@ -120,3 +120,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-107 | P-001: `AddressSearchClient` protocol → struct; delete noop/unimplemented types |
 | T-108 | Example `AddressFormReducer` closure call labels after P-001 |
 | T-109 | `DATE_LEGACY_FORMAT.md` + `audit_date_legacy_format.sh` (**31** audits) |
+| T-110 | `APP_PHASE_CLIENT.md` + dependency key audit cross-check (P-003) |

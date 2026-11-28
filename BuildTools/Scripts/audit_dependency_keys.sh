@@ -70,8 +70,15 @@ fi
 REGISTRY="$ROOT/docs/architecture/DEPENDENCY_REGISTRY.md"
 APP_PHASE="$ROOT/Sources/Xcore/Swift/Dependencies/AppPhase/AppPhaseClient.swift"
 
+APP_PHASE_DOC="$ROOT/docs/architecture/APP_PHASE_CLIENT.md"
+
 if ! grep -q 'P-003' "$REGISTRY"; then
   echo "DEPENDENCY_REGISTRY.md must document P-003 AppPhase test/preview exception"
+  exit 1
+fi
+
+if [[ ! -f "$APP_PHASE_DOC" ]] || ! grep -q 'P-003' "$APP_PHASE_DOC"; then
+  echo "APP_PHASE_CLIENT.md must exist and document P-003"
   exit 1
 fi
 
