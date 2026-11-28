@@ -675,6 +675,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `AGENTS.md` points agents to spacing scale + parallel test policy.
 
+### Round 123 — Layout doc anti-regression (T-146)
+
+- **Enforce:** `audit_registry_catalog.sh` guards `AGENTS.md` + full layout audit triple in `GOVERNANCE_SUMMARY`.
+- **Document:** `SPACING_SCALE.md` links full audit chain.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

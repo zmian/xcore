@@ -62,10 +62,18 @@ fi
 
 SUMMARY="$ROOT/docs/architecture/GOVERNANCE_SUMMARY.md"
 ARCH_MAP="$ROOT/docs/architecture/ARCHITECTURE_MAP.md"
+AGENTS="$ROOT/AGENTS.md"
 
-for script in audit_spacing_scale audit_theme_test_isolation; do
+for script in audit_layout_ssot audit_spacing_scale audit_theme_test_isolation; do
   if ! rg -q "${script}" "$SUMMARY"; then
     echo "GOVERNANCE_SUMMARY.md must reference ${script}.sh (layout SSOT chain)"
+    exit 1
+  fi
+done
+
+for needle in 'SPACING_SCALE.md' 'TEST_CI_POLICY' '0005-metadata-and-theme-globals'; do
+  if ! rg -q "$needle" "$AGENTS"; then
+    echo "AGENTS.md must reference $needle (layout spacing SSOT; T-145)"
     exit 1
   fi
 done
