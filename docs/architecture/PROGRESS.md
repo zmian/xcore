@@ -608,6 +608,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `f025d663` confirms T-128 (Theme test) + T-127/T-123 governance stack on #153.
 
+### Round 108 — Theme forwarder test isolation (T-131)
+
+- **Fix:** `defaultSpacingForwardsToDefaultTheme` Theme SSOT reset; policy + audit coverage.
+- **Verify:** macOS CI pending on push.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

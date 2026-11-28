@@ -141,3 +141,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-128 | `listRowInsetsFollowDefaultSpacing` Theme reset + audit (parallel CI) |
 | T-129 | Theme audit script Bash 3.2 (`head -n -1` fix) |
 | T-130 | Green macOS CI on #153 (`f025d663`, build-test-lint + 33 audits) |
+| T-131 | `defaultSpacingForwardsToDefaultTheme` Theme reset + audit |

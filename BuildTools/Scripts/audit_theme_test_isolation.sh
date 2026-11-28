@@ -35,6 +35,25 @@ if ! rg -q 'spacingScaleMatchesDocumentation' "$POLICY"; then
   exit 1
 fi
 
+if ! rg -q 'listRowInsetsFollowDefaultSpacing' "$POLICY"; then
+  echo "TEST_CI_POLICY.md must document listRowInsetsFollowDefaultSpacing Theme reset"
+  exit 1
+fi
+
+default_spacing_func="$(
+  sed -n '/func defaultSpacingForwardsToDefaultTheme/,/^    @Test func spacingScaleMatchesDocumentation/p' "$TEST_FILE" | sed '$d'
+)"
+
+echo "$default_spacing_func" | rg -q 'Theme\.defaultSpacing = 20' || {
+  echo "defaultSpacingForwardsToDefaultTheme must reset Theme.defaultSpacing to 20 before assertions"
+  exit 1
+}
+
+echo "$default_spacing_func" | rg -q 'Theme\.interItemHSpacing = 12' || {
+  echo "defaultSpacingForwardsToDefaultTheme must reset Theme.interItemHSpacing to 12 before assertions"
+  exit 1
+}
+
 list_row_func="$(
   sed -n '/func listRowInsetsFollowDefaultSpacing/,/^    }/p' "$TEST_FILE"
 )"

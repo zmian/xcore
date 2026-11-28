@@ -21,7 +21,14 @@ struct ThemeLayoutTests {
 
     @Test func defaultSpacingForwardsToDefaultTheme() {
         let original = Theme.defaultSpacing
-        defer { Theme.defaultSpacing = original }
+        let originalInter = Theme.interItemHSpacing
+        defer {
+            Theme.defaultSpacing = original
+            Theme.interItemHSpacing = originalInter
+        }
+
+        Theme.defaultSpacing = 20
+        Theme.interItemHSpacing = 12
 
         CGFloat.defaultSpacing = 24
         #expect(Theme.defaultSpacing == 24)
