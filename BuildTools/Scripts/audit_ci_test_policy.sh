@@ -85,6 +85,11 @@ if ! rg -q '@Suite\(\.serialized\)' "$POLICY"; then
   exit 1
 fi
 
+if ! rg -q 'no bare point literals' "$POLICY"; then
+  echo "TEST_CI_POLICY.md must document ThemeLayoutTests spacing scale token assertions"
+  exit 1
+fi
+
 serialized_live="$(
   rg -l '@Suite\(\.serialized\)' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | wc -l | tr -d ' '
 )"

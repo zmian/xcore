@@ -770,6 +770,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `s1 == 4` → token relationship `s3 == s2 + s1`.
 - **Enforce:** audit bans `#expect(CGFloat.sN == <literal>)`.
+- **CI:** green `af93160c` ([run 46164770741](https://github.com/zmian/xcore/actions/runs/46164770741)).
+
+### Round 141 — TEST_CI_POLICY spacing token assertions (T-164)
+
+- **Document:** `ThemeLayoutTests` token-only spacing policy (T-161–T-163).
+- **Enforce:** `audit_ci_test_policy.sh` cross-check.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
