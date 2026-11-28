@@ -320,6 +320,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **CI:** [#127](https://github.com/zmian/xcore/actions/runs/46118732024) **success** on `ade46764` (build, test, lint, 25 architecture audits). **T-043 done.**
 
+### Round 47 — zero `#warning` in Sources/Xcore (T-019)
+
+- **Migrate:** Push notifications open settings via `URL.notificationSettings`; drop Pond/AddressSearch `#warning` in favor of ENTROPY “tracked product debt”.
+- **Enforce:** `GOVERNANCE_METRICS.md` / `ENTROPY_INVENTORY.md` **Total: 0** `#warning`.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

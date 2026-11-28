@@ -119,21 +119,10 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
 
     @Sendable
     func openAppSettings() {
-        #warning("FIXME: Fix the open settings up. Uncommenting causes segmentation fault 11")
-//        typealias L = Localized.PushNotifications.OpenSystemSettings
-//
-//        Popup.show(title: L.title, message: L.message) { $isPresented in
-//            Button(L.buttonOpenSettings) {
-//                Dependency(\.openURL).wrappedValue(.settingsApp)
-//                isPresented = false
-//            }
-//            .buttonStyle(.primary)
-//
-//            Button.cancel {
-//                isPresented = false
-//            }
-//            .buttonStyle(.secondary)
-//        }
+        Task { @MainActor in
+            @Dependency(\.openURL) var openURL
+            await openURL(.notificationSettings)
+        }
     }
 
     private func registerForRemoteNotifications(_ register: Bool) {

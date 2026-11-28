@@ -6,7 +6,10 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 INVENTORY="$ROOT/docs/architecture/ENTROPY_INVENTORY.md"
 SOURCES="$ROOT/Sources/Xcore"
 
-live_count="$(rg -c '#warning' "$SOURCES" --glob '*.swift' 2>/dev/null | awk -F: '{s+=$2} END {print s+0}')"
+live_count=0
+if rg -q '#warning' "$SOURCES" --glob '*.swift' 2>/dev/null; then
+  live_count="$(rg -c '#warning' "$SOURCES" --glob '*.swift' | awk -F: '{s+=$2} END {print s+0}')"
+fi
 doc_count="$(rg -o 'Total: [0-9]+' "$INVENTORY" | head -1 | rg -o '[0-9]+' || true)"
 
 if [[ -z "$doc_count" ]]; then

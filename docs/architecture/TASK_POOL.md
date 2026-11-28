@@ -4,9 +4,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 ## Ready
 
-| ID | Task | Rationale |
-| --- | --- | --- |
-| T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
+No independent code tasks queued; next entropy work is gated by **P-001–P-003** (product confirmation).
 
 ## Pending confirmation
 
@@ -73,3 +71,5 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-060 | Audit scripts without `mapfile` (`c8512d80`) |
 | T-061 | Bash 3.2-safe spacing/formatting audits (`ade46764`) |
 | T-043 | Green macOS CI on #153 ([#127](https://github.com/zmian/xcore/actions/runs/46118732024) `ade46764`) |
+| T-019 | Clear all tracked `#warning` in Sources/Xcore |
+| T-062 | Audit scripts tolerate zero `#warning` (`rg` exit 1) |

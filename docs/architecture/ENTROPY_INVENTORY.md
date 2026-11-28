@@ -5,15 +5,17 @@ Pair with `TASK_POOL.md` for execution status.
 
 ## Compiler warnings in sources
 
-**Total: 3** `#warning` directives (`make audit-architecture`).
+**Total: 0** `#warning` directives (`make audit-architecture`).
 
-| File | Note |
+Resolved (Round 47 / T-019):
+
+| Former file | Resolution |
 | --- | --- |
-| `PushNotificationsClient+Live.swift` | Settings URL segfault when enabled |
-| `Pond.swift` | Future migration to Point-Free Shared |
-| `AddressSearchClient+Live.swift` | Localization via stringsdict |
+| `PushNotificationsClient+Live.swift` | Open notification settings via `@Dependency(\.openURL)` + `URL.notificationSettings` (removed Popup path that segfaulted). |
+| `Pond.swift` | Tracked under “Tracked product debt” (Shared migration); no compiler `#warning`. |
+| `AddressSearchClient+Live.swift` | Region copy uses existing `Localized` helpers; stringsdict polish remains optional (P-001 scope). |
 
-Resolved (Round 10): removed stale `ProminentButtonStyle` `#warning` (iOS 26 target; control size deferred to T-019).
+Resolved (Round 10): removed stale `ProminentButtonStyle` `#warning` (iOS 26 target).
 
 Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family` already return macOS values.
 
@@ -25,7 +27,14 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Event client | `EventsClient<Event>`, `AppPhaseClient` typealias | `EventsClient` | Document pattern (ADR 0004) |
 | Address search client | Protocol + Live/Noop/Unimplemented | Protocol (for now) | P-001 |
 | Date formatting | Modern `FormatStyle` vs `Date.LegacyFormatStyle` | Modern APIs | P-002 |
-| Storage | `Pond` vs future Shared | Pond until migration | Pond `#warning` |
+| Storage | `Pond` vs future Shared | Pond until migration | See tracked debt below |
+
+## Tracked product debt (no `#warning`)
+
+| Item | Notes |
+| --- | --- |
+| Pond → Point-Free Shared | Large migration; Pond stays canonical until deliberate replacement. |
+| AddressSearch stringsdict | Finer plural localization for region errors; current `Localized` paths are shippable. |
 
 ## Dependency client shapes
 
