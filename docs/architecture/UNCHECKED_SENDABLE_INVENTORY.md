@@ -34,7 +34,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | `Cache.swift` | `Cache` + `DelegateWrapper` (`NSCache`) |
 | `SessionAwareCache.swift` | observation `Task` + `@Dependency` |
 | `Publisher+Extensions.swift` | `DoneSubscriberCancellables` (`AnyCancellable` set) |
-| `ValidationRule+Rules.swift` | `regex(Regex)` local `Box` holder |
+| `ValidationRule+Rules.swift` | `RegexValidationPattern` (`Regex` holder) |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
 **Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
