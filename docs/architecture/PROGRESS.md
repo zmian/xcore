@@ -500,6 +500,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Fix:** `AddressFormReducer` uses closure call syntax (`observe(_:)`, `updateQuery(_:_:)`).
 - **Verify:** macOS CI **green** on `a3d58634` (build-test-lint).
 
+### Round 87 — Legacy date format SSOT (T-109)
+
+- **Document:** `DATE_LEGACY_FORMAT.md` (P-002 gate; single `.legacy` call site).
+- **Enforce:** `audit_date_legacy_format.sh` (**31** audits).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

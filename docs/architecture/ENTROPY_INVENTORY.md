@@ -58,5 +58,6 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
 | Formatting defaults | `audit_formatting_defaults.sh` |
+| Legacy date format | `audit_date_legacy_format.sh` (P-002) |
 | Coding numeric defaults | `audit_coding_defaults.sh` |
 | Composite dedupe | `audit_composite_registration.sh` |

@@ -4,13 +4,14 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 ## Ready
 
-Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent code work is gated by **P-001–P-003** unless expanding audits/docs or module-boundary refactors.
+Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent code work is gated by **P-002–P-003** unless expanding audits/docs, `@unchecked` reduction, or module-boundary refactors.
 
 ## Pending confirmation
 
 | ID | Task | Question |
 | --- | --- | --- |
-| P-002 | Remove `Date.LegacyFormatStyle` per in-file note | Any apps still depend on legacy phrasing? |
+| P-001 | Converge `AddressSearchClient` to struct client | **Done** (T-107). |
+| P-002 | Remove `Date.LegacyFormatStyle` per in-file note | Any apps still depend on legacy phrasing? See [DATE_LEGACY_FORMAT.md](./DATE_LEGACY_FORMAT.md). |
 | P-003 | `AppPhaseClient` testValue uses `.live` | Keep for integration tests or switch to `.unimplemented`? |
 
 ## Done
@@ -118,3 +119,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-106 | `ADDRESS_SEARCH_CLIENT.md` + conformer allowlist in shape audit |
 | T-107 | P-001: `AddressSearchClient` protocol → struct; delete noop/unimplemented types |
 | T-108 | Example `AddressFormReducer` closure call labels after P-001 |
+| T-109 | `DATE_LEGACY_FORMAT.md` + `audit_date_legacy_format.sh` (**31** audits) |
