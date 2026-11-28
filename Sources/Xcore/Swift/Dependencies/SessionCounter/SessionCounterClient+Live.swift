@@ -22,7 +22,7 @@ extension SessionCounterClient {
 
 // MARK: - Implementation
 
-private final class LiveSessionCounterClient: Sendable {
+private final class LiveSessionCounterClient {
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
     @Dependency(\.requestReview) private var requestReview

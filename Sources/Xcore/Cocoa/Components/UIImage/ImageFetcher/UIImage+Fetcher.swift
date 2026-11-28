@@ -46,20 +46,20 @@ extension UIImage.Fetcher {
 
 extension UIImageView {
     private enum AssociatedKey {
-        static var imageRepresentableSource: UInt8 = 0
-        static var imageFetcherCancelBlock: UInt8 = 0
+        static let imageRepresentableSource = AssociatedObjectKey()
+        static let imageFetcherCancelBlock = AssociatedObjectKey()
     }
 
     /// The `ImageSourceType` object associated with the receiver.
     var imageRepresentableSource: ImageSourceType? {
-        get { associatedObject(&AssociatedKey.imageRepresentableSource) }
-        set { setAssociatedObject(&AssociatedKey.imageRepresentableSource, value: newValue) }
+        get { associatedObject(AssociatedKey.imageRepresentableSource) }
+        set { setAssociatedObject(AssociatedKey.imageRepresentableSource, value: newValue) }
     }
 
     /// The image fetch cancel block for the current fetch request.
     var _imageFetcherCancelBlock: ImageDownloaderCancelToken? {
-        get { associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
-        set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
+        get { associatedObject(AssociatedKey.imageFetcherCancelBlock) }
+        set { setAssociatedObject(AssociatedKey.imageFetcherCancelBlock, value: newValue) }
     }
 
     /// Cancel any pending or in-flight image fetch/set request dispatched via

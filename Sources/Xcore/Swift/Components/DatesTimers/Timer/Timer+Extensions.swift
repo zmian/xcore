@@ -79,20 +79,20 @@ extension Timer {
 
 extension Timer {
     private enum AssociatedKey {
-        static var pauseDate: UInt8 = 0
-        static var previousFireDate: UInt8 = 0
+        static let pauseDate = AssociatedObjectKey()
+        static let previousFireDate = AssociatedObjectKey()
     }
 
     /// A property indicating the date when the timer was paused.
     private var pauseDate: Date? {
-        get { associatedObject(&AssociatedKey.pauseDate) }
-        set { setAssociatedObject(&AssociatedKey.pauseDate, value: newValue) }
+        get { associatedObject(AssociatedKey.pauseDate) }
+        set { setAssociatedObject(AssociatedKey.pauseDate, value: newValue) }
     }
 
     /// A property indicating the last fire date for the timer.
     private var previousFireDate: Date? {
-        get { associatedObject(&AssociatedKey.previousFireDate) }
-        set { setAssociatedObject(&AssociatedKey.previousFireDate, value: newValue) }
+        get { associatedObject(AssociatedKey.previousFireDate) }
+        set { setAssociatedObject(AssociatedKey.previousFireDate, value: newValue) }
     }
 
     /// Pauses the timer.

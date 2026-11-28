@@ -429,6 +429,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `LivePushNotificationsClient` mutable state → `LockIsolated` (NSObject delegate; `@unchecked` retained).
 
+### Round 74 — macOS CI strict concurrency (T-090)
+
+- **Fix:** `AssociatedObjectKey` (`static let`) replaces mutable `UInt8` keys (ADR 0006).
+- **Fix:** Drop invalid `Sendable` on `Analytics`, `SessionAwareCache`, `LiveSessionCounterClient`; mock computed accessors; revert `CAMediaTimingFunction` static storage.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

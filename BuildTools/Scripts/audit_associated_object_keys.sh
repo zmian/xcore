@@ -18,8 +18,13 @@ done < <(rg -l 'enum AssociatedKey' "$SOURCES" --glob '*.swift' 2>/dev/null || t
 
 for file in "${key_files[@]}"; do
   if rg -q 'static var [A-Za-z0-9_]+ = "' "$file" 2>/dev/null; then
-    echo "Associated object keys must use UInt8 tokens (static var key: UInt8 = 0), not String literals:"
+    echo "Associated object keys must use AssociatedObjectKey (static let), not String literals:"
     rg -n 'static var [A-Za-z0-9_]+ = "' "$file"
+    exit 1
+  fi
+  if rg -q 'static var [A-Za-z0-9_]+: UInt8' "$file" 2>/dev/null; then
+    echo "Associated object keys must use static let AssociatedObjectKey(), not mutable UInt8:"
+    rg -n 'static var [A-Za-z0-9_]+: UInt8' "$file"
     exit 1
   fi
   if rg -q 'nonisolated\(unsafe\).*AssociatedKey|AssociatedKey.*nonisolated\(unsafe\)' "$file" 2>/dev/null; then

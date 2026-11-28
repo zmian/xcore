@@ -45,17 +45,11 @@ extension CATransitionType {
 // MARK: - CAMediaTimingFunction
 
 extension CAMediaTimingFunction {
-    private static let presetDefault = CAMediaTimingFunction(name: .default)
-    private static let presetLinear = CAMediaTimingFunction(name: .linear)
-    private static let presetEaseIn = CAMediaTimingFunction(name: .easeIn)
-    private static let presetEaseOut = CAMediaTimingFunction(name: .easeOut)
-    private static let presetEaseInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
-
-    public static var `default`: CAMediaTimingFunction { presetDefault }
-    public static var linear: CAMediaTimingFunction { presetLinear }
-    public static var easeIn: CAMediaTimingFunction { presetEaseIn }
-    public static var easeOut: CAMediaTimingFunction { presetEaseOut }
-    public static var easeInEaseOut: CAMediaTimingFunction { presetEaseInEaseOut }
+    public static var `default`: CAMediaTimingFunction { .init(name: .default) }
+    public static var linear: CAMediaTimingFunction { .init(name: .linear) }
+    public static var easeIn: CAMediaTimingFunction { .init(name: .easeIn) }
+    public static var easeOut: CAMediaTimingFunction { .init(name: .easeOut) }
+    public static var easeInEaseOut: CAMediaTimingFunction { .init(name: .easeInEaseOut) }
 }
 
 // MARK: - CATransition

@@ -23,19 +23,19 @@ public final class MockAnalyticsProvider: AnalyticsProvider, Sendable {
 
     public init() {}
 
-    public private(set) var isEnabled: Bool {
+    public var isEnabled: Bool {
         state.value.isEnabled
     }
 
-    public private(set) var userId: String? {
+    public var userId: String? {
         state.value.userId
     }
 
-    public private(set) var traits: EncodableDictionary {
+    public var traits: EncodableDictionary {
         state.value.traits
     }
 
-    public private(set) var events: [AppAnalyticsEvent] {
+    public var events: [AppAnalyticsEvent] {
         state.value.events
     }
 

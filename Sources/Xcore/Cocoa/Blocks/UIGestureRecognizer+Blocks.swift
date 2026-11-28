@@ -11,12 +11,12 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
     public typealias Sender = UIGestureRecognizer
 
     private enum AssociatedKey {
-        static var actionHandler: UInt8 = 0
+        static let actionHandler = AssociatedObjectKey()
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {
-        get { associatedObject(&AssociatedKey.actionHandler) }
-        set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
+        get { associatedObject(AssociatedKey.actionHandler) }
+        set { setAssociatedObject(AssociatedKey.actionHandler, value: newValue) }
     }
 }
 

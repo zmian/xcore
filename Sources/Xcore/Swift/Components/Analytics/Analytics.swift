@@ -6,7 +6,7 @@
 
 import Foundation
 
-open class Analytics<Event: AnalyticsEventProtocol>: Sendable {
+open class Analytics<Event: AnalyticsEventProtocol> {
     private struct State {
         var userId: String?
         var traits: EncodableDictionary = [:]
@@ -16,7 +16,7 @@ open class Analytics<Event: AnalyticsEventProtocol>: Sendable {
     private let state: LockIsolated<State>
 
     /// The registered list of providers.
-    open private(set) var providers: [AnalyticsProvider] {
+    open var providers: [AnalyticsProvider] {
         state.value.providers
     }
 

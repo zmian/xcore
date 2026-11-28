@@ -20,13 +20,13 @@ extension ProcessInfo {
 
 extension ProcessInfo {
     private enum AssociatedKey {
-        static var inMemoryEnvironmentStorage: UInt8 = 0
+        static let inMemoryEnvironmentStorage = AssociatedObjectKey()
     }
 
     /// A dictionary storing in-memory environment values.
     private var inMemoryEnvironmentStorage: [String: String] {
-        get { associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
-        set { setAssociatedObject(&AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
+        get { associatedObject(AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
+        set { setAssociatedObject(AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
     }
 }
 

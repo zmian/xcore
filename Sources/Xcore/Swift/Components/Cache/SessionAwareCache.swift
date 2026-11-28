@@ -34,7 +34,7 @@ import Combine
 ///     analytics.track(event)
 /// }
 /// ```
-public final class SessionAwareCache<Value: Sendable & Hashable>: Sendable {
+public final class SessionAwareCache<Value: Sendable & Hashable> {
     @Dependency(\.appPhase) private var appPhase
     private let inactivityDuration: Duration
     private let storage = LockIsolated<Set<Value>>([])
