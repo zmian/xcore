@@ -36,7 +36,7 @@ Snapshot for reducing concurrency entropy. **Total: 0 annotations** (regenerate 
 
 **Resolved (Round 62):** Global defaults (`Theme.default`, `Calendar.default` / `defaultCodable`, `Locale.numbers`, `Color.RGBColorSpace.default`) use `LockIsolated` storage.
 
-**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets use a `@unchecked Sendable` cache.
+**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets were a `@unchecked Sendable` cache (Round 69 → frozen `static let`).
 
 **Resolved (Round 64):** Associated-object keys use `UInt8` token `static var` (stable `inout` address without `nonisolated(unsafe)`); `MockAnalyticsProvider` state behind `LockIsolated`.
 
