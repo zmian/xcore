@@ -14,6 +14,9 @@ import UIKit
 ///
 /// Swift Testing does not always infer a test dependency context (unlike XCTest); pin `.test` and
 /// expect `reportIssue` from production `testValue` (`.unimplemented`).
+#if canImport(UIKit)
+@Suite(.serialized)
+#endif
 struct DependencyKeyDefaultsTests {
     @Test
     func sessionCounterTestValueIsInert() {

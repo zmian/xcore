@@ -291,6 +291,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#120](https://github.com/zmian/xcore/actions/runs/46111947035) failed: `DependencyKeyDefaultsTests` still red — harness overrides used `.unimplemented`, which `reportIssue`s on use; pasteboard case hit 300s allowance.
 - **Migrate:** Pin `DependencyValues.test` in `withDependencies` and wrap assertions in `withExpectedIssue` so production `testValue` is exercised without live side effects or spurious failures (T-056).
 
+### Round 41 — pasteboard default test hang on #121 (2026-11-28)
+
+- **CI:** [#121](https://github.com/zmian/xcore/actions/runs/46113442937) — session/openURL defaults passed; `pasteboardTestValueDoesNotMutateSystemPasteboard` hit 300s (likely `UIPasteboard.general` under parallel Swift Testing).
+- **Migrate:** `@Suite(.serialized)` on `DependencyKeyDefaultsTests` when UIKit (same pattern as `PasteboardClientTests`) (T-057).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
