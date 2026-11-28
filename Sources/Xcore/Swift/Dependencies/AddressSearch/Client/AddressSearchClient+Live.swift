@@ -8,12 +8,20 @@ import Foundation
 internal import Contacts
 internal import MapKit
 
-// MARK: - Dot Syntax Support
+// MARK: - Live
 
-extension AddressSearchClient where Self == LiveAddressSearchClient {
+extension AddressSearchClient {
     /// Returns the live variant of `AddressSearchClient`.
     public static var live: Self {
-        .init()
+        let client = LiveAddressSearchClient()
+
+        return .init(
+            query: { try await client.query($0) },
+            updateQuery: { client.updateQuery($0, id: $1) },
+            resolve: { try await client.resolve($0) },
+            validate: { try await client.validate($0) },
+            observe: { client.observe(id: $0) }
+        )
     }
 }
 
@@ -31,7 +39,7 @@ extension LiveAddressSearchClient {
 
 // MARK: - Implementation
 
-public final class LiveAddressSearchClient: AddressSearchClient {
+public final class LiveAddressSearchClient: @unchecked Sendable {
     private typealias L = Localized.PostalAddress
     private let delegates = LockIsolated([UUID: Delegate]())
 

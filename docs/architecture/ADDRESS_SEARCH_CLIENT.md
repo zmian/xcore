@@ -1,40 +1,30 @@
-# Address search client (P-001)
+# Address search client
 
-Single source of truth for `AddressSearchClient` shape drift and migration to the canonical struct client (ADR 0002).
+Single source of truth for `AddressSearchClient` (canonical struct client per ADR 0002).
 
-## Current shape
+## Public API
 
 | Item | Value |
 | --- | --- |
-| Public API | `protocol AddressSearchClient: Sendable` |
-| Dependency key | `addressSearch` → `AddressSearchClient` |
-| Variants | `.live`, `.noop`, `.unimplemented` via constrained extensions |
+| Type | `struct AddressSearchClient: Sendable` |
+| Dependency key | `addressSearch` |
+| Variants | `.live`, `.noop`, `.unimplemented` |
 
-## In-repo conformers only
+Closure fields: `query`, `updateQuery`, `resolve`, `validate`, `observe`.
 
-No conformers exist outside `Sources/Xcore/Swift/Dependencies/AddressSearch/`. Custom app conformers are possible via the public protocol (pending product confirmation — **P-001**).
+## Live implementation
 
-| Type | File | Role |
-| --- | --- | --- |
-| `LiveAddressSearchClient` | `AddressSearchClient+Live.swift` | MapKit + Contacts live implementation |
-| `NoopAddressSearchClient` | `AddressSearchClient+Noop.swift` | Previews / side-effect-free tests |
-| `UnimplementedAddressSearchClient` | `AddressSearchClient+Unimplemented.swift` | Default `testValue`; `reportIssue` diagnostics |
+`LiveAddressSearchClient` in `AddressSearchClient+Live.swift` is the MapKit/Contacts engine wired by `AddressSearchClient.live`. It is **not** a protocol conformer; it remains public so tests can configure `LiveAddressSearchClient.supportedRegions`.
 
-## Target shape (when P-001 is accepted)
+## Breaking change (P-001, resolved)
 
-Replace the protocol with a closure `struct AddressSearchClient: Sendable` matching `AudioPlayerClient` / `OpenURLClient`:
-
-- `query`, `updateQuery`, `resolve`, `validate`, `observe` as `@Sendable` closure fields.
-- `.live` wires `LiveAddressSearchClient` (or inlined live implementation) without a public conformance type.
-- Delete `NoopAddressSearchClient` / `UnimplementedAddressSearchClient` types; use static `.noop` / `.unimplemented` on the struct.
-- Update `ENTROPY_INVENTORY` protocol count **1 → 0** and `audit_dependency_client_shapes.sh`.
+The public `protocol AddressSearchClient` and `NoopAddressSearchClient` / `UnimplementedAddressSearchClient` types were removed. Host apps that conformed to the protocol must switch to `AddressSearchClient` struct variants or dependency overrides.
 
 ## Enforcement
 
-`audit_dependency_client_shapes.sh` verifies the three conformers above and rejects new `: AddressSearchClient` conformances in `Sources/Xcore`.
+`audit_dependency_client_shapes.sh` requires zero protocol clients under `Swift/Dependencies`, struct `AddressSearchClient`, and no `: AddressSearchClient` conformances in Sources.
 
 ## Related
 
-- [ADR 0002](./adr/0002-dependency-client-template.md) — struct client template
-- [TASK_POOL.md](./TASK_POOL.md) — **P-001**
+- [ADR 0002](./adr/0002-dependency-client-template.md)
 - [TEST_CI_POLICY.md](./TEST_CI_POLICY.md) — live geocoder tests excluded on CI

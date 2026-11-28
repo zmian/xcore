@@ -31,7 +31,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 | ID | Category | Finding | Status |
 | --- | --- | --- | --- |
 | E-001 | Canonical implementation | Four `@Dependency` clients lacked `testValue` while siblings define `testValue` + often `previewValue` | **Round 1 — fixed** |
-| E-002 | Pattern divergence | `AddressSearchClient` is a protocol; most other clients are closure structs | Pending (documented; migration needs call-site audit) |
+| E-002 | Pattern divergence | `AddressSearchClient` is a protocol; most other clients are closure structs | **Round 86 — fixed** (T-107) |
 | E-003 | Pattern divergence | `AppPhaseClient` uses `testValue: .live` (intentional for lifecycle tests?) | Pending confirmation |
 | E-004 | Duplication | Provider/fetcher registration uses shared `uniqued` but separate composite types (Analytics, FeatureFlag, ImageFetcher) | Accepted — composites wrap different protocols |
 | E-005 | Enforceable architecture | No automated check for dependency registration consistency | **Round 1 — audit script + CI** |
@@ -489,6 +489,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `ADDRESS_SEARCH_CLIENT.md` (conformers, target struct shape).
 - **Enforce:** `audit_dependency_client_shapes.sh` allowlists three in-repo conformers.
+
+### Round 86 — AddressSearch struct client (T-107 / P-001)
+
+- **Migrate:** `AddressSearchClient` → closure struct; delete noop/unimplemented conformers; `LiveAddressSearchClient` `@unchecked Sendable` for `.live` wiring.
+- **Enforce:** protocol client count **0**; `@unchecked` budget **22**.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

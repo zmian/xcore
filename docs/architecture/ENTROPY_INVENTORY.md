@@ -25,7 +25,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | --- | --- | --- | --- |
 | Unique-by-id registration | `CompositeFeatureFlagProvider`, `CompositeImageFetcher`, `Analytics` | `Collection.uniqued(\.id)` + guard on `add` | Enforced by `audit_composite_registration.sh` (ADR 0004) |
 | Event client | `EventsClient<Event>`, `AppPhaseClient` typealias | `EventsClient` | `DEPENDENCY_REGISTRY.md` + ADR 0004 |
-| Address search client | Protocol + Live/Noop/Unimplemented | Protocol (for now) | P-001 |
+| Address search client | Struct + live engine | Struct `AddressSearchClient` | **T-107** |
 | Date formatting | Modern `FormatStyle` vs `Date.LegacyFormatStyle` | Modern APIs | P-002 |
 | Storage | `Pond` vs future Shared | Pond until migration | See tracked debt below |
 
@@ -41,7 +41,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Shape | Count | Examples |
 | --- | --- | --- |
 | Struct + closures | Majority | `OpenURLClient`, `QRCodeClient` |
-| Protocol + conformers | 1 | `AddressSearchClient` |
+| Protocol + conformers | 0 | — (resolved P-001 / T-107) |
 | Typealias over `EventsClient` | 1 | `AppPhaseClient` |
 
 ## Enforcement coverage

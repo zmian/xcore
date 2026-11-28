@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-# Ensures dependency client shape drift (protocol / typealias / struct) matches ENTROPY_INVENTORY.md (P-001).
+# Ensures dependency client shape drift (protocol / typealias / struct) matches ENTROPY_INVENTORY.md.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 INVENTORY="$ROOT/docs/architecture/ENTROPY_INVENTORY.md"
 DEPS="$ROOT/Sources/Xcore/Swift/Dependencies"
+ADDRESS_SEARCH_DOC="$ROOT/docs/architecture/ADDRESS_SEARCH_CLIENT.md"
+ADDRESS_SEARCH_DIR="$DEPS/AddressSearch"
 
-expected_protocol=1
+expected_protocol=0
 expected_typealias=1
 
 doc_protocol="$(
@@ -41,11 +43,6 @@ done < <(rg --no-heading 'public protocol \w+Client' "$DEPS" --glob '*.swift' ||
   exit 1
 }
 
-if ! rg -q 'public protocol AddressSearchClient' "$DEPS/AddressSearch/Client/AddressSearchClient.swift"; then
-  echo "AddressSearchClient must remain the sole protocol client (P-001)"
-  exit 1
-fi
-
 live_typealias=0
 while IFS= read -r line; do
   [[ "$line" == *"EventsClient.swift:"* ]] && continue
@@ -62,45 +59,19 @@ if ! rg -q 'typealias AppPhaseClient = EventsClient' "$DEPS/AppPhase/AppPhaseCli
   exit 1
 fi
 
-ADDRESS_SEARCH_DOC="$ROOT/docs/architecture/ADDRESS_SEARCH_CLIENT.md"
-ADDRESS_SEARCH_DIR="$DEPS/AddressSearch"
-
 if [[ ! -f "$ADDRESS_SEARCH_DOC" ]]; then
-  echo "Missing docs/architecture/ADDRESS_SEARCH_CLIENT.md (P-001 SSOT)"
+  echo "Missing docs/architecture/ADDRESS_SEARCH_CLIENT.md"
   exit 1
 fi
 
-if ! grep -q 'P-001' "$ADDRESS_SEARCH_DOC"; then
-  echo "ADDRESS_SEARCH_CLIENT.md must reference P-001"
+if ! rg -q 'public struct AddressSearchClient: Sendable' "$DEPS/AddressSearch/Client/AddressSearchClient.swift"; then
+  echo "AddressSearchClient must be a public struct client (ADR 0002)"
   exit 1
 fi
 
-allowed_conformers=(
-  "LiveAddressSearchClient"
-  "NoopAddressSearchClient"
-  "UnimplementedAddressSearchClient"
-)
-conformer_count=0
-while IFS= read -r line; do
-  name="$(sed -n 's/.*\(class\|struct\) \([A-Za-z0-9_]*\): AddressSearchClient.*/\2/p' <<<"$line")"
-  [[ -z "$name" ]] && continue
-  conformer_count=$((conformer_count + 1))
-  allowed=false
-  for entry in "${allowed_conformers[@]}"; do
-    if [[ "$name" == "$entry" ]]; then
-      allowed=true
-      break
-    fi
-  done
-  if ! $allowed; then
-    echo "Unexpected AddressSearchClient conformer: $name (see ADDRESS_SEARCH_CLIENT.md)"
-    exit 1
-  fi
-done < <(rg --no-heading '(class|struct) \w+: AddressSearchClient' "$ADDRESS_SEARCH_DIR" --glob '*.swift' || true)
-
-[[ "$conformer_count" == "${#allowed_conformers[@]}" ]] || {
-  echo "Expected ${#allowed_conformers[@]} AddressSearchClient conformers in Sources; found $conformer_count"
+if rg -q '(class|struct) \w+: AddressSearchClient' "$ADDRESS_SEARCH_DIR" --glob '*.swift' 2>/dev/null; then
+  echo "AddressSearchClient protocol conformers are forbidden (use struct client variants)"
   exit 1
-}
+fi
 
-echo "Dependency client shapes audit passed (protocol $live_protocol, EventsClient typealias $live_typealias, addressSearch conformers $conformer_count)."
+echo "Dependency client shapes audit passed (protocol $live_protocol, EventsClient typealias $live_typealias, AddressSearchClient struct)."

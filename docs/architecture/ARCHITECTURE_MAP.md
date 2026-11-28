@@ -66,7 +66,7 @@ flowchart TB
 | --- | --- | --- |
 | Unique elements by key | `Collection.uniqued`, `uniqued(_:)` | **Canonical** — single helper |
 | Composite provider registration | Analytics, FeatureFlagProvider, ImageFetcher | **Parallel by design** — different protocols |
-| Address search | Protocol `AddressSearchClient` + Live/Noop/Unimplemented types | **Divergent** — see P-001 |
+| Address search | Struct `AddressSearchClient` + `LiveAddressSearchClient` engine | **Canonical** (T-107) |
 | Top view controller | `UIApplication.topViewController` + `UIWindow.topViewController` | **Layered** — window delegates to application helper |
 
 ## Verification entrypoints

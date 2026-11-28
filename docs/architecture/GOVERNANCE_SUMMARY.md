@@ -37,7 +37,7 @@ Extensions: [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) (4 folders, 24 root fil
 - [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) — enforced snapshot of all headline budgets
 - [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (0)
 - [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (0)
-- [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) — `@unchecked Sendable` budget (21)
+- [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) — `@unchecked Sendable` budget (22)
 - [SPACING_SCALE.md](./SPACING_SCALE.md) · [FORMATTING_DEFAULTS.md](./FORMATTING_DEFAULTS.md) · [CODING_DEFAULTS.md](./CODING_DEFAULTS.md)
 - [HELPERS_INDEX.md](./HELPERS_INDEX.md) · [LAYER_IMPORTS.md](./LAYER_IMPORTS.md)
 - [PROGRESS.md](./PROGRESS.md) — completed rounds

@@ -64,7 +64,7 @@ extension DependencyValues {
 
 ### Protocol client (exceptional)
 
-Use only when multiple concrete implementations are part of the public contract (`AddressSearchClient`). Still provide `.live`, `.noop`, `.unimplemented` via extensions and the same `DependencyKey` triple. Converge to struct clients when no external conformers remain (see P-001).
+Protocol-based dependency clients are not used in Xcore production keys (`AddressSearchClient` converged to struct — T-107).
 
 ### Variants
 
