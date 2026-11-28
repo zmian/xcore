@@ -10,7 +10,7 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 
 | ID | Task | Question |
 | --- | --- | --- |
-| P-001 | Converge `AddressSearchClient` from protocol to struct client | Breaking for conformers outside repo? |
+| P-001 | Converge `AddressSearchClient` from protocol to struct client | Breaking for conformers outside repo? See [ADDRESS_SEARCH_CLIENT.md](./ADDRESS_SEARCH_CLIENT.md). |
 | P-002 | Remove `Date.LegacyFormatStyle` per in-file note | Any apps still depend on legacy phrasing? |
 | P-003 | `AppPhaseClient` testValue uses `.live` | Keep for integration tests or switch to `.unimplemented`? |
 
@@ -116,3 +116,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-103 | Green macOS CI on #153 (`1e1f7443`, build-test-lint) |
 | T-104 | `DEPENDENCY_REGISTRY` AppPhase exception + `audit_dependency_keys` guard (P-003) |
 | T-105 | `audit_dependency_client_shapes.sh` + ENTROPY enforcement (**30** audits) |
+| T-106 | `ADDRESS_SEARCH_CLIENT.md` + conformer allowlist in shape audit |

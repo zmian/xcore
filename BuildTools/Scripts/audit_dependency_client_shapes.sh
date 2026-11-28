@@ -62,4 +62,45 @@ if ! rg -q 'typealias AppPhaseClient = EventsClient' "$DEPS/AppPhase/AppPhaseCli
   exit 1
 fi
 
-echo "Dependency client shapes audit passed (protocol $live_protocol, EventsClient typealias $live_typealias)."
+ADDRESS_SEARCH_DOC="$ROOT/docs/architecture/ADDRESS_SEARCH_CLIENT.md"
+ADDRESS_SEARCH_DIR="$DEPS/AddressSearch"
+
+if [[ ! -f "$ADDRESS_SEARCH_DOC" ]]; then
+  echo "Missing docs/architecture/ADDRESS_SEARCH_CLIENT.md (P-001 SSOT)"
+  exit 1
+fi
+
+if ! grep -q 'P-001' "$ADDRESS_SEARCH_DOC"; then
+  echo "ADDRESS_SEARCH_CLIENT.md must reference P-001"
+  exit 1
+fi
+
+allowed_conformers=(
+  "LiveAddressSearchClient"
+  "NoopAddressSearchClient"
+  "UnimplementedAddressSearchClient"
+)
+conformer_count=0
+while IFS= read -r line; do
+  name="$(sed -n 's/.*\(class\|struct\) \([A-Za-z0-9_]*\): AddressSearchClient.*/\2/p' <<<"$line")"
+  [[ -z "$name" ]] && continue
+  conformer_count=$((conformer_count + 1))
+  allowed=false
+  for entry in "${allowed_conformers[@]}"; do
+    if [[ "$name" == "$entry" ]]; then
+      allowed=true
+      break
+    fi
+  done
+  if ! $allowed; then
+    echo "Unexpected AddressSearchClient conformer: $name (see ADDRESS_SEARCH_CLIENT.md)"
+    exit 1
+  fi
+done < <(rg --no-heading '(class|struct) \w+: AddressSearchClient' "$ADDRESS_SEARCH_DIR" --glob '*.swift' || true)
+
+[[ "$conformer_count" == "${#allowed_conformers[@]}" ]] || {
+  echo "Expected ${#allowed_conformers[@]} AddressSearchClient conformers in Sources; found $conformer_count"
+  exit 1
+}
+
+echo "Dependency client shapes audit passed (protocol $live_protocol, EventsClient typealias $live_typealias, addressSearch conformers $conformer_count)."

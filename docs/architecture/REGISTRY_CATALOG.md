@@ -8,6 +8,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | --- | --- |
 | [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) | 14 production `@Dependency` keys |
 | [DEPENDENCY_LAYOUT.md](./DEPENDENCY_LAYOUT.md) | Folder layout for dependency clients |
+| [ADDRESS_SEARCH_CLIENT.md](./ADDRESS_SEARCH_CLIENT.md) | P-001 protocol client + in-repo conformers |
 | [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) | Swift/Extensions folders and root files |
 | [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md) | Cocoa/Extensions layout |
 | [COCOA_SUPPORTING_INDEX.md](./COCOA_SUPPORTING_INDEX.md) | Cocoa/Blocks and Protocols |

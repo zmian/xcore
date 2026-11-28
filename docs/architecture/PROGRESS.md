@@ -485,6 +485,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** Sole `AddressSearchClient` protocol + `AppPhaseClient` typealias per `ENTROPY_INVENTORY` (**30** audits).
 
+### Round 85 — AddressSearch P-001 SSOT (T-106)
+
+- **Document:** `ADDRESS_SEARCH_CLIENT.md` (conformers, target struct shape).
+- **Enforce:** `audit_dependency_client_shapes.sh` allowlists three in-repo conformers.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
