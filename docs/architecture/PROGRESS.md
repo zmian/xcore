@@ -653,6 +653,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `e7062737` green — [run 46145404555](https://github.com/zmian/xcore/actions/runs/46145404555) (`build-test-lint` after T-139).
 
+### Round 118 — ADR 0005 spacing chain (T-141)
+
+- **Document:** Theme init + parallel test reset linked to `s5`/`s3` and theme isolation audits.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
