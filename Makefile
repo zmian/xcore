@@ -32,7 +32,7 @@ APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
 ifneq ($(strip $(CI)),)
-XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation
+XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO
 XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DCI"
 RAW_XCODEBUILD := 1
 export SIMCTL_CHILD_CI := true

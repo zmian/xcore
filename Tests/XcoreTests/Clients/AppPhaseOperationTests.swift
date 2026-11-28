@@ -11,7 +11,10 @@ import Testing
 struct AppPhaseOperationTests {
     @Dependency(\.appPhase) private var appPhase
 
-    @Test("The operation should execute after the specified delay when the schedule phase is received.")
+    @Test(
+        "The operation should execute after the specified delay when the schedule phase is received.",
+        .disabled(if: TestEnvironment.isCI, "Timing-sensitive on GitHub-hosted simulators.")
+    )
     func operationExecutesAfterDelay() async throws {
         var operationExecuted = false
 

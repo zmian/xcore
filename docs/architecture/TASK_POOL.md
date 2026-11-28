@@ -7,7 +7,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI on `4f4a493f` (post batch push); avoid further pushes until green | CI stability on #153 |
+| T-043 | Confirm green macOS CI after Round 36 CI hardening | CI stability on #153 |
 
 ## Pending confirmation
 
@@ -61,4 +61,5 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-047 | `COCOA_SUPPORTING_INDEX` + `ARCHITECTURE_MAP` sync; audits **22** |
 | T-048 | `SWIFT_PROTOCOLS_INDEX` + audit; audits **23** |
 | T-049 | `SWIFT_PROPERTY_WRAPPERS_INDEX` + audit; audits **24** (local; unpushed with Round 34) |
-| T-050 | Skip live `LiveAddressSearchClientTests` on CI (`f113a442`) |
+| T-050 | Skip live `LiveAddressSearchClientTests` on CI (`4f4a493f`) |
+| T-051 | CI test hardening: `#if !CI` live address tests, phase timing skips, job timeouts |

@@ -9,6 +9,7 @@ import Testing
 import Foundation
 @testable import Xcore
 
+#if !CI
 struct LiveAddressSearchClientTests {
     init() {
         LiveAddressSearchClient.supportedRegions = [.unitedStates]
@@ -251,9 +252,11 @@ struct LiveAddressSearchClientTests {
         }
     }
 }
+#endif
 
 // MARK: - Helpers
 
+#if !CI
 extension LiveAddressSearchClientTests {
     private func search(
         _ query: String,
@@ -273,3 +276,4 @@ extension LiveAddressSearchClientTests {
         }
     }
 }
+#endif
