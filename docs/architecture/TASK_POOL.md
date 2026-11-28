@@ -133,3 +133,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-120 | Revert T-118/T-119; budget **19** (`976fa8cd`) |
 | T-121 | Revert T-116; restore `RegexValidationPattern`; budget **20** |
 | T-122 | Revert T-117; restore `DoneSubscriberCancellables`; budget **21** |
+| T-123 | `UNCHECKED_SENDABLE_CI_EVIDENCE` + `audit_unchecked_sendable_ci_holds.sh` (**33** audits) |

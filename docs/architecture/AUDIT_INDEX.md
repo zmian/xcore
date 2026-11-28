@@ -24,6 +24,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_dependency_client_shapes.sh` | `ENTROPY_INVENTORY` client shapes: zero protocol clients; struct `AddressSearchClient`; one `EventsClient` typealias (`AppPhaseClient`). |
 | `BuildTools/Scripts/audit_concurrency_inventory.sh` | `nonisolated(unsafe)` count matches `CONCURRENCY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` | `@unchecked Sendable` count matches `UNCHECKED_SENDABLE_INVENTORY.md` (ADR 0007). |
+| `BuildTools/Scripts/audit_unchecked_sendable_ci_holds.sh` | CI-proven holders for `RegexValidationPattern`, `DoneSubscriberCancellables`, etc. (`UNCHECKED_SENDABLE_CI_EVIDENCE.md`). |
 | `BuildTools/Scripts/audit_associated_object_keys.sh` | No `nonisolated(unsafe)`; `AssociatedKey` uses `UInt8` tokens (ADR 0006). |
 | `BuildTools/Scripts/audit_module_placement.sh` | `DependencyKey` under `Swift/Dependencies/` (Pond excepted); no `IssueReporting`; canonical `Unimplemented:` strings (ADR 0003). |
 | `BuildTools/Scripts/audit_layer_imports.sh` | Cross-layer imports match `LAYER_IMPORTS.md` (Cocoa→SwiftUI, Swift/Components→UIKit; ADR 0003). |

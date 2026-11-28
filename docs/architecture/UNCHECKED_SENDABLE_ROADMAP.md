@@ -1,7 +1,8 @@
 # `@unchecked Sendable` reduction roadmap
 
 Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) (ADR 0007).  
-**Open annotations: 21** (must match `make audit-architecture`).
+**Open annotations: 21** (must match `make audit-architecture`).  
+**CI holds:** do not re-attempt patterns in [UNCHECKED_SENDABLE_CI_EVIDENCE.md](./UNCHECKED_SENDABLE_CI_EVIDENCE.md) (`audit_unchecked_sendable_ci_holds.sh`).
 
 ## Primitives (keep conditional `@unchecked`)
 

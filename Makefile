@@ -153,4 +153,5 @@ audit-architecture: ## Run architecture governance checks (no Xcode required)
 	@bash BuildTools/Scripts/audit_registry_catalog.sh
 	@bash BuildTools/Scripts/audit_governance_metrics.sh
 	@bash BuildTools/Scripts/audit_product_gates.sh
+	@bash BuildTools/Scripts/audit_unchecked_sendable_ci_holds.sh
 	@bash BuildTools/Scripts/audit_audit_index.sh

@@ -572,7 +572,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** Restore `DoneSubscriberCancellables`.
 - **Enforce:** `@unchecked` budget **21** (session attempts T-116–T-119 net zero).
-- **Verify:** macOS CI pending after T-122 push.
+- **Verify:** macOS CI pending on `9f2aa803`.
+
+### Round 101 — Unchecked Sendable CI evidence (T-123)
+
+- **Document:** `UNCHECKED_SENDABLE_CI_EVIDENCE.md` (E-001–E-006).
+- **Enforce:** `audit_unchecked_sendable_ci_holds.sh` (**33** audits).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
