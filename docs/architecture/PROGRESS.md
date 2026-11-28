@@ -389,6 +389,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Associated-object keys → `UInt8` tokens; `MockAnalyticsProvider` → `LockIsolated` state; concurrency budget **0** (T-079).
 
+### Round 65 — ADR 0006 + associated-key audit (T-080)
+
+- **Enforce:** `audit_associated_object_keys.sh`; **27** architecture audits; ADR 0006 documents LockIsolated + UInt8 key pattern.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

@@ -4,7 +4,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 
 ## Ready
 
-No independent code tasks queued; next entropy work is gated by **P-001–P-003** (product confirmation).
+Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent code work is gated by **P-001–P-003** unless expanding audits/docs or module-boundary refactors.
 
 ## Pending confirmation
 
@@ -90,3 +90,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-077 | Global Theme/Calendar/Locale/Color defaults → `LockIsolated` (30→25) |
 | T-078 | UIFont/Font defaults + timing presets (25→18) |
 | T-079 | Associated keys + MockAnalyticsProvider (18→0) |
+| T-080 | ADR 0006 + `audit_associated_object_keys.sh` (27 audits) |

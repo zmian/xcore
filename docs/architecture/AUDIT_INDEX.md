@@ -21,6 +21,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_dependency_layout.sh` | `DEPENDENCY_LAYOUT.md` matches `Swift/Dependencies/` subfolders and root clients. |
 | `BuildTools/Scripts/audit_dependency_keys.sh` | Every `DependencyKey` has `testValue`; `previewValue` when `noop`/`empty` exists (see ADR 0001–0002). |
 | `BuildTools/Scripts/audit_concurrency_inventory.sh` | `nonisolated(unsafe)` count matches `CONCURRENCY_INVENTORY.md`. |
+| `BuildTools/Scripts/audit_associated_object_keys.sh` | No `nonisolated(unsafe)`; `AssociatedKey` uses `UInt8` tokens (ADR 0006). |
 | `BuildTools/Scripts/audit_module_placement.sh` | `DependencyKey` under `Swift/Dependencies/` (Pond excepted); no `IssueReporting`; canonical `Unimplemented:` strings (ADR 0003). |
 | `BuildTools/Scripts/audit_layer_imports.sh` | Cross-layer imports match `LAYER_IMPORTS.md` (Cocoa→SwiftUI, Swift/Components→UIKit; ADR 0003). |
 | `BuildTools/Scripts/audit_compiler_warnings.sh` | `#warning` count matches `ENTROPY_INVENTORY.md`. |
