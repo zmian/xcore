@@ -531,6 +531,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `UNCHECKED_SENDABLE_ROADMAP.md` agent reduction queue.
 - **Enforce:** `audit_unchecked_sendable_inventory.sh` checks roadmap open count.
 
+### Round 93 — UserDefaultsPond Sendable (T-115)
+
+- **Migrate:** Drop `@unchecked` on `UserDefaultsPond`; budget **20**.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

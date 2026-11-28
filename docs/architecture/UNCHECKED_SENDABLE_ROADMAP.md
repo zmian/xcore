@@ -1,7 +1,7 @@
 # `@unchecked Sendable` reduction roadmap
 
 Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) (ADR 0007).  
-**Open annotations: 21** (must match `make audit-architecture`).
+**Open annotations: 20** (must match `make audit-architecture`).
 
 ## Primitives (keep conditional `@unchecked`)
 
@@ -34,10 +34,9 @@ Agent queue for lowering the budget in [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHE
 | `Popup.swift` | `TransitionStorage` | `AnyTransition` (plain `Sendable` reverted T-088) |
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` | `Formatter` bridge |
 | `PondKey.swift` | `Storage` | `AuthenticationPolicy` |
-| `Pond+UserDefaults.swift` | `UserDefaultsPond` | `UserDefaults` |
-
 ## Resolved in this PR
 
 - `AddressSearchResult.swift` (T-113) — struct `Sendable`
+- `Pond+UserDefaults.swift` (T-115) — `UserDefaults` is `Sendable` on current SDK
 
 Update this file whenever the live count changes.

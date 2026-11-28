@@ -9,7 +9,7 @@ Headline budgets agents should not regress without updating source inventories a
 | Runtime CI test skips (`TestEnvironment.isCI`) | 4 |
 | Production dependency keys | 14 |
 | nonisolated(unsafe) in Sources/Xcore | 0 |
-| @unchecked Sendable in Sources/Xcore | 21 |
+| @unchecked Sendable in Sources/Xcore | 20 |
 | #warning in Sources/Xcore | 0 |
 | Swift/Components domains | 14 |
 | SwiftUI/Components domains | 21 |
