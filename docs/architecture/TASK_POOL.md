@@ -8,7 +8,6 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
 | T-043 | Confirm green macOS CI on `855473cb` (#114); push only `7d095f7b` (23 audits); then await next green before Round 35 push | CI stability on #153 — #114 **Test** step >2h (ET); treat as hung until completed |
-| T-050 | If #114 times out or stays stuck: inspect `make test` hang (simulator, live tests, runner) and re-run | CI reliability |
 
 ## Pending confirmation
 
@@ -62,3 +61,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-047 | `COCOA_SUPPORTING_INDEX` + `ARCHITECTURE_MAP` sync; audits **22** |
 | T-048 | `SWIFT_PROTOCOLS_INDEX` + audit; audits **23** |
 | T-049 | `SWIFT_PROPERTY_WRAPPERS_INDEX` + audit; audits **24** (local; unpushed with Round 34) |
+| T-050 | Skip live `LiveAddressSearchClientTests` on CI (`f113a442`) |
