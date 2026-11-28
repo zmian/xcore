@@ -64,6 +64,11 @@ SUMMARY="$ROOT/docs/architecture/GOVERNANCE_SUMMARY.md"
 ARCH_MAP="$ROOT/docs/architecture/ARCHITECTURE_MAP.md"
 AGENTS="$ROOT/AGENTS.md"
 
+if ! rg -q 'audit_ci_test_policy' "$SUMMARY"; then
+  echo "GOVERNANCE_SUMMARY.md must reference audit_ci_test_policy.sh (Theme reset in TEST_CI_POLICY)"
+  exit 1
+fi
+
 for script in audit_layout_ssot audit_spacing_scale audit_theme_test_isolation; do
   if ! rg -q "${script}" "$SUMMARY"; then
     echo "GOVERNANCE_SUMMARY.md must reference ${script}.sh (layout SSOT chain)"

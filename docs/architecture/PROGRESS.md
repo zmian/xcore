@@ -688,6 +688,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `b3ced217` green — [run 46147746710](https://github.com/zmian/xcore/actions/runs/46147746710) (`build-test-lint` after T-146–T-147).
 
+### Round 126 — CI policy in governance SSOT (T-149)
+
+- **Document:** `GOVERNANCE_SUMMARY` / `ENTROPY_INVENTORY` cite `audit_ci_test_policy.sh`.
+- **Enforce:** `audit_registry_catalog.sh` guards summary reference.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
