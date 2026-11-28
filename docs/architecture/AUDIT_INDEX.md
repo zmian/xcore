@@ -21,6 +21,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_dependency_registry.sh` | `DEPENDENCY_REGISTRY.md` total + each key has `DependencyValues` property. |
 | `BuildTools/Scripts/audit_dependency_layout.sh` | `DEPENDENCY_LAYOUT.md` matches `Swift/Dependencies/` subfolders and root clients. |
 | `BuildTools/Scripts/audit_dependency_keys.sh` | Every `DependencyKey` has `testValue`; `previewValue` when `noop`/`empty` exists (see ADR 0001–0002). |
+| `BuildTools/Scripts/audit_dependency_client_shapes.sh` | `ENTROPY_INVENTORY` client shapes: one protocol (`AddressSearchClient`), one `EventsClient` typealias (`AppPhaseClient`). |
 | `BuildTools/Scripts/audit_concurrency_inventory.sh` | `nonisolated(unsafe)` count matches `CONCURRENCY_INVENTORY.md`. |
 | `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` | `@unchecked Sendable` count matches `UNCHECKED_SENDABLE_INVENTORY.md` (ADR 0007). |
 | `BuildTools/Scripts/audit_associated_object_keys.sh` | No `nonisolated(unsafe)`; `AssociatedKey` uses `UInt8` tokens (ADR 0006). |

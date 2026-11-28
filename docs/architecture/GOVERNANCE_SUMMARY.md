@@ -5,7 +5,7 @@
 ## Before you edit
 
 1. Read [ADR 0002](./adr/0002-dependency-client-template.md) when adding `@Dependency` clients.
-2. Run `make audit-architecture` (**29** Linux-safe checks; see `AUDIT_INDEX.md`) before push.
+2. Run `make audit-architecture` (**30** Linux-safe checks; see `AUDIT_INDEX.md`) before push.
 3. Headline budgets: [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md).
 4. Catalog of registries and inventories: [REGISTRY_CATALOG.md](./REGISTRY_CATALOG.md).
 5. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.

@@ -49,6 +49,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Concern | Tool |
 | --- | --- |
 | Dependency keys | `audit_dependency_keys.sh` |
+| Dependency client shapes | `audit_dependency_client_shapes.sh` (P-001) |
 | Module placement / unimplemented copy | `audit_module_placement.sh` |
 | Layer import allowlists | `audit_layer_imports.sh` |
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |

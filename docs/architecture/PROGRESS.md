@@ -481,6 +481,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `DEPENDENCY_REGISTRY.md` “Key default exceptions” for `appPhase` (P-003).
 - **Enforce:** `audit_dependency_keys.sh` + registry table scoping in `audit_dependency_registry.sh`.
 
+### Round 84 — Dependency client shape audit (T-105)
+
+- **Enforce:** Sole `AddressSearchClient` protocol + `AppPhaseClient` typealias per `ENTROPY_INVENTORY` (**30** audits).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

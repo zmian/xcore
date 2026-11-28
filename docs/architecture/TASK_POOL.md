@@ -115,3 +115,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-102 | `audit_theme_test_isolation.sh` + TEST_CI_POLICY (**29** audits) |
 | T-103 | Green macOS CI on #153 (`1e1f7443`, build-test-lint) |
 | T-104 | `DEPENDENCY_REGISTRY` AppPhase exception + `audit_dependency_keys` guard (P-003) |
+| T-105 | `audit_dependency_client_shapes.sh` + ENTROPY enforcement (**30** audits) |

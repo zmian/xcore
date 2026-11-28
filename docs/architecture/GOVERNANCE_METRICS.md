@@ -5,7 +5,7 @@ Headline budgets agents should not regress without updating source inventories a
 
 | Metric | Value |
 | --- | --- |
-| Architecture audit scripts | 29 |
+| Architecture audit scripts | 30 |
 | Runtime CI test skips (`TestEnvironment.isCI`) | 4 |
 | Production dependency keys | 14 |
 | nonisolated(unsafe) in Sources/Xcore | 0 |
