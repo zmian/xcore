@@ -13,7 +13,7 @@ Swift 6 strict concurrency required widespread `nonisolated(unsafe)` across glob
 1. **`Sources/Xcore` budget:** **0** `nonisolated(unsafe)` annotations. `audit_concurrency_inventory.sh` and `GOVERNANCE_METRICS.md` enforce the total.
 2. **Mutable shared state:** Prefer `LockIsolated` with public get/set when a frozen `static let` is insufficient (dependency registries, theme defaults, mocks).
 3. **Non-Sendable UIKit/AVFoundation handles:** Hold instances in `LockIsolated` or an `@unchecked Sendable` box with no `nonisolated(unsafe)` field.
-4. **Associated-object keys:** Use `private enum AssociatedKey { static let name = AssociatedObjectKey() }` and pass `AssociatedKey.name` to `associatedObject` / `setAssociatedObject`. Do not use mutable `UInt8` globals, string-literal keys, or `nonisolated(unsafe)` on key storage.
+4. **Associated-object keys:** Use `private enum AssociatedKey { static let name = AssociatedObjectKey() }` and pass `AssociatedKey.name` to `associatedObject` / `setAssociatedObject`. `AssociatedObjectKey` is `@unchecked Sendable` (immutable allocated pointer). Do not use mutable `UInt8` globals, string-literal keys, or `nonisolated(unsafe)` on key storage.
 
 ## Consequences
 

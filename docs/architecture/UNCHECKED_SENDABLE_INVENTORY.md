@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 11 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 12 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -8,6 +8,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 
 | Location | Role |
 | --- | --- |
+| `ExtensibleByAssociatedObject.swift` | `AssociatedObjectKey` (stable `UnsafeRawPointer` token) |
 | `ReferenceBox.swift` | `ReferenceBox` / `MutableReferenceBox` when `Value: Sendable` |
 | `Weak.swift` | `Weak` when `Value: Sendable` |
 | `ValuePublisher.swift` | `ValuePublisher` when `Output: Sendable` |

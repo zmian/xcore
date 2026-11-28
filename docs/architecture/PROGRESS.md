@@ -439,6 +439,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Fix:** `AssociatedObjectKey` drops `Sendable` (immutable token; `UnsafeRawPointer` not Sendable).
 - **Revert:** `Popup.TransitionStorage` `@unchecked Sendable`.
 
+### Round 75 — CI associated keys + SDWebImage cancel (T-092)
+
+- **Fix:** `AssociatedObjectKey` → `@unchecked Sendable`; `ImageDownloader` cancel via `LockIsolated`. Budget **12**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

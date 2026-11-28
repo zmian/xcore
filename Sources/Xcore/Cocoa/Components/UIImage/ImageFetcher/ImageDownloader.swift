@@ -15,25 +15,27 @@ enum ImageDownloader {
     /// Downloads the image at the given URL, if not present in cache or return the
     /// cached version otherwise.
     static func load(url: URL) async throws -> (UIImage, ImageSourceType.CacheType) {
-        var token: SDWebImageCombinedOperation?
-        let cancel = ImageDownloaderCancelToken { token?.cancel() }
+        let token = LockIsolated<SDWebImageCombinedOperation?>(nil)
+        let cancel = ImageDownloaderCancelToken {
+            token.withValue { $0?.cancel() }
+        }
 
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
-                token = SDWebImageManager.shared.loadImage(
+                token.setValue(SDWebImageManager.shared.loadImage(
                     with: url,
                     options: [.avoidAutoSetImage],
                     progress: nil
                 ) { image, _, error, cacheType, _, _ in
                     if Task.isCancelled {
-                        token?.cancel()
+                        token.withValue { $0?.cancel() }
                         continuation.resume(throwing: CancellationError())
                     } else if let image {
                         continuation.resume(returning: (image, .init(cacheType)))
                     } else {
                         continuation.resume(throwing: error ?? ImageFetcherError.notFound)
                     }
-                }
+                })
             }
         } onCancel: {
             cancel()
@@ -42,18 +44,20 @@ enum ImageDownloader {
 
     /// Downloads the image from the given url.
     static func download(url: URL) async throws -> UIImage {
-        var token: SDWebImageDownloadToken?
-        let cancel = ImageDownloaderCancelToken { token?.cancel() }
+        let token = LockIsolated<SDWebImageDownloadToken?>(nil)
+        let cancel = ImageDownloaderCancelToken {
+            token.withValue { $0?.cancel() }
+        }
 
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
-                token = SDWebImageDownloader.shared.downloadImage(
+                token.setValue(SDWebImageDownloader.shared.downloadImage(
                     with: url,
                     options: [],
                     progress: nil
                 ) { image, _, error, finished in
                     if Task.isCancelled {
-                        token?.cancel()
+                        token.withValue { $0?.cancel() }
                         continuation.resume(throwing: CancellationError())
                     }
 
@@ -66,7 +70,7 @@ enum ImageDownloader {
                     } else {
                         continuation.resume(throwing: error ?? ImageFetcherError.notFound)
                     }
-                }
+                })
             }
         } onCancel: {
             cancel()
