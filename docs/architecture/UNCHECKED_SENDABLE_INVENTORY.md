@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 22 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 21 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -18,7 +18,6 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | Location | Role |
 | --- | --- |
 | `AddressSearchClient+Live.swift` | `LiveAddressSearchClient` (`@Sendable` `.live` capture); `Delegate` (`NSObject` + `MKLocalSearchCompleter`) |
-| `AddressSearchResult.swift` | `MKLocalSearchCompletion` in `LockIsolated` |
 | `AudioPlayerClient+Live.swift` | `LiveAudioClient` (`AVAudioPlayer` behind `NSLock`) |
 | `SessionCounterClient+Live.swift` | `LiveSessionCounterClient` (`@Dependency` + observation task) |
 | `PushNotificationsClient+Live.swift` | `NSObject` live client |
@@ -38,6 +37,8 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
 **Resolved (Round 86):** `AddressSearchClient` is a struct client; live engine marked `@unchecked Sendable` for closure wiring (T-107). Deletes public protocol + conformer types.
+
+**Resolved (Round 91):** `AddressSearchResult` is a `Sendable` struct; resolve uses natural-language `MKLocalSearch.Request` (T-113).
 
 **Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
 

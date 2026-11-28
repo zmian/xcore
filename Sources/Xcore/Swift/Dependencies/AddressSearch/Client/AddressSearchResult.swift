@@ -9,11 +9,9 @@ internal import MapKit
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.
-public final class AddressSearchResult: @unchecked Sendable, Hashable {
+public struct AddressSearchResult: Sendable, Hashable {
     public let title: String
     public let subtitle: String
-    private let completionLock = NSLock()
-    private var completionStorage: MKLocalSearchCompletion?
 
     /// Creates an instance of search result from given title and subtitle string.
     ///
@@ -29,39 +27,15 @@ public final class AddressSearchResult: @unchecked Sendable, Hashable {
     ///
     /// - Parameter completion: The search completion object.
     init(_ completion: MKLocalSearchCompletion) {
-        self.title = completion.title
-        self.subtitle = completion.subtitle
-        completionLock.withLock { completionStorage = completion }
+        self.init(title: completion.title, subtitle: completion.subtitle)
     }
 
     /// Returns search request to search for map locations based on a natural
     /// language string.
     func request() -> MKLocalSearch.Request {
-        if let completion = completionLock.withLock({ completionStorage }) {
-            return MKLocalSearch.Request(completion: completion)
-        }
-
-        return MKLocalSearch.Request().apply {
+        MKLocalSearch.Request().apply {
             $0.naturalLanguageQuery = [title, subtitle].joined(separator: ", ")
             $0.resultTypes = .address
         }
-    }
-}
-
-// MARK: - Equatable
-
-extension AddressSearchResult {
-    public static func ==(lhs: AddressSearchResult, rhs: AddressSearchResult) -> Bool {
-        lhs.title == rhs.title &&
-        lhs.subtitle == rhs.subtitle
-    }
-}
-
-// MARK: - Hashable
-
-extension AddressSearchResult {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(title)
-        hasher.combine(subtitle)
     }
 }

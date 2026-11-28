@@ -520,6 +520,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** ADR 0008 product gates index; ENTROPY enforcement row.
 
+### Round 91 — AddressSearchResult Sendable struct (T-113)
+
+- **Migrate:** Drop `MKLocalSearchCompletion` retention; struct + natural-language resolve request.
+- **Enforce:** `@unchecked` budget **21**.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
