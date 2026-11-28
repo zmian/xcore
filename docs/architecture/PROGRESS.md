@@ -286,6 +286,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#119](https://github.com/zmian/xcore/actions/runs/46110239691) failed in ~10m: `AsyncValueStreamTests.iterations` (300s allowance), `DependencyKeyDefaultsTests` (live deps without `withDependencies`), `DateTest.timeZone` (EST vs EDT).
 - **Migrate:** `Task.yield` before stream mutations; scope dependency default tests with `withDependencies` + harness types; align US Eastern offset with `Calendar` (T-055).
 
+### Round 40 — DependencyKeyDefaultsTests on #120 (2026-11-28)
+
+- **CI:** [#120](https://github.com/zmian/xcore/actions/runs/46111947035) failed: `DependencyKeyDefaultsTests` still red — harness overrides used `.unimplemented`, which `reportIssue`s on use; pasteboard case hit 300s allowance.
+- **Migrate:** Pin `DependencyValues.test` in `withDependencies` and wrap assertions in `withExpectedIssue` so production `testValue` is exercised without live side effects or spurious failures (T-056).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

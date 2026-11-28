@@ -7,8 +7,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after T-055 test fixes | CI stability on #153 |
-| T-055 | Fix `#119` failures: stream yield, dependency test scope, DST timeZone | Push after T-054 |
+| T-043 | Confirm green macOS CI after T-056 | CI stability on #153 |
+| T-056 | Fix `#120` `DependencyKeyDefaultsTests` (`.test` + `withExpectedIssue`) | Push after T-055 |
 
 ## Pending confirmation
 
@@ -67,3 +67,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-052 | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` |
 | T-053 | Concurrency stream tests: await collection tasks; single `AsyncStream` consumer (`1f0bfccc`) |
 | T-054 | CI throughput: parallel tests, per-test allowance, longer timeouts (`452c928d`) |
+| T-055 | Stream yield, `DateTests` DST, first dependency-defaults attempt (`0c9552b7`) |

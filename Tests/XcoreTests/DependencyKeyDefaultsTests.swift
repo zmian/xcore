@@ -12,29 +12,33 @@ import UIKit
 
 /// Regression tests for ADR 0001: production `DependencyKey` types must default to safe test values.
 ///
-/// Swift Testing does not install dependency `testValue`s automatically (unlike XCTest); scope each
-/// case with `withDependencies` and the production `testValue` variant.
+/// Swift Testing does not always infer a test dependency context (unlike XCTest); pin `.test` and
+/// expect `reportIssue` from production `testValue` (`.unimplemented`).
 struct DependencyKeyDefaultsTests {
     @Test
     func sessionCounterTestValueIsInert() {
         withDependencies {
-            $0.sessionCounter = .unimplemented
+            $0 = .test
         } operation: {
-            let harness = SessionCounterHarness()
-            let initial = harness.sessionCounter.count()
-            harness.sessionCounter.increment()
-            #expect(harness.sessionCounter.count() == initial)
+            withExpectedIssue {
+                @Dependency(\.sessionCounter) var sessionCounter
+                let initial = sessionCounter.count()
+                sessionCounter.increment()
+                #expect(sessionCounter.count() == initial)
+            }
         }
     }
 
     @Test
     func openURLTestValueDoesNotOpen() async {
         await withDependencies {
-            $0.openURL = .unimplemented
+            $0 = .test
         } operation: {
-            let harness = OpenURLHarness()
-            let opened = await harness.openURL(URL(string: "https://example.com"))
-            #expect(opened == false)
+            await withExpectedIssue {
+                @Dependency(\.openURL) var openURL
+                let opened = await openURL(URL(string: "https://example.com"))
+                #expect(opened == false)
+            }
         }
     }
 
@@ -42,26 +46,16 @@ struct DependencyKeyDefaultsTests {
     @Test
     func pasteboardTestValueDoesNotMutateSystemPasteboard() {
         withDependencies {
-            $0.pasteboard = .unimplemented
+            $0 = .test
         } operation: {
-            let marker = "xcore-governance-pasteboard-test"
-            UIPasteboard.general.string = marker
-            let harness = PasteboardHarness()
-            harness.pasteboard.copy("should-not-replace")
-            #expect(UIPasteboard.general.string == marker)
+            withExpectedIssue {
+                let marker = "xcore-governance-pasteboard-test"
+                UIPasteboard.general.string = marker
+                @Dependency(\.pasteboard) var pasteboard
+                pasteboard.copy("should-not-replace")
+                #expect(UIPasteboard.general.string == marker)
+            }
         }
     }
     #endif
-}
-
-private final class SessionCounterHarness: @unchecked Sendable {
-    @Dependency(\.sessionCounter) var sessionCounter
-}
-
-private final class OpenURLHarness: @unchecked Sendable {
-    @Dependency(\.openURL) var openURL
-}
-
-private final class PasteboardHarness: @unchecked Sendable {
-    @Dependency(\.pasteboard) var pasteboard
 }
