@@ -35,4 +35,18 @@ if ! rg -q 'spacingScaleMatchesDocumentation' "$POLICY"; then
   exit 1
 fi
 
+list_row_func="$(
+  sed -n '/func listRowInsetsFollowDefaultSpacing/,/^}/p' "$TEST_FILE" | head -n -1
+)"
+
+echo "$list_row_func" | rg -q 'Theme\.defaultSpacing = 20' || {
+  echo "listRowInsetsFollowDefaultSpacing must reset Theme.defaultSpacing to 20 before assertions"
+  exit 1
+}
+
+echo "$list_row_func" | rg -q 'Theme\.interItemHSpacing = 12' || {
+  echo "listRowInsetsFollowDefaultSpacing must reset Theme.interItemHSpacing to 12 before assertions"
+  exit 1
+}
+
 echo "Theme test isolation audit passed (spacing scale reset documented and enforced)."

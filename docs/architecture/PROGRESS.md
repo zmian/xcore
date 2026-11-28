@@ -592,6 +592,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_registry_catalog.sh` requires `UNCHECKED_SENDABLE_CI_EVIDENCE.md` row.
 - **Document:** `GOVERNANCE_SUMMARY.md` **33** audits + ADR 0009 rule row.
+- **Verify:** macOS CI **failed** `1e39f319` — `ThemeLayoutTests.listRowInsetsFollowDefaultSpacing` (parallel Theme pollution).
+
+### Round 105 — Theme list-row test isolation (T-128)
+
+- **Fix:** Reset `Theme.defaultSpacing` / `interItemHSpacing` in `listRowInsetsFollowDefaultSpacing`.
+- **Enforce:** `audit_theme_test_isolation.sh` covers both Theme layout tests.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

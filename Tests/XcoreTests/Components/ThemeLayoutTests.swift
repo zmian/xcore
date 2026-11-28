@@ -42,6 +42,10 @@ struct ThemeLayoutTests {
         let original = Theme.defaultSpacing
         defer { Theme.defaultSpacing = original }
 
+        // Reset theme metrics so parallel tests cannot pollute forwarder reads.
+        Theme.defaultSpacing = 20
+        Theme.interItemHSpacing = 12
+
         Theme.defaultSpacing = 16
         #expect(EdgeInsets.listRow == EdgeInsets(16))
         #expect(Theme.listRowInsets == EdgeInsets(16))

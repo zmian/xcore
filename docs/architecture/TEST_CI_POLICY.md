@@ -24,6 +24,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 | File | Test | Guard |
 | --- | --- | --- |
 | `Tests/XcoreTests/Components/ThemeLayoutTests.swift` | `spacingScaleMatchesDocumentation` | Resets `Theme.defaultSpacing = 20` and `Theme.interItemHSpacing = 12` before `s1`…`s8` assertions (T-101). Enforced by `audit_theme_test_isolation.sh`. |
+| `Tests/XcoreTests/Components/ThemeLayoutTests.swift` | `listRowInsetsFollowDefaultSpacing` | Same Theme reset before mutating `defaultSpacing` (T-128; parallel CI). |
 
 ## Runtime skips
 
