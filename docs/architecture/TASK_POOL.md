@@ -85,3 +85,5 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-072 | `supportedRegions` → `LockIsolated` static (concurrency 36→35) |
 | T-073 | `ValidationRule.regex(Regex)` → `LockIsolated` capture (concurrency 35→34) |
 | T-074 | `Cache` NSCache → `LockIsolated` (concurrency 34→32) |
+| T-075 | `CodingFormatStyleDefaults` → `LockIsolated` + audit (concurrency 32→31) |
+| T-076 | `Popup.Style` transition box (concurrency 31→30) |

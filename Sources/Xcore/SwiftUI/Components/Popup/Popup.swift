@@ -34,6 +34,14 @@ extension Popup {
 // MARK: - Style
 
 extension Popup {
+    private struct TransitionStorage: @unchecked Sendable {
+        let transition: AnyTransition
+
+        init(_ transition: AnyTransition) {
+            self.transition = transition
+        }
+    }
+
     /// A structure representing the style of a popup.
     public struct Style: Hashable, Sendable {
         /// The alignment of the popup inside the resulting view. Alignment applies if
@@ -43,8 +51,10 @@ extension Popup {
         /// The animation applied to all animatable values to the popup content.
         public let animation: Animation
 
+        private let transitionStorage: TransitionStorage
+
         /// The transition to associates with the popup.
-        nonisolated(unsafe) public let transition: AnyTransition
+        public var transition: AnyTransition { transitionStorage.transition }
 
         /// The style of the presenting window.
         public let windowStyle: WindowStyle
@@ -87,7 +97,7 @@ extension Popup {
         ) {
             self.alignment = alignment
             self.animation = animation
-            self.transition = transition
+            self.transitionStorage = TransitionStorage(transition)
             self.windowStyle = windowStyle
             self.ignoresSafeAreaEdges = ignoresSafeAreaEdges
             self.allowDimming = allowDimming

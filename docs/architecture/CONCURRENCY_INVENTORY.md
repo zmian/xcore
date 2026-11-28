@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 32 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 30 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -11,7 +11,6 @@ Snapshot for reducing concurrency entropy. **Total: 32 annotations** (regenerate
 | `Locale+Extensions.swift` | Default locale for numbers |
 | `Theme+Default.swift` | Default SwiftUI theme |
 | `UIFont+App.swift` | Default app typeface |
-| `CodingFormatStyle+Defaults.swift` | JSON encode-as-string default (`Decimal`/`Double` forward) |
 
 **Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Future work: narrow public mutation surface or move to injected configuration.
 
@@ -52,10 +51,14 @@ Snapshot for reducing concurrency entropy. **Total: 32 annotations** (regenerate
 
 **Resolved (Round 59):** `Cache` `NSCache` storage behind `LockIsolated` (was `nonisolated(unsafe)`).
 
+**Resolved (Round 60):** `CodingFormatStyleDefaults.defaultEncodeAsString` uses `LockIsolated`; coding audit enforces SSOT without `nonisolated(unsafe)`.
+
+**Resolved (Round 61):** `Popup.Style` stores `AnyTransition` in `@unchecked Sendable` box (was `nonisolated(unsafe)` stored property).
+
 ## Animation / presentation
 
 | Location |
 | --- |
-| `CoreAnimation+Extensions.swift`, `Popup.swift` |
+| `CoreAnimation+Extensions.swift` |
 
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.

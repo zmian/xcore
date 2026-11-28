@@ -8,6 +8,11 @@ import Foundation
 
 /// Shared defaults for ``CodingFormatStyle`` numeric encoding.
 public enum CodingFormatStyleDefaults {
+    private static let defaultEncodeAsStringStorage = LockIsolated(false)
+
     /// When `true`, ``DecimalCodingFormatStyle`` and ``DoubleCodingFormatStyle`` encode as JSON strings.
-    nonisolated(unsafe) public static var defaultEncodeAsString = false
+    public static var defaultEncodeAsString: Bool {
+        get { defaultEncodeAsStringStorage.value }
+        set { defaultEncodeAsStringStorage.setValue(newValue) }
+    }
 }

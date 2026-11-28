@@ -6,10 +6,14 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 FORMAT="$ROOT/Sources/Xcore/Swift/Extensions/Codable/FormatStyle"
 DEFAULTS="$FORMAT/CodingFormatStyle+Defaults.swift"
 
-unsafe_count="$(rg -c 'nonisolated\(unsafe\).*defaultEncodeAsString' "$FORMAT" --glob '*.swift' 2>/dev/null | awk -F: '{s+=$2} END {print s+0}')"
-if [[ "$unsafe_count" != "1" ]]; then
-  echo "Expected exactly 1 nonisolated(unsafe) defaultEncodeAsString in FormatStyle (found $unsafe_count)"
+if rg -q 'nonisolated\(unsafe\).*defaultEncodeAsString' "$FORMAT" --glob '*.swift' 2>/dev/null; then
+  echo "defaultEncodeAsString must not use nonisolated(unsafe); use CodingFormatStyleDefaults + LockIsolated"
   rg -n 'defaultEncodeAsString' "$FORMAT" --glob '*.swift' || true
+  exit 1
+fi
+
+if ! rg -q 'LockIsolated' "$DEFAULTS"; then
+  echo "CodingFormatStyleDefaults must guard defaultEncodeAsString with LockIsolated"
   exit 1
 fi
 

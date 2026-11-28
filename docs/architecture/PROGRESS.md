@@ -373,6 +373,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** All cache operations through `LockIsolated<NSCache>`; concurrency budget **32** (T-074).
 
+### Round 60–61 — coding default + popup transition (T-075, T-076)
+
+- **Migrate:** `CodingFormatStyleDefaults` + `Popup.Style` drop `nonisolated(unsafe)`; update `audit_coding_defaults.sh`; concurrency budget **30**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
