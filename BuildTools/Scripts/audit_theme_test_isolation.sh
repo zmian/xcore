@@ -17,6 +17,11 @@ if ! rg -q 'func resetThemeSpacingSSOTForParallelTesting' "$TEST_FILE"; then
   exit 1
 fi
 
+if ! rg -q '@Suite\(\.serialized\)' "$TEST_FILE"; then
+  echo "ThemeLayoutTests must use @Suite(.serialized) (global Theme spacing mutations)"
+  exit 1
+fi
+
 reset_func="$(
   sed -n '/func resetThemeSpacingSSOTForParallelTesting/,/^}/p' "$TEST_FILE" | sed '$d'
 )"

@@ -163,3 +163,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-150 | `CGFloat.s3`/`s5` docs link Theme defaults + `SPACING_SCALE` |
 | T-151 | Green macOS CI on #153 (`ae2eb580`, T-149–T-150) |
 | T-152 | Theme spacing property docs + spacing audit guards |
+| T-153 | `ThemeLayoutTests` `.serialized` + audit (parallel race) |

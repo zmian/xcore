@@ -706,6 +706,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `Theme.defaultSpacing` / `interItemHSpacing` cite `s5`/`s3` + `SPACING_SCALE.md`.
 - **Enforce:** `audit_spacing_scale.sh` guards token + Theme doc references.
 
+### Round 130 — ThemeLayoutTests serialization (T-153)
+
+- **Fix:** `@Suite(.serialized)` after parallel race (`spacingScaleMatchesDocumentation` CI).
+- **Enforce:** `audit_theme_test_isolation.sh` + `TEST_CI_POLICY.md`.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

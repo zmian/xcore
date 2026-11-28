@@ -8,7 +8,7 @@ private func resetThemeSpacingSSOTForParallelTesting() {
     Theme.interItemHSpacing = .s3
 }
 
-@Suite
+@Suite(.serialized)
 struct ThemeLayoutTests {
     @Test func cornerRadiusAppConstantsForwardsToDefaultTheme() {
         let original = Theme.cornerRadius
