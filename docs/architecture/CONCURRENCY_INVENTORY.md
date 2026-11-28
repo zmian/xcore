@@ -1,12 +1,11 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 43 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 42 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
 | Location | Role |
 | --- | --- |
-| `FeatureFlag+Providers.swift` | Static composite provider registry |
 | `Constants.swift` | Spacing, layout, and formatting defaults |
 | `Calendar+Extensions.swift` | Default calendar codable/current |
 | `Locale+Extensions.swift` | Default locale for numbers |
@@ -43,6 +42,8 @@ Snapshot for reducing concurrency entropy. **Total: 43 annotations** (regenerate
 **Intent:** Bridge non-Sendable UIKit/AVFoundation/MapKit types. Candidates for actor-isolated facades if warnings increase.
 
 **Resolved (Round 50):** `CompositeImageFetcher` uses `LockIsolated` for fetcher list (was `nonisolated(unsafe)`).
+
+**Resolved (Round 51):** `FeatureFlag` global provider registry uses `LockIsolated` (was `nonisolated(unsafe)`).
 
 ## Animation / presentation
 

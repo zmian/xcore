@@ -76,3 +76,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-063 | Doc sync: catalogs + TEST_CI_POLICY + ADR 0001 testing notes |
 | T-064 | `audit_registry_catalog.sh` + 26-audit CI gate |
 | T-065 | `CompositeImageFetcher` → `LockIsolated` (concurrency 44→43) |
+| T-066 | `FeatureFlag` provider registry → `LockIsolated` (concurrency 43→42) |

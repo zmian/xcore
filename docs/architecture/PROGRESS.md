@@ -337,6 +337,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Replace `nonisolated(unsafe)` fetcher array with `LockIsolated` (+ `@unchecked Sendable`); concurrency budget **43** (T-065).
 
+### Round 51 — `FeatureFlag` provider registry (T-066)
+
+- **Migrate:** Static `CompositeFeatureFlagProvider` behind `LockIsolated`; concurrency budget **42** (T-066).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
