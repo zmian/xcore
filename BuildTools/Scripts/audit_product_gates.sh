@@ -71,6 +71,16 @@ for entry in "${required_resolved[@]}"; do
     echo "Missing SSOT $ARCH/$doc for resolved $id"
     exit 1
   fi
+  if [[ "$id" == "P-001" ]]; then
+    if ! rg -q 'audit_dependency_client_shapes' "$ARCH/$doc"; then
+      echo "ADDRESS_SEARCH_CLIENT.md must reference audit_dependency_client_shapes.sh"
+      exit 1
+    fi
+    if ! rg -q 'audit_product_gates' "$ARCH/$doc"; then
+      echo "ADDRESS_SEARCH_CLIENT.md must reference audit_product_gates.sh"
+      exit 1
+    fi
+  fi
 done
 
 echo "Product gates audit passed (${#required_pending[@]} pending, ${#required_resolved[@]} resolved)."

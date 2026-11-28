@@ -178,3 +178,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-165 | ADR 0005 theme layout test token policy |
 | T-166 | P-003 vs AppPhase `@unchecked` documentation |
 | T-167 | Product gate docs link enforcement audits |
+| T-168 | P-001 `ADDRESS_SEARCH_CLIENT` enforcement SSOT |

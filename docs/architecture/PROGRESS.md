@@ -794,6 +794,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** P-002/P-003 enforcement sections (`audit_*` cross-refs).
 - **Enforce:** `audit_product_gates.sh` requires audit script mentions in gate docs.
+- **CI:** green `c4eed52a` ([run 46170680788](https://github.com/zmian/xcore/actions/runs/46170680788)).
+
+### Round 145 — P-001 resolved client SSOT (T-168)
+
+- **Document:** `ADDRESS_SEARCH_CLIENT` enforcement chain (shapes + CI compile exclusion).
+- **Enforce:** `audit_product_gates.sh` guards for resolved P-001.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

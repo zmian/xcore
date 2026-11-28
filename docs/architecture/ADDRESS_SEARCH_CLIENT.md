@@ -24,7 +24,9 @@ The public `protocol AddressSearchClient` and `NoopAddressSearchClient` / `Unimp
 
 ## Enforcement
 
-`audit_dependency_client_shapes.sh` requires zero protocol clients under `Swift/Dependencies`, struct `AddressSearchClient`, and no `: AddressSearchClient` conformances in Sources.
+- `audit_dependency_client_shapes.sh` — zero protocol clients under `Swift/Dependencies`; struct `AddressSearchClient`; no `: AddressSearchClient` conformances in Sources.
+- `audit_product_gates.sh` — resolved **P-001** row in `PRODUCT_GATES.md` links this doc.
+- `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` — `LiveAddressSearchClientTests` compile-excluded on CI.
 
 ## Related
 

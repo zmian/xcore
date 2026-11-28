@@ -25,7 +25,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | --- | --- | --- | --- |
 | Unique-by-id registration | `CompositeFeatureFlagProvider`, `CompositeImageFetcher`, `Analytics` | `Collection.uniqued(\.id)` + guard on `add` | Enforced by `audit_composite_registration.sh` (ADR 0004) |
 | Event client | `EventsClient<Event>`, `AppPhaseClient` typealias | `EventsClient` | `DEPENDENCY_REGISTRY.md` + ADR 0004 |
-| Address search client | Struct + live engine | Struct `AddressSearchClient` | **T-107** |
+| Address search client | Struct + live engine | Struct `AddressSearchClient` | **T-107** / **P-001** resolved (`ADDRESS_SEARCH_CLIENT.md`) |
 | Date formatting | Modern `FormatStyle` vs `Date.LegacyFormatStyle` | Modern APIs | P-002 (`DATE_LEGACY_FORMAT.md`) |
 | App phase dependency defaults | `testValue` / `previewValue` `.live` vs `.unimplemented` | Documented exception | P-003 (`APP_PHASE_CLIENT.md`; `@unchecked` on `AppPhase` is separate) |
 | Storage | `Pond` vs future Shared | Pond until migration | See tracked debt below |
