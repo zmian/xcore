@@ -59,3 +59,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-045 | `EXTENSIONS_INDEX.md` + `audit_dependency_layout.sh`; audits **19** |
 | T-046 | Cocoa + SwiftUI extension indexes; audits **21** |
 | T-047 | `COCOA_SUPPORTING_INDEX` + `ARCHITECTURE_MAP` sync; audits **22** |
+| T-048 | `SWIFT_PROTOCOLS_INDEX` + audit; audits **23** |

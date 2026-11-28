@@ -38,6 +38,7 @@ for pair in \
   "SwiftUI/Components domains:SWIFTUI_COMPONENT_INDEX.md:Total:" \
   "Cocoa/Components domains:COCOA_COMPONENT_INDEX.md:Total:" \
   "Swift/Helpers files:HELPERS_INDEX.md:Total:" \
+  "Swift/Protocols files:SWIFT_PROTOCOLS_INDEX.md:Total:" \
   "Swift/Extensions domains:EXTENSIONS_INDEX.md:Total:" \
   "Swift/Dependencies subfolders:DEPENDENCY_LAYOUT.md:Total subfolders:" \
   "Cocoa/Extensions folders:COCOA_EXTENSIONS_INDEX.md:Total:" \

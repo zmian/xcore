@@ -245,6 +245,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Verify:** `make audit-architecture` (22 scripts).
 - **CI:** #113 on `c1ad8cc8` failed `ThemeLayoutTests` (missing `import SwiftUI`); fixed before push.
 
+### Round 34 — Swift Protocols index (2026-11-27)
+
+- **Document:** `SWIFT_PROTOCOLS_INDEX.md` (4 files).
+- **Enforce:** `audit_swift_protocols_index.sh`; audits **23**; agent quick-start index links.
+- **Verify:** `make audit-architecture`. Push after green CI on `855473cb`.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
