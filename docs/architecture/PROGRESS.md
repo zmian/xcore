@@ -270,6 +270,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_ci_test_policy.sh`; audits **25**.
 - **Verify:** `make audit-architecture`. Commit held until CI **#117** on `50e89757` completes (T-043).
 
+### Round 37 follow-up — stream test hang (2026-11-28)
+
+- **CI:** [#117](https://github.com/zmian/xcore/actions/runs/46104037572) **Test** hit 30m step timeout (not geocoder).
+- **Root cause:** `AsyncPassthroughStreamTests.iterations_asyncStream_directly` used two `for await` consumers on a single `AsyncStream` (single-consumer); unstructured `Task` work in stream tests never awaited → runner wait forever.
+- **Migrate:** Await collection tasks; single consumer for `AsyncStream`; same pattern in `AsyncCurrentValueStreamTests` / `AsyncValueStreamTests` (T-053).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

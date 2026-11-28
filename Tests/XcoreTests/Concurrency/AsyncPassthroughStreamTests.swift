@@ -12,36 +12,28 @@ struct AsyncPassthroughStreamTests {
     func iterations() async {
         let stream = AsyncPassthroughStream<Int>()
 
-        Task {
-            // Collect all produced elements
+        let first = Task {
             var values: [Int] = []
-
             for await value in stream {
                 values.append(value)
             }
-
-            // Verify collected elements
-            #expect(values == [1, 2])
+            return values
         }
 
-        Task {
-            // Collect all produced elements
+        let second = Task {
             var values: [Int] = []
-
             for await value in stream {
                 values.append(value)
             }
-
-            // Verify collected elements
-            #expect(values == [1, 2])
+            return values
         }
 
-        // Produce new elements
         stream.send(1)
         stream.send(2)
-
-        // Finish producing elements
         stream.finish()
+
+        #expect(await first.value == [1, 2])
+        #expect(await second.value == [1, 2])
     }
 
     @Test
@@ -52,28 +44,11 @@ struct AsyncPassthroughStreamTests {
             $0.finish()
         }
 
-        Task {
-            // Collect all produced elements
-            var values: [Int] = []
-
-            for await value in stream {
-                values.append(value)
-            }
-
-            // Verify collected elements
-            #expect(values == [1, 2])
+        var values: [Int] = []
+        for await value in stream {
+            values.append(value)
         }
 
-        Task {
-            // Collect all produced elements
-            var values: [Int] = []
-
-            for await value in stream {
-                values.append(value)
-            }
-
-            // Verify collected elements
-            #expect(values == [])
-        }
+        #expect(values == [1, 2])
     }
 }

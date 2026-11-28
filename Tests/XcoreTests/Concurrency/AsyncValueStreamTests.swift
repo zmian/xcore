@@ -34,23 +34,18 @@ struct AsyncValueStreamTests {
         let internalStream = AsyncCurrentValueStream<Int>(5)
         let externalStream = AsyncValueStream(internalStream)
 
-        Task {
-            // Collect all produced elements
+        let collected = Task {
             var values: [Int] = []
-
             for await value in externalStream {
                 values.append(value)
             }
-
-            // Verify collected elements
-            #expect(values == [5, 1, 2])
+            return values
         }
 
-        // Produce new elements
         internalStream.send(1)
         internalStream.send(2)
-
-        // Finish producing elements
         internalStream.finish()
+
+        #expect(await collected.value == [5, 1, 2])
     }
 }

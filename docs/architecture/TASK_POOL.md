@@ -7,7 +7,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after Round 36 CI hardening | CI stability on #153 |
+| T-043 | Confirm green macOS CI after T-053 stream test fix | CI stability on #153 |
+| T-053 | Fix concurrency stream tests that hung CI (await tasks; single AsyncStream consumer) | Push with Round 37 |
 
 ## Pending confirmation
 
@@ -63,4 +64,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-049 | `SWIFT_PROPERTY_WRAPPERS_INDEX` + audit; audits **24** (local; unpushed with Round 34) |
 | T-050 | Skip live `LiveAddressSearchClientTests` on CI (`4f4a493f`) |
 | T-051 | CI test hardening: `#if !CI` live address tests, phase timing skips, job timeouts |
-| T-052 | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` (local; push after T-043) |
+| T-052 | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` |
