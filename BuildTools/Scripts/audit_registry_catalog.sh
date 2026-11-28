@@ -129,4 +129,10 @@ if ! rg -q 'audit_ci_test_policy' "$ARCH_MAP"; then
   exit 1
 fi
 
+ADR0005="$ROOT/docs/architecture/adr/0005-metadata-and-theme-globals.md"
+if ! rg -q 'T-161' "$ADR0005"; then
+  echo "ADR 0005 must document ThemeLayoutTests scale token policy (T-161–T-164)"
+  exit 1
+fi
+
 echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog, unchecked $unchecked_catalog)."

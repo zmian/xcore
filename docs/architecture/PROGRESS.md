@@ -776,6 +776,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `ThemeLayoutTests` token-only spacing policy (T-161–T-163).
 - **Enforce:** `audit_ci_test_policy.sh` cross-check.
+- **CI:** green `2d068617` ([run 46166329743](https://github.com/zmian/xcore/actions/runs/46166329743)).
+
+### Round 142 — ADR 0005 theme test token policy (T-165)
+
+- **ADR:** layout parallel test + scale token consequences.
+- **Enforce:** `audit_registry_catalog.sh` ADR 0005 guard.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
