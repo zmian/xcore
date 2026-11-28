@@ -36,7 +36,7 @@ if ! rg -q 'spacingScaleMatchesDocumentation' "$POLICY"; then
 fi
 
 list_row_func="$(
-  sed -n '/func listRowInsetsFollowDefaultSpacing/,/^}/p' "$TEST_FILE" | head -n -1
+  sed -n '/func listRowInsetsFollowDefaultSpacing/,/^    }/p' "$TEST_FILE"
 )"
 
 echo "$list_row_func" | rg -q 'Theme\.defaultSpacing = 20' || {

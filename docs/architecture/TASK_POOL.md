@@ -139,3 +139,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-126 | `AGENTS.md` + `REGISTRY_CATALOG` sync (33 audits, CI evidence) |
 | T-127 | Registry audit CI evidence row + `GOVERNANCE_SUMMARY` sync |
 | T-128 | `listRowInsetsFollowDefaultSpacing` Theme reset + audit (parallel CI) |
+| T-129 | Theme audit script Bash 3.2 (`head -n -1` fix) |

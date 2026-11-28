@@ -599,6 +599,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Fix:** Reset `Theme.defaultSpacing` / `interItemHSpacing` in `listRowInsetsFollowDefaultSpacing`.
 - **Enforce:** `audit_theme_test_isolation.sh` covers both Theme layout tests.
 
+### Round 106 — Theme audit Bash 3.2 (T-129)
+
+- **Fix:** Replace `head -n -1` in theme isolation audit (macOS CI / Bash 3.2).
+- **Verify:** macOS CI pending after push.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
