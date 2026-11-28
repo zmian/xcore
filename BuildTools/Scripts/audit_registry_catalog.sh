@@ -95,15 +95,25 @@ for script in audit_layout_ssot audit_spacing_scale audit_theme_test_isolation; 
   fi
 done
 
-for needle in 'SPACING_SCALE.md' 'TEST_CI_POLICY' '0005-metadata-and-theme-globals'; do
+for needle in 'SPACING_SCALE.md' 'TEST_CI_POLICY' '0005-metadata-and-theme-globals' 'GOVERNANCE_METRICS.md'; do
   if ! rg -q "$needle" "$AGENTS"; then
     echo "AGENTS.md must reference $needle (layout spacing SSOT; T-145)"
     exit 1
   fi
 done
 
+if ! rg -q '@Suite\(\.serialized\)' "$AGENTS"; then
+  echo "AGENTS.md must reference @Suite(.serialized) (CI test policy; T-158)"
+  exit 1
+fi
+
 if ! rg -q 'audit_theme_test_isolation' "$ARCH_MAP"; then
   echo "ARCHITECTURE_MAP.md must reference audit_theme_test_isolation.sh for layout ownership"
+  exit 1
+fi
+
+if ! rg -q 'audit_ci_test_policy' "$ARCH_MAP"; then
+  echo "ARCHITECTURE_MAP.md must reference audit_ci_test_policy.sh for CI test isolation"
   exit 1
 fi
 

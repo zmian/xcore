@@ -25,7 +25,7 @@ Xcore uses `UserInfoContainer` for typed metadata bags (analytics, errors, featu
 - **`Theme.default`** owns SwiftUI theme defaults, including those layout metrics.
 - **`Theme.init`** default spacing uses frozen `CGFloat.s5` / `.s3` (not raw point literals); enforced by `audit_layout_ssot.sh` (T-139).
 - Fixed scale `s1`…`s8` is frozen on `CGFloat` (`static let`); see `SPACING_SCALE.md` + `audit_spacing_scale.sh`.
-- Parallel `make test` resets global spacing via `resetThemeSpacingSSOTForParallelTesting()` in `ThemeLayoutTests`; see `TEST_CI_POLICY.md` + `audit_theme_test_isolation.sh` (T-135–T-137).
+- Parallel `make test` resets global spacing via `resetThemeSpacingSSOTForParallelTesting()` in `ThemeLayoutTests` (`@Suite(.serialized)`, T-153); see `TEST_CI_POLICY.md` + `audit_theme_test_isolation.sh` (T-135–T-137).
 - Masking and fraction/random defaults are frozen on `Character` / `Int` / `Double`; see `FORMATTING_DEFAULTS.md` + `audit_formatting_defaults.sh`.
 - Mutating these at launch is supported for app branding; new globals must be added here (not scattered), and `CONCURRENCY_INVENTORY.md` updated when `nonisolated(unsafe)` count changes.
 

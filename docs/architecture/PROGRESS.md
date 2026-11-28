@@ -734,6 +734,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Catalog:** `REGISTRY_CATALOG` + `GOVERNANCE_SUMMARY` + `ARCHITECTURE_MAP` for CI test budgets.
 - **Enforce:** `audit_registry_catalog.sh` metrics/policy parity + summary refs.
+- **CI:** green `1319ab01` ([run 46157732542](https://github.com/zmian/xcore/actions/runs/46157732542)).
+
+### Round 135 — AGENTS + ADR 0005 CI test pointers (T-158)
+
+- **Document:** `AGENTS.md` CI test policy + serialized suites; ADR 0005 `.serialized` note.
+- **Enforce:** `audit_registry_catalog.sh` `AGENTS` + `ARCHITECTURE_MAP` guards.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
