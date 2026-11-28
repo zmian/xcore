@@ -121,3 +121,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-108 | Example `AddressFormReducer` closure call labels after P-001 |
 | T-109 | `DATE_LEGACY_FORMAT.md` + `audit_date_legacy_format.sh` (**31** audits) |
 | T-110 | `APP_PHASE_CLIENT.md` + dependency key audit cross-check (P-003) |
+| T-111 | `PRODUCT_GATES.md` + `audit_product_gates.sh` (**32** audits) |

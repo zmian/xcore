@@ -49,7 +49,7 @@ Registries: `DEPENDENCY_REGISTRY.md`, `COMPONENT_INDEX.md`, `SWIFTUI_COMPONENT_I
 Before adding a `@Dependency` client, read `docs/architecture/adr/0002-dependency-client-template.md`.
 Concurrency: no `nonisolated(unsafe)` in `Sources/Xcore`; associated keys use `UInt8` tokens (`adr/0006-concurrency-and-associated-keys.md`). New `@unchecked Sendable` requires `UNCHECKED_SENDABLE_INVENTORY.md` (`adr/0007-unchecked-sendable-inventory.md`).
 
-Verification without Xcode: `make audit-architecture` (**31** checks; see
+Verification without Xcode: `make audit-architecture` (**32** checks; see
 `docs/architecture/AUDIT_INDEX.md`). macOS CI needs Homebrew `ripgrep`; audit shell scripts
 target Bash 3.2 (no `mapfile` / `declare -A`).
 

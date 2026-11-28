@@ -34,6 +34,15 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 0 `nonisolated(unsafe)` |
 | [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) | 22 `@unchecked Sendable` |
 
+## Product gates
+
+| Doc | Use |
+| --- | --- |
+| [PRODUCT_GATES.md](./PRODUCT_GATES.md) | Pending P-002 / P-003 index |
+| [ADDRESS_SEARCH_CLIENT.md](./ADDRESS_SEARCH_CLIENT.md) | Resolved P-001 |
+| [APP_PHASE_CLIENT.md](./APP_PHASE_CLIENT.md) | P-003 |
+| [DATE_LEGACY_FORMAT.md](./DATE_LEGACY_FORMAT.md) | P-002 |
+
 ## Process
 
 | Doc | Use |
@@ -50,6 +59,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 31 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 32 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```

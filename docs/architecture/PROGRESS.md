@@ -510,6 +510,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `APP_PHASE_CLIENT.md` (P-003 live test/preview defaults).
 - **Enforce:** `audit_dependency_keys.sh` requires doc + registry parity.
 
+### Round 89 — Product gates index (T-111)
+
+- **Document:** `PRODUCT_GATES.md` centralizes P-001–P-003 SSOT links.
+- **Enforce:** `audit_product_gates.sh` (**32** audits).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
