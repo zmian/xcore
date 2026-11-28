@@ -545,19 +545,23 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 95 — Publisher.done cancellable storage (T-117)
 
 - **Migrate:** `LockIsolated<Set<AnyCancellable>>` replaces `DoneSubscriberCancellables`.
-- **Enforce:** `@unchecked` budget **19**.
-- **Verify:** macOS CI pending on `56e118d2`.
+- **Enforce:** `@unchecked` budget **19** (net after T-118/T-119 reverts).
 
-### Round 96 — AssociatedObjectKey Sendable (T-118)
+### Round 96 — AssociatedObjectKey Sendable attempt (T-118)
 
-- **Migrate:** `AssociatedObjectKey: Sendable` (stable `UnsafeRawPointer` token).
-- **Enforce:** `@unchecked` budget **18**.
-- **Verify:** macOS CI pending on stacked commits through `54a9cbba`.
+- **Attempt:** Plain `Sendable` on `AssociatedObjectKey`.
+- **Revert:** macOS CI — `UnsafeRawPointer` not `Sendable` (`6bcfe765`).
 
-### Round 97 — ValuePublisher Sendable (T-119)
+### Round 97 — ValuePublisher Sendable attempt (T-119)
 
-- **Migrate:** `Sendable where Output: Sendable, Failure: Sendable` (no `@unchecked`).
-- **Enforce:** `@unchecked` budget **17**.
+- **Attempt:** Conditional `Sendable` without `@unchecked`.
+- **Revert:** macOS CI — `CurrentValueSubject` not `Sendable` (`6bcfe765`).
+
+### Round 98 — CI revert stack (T-118/T-119)
+
+- **Fix:** Restore `@unchecked` on `AssociatedObjectKey` and `ValuePublisher`.
+- **Enforce:** `@unchecked` budget **19** (T-116–T-117 retained).
+- **Verify:** macOS CI pending after revert push.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
