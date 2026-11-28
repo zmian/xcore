@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 36 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 34 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -12,7 +12,6 @@ Snapshot for reducing concurrency entropy. **Total: 36 annotations** (regenerate
 | `Theme+Default.swift` | Default SwiftUI theme |
 | `UIFont+App.swift` | Default app typeface |
 | `CodingFormatStyle+Defaults.swift` | JSON encode-as-string default (`Decimal`/`Double` forward) |
-| `AddressSearchClient+Live.swift` | `supportedRegions` configuration |
 
 **Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Future work: narrow public mutation surface or move to injected configuration.
 
@@ -37,7 +36,7 @@ Snapshot for reducing concurrency entropy. **Total: 36 annotations** (regenerate
 
 | Location |
 | --- |
-| `Cache.swift`, `AddressSearchClient+Live` |
+| `Cache.swift` |
 
 **Intent:** Bridge non-Sendable UIKit/AVFoundation/MapKit types. Candidates for actor-isolated facades if warnings increase.
 
@@ -55,16 +54,14 @@ Snapshot for reducing concurrency entropy. **Total: 36 annotations** (regenerate
 
 **Resolved (Round 56):** `LiveAddressSearchClient.Delegate` holds `MKLocalSearchCompleter` in `LockIsolated` (was `nonisolated(unsafe)`).
 
+**Resolved (Round 57):** `LiveAddressSearchClient.supportedRegions` uses `LockIsolated` storage (was `nonisolated(unsafe)` static).
+
+**Resolved (Round 58):** `ValidationRule.regex(Regex)` captures pattern in `LockIsolated` (was `nonisolated(unsafe)` local).
+
 ## Animation / presentation
 
 | Location |
 | --- |
 | `CoreAnimation+Extensions.swift`, `Popup.swift` |
-
-## Validation
-
-| Location |
-| --- |
-| `ValidationRule+Rules.swift` |
 
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.

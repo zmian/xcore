@@ -361,6 +361,14 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Completer in `LiveAddressSearchClient.Delegate` behind `LockIsolated`; concurrency budget **36** (T-071).
 
+### Round 57 — `supportedRegions` configuration (T-072)
+
+- **Migrate:** Region allowlist behind `LockIsolated`; public get/set preserved; concurrency budget **35** (T-072).
+
+### Round 58 — `ValidationRule.regex` capture (T-073)
+
+- **Migrate:** Typed `Regex` held in `LockIsolated` for `@Sendable` validate closure; concurrency budget **34** (T-073).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

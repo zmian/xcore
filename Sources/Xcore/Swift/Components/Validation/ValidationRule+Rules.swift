@@ -126,9 +126,9 @@ extension ValidationRule<String> {
     ///   - pattern: The regular expression pattern used to validate the input.
     /// - Returns: A `ValidationRule` instance.
     public static func regex<Output>(_ pattern: Regex<Output>) -> Self {
-        nonisolated(unsafe) let pattern = pattern
+        let pattern = LockIsolated(pattern)
         return .init { input in
-            input.wholeMatch(of: pattern) != nil
+            input.wholeMatch(of: pattern.value) != nil
         }
     }
 

@@ -18,10 +18,15 @@ extension AddressSearchClient where Self == LiveAddressSearchClient {
 }
 
 extension LiveAddressSearchClient {
+    private static let supportedRegionsStorage = LockIsolated([Locale.Region.unitedStates])
+
     /// A list of ISO country codes for supported regions (e.g., “US” or “GB”).
     ///
     /// If empty then all regions are supported.
-    nonisolated(unsafe) public static var supportedRegions = [Locale.Region.unitedStates]
+    public static var supportedRegions: [Locale.Region] {
+        get { supportedRegionsStorage.value }
+        set { supportedRegionsStorage.setValue(newValue) }
+    }
 }
 
 // MARK: - Implementation

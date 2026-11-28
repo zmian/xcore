@@ -82,3 +82,5 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-069 | `LiveAudioClient` → `LockIsolated<AVAudioPlayer?>` (concurrency 39→38) |
 | T-070 | `AddressSearchResult` → `LockIsolated` MapKit completion (concurrency 38→37) |
 | T-071 | `LiveAddressSearchClient.Delegate` completer → `LockIsolated` (concurrency 37→36) |
+| T-072 | `supportedRegions` → `LockIsolated` static (concurrency 36→35) |
+| T-073 | `ValidationRule.regex(Regex)` → `LockIsolated` capture (concurrency 35→34) |
