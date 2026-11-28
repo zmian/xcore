@@ -41,7 +41,7 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 - `Makefile`: per-test execution allowance (5 minutes) when `CI` is set; `make test` uses unfiltered `xcodebuild` output on CI.
 - `.github/workflows/ci.yml`: job timeout 60 minutes; Test step timeout 45 minutes.
 - **Install tools:** `brew install ripgrep swiftlint swiftformat` (audits require `rg` on the runner).
-- **Architecture audit shell:** GitHub-hosted macOS uses **Bash 3.2** (`/bin/bash`). Audit scripts must not use `mapfile` or `declare -A` (see T-060, T-061).
+- **Architecture audit shell:** GitHub-hosted macOS uses **Bash 3.2** (`/bin/bash`). Audit scripts must not use `mapfile`, `declare -A`, or `head -n -` (see T-060, T-061, T-129). Enforced by `audit_ci_test_policy.sh`.
 
 ## Swift Testing + `swift-dependencies`
 

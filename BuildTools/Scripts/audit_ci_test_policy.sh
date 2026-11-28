@@ -41,4 +41,9 @@ if [[ "$table_rows" != "$doc_runtime" ]]; then
   exit 1
 fi
 
+if rg -q 'head -n -' "$ROOT/BuildTools/Scripts"/audit_*.sh 2>/dev/null; then
+  echo "Audit scripts must not use 'head -n -' (BSD head on macOS CI / Bash 3.2)"
+  exit 1
+fi
+
 echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI)."

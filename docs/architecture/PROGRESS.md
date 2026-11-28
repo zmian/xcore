@@ -611,7 +611,15 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 108 — Theme forwarder test isolation (T-131)
 
 - **Fix:** `defaultSpacingForwardsToDefaultTheme` Theme SSOT reset; policy + audit coverage.
-- **Verify:** macOS CI pending on push.
+- **Verify:** macOS CI **green** on `a77cbce1` (run 46140604012).
+
+### Round 109 — Audit script Bash portability (T-132)
+
+- **Enforce:** `audit_ci_test_policy.sh` bans `head -n -` in audit scripts.
+
+### Round 110 — CI verification (T-133)
+
+- **Verify:** `a77cbce1` green after full ThemeLayoutTests isolation suite.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
