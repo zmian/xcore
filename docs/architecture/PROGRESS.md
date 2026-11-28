@@ -640,6 +640,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** Parallel test reset uses `CGFloat.s5` / `.s3` instead of literals.
 - **Enforce:** `audit_theme_test_isolation.sh` cross-checks `SPACING_SCALE.md` defaults.
 
+### Round 115 — macOS CI (T-138)
+
+- **Verify:** `d467cc82` green — [run 46144076165](https://github.com/zmian/xcore/actions/runs/46144076165) (`build-test-lint` after T-137).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
