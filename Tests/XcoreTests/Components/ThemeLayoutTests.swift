@@ -29,6 +29,10 @@ struct ThemeLayoutTests {
     }
 
     @Test func spacingScaleMatchesDocumentation() {
+        // Reset theme metrics so parallel tests cannot pollute forwarder reads.
+        Theme.defaultSpacing = 20
+        Theme.interItemHSpacing = 12
+
         #expect(CGFloat.s1 == 4)
         #expect(CGFloat.s5 == CGFloat.defaultSpacing)
         #expect(CGFloat.s3 == CGFloat.interItemHSpacing)
