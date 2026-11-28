@@ -22,6 +22,8 @@ Snapshot for reducing concurrency entropy. **Total: 0 annotations** (regenerate 
 
 **Resolved (Round 55):** `AddressSearchResult` stores `MKLocalSearchCompletion` in `LockIsolated` (was `nonisolated(unsafe)`).
 
+**Resolved (Round 91):** `AddressSearchResult` is a `Sendable` struct without MapKit completion retention (T-113).
+
 **Resolved (Round 56):** `LiveAddressSearchClient.Delegate` holds `MKLocalSearchCompleter` in `LockIsolated` (was `nonisolated(unsafe)`).
 
 **Resolved (Round 57):** `LiveAddressSearchClient.supportedRegions` uses `LockIsolated` storage (was `nonisolated(unsafe)` static).
