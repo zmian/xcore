@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 38 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 37 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -37,7 +37,7 @@ Snapshot for reducing concurrency entropy. **Total: 38 annotations** (regenerate
 
 | Location |
 | --- |
-| `Cache.swift`, `AddressSearchClient+Live`, `AddressSearchResult` |
+| `Cache.swift`, `AddressSearchClient+Live` |
 
 **Intent:** Bridge non-Sendable UIKit/AVFoundation/MapKit types. Candidates for actor-isolated facades if warnings increase.
 
@@ -50,6 +50,8 @@ Snapshot for reducing concurrency entropy. **Total: 38 annotations** (regenerate
 **Resolved (Round 53):** `Device` and `Screen` singleton subscriptions use `LockIsolated<AnyCancellable?>` (was instance `nonisolated(unsafe)`).
 
 **Resolved (Round 54):** `LiveAudioClient` retains `AVAudioPlayer` in `LockIsolated` (was `nonisolated(unsafe)`).
+
+**Resolved (Round 55):** `AddressSearchResult` stores `MKLocalSearchCompletion` in `LockIsolated` (was `nonisolated(unsafe)`).
 
 ## Animation / presentation
 

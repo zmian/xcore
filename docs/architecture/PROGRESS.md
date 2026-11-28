@@ -353,6 +353,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `AVAudioPlayer` retention via `LockIsolated`; concurrency budget **38** (T-069).
 
+### Round 55 — `AddressSearchResult` completion (T-070)
+
+- **Migrate:** `MKLocalSearchCompletion` via `LockIsolated`; concurrency budget **37** (T-070).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

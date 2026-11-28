@@ -12,7 +12,7 @@ internal import MapKit
 public final class AddressSearchResult: Sendable, Hashable {
     public let title: String
     public let subtitle: String
-    nonisolated(unsafe) private let completion: MKLocalSearchCompletion?
+    private let completion = LockIsolated<MKLocalSearchCompletion?>(nil)
 
     /// Creates an instance of search result from given title and subtitle string.
     ///
@@ -22,7 +22,6 @@ public final class AddressSearchResult: Sendable, Hashable {
     public init(title: String, subtitle: String) {
         self.title = title
         self.subtitle = subtitle
-        self.completion = nil
     }
 
     /// Creates an instance of search result from given search completion object.
@@ -31,13 +30,13 @@ public final class AddressSearchResult: Sendable, Hashable {
     init(_ completion: MKLocalSearchCompletion) {
         self.title = completion.title
         self.subtitle = completion.subtitle
-        self.completion = completion
+        self.completion.setValue(completion)
     }
 
     /// Returns search request to search for map locations based on a natural
     /// language string.
     func request() -> MKLocalSearch.Request {
-        if let completion {
+        if let completion = completion.value {
             return MKLocalSearch.Request(completion: completion)
         }
 
