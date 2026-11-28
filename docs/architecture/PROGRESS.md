@@ -649,6 +649,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** `Theme.init` default spacing uses `CGFloat.s5` / `.s3`.
 - **Enforce:** `audit_layout_ssot.sh` guards init defaults.
 
+### Round 117 — macOS CI (T-140)
+
+- **Verify:** `e7062737` green — [run 46145404555](https://github.com/zmian/xcore/actions/runs/46145404555) (`build-test-lint` after T-139).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
