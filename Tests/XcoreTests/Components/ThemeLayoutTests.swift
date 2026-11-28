@@ -35,8 +35,8 @@ struct ThemeLayoutTests {
 
         resetThemeSpacingSSOTForParallelTesting()
 
-        CGFloat.defaultSpacing = 24
-        #expect(Theme.defaultSpacing == 24)
+        CGFloat.defaultSpacing = .s6
+        #expect(Theme.defaultSpacing == .s6)
         CGFloat.defaultSpacing = original
     }
 
@@ -54,8 +54,8 @@ struct ThemeLayoutTests {
 
         resetThemeSpacingSSOTForParallelTesting()
 
-        Theme.defaultSpacing = 16
-        #expect(EdgeInsets.listRow == EdgeInsets(16))
-        #expect(Theme.listRowInsets == EdgeInsets(16))
+        Theme.defaultSpacing = .s4
+        #expect(EdgeInsets.listRow == EdgeInsets(.s4))
+        #expect(Theme.listRowInsets == EdgeInsets(.s4))
     }
 }

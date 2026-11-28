@@ -71,4 +71,10 @@ if ! rg -q 'resetThemeSpacingSSOTForParallelTesting' "$POLICY"; then
   exit 1
 fi
 
+if rg -q '(Theme|CGFloat)\.defaultSpacing = [0-9]+' "$TEST_FILE"; then
+  echo "ThemeLayoutTests must use spacing scale tokens (e.g. .s4/.s6), not bare point literals"
+  rg -n '(Theme|CGFloat)\.defaultSpacing = [0-9]+' "$TEST_FILE" || true
+  exit 1
+fi
+
 echo "Theme test isolation audit passed (spacing scale reset documented and enforced)."

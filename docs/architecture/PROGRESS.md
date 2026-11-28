@@ -752,6 +752,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Catalog:** `ENTROPY_INVENTORY`, `REGISTRY_CATALOG`, `GOVERNANCE_SUMMARY`, `AUDIT_INDEX` for full CI budget chain.
 - **Enforce:** `audit_registry_catalog.sh` ENTROPY + catalog guards.
+- **CI:** green `187cc799` ([run 46160744433](https://github.com/zmian/xcore/actions/runs/46160744433)).
+
+### Round 138 — ThemeLayoutTests spacing tokens (T-161)
+
+- **Migrate:** raw `16`/`24` → `.s4`/`.s6` in theme layout tests.
+- **Enforce:** `audit_theme_test_isolation.sh` bans bare spacing literals.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
