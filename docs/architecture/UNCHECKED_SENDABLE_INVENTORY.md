@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 20 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 21 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006). Reduction queue: [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md).
 
@@ -32,6 +32,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` bridges `Formatter` |
 | `Cache.swift` | `Cache` + `DelegateWrapper` (`NSCache`) |
 | `SessionAwareCache.swift` | observation `Task` + `@Dependency` |
+| `Publisher+Extensions.swift` | `DoneSubscriberCancellables` (`AnyCancellable` set; `LockIsolated` reverted T-122) |
 | `ValidationRule+Rules.swift` | `RegexValidationPattern` (`Regex` holder; direct capture reverted T-121) |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
@@ -43,7 +44,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 
 **Attempted (Round 94):** Delete `RegexValidationPattern`; reverted — `Regex<Output>` not `Sendable` in `@Sendable` closure on CI (T-116/T-121).
 
-**Resolved (Round 95):** `Publisher.done` uses `LockIsolated<Set<AnyCancellable>>`; deleted `DoneSubscriberCancellables` (T-117).
+**Attempted (Round 95):** `Publisher.done` `LockIsolated` set; reverted — `AnyCancellable` not `Sendable` in `@Sendable` closures on CI (T-117/T-122).
 
 **Attempted (Round 96):** `AssociatedObjectKey` plain `Sendable` reverted — `UnsafeRawPointer` not `Sendable` on CI (T-118).
 

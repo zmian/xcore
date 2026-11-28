@@ -542,10 +542,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Attempt:** Delete `RegexValidationPattern`; capture `Regex` with `Output: Sendable`.
 - **Revert (T-121):** macOS CI — `Regex<Output>` not `Sendable` in rule closure (`976fa8cd`).
 
-### Round 95 — Publisher.done cancellable storage (T-117)
+### Round 95 — Publisher.done cancellable storage attempt (T-117)
 
-- **Migrate:** `LockIsolated<Set<AnyCancellable>>` replaces `DoneSubscriberCancellables`.
-- **Enforce:** `@unchecked` budget was **19** before T-121 (T-117 net win).
+- **Attempt:** `LockIsolated<Set<AnyCancellable>>` replaces `DoneSubscriberCancellables`.
+- **Revert (T-122):** macOS CI — `AnyCancellable` not `Sendable` (`71b369f0`).
 
 ### Round 96 — AssociatedObjectKey Sendable attempt (T-118)
 
@@ -566,7 +566,13 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 99 — Regex holder restore (T-121)
 
 - **Fix:** Restore `RegexValidationPattern` `@unchecked` holder.
-- **Enforce:** `@unchecked` budget **20**; net PR win **T-117** only until further CI.
+- **Enforce:** `@unchecked` budget **20**.
+
+### Round 100 — Publisher.done holder restore (T-122)
+
+- **Fix:** Restore `DoneSubscriberCancellables`.
+- **Enforce:** `@unchecked` budget **21** (session attempts T-116–T-119 net zero).
+- **Verify:** macOS CI pending after T-122 push.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
