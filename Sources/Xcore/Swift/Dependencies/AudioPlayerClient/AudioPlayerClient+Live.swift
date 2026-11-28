@@ -20,7 +20,7 @@ extension AudioPlayerClient {
 
 // MARK: - Implementation
 
-private final class LiveAudioClient: Sendable {
+private final class LiveAudioClient: @unchecked Sendable {
     private let audioPlayer = LockIsolated<AVAudioPlayer?>(nil)
 
     public func play(_ file: AudioFile) {
@@ -32,7 +32,7 @@ private final class LiveAudioClient: Sendable {
         }
 
         try? AVAudioSession.sharedInstance().setCategory(file.category)
-        audioPlayer.setValue(player)
-        player.play()
+        audioPlayer.withValue { $0 = player }
+        audioPlayer.withValue { $0?.play() }
     }
 }

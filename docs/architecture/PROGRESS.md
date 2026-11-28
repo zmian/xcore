@@ -447,6 +447,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `ValidationRule` regex via `LockIsolated.withValue`; Address Search `@unchecked` + query accessor. Budget **14**.
 
+### Round 77 — Audio + session counter live clients (T-094)
+
+- **Fix:** `LiveAudioClient` / `LiveSessionCounterClient` `@unchecked Sendable`; AVAudioPlayer via `withValue`. Budget **16**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

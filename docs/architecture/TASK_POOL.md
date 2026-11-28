@@ -104,3 +104,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-091 | Popup revert + `AssociatedObjectKey` without `Sendable` |
 | T-092 | `AssociatedObjectKey` @unchecked + ImageDownloader LockIsolated |
 | T-093 | AddressSearch + ValidationRule Regex CI fixes |
+| T-094 | AudioPlayer + SessionCounter live Sendable CI |
