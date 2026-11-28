@@ -17,23 +17,18 @@ extension Publisher where Failure == Never {
     ///
     /// - Parameter receiveValue: The closure to execute on receipt of a value.
     public func done(_ receiveValue: @escaping ((Output) -> Void)) {
-        cancellablesLock.lock()
-        defer { cancellablesLock.unlock() }
-
         var cancellable: AnyCancellable?
 
         cancellable = sink { output in
             receiveValue(output)
             if let token = cancellable {
-                cancellablesLock.synchronized {
-                    cancellables.remove(token)
-                }
+                doneSubscriberCancellables.withValue { $0.remove(token) }
                 cancellable = nil
             }
         }
 
         if let cancellable {
-            cancellables.insert(cancellable)
+            doneSubscriberCancellables.withValue { $0.insert(cancellable) }
         }
     }
 }
@@ -71,6 +66,5 @@ extension Publisher {
     }
 }
 
-nonisolated(unsafe) private var cancellables = Set<AnyCancellable>()
-private let cancellablesLock = NSRecursiveLock()
+private let doneSubscriberCancellables = LockIsolated(Set<AnyCancellable>())
 #endif

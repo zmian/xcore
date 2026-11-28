@@ -341,6 +341,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Static `CompositeFeatureFlagProvider` behind `LockIsolated`; concurrency budget **42** (T-066).
 
+### Round 52 — `Publisher.done` cancellables (T-067)
+
+- **Migrate:** `LockIsolated<Set<AnyCancellable>>` for one-shot Combine subscribers; concurrency budget **41** (T-067).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
