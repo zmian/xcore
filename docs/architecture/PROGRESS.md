@@ -708,8 +708,9 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 ### Round 130 — ThemeLayoutTests serialization (T-153)
 
-- **Fix:** `@Suite(.serialized)` after parallel race (`spacingScaleMatchesDocumentation` CI).
+- **Fix:** `@Suite(.serialized)` after parallel race on `3c9b3696` (`spacingScaleMatchesDocumentation`).
 - **Enforce:** `audit_theme_test_isolation.sh` + `TEST_CI_POLICY.md`.
+- **CI:** green `7ccd8510` ([run 46152198493](https://github.com/zmian/xcore/actions/runs/46152198493)).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
