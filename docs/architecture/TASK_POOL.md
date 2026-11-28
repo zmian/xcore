@@ -7,7 +7,7 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI on `855473cb` (#114); push only `7d095f7b` (23 audits); then await next green before Round 35 push | CI stability on #153 — #114 **Test** step >2h (ET); treat as hung until completed |
+| T-043 | Confirm green macOS CI on `4f4a493f` (post batch push); avoid further pushes until green | CI stability on #153 |
 
 ## Pending confirmation
 
