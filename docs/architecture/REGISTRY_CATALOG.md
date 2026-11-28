@@ -50,7 +50,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | Use |
 | --- | --- |
 | [GOVERNANCE_SUMMARY.md](./GOVERNANCE_SUMMARY.md) | Quick start |
-| [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) | Headline budgets (enforced) |
+| [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) | Headline budgets (inventories + CI test counts) |
 | [TASK_POOL.md](./TASK_POOL.md) | Ready / pending / done tasks |
 | [PROGRESS.md](./PROGRESS.md) | Round log |
 | [ARCHITECTURE_MAP.md](./ARCHITECTURE_MAP.md) | Layers and boundaries |

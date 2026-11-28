@@ -60,6 +60,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
 | Parallel Theme test spacing | `audit_theme_test_isolation.sh`, `audit_ci_test_policy.sh` (`TEST_CI_POLICY.md`) |
 | Serialized Swift Testing suites | `audit_ci_test_policy.sh` (`TEST_CI_POLICY.md` § Serialized test suites) |
+| CI test budgets (compile / runtime / serialized) | `GOVERNANCE_METRICS.md` + `audit_governance_metrics.sh` + `audit_ci_test_policy.sh` |
 | Formatting defaults | `audit_formatting_defaults.sh` |
 | Legacy date format | `audit_date_legacy_format.sh` (P-002) |
 | Coding numeric defaults | `audit_coding_defaults.sh` |

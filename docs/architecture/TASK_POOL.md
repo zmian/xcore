@@ -170,3 +170,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-157 | Registry catalog + architecture map CI test SSOT |
 | T-158 | `AGENTS.md` + ADR 0005 CI test policy pointers |
 | T-159 | `#if !CI` compile-excluded suite budget in metrics audits |
+| T-160 | ENTROPY/registry catalog CI budget cross-links |

@@ -79,6 +79,16 @@ if ! rg -q 'serialized suites' "$CATALOG"; then
   exit 1
 fi
 
+if ! rg -q 'CI test counts' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must document CI test counts on GOVERNANCE_METRICS row"
+  exit 1
+fi
+
+if ! rg -q 'CI test budgets' "$ENTROPY"; then
+  echo "ENTROPY_INVENTORY.md must list CI test budgets under enforcement coverage"
+  exit 1
+fi
+
 compile_metric="$(metric_value 'compile-excluded test suites')"
 runtime_metric="$(metric_value 'Runtime CI test skips')"
 serialized_metric="$(metric_value 'Serialized Swift Testing suites')"

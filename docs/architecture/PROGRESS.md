@@ -746,6 +746,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Metric:** `#if !CI` suite count on `GOVERNANCE_METRICS.md`.
 - **Enforce:** `audit_ci_test_policy.sh` + `audit_governance_metrics.sh` + registry catalog parity.
+- **CI:** green `f66dd4c5` ([run 46159812810](https://github.com/zmian/xcore/actions/runs/46159812810)).
+
+### Round 137 — ENTROPY catalog CI budget links (T-160)
+
+- **Catalog:** `ENTROPY_INVENTORY`, `REGISTRY_CATALOG`, `GOVERNANCE_SUMMARY`, `AUDIT_INDEX` for full CI budget chain.
+- **Enforce:** `audit_registry_catalog.sh` ENTROPY + catalog guards.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

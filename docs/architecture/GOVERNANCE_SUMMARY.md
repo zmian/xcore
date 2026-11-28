@@ -38,7 +38,7 @@ Extensions: [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) (4 folders, 24 root fil
 
 ## Inventories
 
-- [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) — enforced snapshot of all headline budgets
+- [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) — enforced snapshot of headline budgets (inventories + CI test counts)
 - [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (0)
 - [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (0)
 - [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) — `@unchecked Sendable` budget (21)
