@@ -34,7 +34,7 @@ import Combine
 ///     analytics.track(event)
 /// }
 /// ```
-public final class SessionAwareCache<Value: Sendable & Hashable> {
+public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
     private let inactivityDuration: Duration
     private let storage = LockIsolated<Set<Value>>([])
@@ -113,6 +113,6 @@ public final class SessionAwareCache<Value: Sendable & Hashable> {
     /// - Parameter value: A value to look for in the cache.
     /// - Returns: `true` if the value exists in the cache; otherwise, `false`.
     public func contains(_ value: Value) -> Bool {
-        storage.value.contains(value)
+        storage.withValue { $0.contains(value) }
     }
 }

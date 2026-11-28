@@ -105,3 +105,5 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-092 | `AssociatedObjectKey` @unchecked + ImageDownloader LockIsolated |
 | T-093 | AddressSearch + ValidationRule Regex CI fixes |
 | T-094 | AudioPlayer + SessionCounter live Sendable CI |
+| T-095 | AssociatedObjectKey pointer cast |
+| T-096 | Cache, SessionAwareCache, Publisher.done CI |

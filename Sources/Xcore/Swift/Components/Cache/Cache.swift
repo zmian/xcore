@@ -22,7 +22,7 @@ import Foundation
 /// }
 /// cache["imageData"] = nil // removes cached entry
 /// ```
-public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
+public final class Cache<Key: Sendable & Hashable, Value>: @unchecked Sendable {
     /// The underlying NSCache instance (guarded for `Sendable`; NSCache ops are
     /// [thread safe]).
     ///
@@ -45,7 +45,7 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     ///
     /// The default value is an empty string ("").
     public var name: String {
-        get { cache.value.name }
+        get { cache.withValue { $0.name } }
         set { cache.withValue { $0.name = newValue } }
     }
 
@@ -59,22 +59,23 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     }
 
     public subscript(_ key: Key, cost cost: Int? = nil) -> Value? {
-        get { cache.value.object(forKey: ReferenceBox(key))?.value }
+        get {
+            cache.withValue { $0.object(forKey: ReferenceBox(key))?.value }
+        }
         set {
-            let key = ReferenceBox(key)
-
-            cache.withValue { storage in
-                if let newValue {
-                    let newValue = ReferenceBox(newValue)
-
+            let keyBox = ReferenceBox(key)
+            if let newValue {
+                let valueBox = ReferenceBox(newValue)
+                let cost = cost
+                cache.withValue { storage in
                     if let cost {
-                        storage.setObject(newValue, forKey: key, cost: cost)
+                        storage.setObject(valueBox, forKey: keyBox, cost: cost)
                     } else {
-                        storage.setObject(newValue, forKey: key)
+                        storage.setObject(valueBox, forKey: keyBox)
                     }
-                } else {
-                    storage.removeObject(forKey: key)
                 }
+            } else {
+                cache.withValue { $0.removeObject(forKey: keyBox) }
             }
         }
     }
@@ -100,7 +101,7 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     /// in the cache could be evicted instantly, at a later point in time, or
     /// possibly never, all depending on the implementation details of the cache.
     public var totalCostLimit: Int {
-        get { cache.value.totalCostLimit }
+        get { cache.withValue { $0.totalCostLimit } }
         set { cache.withValue { $0.totalCostLimit = newValue } }
     }
 
@@ -112,21 +113,21 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     /// cache could be evicted instantly, later, or possibly never, depending on the
     /// implementation details of the cache.
     public var countLimit: Int {
-        get { cache.value.countLimit }
+        get { cache.withValue { $0.countLimit } }
         set { cache.withValue { $0.countLimit = newValue } }
     }
 
     /// A Boolean property indicating whether the cache evicts values with discarded
     /// content.
     public var evictsValuesWithDiscardedContent: Bool {
-        get { cache.value.evictsObjectsWithDiscardedContent }
+        get { cache.withValue { $0.evictsObjectsWithDiscardedContent } }
         set { cache.withValue { $0.evictsObjectsWithDiscardedContent = newValue } }
     }
 }
 
 // MARK: - DelegateWrapper
 
-private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, Sendable {
+private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, @unchecked Sendable {
     let willEvictValue: (@Sendable (Value) -> Void)?
 
     init(willEvictValue: (@Sendable (Value) -> Void)?) {

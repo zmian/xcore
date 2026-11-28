@@ -455,6 +455,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `UnsafeRawPointer(storage)` assignment (Swift 6 type check).
 
+### Round 78 — Cache/Combine session caches (T-096)
+
+- **Fix:** `Cache` / `SessionAwareCache` `@unchecked`; NSCache via `withValue`; `done(_:)` cancel store. Budget **20**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
