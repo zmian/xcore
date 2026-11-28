@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 20 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 16 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -26,15 +26,13 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | Location | Role |
 | --- | --- |
 | `Analytics.swift` | Open analytics hub |
-| `AnalyticsProvider+Mock.swift` | Mock provider (`LockIsolated` state) |
-| `AnalyticsProvider.swift` | Protocol doc example only |
 | `SessionAwareCache.swift` | Session-scoped cache |
 | `Money.swift` | `Appearance` styling box |
-| `ImageFetcher+Composite.swift` | Composite fetcher (`LockIsolated` list) |
-| `UIImage+Fetcher.swift` | `ImageDownloaderCancelToken` |
 | `CoreAnimation+Extensions.swift` | Timing-function preset cache |
 | `Popup.swift` | `TransitionStorage` (`AnyTransition`) |
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` bridges `Formatter` |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
+
+**Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
 
 Regressions: `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` compares live count to the total above.

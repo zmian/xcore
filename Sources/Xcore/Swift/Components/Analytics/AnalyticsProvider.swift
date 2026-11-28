@@ -15,7 +15,7 @@ import Foundation
 /// ```swift
 /// private import Segment
 ///
-/// final class SegmentAnalyticsProvider: AnalyticsProvider, @unchecked Sendable {
+/// final class SegmentAnalyticsProvider: AnalyticsProvider, Sendable {
 ///     @Dependency(\.appPhase) private var appPhase
 ///     private var appPhaseTask: Task<Void, Never>?
 ///     private var segment: Segment.Analytics {

@@ -73,8 +73,8 @@ extension UIImageView {
     }
 }
 
-struct ImageDownloaderCancelToken: @unchecked Sendable {
-    let cancel: () -> Void
+struct ImageDownloaderCancelToken: Sendable {
+    let cancel: @Sendable () -> Void
 
     func callAsFunction() {
         cancel()

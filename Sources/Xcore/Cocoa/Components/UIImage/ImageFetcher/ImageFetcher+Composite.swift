@@ -8,7 +8,7 @@
 import UIKit
 import OSLog
 
-final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral, @unchecked Sendable {
+final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral, Sendable {
     private let fetchers = LockIsolated([ImageFetcher]())
 
     init(_ fetchers: [ImageFetcher]) {

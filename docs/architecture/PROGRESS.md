@@ -401,6 +401,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `UNCHECKED_SENDABLE_INVENTORY.md`, ADR 0007, `audit_unchecked_sendable_inventory.sh` (**28** audits); registry/metrics sync for 20 annotations.
 
+### Round 68 — peel `@unchecked Sendable` (T-083)
+
+- **Migrate:** `ImageDownloaderCancelToken` (`@Sendable` cancel), `CompositeImageFetcher` + `MockAnalyticsProvider` → `Sendable` (`LockIsolated`). Budget **16**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

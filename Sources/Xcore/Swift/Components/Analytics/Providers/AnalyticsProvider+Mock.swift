@@ -7,7 +7,7 @@
 import Foundation
 
 /// A mock analytics provider that is suitable for tests.
-public final class MockAnalyticsProvider: AnalyticsProvider, @unchecked Sendable {
+public final class MockAnalyticsProvider: AnalyticsProvider, Sendable {
     private struct State {
         var isEnabled = true
         var userId: String?
