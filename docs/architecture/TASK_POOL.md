@@ -96,3 +96,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-083 | Drop `@unchecked` on composite fetcher, mock analytics, cancel token (20→16) |
 | T-084 | Timing presets + `SessionAwareCache` Sendable (16→14) |
 | T-085 | `Analytics` → `LockIsolated` hub (14→13) |
+| T-086 | `LiveSessionCounterClient` Sendable (13→12) |

@@ -413,6 +413,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `Analytics` identity + provider list in `LockIsolated`. Budget **13**.
 
+### Round 71 — session counter live backend (T-086)
+
+- **Migrate:** `LiveSessionCounterClient` → `Sendable` with `LockIsolated` task. Budget **12**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

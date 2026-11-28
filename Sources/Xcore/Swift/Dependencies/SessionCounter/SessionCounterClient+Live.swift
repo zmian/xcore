@@ -22,26 +22,26 @@ extension SessionCounterClient {
 
 // MARK: - Implementation
 
-private final class LiveSessionCounterClient: @unchecked Sendable {
+private final class LiveSessionCounterClient: Sendable {
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
     @Dependency(\.requestReview) private var requestReview
-    private var appStatusTask: Task<Void, Never>?
+    private let appStatusTask = LockIsolated<Task<Void, Never>?>(nil)
 
     fileprivate init() {
         addObserver()
     }
 
     deinit {
-        appStatusTask?.cancel()
+        appStatusTask.withValue { $0?.cancel() }
     }
 
     private func addObserver() {
-        appStatusTask = Task {
+        appStatusTask.setValue(Task {
             for await appStatus in appStatus.receive.values where appStatus == .session(.unlocked) {
                 increment()
             }
-        }
+        })
     }
 
     public var count: Int {

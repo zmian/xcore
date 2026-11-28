@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 13 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 12 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -18,7 +18,6 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | --- | --- |
 | `PushNotificationsClient+Live.swift` | `NSObject` live client |
 | `PushNotificationsClient.swift` | `NotificationReceivedHandler` (non-Sendable closure storage) |
-| `SessionCounterClient+Live.swift` | Live client with locked storage |
 | `AppPhaseClient.swift` | `AppPhase` enum payloads |
 
 ## Components (shared mutable or UIKit bridges)
@@ -35,5 +34,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 **Resolved (Round 69):** `CAMediaTimingFunction` presets use frozen `static let`; `SessionAwareCache` is `Sendable` via `LockIsolated` session state (T-084).
 
 **Resolved (Round 70):** `Analytics` hub state behind `LockIsolated` (T-085).
+
+**Resolved (Round 71):** `LiveSessionCounterClient` observation task in `LockIsolated` (T-086).
 
 Regressions: `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` compares live count to the total above.
