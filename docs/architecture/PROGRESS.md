@@ -701,6 +701,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `ae2eb580` green — [run 46149268367](https://github.com/zmian/xcore/actions/runs/46149268367) (`build-test-lint` after T-149–T-150; `cf72f836` run cancelled by stack).
 
+### Round 129 — Theme spacing API docs + audit (T-152)
+
+- **Document:** `Theme.defaultSpacing` / `interItemHSpacing` cite `s5`/`s3` + `SPACING_SCALE.md`.
+- **Enforce:** `audit_spacing_scale.sh` guards token + Theme doc references.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

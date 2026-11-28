@@ -81,9 +81,13 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
     public var cornerRadius: CGFloat
 
     /// The default spacing between sections and containers.
+    ///
+    /// ``Theme/init`` defaults this to ``CGFloat/s5``. See `docs/architecture/SPACING_SCALE.md`.
     public var defaultSpacing: CGFloat
 
     /// The default horizontal spacing between items in a row.
+    ///
+    /// ``Theme/init`` defaults this to ``CGFloat/s3``. See `docs/architecture/SPACING_SCALE.md`.
     public var interItemHSpacing: CGFloat
 
     /// The default insets applied to list rows (derived from ``defaultSpacing``).

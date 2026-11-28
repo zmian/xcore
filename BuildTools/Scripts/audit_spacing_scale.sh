@@ -51,4 +51,16 @@ theme_inter="$(awk -F'|' '/\| `interItemHSpacing` \|/ { gsub(/^ +| +$/, "", $3);
   exit 1
 }
 
+for token in s3 s5; do
+  if ! rg -B8 "static let ${token}: Self" "$CONSTANTS" | rg -q 'SPACING_SCALE\.md'; then
+    echo "CGFloat.${token} public docs must reference SPACING_SCALE.md (T-150)"
+    exit 1
+  fi
+done
+
+if ! rg -q 'SPACING_SCALE\.md' "$ROOT/Sources/Xcore/SwiftUI/Components/Theme/Theme.swift"; then
+  echo "Theme.swift spacing properties must reference SPACING_SCALE.md"
+  exit 1
+fi
+
 echo "Spacing scale audit passed (s1…s8 frozen; s3/s5 aligned with theme defaults)."
