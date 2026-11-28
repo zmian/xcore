@@ -28,3 +28,9 @@ Authoritative list of dependency keys shipped in the **Xcore** package (app-defi
 - **Protocol client:** `addressSearch` only (pending P-001).
 - **Typealias client:** `appPhase` over `EventsClient` (ADR 0004).
 - **Template:** `EventsClient<Event>` — host apps register their own keys (documented in source).
+
+## Key default exceptions
+
+| Key | `testValue` | `previewValue` | Notes |
+| --- | --- | --- | --- |
+| `appPhase` | `.live` | `.live` | Lifecycle/event hub for delegate forwarding and timing tests (**P-003**). Allowlisted in `audit_dependency_keys.sh`; do not switch to `.unimplemented` without product confirmation. |

@@ -20,6 +20,10 @@ if [[ "$live_count" != "$doc_count" ]]; then
   exit 1
 fi
 
+production_table="$(
+  awk '/^\| Key \| Type \| Location \|$/,/^## / { if ($0 ~ /^## / && $0 !~ /^## Key default/) exit; print }' "$REGISTRY"
+)"
+
 missing=0
 while IFS= read -r key; do
   [[ -z "$key" ]] && continue
@@ -27,7 +31,7 @@ while IFS= read -r key; do
     echo "DEPENDENCY_REGISTRY lists '\`${key}\`' but no DependencyValues property found"
     missing=1
   fi
-done < <(rg '^\| `[^`]+` \|' "$REGISTRY" | sed -n 's/^| `\([^`]*\)`.*/\1/p')
+done < <(printf '%s\n' "$production_table" | rg '^\| `[^`]+` \|' | sed -n 's/^| `\([^`]*\)`.*/\1/p')
 
 if [[ "$missing" -ne 0 ]]; then
   exit 1
@@ -44,7 +48,7 @@ while IFS= read -r rel; do
     echo "DEPENDENCY_REGISTRY location missing on disk: Sources/Xcore/$rel"
     path_errors=1
   fi
-done < <(rg '^\| `[^`]+` \|' "$REGISTRY" | awk -F'|' '{gsub(/^ +| +$/, "", $4); print $4}')
+done < <(printf '%s\n' "$production_table" | rg '^\| `[^`]+` \|' | awk -F'|' '{gsub(/^ +| +$/, "", $4); print $4}')
 
 if [[ "$path_errors" -ne 0 ]]; then
   exit 1

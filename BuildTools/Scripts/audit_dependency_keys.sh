@@ -67,4 +67,27 @@ if $failed; then
   exit 1
 fi
 
+REGISTRY="$ROOT/docs/architecture/DEPENDENCY_REGISTRY.md"
+APP_PHASE="$ROOT/Sources/Xcore/Swift/Dependencies/AppPhase/AppPhaseClient.swift"
+
+if ! grep -q 'P-003' "$REGISTRY"; then
+  echo "DEPENDENCY_REGISTRY.md must document P-003 AppPhase test/preview exception"
+  exit 1
+fi
+
+if ! grep -q 'static let testValue: AppPhaseClient = \.live' "$APP_PHASE"; then
+  echo "AppPhaseClient testValue must remain .live until P-003 resolves (update registry + allowlist if intentional)"
+  exit 1
+fi
+
+if ! grep -q 'static let previewValue: AppPhaseClient = \.live' "$APP_PHASE"; then
+  echo "AppPhaseClient previewValue must remain .live until P-003 resolves (update registry + allowlist if intentional)"
+  exit 1
+fi
+
+if ! grep -q '| `appPhase`' "$REGISTRY" || ! grep -q 'Key default exceptions' "$REGISTRY"; then
+  echo "DEPENDENCY_REGISTRY.md must list appPhase under Key default exceptions"
+  exit 1
+fi
+
 echo "DependencyKey audit passed (${#key_files[@]} DependencyKey file(s))."

@@ -476,6 +476,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_theme_test_isolation.sh` + `TEST_CI_POLICY.md` global Theme SSOT section (**29** audits).
 
+### Round 83 — AppPhase dependency exception SSOT (T-104)
+
+- **Document:** `DEPENDENCY_REGISTRY.md` “Key default exceptions” for `appPhase` (P-003).
+- **Enforce:** `audit_dependency_keys.sh` + registry table scoping in `audit_dependency_registry.sh`.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
