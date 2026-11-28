@@ -29,6 +29,7 @@ Extensions: [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) (4 folders, 24 root fil
 | `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
 | Theme spacing: `Theme.init` uses `CGFloat.s5`/`.s3`; frozen `s1`…`s8` | 0005 + `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
 | Parallel CI: Theme spacing reset + `@Suite(.serialized)` on `ThemeLayoutTests` | `TEST_CI_POLICY.md` + `audit_theme_test_isolation.sh` + `audit_ci_test_policy.sh` |
+| CI test budgets (runtime skips + serialized suites) | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` + `audit_governance_metrics.sh` |
 | Layer import allowlists | 0003 + `audit_layer_imports.sh` |
 | Headline metrics match inventories | `audit_governance_metrics.sh` |
 | Zero `nonisolated(unsafe)`; `AssociatedObjectKey` tokens | 0006 + `audit_concurrency_inventory.sh`, `audit_associated_object_keys.sh` |

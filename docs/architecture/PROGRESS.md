@@ -728,6 +728,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Metric:** serialized suite budget on `GOVERNANCE_METRICS.md`.
 - **Enforce:** `audit_governance_metrics.sh` triple-sync runtime + serialized counts with `TEST_CI_POLICY.md`.
+- **CI:** green `fe6ee2af` ([run 46156369744](https://github.com/zmian/xcore/actions/runs/46156369744)).
+
+### Round 134 — Registry catalog CI test SSOT (T-157)
+
+- **Catalog:** `REGISTRY_CATALOG` + `GOVERNANCE_SUMMARY` + `ARCHITECTURE_MAP` for CI test budgets.
+- **Enforce:** `audit_registry_catalog.sh` metrics/policy parity + summary refs.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

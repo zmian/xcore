@@ -59,6 +59,7 @@ flowchart TB
 | Localized copy | Generated `LocalizableStrings` | SwiftGen + `Resources/` |
 | Typed metadata bags | `UserInfoContainer` | `UserInfoKey.swift` (ADR 0005) |
 | Layout / theme defaults | `Theme.default` (spacing via `s5`/`s3` at init); frozen scale on `CGFloat`; forwarders in `AppConstants` | `Theme.swift`, `Constants.swift` (ADR 0005; `audit_layout_ssot.sh`, `audit_spacing_scale.sh`, `audit_theme_test_isolation.sh`) |
+| CI test isolation | Runtime skips, `#if !CI` suites, `@Suite(.serialized)` catalog | `TEST_CI_POLICY.md` (`audit_ci_test_policy.sh`, `audit_governance_metrics.sh`) |
 
 ## Duplicate / parallel implementations
 

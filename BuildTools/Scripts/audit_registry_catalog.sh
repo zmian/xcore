@@ -69,6 +69,25 @@ if ! rg -q 'audit_ci_test_policy' "$SUMMARY"; then
   exit 1
 fi
 
+if ! rg -q 'audit_governance_metrics' "$SUMMARY"; then
+  echo "GOVERNANCE_SUMMARY.md must reference audit_governance_metrics.sh (CI test budgets)"
+  exit 1
+fi
+
+if ! rg -q 'serialized suites' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must document serialized suites on TEST_CI_POLICY row"
+  exit 1
+fi
+
+runtime_metric="$(metric_value 'Runtime CI test skips')"
+serialized_metric="$(metric_value 'Serialized Swift Testing suites')"
+policy_runtime="$(rg -o 'Runtime CI skips: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
+policy_serialized="$(rg -o 'Serialized suites: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
+[[ "$runtime_metric" == "$policy_runtime" && "$serialized_metric" == "$policy_serialized" ]] || {
+  echo "REGISTRY_CATALOG: GOVERNANCE_METRICS CI budgets ($runtime_metric runtime, $serialized_metric serialized) != TEST_CI_POLICY ($policy_runtime, $policy_serialized)"
+  exit 1
+}
+
 for script in audit_layout_ssot audit_spacing_scale audit_theme_test_isolation; do
   if ! rg -q "${script}" "$SUMMARY"; then
     echo "GOVERNANCE_SUMMARY.md must reference ${script}.sh (layout SSOT chain)"
