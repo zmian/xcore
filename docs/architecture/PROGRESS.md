@@ -381,6 +381,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Theme, Calendar, Locale, Color RGB defaults → `LockIsolated`; concurrency budget **25** (T-077).
 
+### Round 63 — typography + timing presets (T-078)
+
+- **Migrate:** App typeface, content-size override, CAMediaTimingFunction presets; concurrency budget **18** (T-078).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

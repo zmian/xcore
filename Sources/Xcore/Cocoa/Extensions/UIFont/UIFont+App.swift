@@ -8,7 +8,12 @@
 import UIKit
 
 extension UIFont {
-    nonisolated(unsafe) public static var defaultAppTypeface: UIFont.Typeface = .system
+    private static let defaultAppTypefaceStorage = LockIsolated(UIFont.Typeface.system)
+
+    public static var defaultAppTypeface: UIFont.Typeface {
+        get { defaultAppTypefaceStorage.value }
+        set { defaultAppTypefaceStorage.setValue(newValue) }
+    }
 
     /// Scaled version of default app typeface.
     ///

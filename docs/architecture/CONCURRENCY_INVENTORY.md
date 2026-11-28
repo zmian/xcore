@@ -1,13 +1,12 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 25 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 18 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
 | Location | Role |
 | --- | --- |
 | `Constants.swift` | Spacing, layout, and formatting defaults |
-| `UIFont+App.swift` | Default app typeface |
 
 **Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Future work: narrow public mutation surface or move to injected configuration.
 
@@ -54,10 +53,6 @@ Snapshot for reducing concurrency entropy. **Total: 25 annotations** (regenerate
 
 **Resolved (Round 62):** Global defaults (`Theme.default`, `Calendar.default` / `defaultCodable`, `Locale.numbers`, `Color.RGBColorSpace.default`) use `LockIsolated` storage.
 
-## Animation / presentation
-
-| Location |
-| --- |
-| `CoreAnimation+Extensions.swift` |
+**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets use a `@unchecked Sendable` cache (7 annotations removed).
 
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.
