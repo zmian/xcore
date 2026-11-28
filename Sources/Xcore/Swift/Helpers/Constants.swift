@@ -67,10 +67,16 @@ extension CGFloat {
     /// Spacing with the default value of `8` at a normal dynamic type setting.
     public static let s2: Self = 8
     /// Spacing with the default value of `12` at a normal dynamic type setting.
+    ///
+    /// Matches the launch default for ``Theme/interItemHSpacing`` (`Theme.init` uses `.s3`).
+    /// See `docs/architecture/SPACING_SCALE.md` (enforced by `audit_spacing_scale.sh`).
     public static let s3: Self = 12
     /// Spacing with the default value of `16` at a normal dynamic type setting.
     public static let s4: Self = 16
     /// Spacing with the default value of `20` at a normal dynamic type setting.
+    ///
+    /// Matches the launch default for ``Theme/defaultSpacing`` (`Theme.init` uses `.s5`).
+    /// See `docs/architecture/SPACING_SCALE.md` (enforced by `audit_spacing_scale.sh`).
     public static let s5: Self = 20
     /// Spacing with the default value of `24` at a normal dynamic type setting.
     public static let s6: Self = 24

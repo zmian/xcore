@@ -160,3 +160,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-147 | `audit_ci_test_policy` guards Theme parallel reset docs |
 | T-148 | Green macOS CI on #153 (`b3ced217`, T-146–T-147) |
 | T-149 | Governance SSOT cites `audit_ci_test_policy` for Theme reset |
+| T-150 | `CGFloat.s3`/`s5` docs link Theme defaults + `SPACING_SCALE` |

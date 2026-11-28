@@ -693,6 +693,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Document:** `GOVERNANCE_SUMMARY` / `ENTROPY_INVENTORY` cite `audit_ci_test_policy.sh`.
 - **Enforce:** `audit_registry_catalog.sh` guards summary reference.
 
+### Round 127 — `CGFloat.s3`/`s5` public docs (T-150)
+
+- **Document:** Frozen tokens document Theme launch-default SSOT in `Constants.swift`.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
