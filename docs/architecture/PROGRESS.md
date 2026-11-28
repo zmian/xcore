@@ -724,6 +724,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_ci_test_policy.sh` count + per-file listing; `ENTROPY_INVENTORY` row.
 - **CI:** green `b67732f0` ([run 46154549854](https://github.com/zmian/xcore/actions/runs/46154549854)).
 
+### Round 133 — Governance metrics ↔ CI policy (T-156)
+
+- **Metric:** serialized suite budget on `GOVERNANCE_METRICS.md`.
+- **Enforce:** `audit_governance_metrics.sh` triple-sync runtime + serialized counts with `TEST_CI_POLICY.md`.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

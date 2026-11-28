@@ -166,3 +166,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-153 | `ThemeLayoutTests` `.serialized` + audit (parallel race) |
 | T-154 | `audit_ci_test_policy` Theme serialized cross-check |
 | T-155 | Serialized test suite catalog + CI policy audit |
+| T-156 | Governance metrics sync with `TEST_CI_POLICY` CI budgets |

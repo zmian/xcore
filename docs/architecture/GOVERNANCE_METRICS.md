@@ -7,6 +7,7 @@ Headline budgets agents should not regress without updating source inventories a
 | --- | --- |
 | Architecture audit scripts | 33 |
 | Runtime CI test skips (`TestEnvironment.isCI`) | 4 |
+| Serialized Swift Testing suites (`@Suite(.serialized)`) | 4 |
 | Production dependency keys | 14 |
 | nonisolated(unsafe) in Sources/Xcore | 0 |
 | @unchecked Sendable in Sources/Xcore | 21 |
@@ -29,4 +30,4 @@ Headline budgets agents should not regress without updating source inventories a
 | Cocoa→SwiftUI allowlist | 4 |
 | Swift/Components→UIKit allowlist | 3 |
 
-Sources: `AUDIT_INDEX.md`, `DEPENDENCY_REGISTRY.md`, `CONCURRENCY_INVENTORY.md`, `UNCHECKED_SENDABLE_INVENTORY.md`, `ENTROPY_INVENTORY.md`, component indexes, `LAYER_IMPORTS.md`.
+Sources: `AUDIT_INDEX.md`, `DEPENDENCY_REGISTRY.md`, `CONCURRENCY_INVENTORY.md`, `UNCHECKED_SENDABLE_INVENTORY.md`, `ENTROPY_INVENTORY.md`, `TEST_CI_POLICY.md`, component indexes, `LAYER_IMPORTS.md`.

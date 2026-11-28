@@ -4,6 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 METRICS="$ROOT/docs/architecture/GOVERNANCE_METRICS.md"
+POLICY="$ROOT/docs/architecture/TEST_CI_POLICY.md"
 SOURCES="$ROOT/Sources/Xcore"
 
 expected_metric() {
@@ -111,6 +112,28 @@ doc_cocoa="$(expected_metric 'Cocoa→SwiftUI allowlist')"
 doc_swift="$(expected_metric 'Swift/Components→UIKit allowlist')"
 [[ "$cocoa_allow" == "$doc_cocoa" && "$swift_allow" == "$doc_swift" ]] || {
   echo "Layer import allowlists out of sync with GOVERNANCE_METRICS.md"
+  exit 1
+}
+
+runtime_live="$(
+  rg -c 'disabled\(if: TestEnvironment\.isCI' "$ROOT/Tests" --glob '*.swift' 2>/dev/null \
+    | rg -v 'LiveAddressSearchClientTests\.swift' \
+    | awk -F: '{s+=$2} END {print s+0}'
+)"
+doc_runtime="$(expected_metric 'Runtime CI test skips')"
+policy_runtime="$(rg -o 'Runtime CI skips: [0-9]+' "$POLICY" | head -1 | rg -o '[0-9]+' || true)"
+[[ "$runtime_live" == "$doc_runtime" && "$doc_runtime" == "$policy_runtime" ]] || {
+  echo "Runtime CI skips: live $runtime_live, GOVERNANCE_METRICS $doc_runtime, TEST_CI_POLICY $policy_runtime"
+  exit 1
+}
+
+serialized_live="$(
+  rg -l '@Suite\(\.serialized\)' "$ROOT/Tests" --glob '*.swift' 2>/dev/null | wc -l | tr -d ' '
+)"
+doc_serialized="$(expected_metric 'Serialized Swift Testing suites')"
+policy_serialized="$(rg -o 'Serialized suites: [0-9]+' "$POLICY" | head -1 | rg -o '[0-9]+' || true)"
+[[ "$serialized_live" == "$doc_serialized" && "$doc_serialized" == "$policy_serialized" ]] || {
+  echo "Serialized suites: live $serialized_live, GOVERNANCE_METRICS $doc_serialized, TEST_CI_POLICY $policy_serialized"
   exit 1
 }
 

@@ -12,7 +12,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_helpers_index.sh` | `HELPERS_INDEX.md` matches `Swift/Helpers/*.swift` count. |
 | `BuildTools/Scripts/audit_swift_protocols_index.sh` | `SWIFT_PROTOCOLS_INDEX.md` matches `Swift/Protocols/` file count. |
 | `BuildTools/Scripts/audit_swift_property_wrappers_index.sh` | `SWIFT_PROPERTY_WRAPPERS_INDEX.md` matches `Swift/PropertyWrappers/` file count. |
-| `BuildTools/Scripts/audit_ci_test_policy.sh` | `TEST_CI_POLICY.md` matches CI test guards; documents Theme parallel reset + `audit_theme_test_isolation`. |
+| `BuildTools/Scripts/audit_ci_test_policy.sh` | `TEST_CI_POLICY.md` matches CI test guards; Theme reset + serialized suite catalog. |
 | `BuildTools/Scripts/audit_theme_test_isolation.sh` | `resetThemeSpacingSSOTForParallelTesting()` (`.s5`/`.s3`) + call sites (`TEST_CI_POLICY.md`). |
 | `BuildTools/Scripts/audit_extensions_index.sh` | `EXTENSIONS_INDEX.md` matches `Swift/Extensions/` folders and root file count. |
 | `BuildTools/Scripts/audit_component_index.sh` | `COMPONENT_INDEX.md` total matches `Swift/Components/` domain folders. |
@@ -36,7 +36,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_coding_defaults.sh` | Single `CodingFormatStyleDefaults.defaultEncodeAsString` (see `CODING_DEFAULTS.md`). |
 | `BuildTools/Scripts/audit_composite_registration.sh` | Provider/fetcher composites dedupe by `id` (ADR 0004; ImageTransform exempt). |
 | `BuildTools/Scripts/audit_registry_catalog.sh` | `REGISTRY_CATALOG.md` inventory budgets match `GOVERNANCE_METRICS.md` and entropy/concurrency inventories. |
-| `BuildTools/Scripts/audit_governance_metrics.sh` | `GOVERNANCE_METRICS.md` matches live inventory totals. |
+| `BuildTools/Scripts/audit_governance_metrics.sh` | `GOVERNANCE_METRICS.md` matches live inventory totals + `TEST_CI_POLICY.md` CI test budgets. |
 | `BuildTools/Scripts/audit_product_gates.sh` | `PRODUCT_GATES.md` matches P-001–P-003 SSOT docs. |
 | `BuildTools/Scripts/audit_audit_index.sh` | `AUDIT_INDEX.md` matches `Makefile` `audit-architecture` script list. |
 
