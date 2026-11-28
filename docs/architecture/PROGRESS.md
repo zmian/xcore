@@ -535,6 +535,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Attempt:** Plain `Sendable` on `UserDefaultsPond`.
 - **Revert:** macOS CI — `UserDefaults` not `Sendable`; budget stays **21**.
+- **Verify:** macOS CI pending on `30e316e2` (revert-only).
+
+### Round 94 — Regex validation holder deletion (T-116)
+
+- **Delete:** `RegexValidationPattern`; `regex(Regex<Output>)` requires `Output: Sendable`.
+- **Enforce:** `@unchecked` budget **20**.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

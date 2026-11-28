@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 21 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 20 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006). Reduction queue: [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md).
 
@@ -33,7 +33,6 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | `Cache.swift` | `Cache` + `DelegateWrapper` (`NSCache`) |
 | `SessionAwareCache.swift` | observation `Task` + `@Dependency` |
 | `Publisher+Extensions.swift` | `DoneSubscriberCancellables` (`AnyCancellable` set) |
-| `ValidationRule+Rules.swift` | `RegexValidationPattern` (`Regex` holder) |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
 **Resolved (Round 86):** `AddressSearchClient` is a struct client; live engine marked `@unchecked Sendable` for closure wiring (T-107). Deletes public protocol + conformer types.
@@ -41,6 +40,8 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 **Resolved (Round 91):** `AddressSearchResult` is a `Sendable` struct; resolve uses natural-language `MKLocalSearch.Request` (T-113).
 
 **Attempted (Round 93):** `UserDefaultsPond` plain `Sendable` reverted — `UserDefaults` not `Sendable` on macOS CI (T-115).
+
+**Resolved (Round 94):** `ValidationRule.regex(Regex<Output>)` captures `Regex` when `Output: Sendable`; deleted `RegexValidationPattern` holder (T-116).
 
 **Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
 
