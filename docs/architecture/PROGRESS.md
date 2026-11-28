@@ -524,6 +524,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Drop `MKLocalSearchCompletion` retention; struct + natural-language resolve request.
 - **Enforce:** `@unchecked` budget **21**.
+- **Verify:** macOS CI **green** on `40fd0d55` (build-test-lint).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
