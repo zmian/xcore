@@ -409,6 +409,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `CAMediaTimingFunction` preset SSOT without wrapper class; `SessionAwareCache` → `Sendable`. Budget **14**.
 
+### Round 70 — analytics hub Sendable (T-085)
+
+- **Migrate:** `Analytics` identity + provider list in `LockIsolated`. Budget **13**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

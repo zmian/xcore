@@ -6,27 +6,36 @@
 
 import Foundation
 
-open class Analytics<Event: AnalyticsEventProtocol>: @unchecked Sendable {
-    private var userId: String?
-    private var traits: EncodableDictionary = [:]
+open class Analytics<Event: AnalyticsEventProtocol>: Sendable {
+    private struct State {
+        var userId: String?
+        var traits: EncodableDictionary = [:]
+        var providers: [AnalyticsProvider]
+    }
+
+    private let state: LockIsolated<State>
 
     /// The registered list of providers.
-    open private(set) var providers: [AnalyticsProvider]
+    open private(set) var providers: [AnalyticsProvider] {
+        state.value.providers
+    }
 
     public init(providers: [AnalyticsProvider]) {
-        self.providers = providers
+        state = LockIsolated(State(providers: providers))
     }
 
     /// Register list of given providers if they are not already registered.
     ///
     /// - Note: This method ensures there are no duplicate providers.
     open func register(_ providers: [AnalyticsProvider]) {
-        for provider in providers {
-            guard !self.providers.contains(where: { $0.id == provider.id }) else {
-                continue
-            }
+        state.withValue { state in
+            for provider in providers {
+                guard !state.providers.contains(where: { $0.id == provider.id }) else {
+                    continue
+                }
 
-            self.providers.append(provider)
+                state.providers.append(provider)
+            }
         }
     }
 
@@ -39,13 +48,13 @@ open class Analytics<Event: AnalyticsEventProtocol>: @unchecked Sendable {
 
     /// Unregister and removes the given provider.
     open func unregister(_ provider: AnalyticsProvider) {
-        let ids = providers.map(\.id)
+        state.withValue { state in
+            guard let index = state.providers.firstIndex(where: { $0.id == provider.id }) else {
+                return
+            }
 
-        guard let index = ids.firstIndex(of: provider.id) else {
-            return
+            state.providers.remove(at: index)
         }
-
-        providers.remove(at: index)
     }
 
     /// Track the given event.
@@ -95,12 +104,18 @@ open class Analytics<Event: AnalyticsEventProtocol>: @unchecked Sendable {
     /// Meaning, there would be pockets of user's which would never track back to
     /// the user if they ever signed back on to the app.
     open func reset() {
-        guard userId != nil else {
+        guard let providers = state.withValue({ state -> [AnalyticsProvider]? in
+            guard state.userId != nil else {
+                return nil
+            }
+
+            state.userId = nil
+            state.traits = [:]
+            return state.providers
+        }) else {
             return
         }
 
-        userId = nil
-        traits = [:]
         providers.forEach { $0.reset() }
     }
 }
@@ -118,7 +133,7 @@ extension Analytics {
     ///    different before invoking the identify call on the registered analytics
     ///    providers.
     public func identify(userId: String) {
-        _identify(userId: userId, traits: traits)
+        _identify(userId: userId, traits: state.value.traits)
     }
 
     /// A method to identify all registered providers with given user id and traits.
@@ -131,7 +146,7 @@ extension Analytics {
     ///    different before invoking the identify call on the registered analytics
     ///    providers.
     public func identify(traits: EncodableDictionary) {
-        _identify(userId: userId, traits: traits)
+        _identify(userId: state.value.userId, traits: traits)
     }
 
     /// A method to identify all registered providers with given user id and traits.
@@ -163,15 +178,25 @@ extension Analytics {
     ///    different before invoking the identify call on the registered analytics
     ///    providers.
     private func _identify(userId: String?, traits: EncodableDictionary) {
-        let currentUserId = self.userId
-        let currentTraits = self.traits
+        let update = state.withValue { state -> (userId: String?, traits: EncodableDictionary, providers: [AnalyticsProvider], shouldIdentify: Bool) in
+            let currentUserId = state.userId
+            let currentTraits = state.traits
 
-        guard userId?.nilIfBlank != currentUserId?.nilIfBlank || !traits.isEqual(currentTraits) else {
+            guard userId?.nilIfBlank != currentUserId?.nilIfBlank || !traits.isEqual(currentTraits) else {
+                return (currentUserId, currentTraits, state.providers, false)
+            }
+
+            state.userId = userId ?? currentUserId
+            state.traits = traits.isEmpty ? currentTraits : traits
+            return (state.userId, state.traits, state.providers, true)
+        }
+
+        guard update.shouldIdentify else {
             return
         }
 
-        self.userId = userId ?? currentUserId
-        self.traits = traits.isEmpty ? currentTraits : traits
-        providers.forEach { $0.identify(userId: self.userId, traits: self.traits) }
+        update.providers.forEach {
+            $0.identify(userId: update.userId, traits: update.traits)
+        }
     }
 }
