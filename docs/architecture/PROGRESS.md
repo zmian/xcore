@@ -345,6 +345,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `LockIsolated<Set<AnyCancellable>>` for one-shot Combine subscribers; concurrency budget **41** (T-067).
 
+### Round 53 — `Device` / `Screen` subscriptions (T-068)
+
+- **Migrate:** Retain orientation/screen Combine tokens in `LockIsolated`; concurrency budget **39** (T-068).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

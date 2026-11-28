@@ -80,17 +80,19 @@ public final class Screen: ObservableObject, Sendable {
         }
     }
 
-    nonisolated(unsafe) private var cancellable: AnyCancellable?
+    private let orientationSubscription = LockIsolated<AnyCancellable?>(nil)
 
     private init() {
         #if os(iOS)
-        cancellable = NotificationCenter
-            .default
-            .publisher(for: UIDevice.orientationDidChangeNotification, object: nil)
-            .receive(on: .main)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
+        orientationSubscription.setValue(
+            NotificationCenter
+                .default
+                .publisher(for: UIDevice.orientationDidChangeNotification, object: nil)
+                .receive(on: .main)
+                .sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+        )
         #endif
     }
 }
