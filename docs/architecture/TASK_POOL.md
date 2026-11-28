@@ -173,3 +173,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-160 | ENTROPY/registry catalog CI budget cross-links |
 | T-161 | Theme layout tests use spacing scale tokens |
 | T-162 | Theme layout tests: corner radius uses scale tokens |
+| T-163 | Theme layout tests: scale #expect without bare points |

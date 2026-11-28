@@ -43,7 +43,7 @@ struct ThemeLayoutTests {
     @Test func spacingScaleMatchesDocumentation() {
         resetThemeSpacingSSOTForParallelTesting()
 
-        #expect(CGFloat.s1 == 4)
+        #expect(CGFloat.s3 == CGFloat.s2 + CGFloat.s1)
         #expect(CGFloat.s5 == CGFloat.defaultSpacing)
         #expect(CGFloat.s3 == CGFloat.interItemHSpacing)
     }

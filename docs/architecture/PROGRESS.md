@@ -764,6 +764,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** corner-radius mutations `20`/`12` → `.s5`/`.s3`.
 - **Enforce:** audit bans bare `cornerRadius` literals in `ThemeLayoutTests`.
+- **CI:** green `50e14990` ([run 46163636986](https://github.com/zmian/xcore/actions/runs/46163636986)).
+
+### Round 140 — Theme scale assertions without point literals (T-163)
+
+- **Migrate:** `s1 == 4` → token relationship `s3 == s2 + s1`.
+- **Enforce:** audit bans `#expect(CGFloat.sN == <literal>)`.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

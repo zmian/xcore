@@ -83,4 +83,10 @@ if rg -q '(Theme|AppConstants)\.cornerRadius = [0-9]+' "$TEST_FILE"; then
   exit 1
 fi
 
+if rg -q '#expect\(CGFloat\.s[0-9]+ == [0-9]+\)' "$TEST_FILE"; then
+  echo "ThemeLayoutTests must assert spacing via tokens/relationships, not bare point #expect literals"
+  rg -n '#expect\(CGFloat\.s[0-9]+ == [0-9]+\)' "$TEST_FILE" || true
+  exit 1
+fi
+
 echo "Theme test isolation audit passed (spacing scale reset documented and enforced)."
