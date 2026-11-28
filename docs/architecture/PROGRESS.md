@@ -467,6 +467,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** Drop `LockIsolated` around `NSCache` (thread-safe; non-`Sendable` values).
 
+### Round 80 — Regex/MapKit LockIsolated capture (T-099)
+
+- **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
