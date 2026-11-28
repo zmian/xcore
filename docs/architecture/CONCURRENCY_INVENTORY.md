@@ -1,6 +1,6 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 44 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 43 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
@@ -38,9 +38,11 @@ Snapshot for reducing concurrency entropy. **Total: 44 annotations** (regenerate
 
 | Location |
 | --- |
-| `ImageFetcher+Composite`, `Cache.swift`, `AudioPlayerClient+Live`, `AddressSearchClient+Live`, `AddressSearchResult`, `Device.swift`, `Screen.swift`, `Publisher+Extensions` |
+| `Cache.swift`, `AudioPlayerClient+Live`, `AddressSearchClient+Live`, `AddressSearchResult`, `Device.swift`, `Screen.swift`, `Publisher+Extensions` |
 
 **Intent:** Bridge non-Sendable UIKit/AVFoundation/MapKit types. Candidates for actor-isolated facades if warnings increase.
+
+**Resolved (Round 50):** `CompositeImageFetcher` uses `LockIsolated` for fetcher list (was `nonisolated(unsafe)`).
 
 ## Animation / presentation
 

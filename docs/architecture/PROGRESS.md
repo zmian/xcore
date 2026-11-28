@@ -333,6 +333,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_registry_catalog.sh` keeps `REGISTRY_CATALOG.md` inventory row in sync with `GOVERNANCE_METRICS.md` and ENTROPY/CONCURRENCY totals (26 audits).
 
+### Round 50 — `CompositeImageFetcher` concurrency (T-065)
+
+- **Migrate:** Replace `nonisolated(unsafe)` fetcher array with `LockIsolated` (+ `@unchecked Sendable`); concurrency budget **43** (T-065).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

@@ -8,27 +8,27 @@
 import UIKit
 import OSLog
 
-final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
-    /// The registered list of fetchers.
-    nonisolated(unsafe) private var fetchers: [ImageFetcher] = []
+final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral, @unchecked Sendable {
+    private let fetchers = LockIsolated([ImageFetcher]())
 
     init(_ fetchers: [ImageFetcher]) {
-        self.fetchers = fetchers.uniqued(\.id)
+        self.fetchers.setValue(fetchers.uniqued(\.id))
     }
 
     init(arrayLiteral elements: ImageFetcher...) {
-        self.fetchers = elements.uniqued(\.id)
+        self.fetchers.setValue(elements.uniqued(\.id))
     }
 
     /// Add given fetcher if it's not already included in the collection.
     ///
     /// - Note: This method ensures there are no duplicate fetchers.
     func add(_ fetcher: ImageFetcher) {
-        guard !fetchers.contains(where: { $0.id == fetcher.id }) else {
-            return
+        fetchers.withValue { list in
+            guard !list.contains(where: { $0.id == fetcher.id }) else {
+                return
+            }
+            list.append(fetcher)
         }
-
-        fetchers.append(fetcher)
     }
 
     /// Add list of given fetchers if they are not already included in the
@@ -41,19 +41,18 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 
     /// Removes the given fetcher.
     func remove(_ fetcher: ImageFetcher) {
-        let ids = fetchers.map(\.id)
-
-        guard let index = ids.firstIndex(of: fetcher.id) else {
-            return
+        fetchers.withValue { list in
+            guard let index = list.firstIndex(where: { $0.id == fetcher.id }) else {
+                return
+            }
+            list.remove(at: index)
         }
-
-        fetchers.remove(at: index)
     }
 }
 
 extension CompositeImageFetcher {
     var id: String {
-        fetchers.map(\.id).joined(separator: "_")
+        fetchers.value.map(\.id).joined(separator: "_")
     }
 
     func canHandle(_ image: ImageRepresentable) -> Bool {
@@ -76,7 +75,8 @@ extension CompositeImageFetcher {
         //    built-in ones.
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
-        guard let fetcher = fetchers.reversed().first(where: { $0.canHandle(image) }) else {
+        let registered = fetchers.value
+        guard let fetcher = registered.reversed().first(where: { $0.canHandle(image) }) else {
             throw ImageFetcherError.notFound
         }
 
@@ -95,7 +95,7 @@ extension CompositeImageFetcher {
     }
 
     func removeCache() {
-        fetchers.forEach { $0.removeCache() }
+        fetchers.value.forEach { $0.removeCache() }
     }
 }
 #endif
