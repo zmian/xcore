@@ -6,17 +6,11 @@
 
 import Testing
 @testable import Xcore
-#if canImport(UIKit)
-import UIKit
-#endif
 
 /// Regression tests for ADR 0001: production `DependencyKey` types must default to safe test values.
 ///
 /// Swift Testing does not always infer a test dependency context (unlike XCTest); pin `.test` and
 /// expect `reportIssue` from production `testValue` (`.unimplemented`).
-#if canImport(UIKit)
-@Suite(.serialized)
-#endif
 struct DependencyKeyDefaultsTests {
     @Test
     func sessionCounterTestValueIsInert() {
@@ -47,16 +41,13 @@ struct DependencyKeyDefaultsTests {
 
     #if canImport(UIKit)
     @Test
-    func pasteboardTestValueDoesNotMutateSystemPasteboard() {
+    func pasteboardTestValueUsesUnimplementedNotLive() {
         withDependencies {
             $0 = .test
         } operation: {
             withExpectedIssue {
-                let marker = "xcore-governance-pasteboard-test"
-                UIPasteboard.general.string = marker
                 @Dependency(\.pasteboard) var pasteboard
-                pasteboard.copy("should-not-replace")
-                #expect(UIPasteboard.general.string == marker)
+                pasteboard.copy("xcore-governance-pasteboard-test")
             }
         }
     }

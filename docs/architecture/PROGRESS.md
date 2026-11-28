@@ -296,6 +296,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#121](https://github.com/zmian/xcore/actions/runs/46113442937) — session/openURL defaults passed; `pasteboardTestValueDoesNotMutateSystemPasteboard` hit 300s (likely `UIPasteboard.general` under parallel Swift Testing).
 - **Migrate:** `@Suite(.serialized)` on `DependencyKeyDefaultsTests` when UIKit (same pattern as `PasteboardClientTests`) (T-057).
 
+### Round 42 — pasteboard test without `UIPasteboard.general` (#122)
+
+- **CI:** [#122](https://github.com/zmian/xcore/actions/runs/46114522166) — serialization did not fix 300s hang; touching `UIPasteboard.general` on the simulator runner appears unsafe here.
+- **Migrate:** Pasteboard default test only asserts production `testValue` via `withExpectedIssue` on `copy` (live pasteboard guard remains in `PasteboardClientTests.noopVariant`) (T-058).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

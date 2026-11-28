@@ -7,8 +7,8 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | ID | Task | Rationale |
 | --- | --- | --- |
 | T-019 | Resolve tracked `#warning` items (see ENTROPY_INVENTORY) | Deletion / modernization |
-| T-043 | Confirm green macOS CI after T-057 | CI stability on #153 |
-| T-057 | Serialize `DependencyKeyDefaultsTests` for `UIPasteboard` (#121) | Push after T-056 |
+| T-043 | Confirm green macOS CI after T-058 | CI stability on #153 |
+| T-058 | Drop `UIPasteboard.general` from dependency default test (#122) | Push after T-057 |
 
 ## Pending confirmation
 
@@ -69,3 +69,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-054 | CI throughput: parallel tests, per-test allowance, longer timeouts (`452c928d`) |
 | T-055 | Stream yield, `DateTests` DST, first dependency-defaults attempt (`0c9552b7`) |
 | T-056 | Dependency defaults: `.test` + `withExpectedIssue` (`a1a53212`) |
+| T-057 | Serialize dependency defaults suite (`1833af47`) |
