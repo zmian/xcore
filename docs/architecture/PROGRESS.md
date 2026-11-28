@@ -423,7 +423,7 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 ### Round 73 — Popup transition storage (T-088)
 
-- **Migrate:** `Popup.TransitionStorage` → `Sendable`. Budget **10** (commit local; push after green CI #153).
+- **Migrate:** `Popup.TransitionStorage` → `Sendable` (reverted on CI; budget stays **11**).
 
 ### Round 73b — Push live client isolation (T-089)
 
@@ -433,6 +433,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `AssociatedObjectKey` (`static let`) replaces mutable `UInt8` keys (ADR 0006).
 - **Fix:** Drop invalid `Sendable` on `Analytics`, `SessionAwareCache`, `LiveSessionCounterClient`; mock computed accessors; revert `CAMediaTimingFunction` static storage.
+
+### Round 74b — CI follow-up (T-091)
+
+- **Fix:** `AssociatedObjectKey` drops `Sendable` (immutable token; `UnsafeRawPointer` not Sendable).
+- **Revert:** `Popup.TransitionStorage` `@unchecked Sendable`.
 
 ## Next scheduled work (task pool excerpt)
 

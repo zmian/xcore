@@ -36,10 +36,12 @@ Snapshot for reducing concurrency entropy. **Total: 0 annotations** (regenerate 
 
 **Resolved (Round 62):** Global defaults (`Theme.default`, `Calendar.default` / `defaultCodable`, `Locale.numbers`, `Color.RGBColorSpace.default`) use `LockIsolated` storage.
 
-**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets were a `@unchecked Sendable` cache (Round 69 → frozen `static let`).
+**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`.
 
-**Resolved (Round 64):** Associated-object keys use `UInt8` token `static var` (stable `inout` address without `nonisolated(unsafe)`); `MockAnalyticsProvider` state behind `LockIsolated`.
+**Resolved (Round 64):** Associated-object keys migrated off `nonisolated(unsafe)`; `MockAnalyticsProvider` state behind `LockIsolated`.
 
-**Enforcement (Round 65):** ADR 0006 documents the zero-`unsafe` budget, `LockIsolated` globals, and `UInt8` associated keys; `audit_associated_object_keys.sh` blocks regressions.
+**Resolved (Round 74 / T-090):** Associated-object keys use `AssociatedObjectKey` (`static let`) for Swift 6 global-concurrency safety (ADR 0006). `CAMediaTimingFunction` presets use per-access factories (non-Sendable `CAMediaTimingFunction`).
+
+**Enforcement (Round 65):** ADR 0006 documents the zero-`unsafe` budget, `LockIsolated` globals, and associated-key pattern; `audit_associated_object_keys.sh` blocks regressions.
 
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.

@@ -101,3 +101,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-088 | `Popup.TransitionStorage` Sendable (11→10; push gated on CI) |
 | T-089 | `LivePushNotificationsClient` LockIsolated (hygiene; NSObject) |
 | T-090 | `AssociatedObjectKey` + CI Sendable fixes (macOS #153) |
+| T-091 | Popup revert + `AssociatedObjectKey` without `Sendable` |
