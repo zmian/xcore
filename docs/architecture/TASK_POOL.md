@@ -74,3 +74,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-019 | Clear all tracked `#warning` in Sources/Xcore |
 | T-062 | Audit scripts tolerate zero `#warning` (`rg` exit 1) |
 | T-063 | Doc sync: catalogs + TEST_CI_POLICY + ADR 0001 testing notes |
+| T-064 | `audit_registry_catalog.sh` + 26-audit CI gate |

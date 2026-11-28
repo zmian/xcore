@@ -329,6 +329,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** Align `REGISTRY_CATALOG`, `GOVERNANCE_SUMMARY` with zero `#warning`; document macOS audit runner + Swift Testing dependency pattern in `TEST_CI_POLICY.md`, `AUDIT_INDEX.md`, ADR 0001 (T-063).
 
+### Round 49 — registry catalog budget audit (T-064)
+
+- **Enforce:** `audit_registry_catalog.sh` keeps `REGISTRY_CATALOG.md` inventory row in sync with `GOVERNANCE_METRICS.md` and ENTROPY/CONCURRENCY totals (26 audits).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
