@@ -421,6 +421,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `Money.Appearance` styling behind `LockIsolated`. Budget **11**.
 
+### Round 73 — Popup transition storage (T-088)
+
+- **Migrate:** `Popup.TransitionStorage` → `Sendable`. Budget **10** (commit local; push after green CI #153).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

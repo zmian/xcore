@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 11 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 10 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -24,7 +24,6 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 
 | Location | Role |
 | --- | --- |
-| `Popup.swift` | `TransitionStorage` (`AnyTransition`) |
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` bridges `Formatter` |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
@@ -37,5 +36,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 **Resolved (Round 71):** `LiveSessionCounterClient` observation task in `LockIsolated` (T-086).
 
 **Resolved (Round 72):** `Money.Appearance` global styling via `LockIsolated` (T-087).
+
+**Resolved (Round 73):** `Popup.Style` `TransitionStorage` is `Sendable` (`AnyTransition` type erasure) (T-088, pending macOS CI on #153).
 
 Regressions: `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` compares live count to the total above.

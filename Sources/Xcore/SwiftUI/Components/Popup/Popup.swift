@@ -34,7 +34,7 @@ extension Popup {
 // MARK: - Style
 
 extension Popup {
-    private struct TransitionStorage: @unchecked Sendable {
+    private struct TransitionStorage: Sendable {
         let transition: AnyTransition
 
         init(_ transition: AnyTransition) {
