@@ -6,8 +6,6 @@
 
 import SwiftUI
 
-#warning("TODO: Incorporate control size and prominence iOS 16 modifiers.")
-
 public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let id: ButtonIdentifier
     private let prominence: ButtonProminence
@@ -121,11 +119,11 @@ extension ButtonStyle {
 
 extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
     public static var rectFill: Self {
-        .fill(shape: .rect(cornerRadius: AppConstants.cornerRadius))
+        .fill(shape: .rect(cornerRadius: Theme.cornerRadius))
     }
 
     public static var rectOutline: Self {
-        .outline(shape: .rect(cornerRadius: AppConstants.cornerRadius))
+        .outline(shape: .rect(cornerRadius: Theme.cornerRadius))
     }
 }
 

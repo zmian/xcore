@@ -32,35 +32,29 @@ struct AsyncCurrentValueStreamTests {
     func iterations() async {
         let stream = AsyncCurrentValueStream<Int>(5)
 
-        Task {
-            // Collect all produced elements
+        let first = Task {
             var values: [Int] = []
-
             for await value in stream {
                 values.append(value)
             }
-
-            // Verify collected elements
-            #expect(values == [5, 1, 2])
+            return values
         }
 
-        Task {
-            // Collect all produced elements
+        let second = Task {
             var values: [Int] = []
-
             for await value in stream {
                 values.append(value)
             }
-
-            // Verify collected elements
-            #expect(values == [5, 1, 2])
+            return values
         }
 
-        // Produce new elements
+        await Task.yield()
+
         stream.send(1)
         stream.send(2)
-
-        // Finish producing elements
         stream.finish()
+
+        #expect(await first.value == [5, 1, 2])
+        #expect(await second.value == [5, 1, 2])
     }
 }

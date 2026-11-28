@@ -27,6 +27,11 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 - [SwiftLint][swiftlint-link]
 - [SwiftFormat][swiftformat-link]
 
+## Architecture governance
+
+Agent-oriented structure, ADRs, and CI audits live under [`docs/architecture/`](docs/architecture/).  
+Run `make audit-architecture` for dependency keys, module indexes, layout SSOT, composites, concurrency, and warning budgets (no Xcode required). See [`AUDIT_INDEX.md`](docs/architecture/AUDIT_INDEX.md).
+
 ## Makefile
 
 We use a Makefile to provide useful shortcuts. Run these commands from the project root:
@@ -37,6 +42,7 @@ We use a Makefile to provide useful shortcuts. Run these commands from the proje
 - `make run` Builds, installs, and launches the app in the configured simulator
 - `make lint` Runs SwiftLint
 - `make format` Runs SwiftFormat
+- `make audit-architecture` Runs architecture governance audits
 
 ## Installation
 

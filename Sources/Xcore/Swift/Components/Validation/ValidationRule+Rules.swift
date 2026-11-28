@@ -6,6 +6,11 @@
 
 import Foundation
 
+private final class RegexValidationPattern<Output>: @unchecked Sendable {
+    let pattern: Regex<Output>
+    init(_ pattern: Regex<Output>) { self.pattern = pattern }
+}
+
 extension ValidationRule {
     /// No validation rule is applied.
     public static var none: Self {
@@ -126,9 +131,9 @@ extension ValidationRule<String> {
     ///   - pattern: The regular expression pattern used to validate the input.
     /// - Returns: A `ValidationRule` instance.
     public static func regex<Output>(_ pattern: Regex<Output>) -> Self {
-        nonisolated(unsafe) let pattern = pattern
+        let holder = RegexValidationPattern(pattern)
         return .init { input in
-            input.wholeMatch(of: pattern) != nil
+            input.wholeMatch(of: holder.pattern) != nil
         }
     }
 

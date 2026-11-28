@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# REGISTRY_CATALOG.md inventory budgets match GOVERNANCE_METRICS.md and live inventories.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+CATALOG="$ROOT/docs/architecture/REGISTRY_CATALOG.md"
+METRICS="$ROOT/docs/architecture/GOVERNANCE_METRICS.md"
+ENTROPY="$ROOT/docs/architecture/ENTROPY_INVENTORY.md"
+CONCURRENCY="$ROOT/docs/architecture/CONCURRENCY_INVENTORY.md"
+UNCHECKED="$ROOT/docs/architecture/UNCHECKED_SENDABLE_INVENTORY.md"
+
+metric_value() {
+  awk -F'|' -v lbl="$1" 'index($2, lbl) > 0 {gsub(/^ +| +$/, "", $3); print $3; exit}' "$METRICS"
+}
+
+entropy_catalog="$(awk -F'|' '/ENTROPY_INVENTORY/ {gsub(/^ +| +$/, "", $3); print $3; exit}' "$CATALOG" | rg -o '^[0-9]+' || true)"
+warning_metric="$(metric_value '#warning in Sources/Xcore')"
+entropy_total="$(rg -o 'Total: [0-9]+' "$ENTROPY" | head -1 | rg -o '[0-9]+' || true)"
+
+if [[ -z "$entropy_catalog" || -z "$warning_metric" || -z "$entropy_total" ]]; then
+  echo "Could not read #warning budgets from catalog, metrics, or ENTROPY_INVENTORY"
+  exit 1
+fi
+
+if [[ "$entropy_catalog" != "$warning_metric" || "$entropy_catalog" != "$entropy_total" ]]; then
+  echo "REGISTRY_CATALOG #warning: catalog $entropy_catalog, metrics $warning_metric, ENTROPY $entropy_total"
+  exit 1
+fi
+
+concurrency_catalog="$(awk -F'|' '/CONCURRENCY_INVENTORY/ {gsub(/^ +| +$/, "", $3); print $3; exit}' "$CATALOG" | rg -o '^[0-9]+' || true)"
+concurrency_metric="$(metric_value 'nonisolated(unsafe) in Sources/Xcore')"
+concurrency_total="$(rg -o 'Total: [0-9]+' "$CONCURRENCY" | head -1 | rg -o '[0-9]+' || true)"
+
+if [[ -z "$concurrency_catalog" || -z "$concurrency_metric" || -z "$concurrency_total" ]]; then
+  echo "Could not read concurrency budgets from catalog, metrics, or CONCURRENCY_INVENTORY"
+  exit 1
+fi
+
+if [[ "$concurrency_catalog" != "$concurrency_metric" || "$concurrency_catalog" != "$concurrency_total" ]]; then
+  echo "REGISTRY_CATALOG concurrency: catalog $concurrency_catalog, metrics $concurrency_metric, CONCURRENCY $concurrency_total"
+  exit 1
+fi
+
+unchecked_catalog="$(awk -F'|' '/UNCHECKED_SENDABLE_INVENTORY/ {gsub(/^ +| +$/, "", $3); print $3; exit}' "$CATALOG" | rg -o '^[0-9]+' || true)"
+unchecked_metric="$(metric_value '@unchecked Sendable in Sources/Xcore')"
+unchecked_total="$(rg -o 'Total: [0-9]+' "$UNCHECKED" | head -1 | rg -o '[0-9]+' || true)"
+
+if [[ -z "$unchecked_catalog" || -z "$unchecked_metric" || -z "$unchecked_total" ]]; then
+  echo "Could not read @unchecked Sendable budgets from catalog, metrics, or UNCHECKED_SENDABLE_INVENTORY"
+  exit 1
+fi
+
+if [[ "$unchecked_catalog" != "$unchecked_metric" || "$unchecked_catalog" != "$unchecked_total" ]]; then
+  echo "REGISTRY_CATALOG @unchecked Sendable: catalog $unchecked_catalog, metrics $unchecked_metric, UNCHECKED $unchecked_total"
+  exit 1
+fi
+
+if ! rg -q 'UNCHECKED_SENDABLE_CI_EVIDENCE\.md' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must list UNCHECKED_SENDABLE_CI_EVIDENCE.md (ADR 0009)"
+  exit 1
+fi
+
+SUMMARY="$ROOT/docs/architecture/GOVERNANCE_SUMMARY.md"
+ARCH_MAP="$ROOT/docs/architecture/ARCHITECTURE_MAP.md"
+AGENTS="$ROOT/AGENTS.md"
+
+if ! rg -q 'audit_ci_test_policy' "$SUMMARY"; then
+  echo "GOVERNANCE_SUMMARY.md must reference audit_ci_test_policy.sh (Theme reset in TEST_CI_POLICY)"
+  exit 1
+fi
+
+if ! rg -q 'audit_governance_metrics' "$SUMMARY"; then
+  echo "GOVERNANCE_SUMMARY.md must reference audit_governance_metrics.sh (CI test budgets)"
+  exit 1
+fi
+
+if ! rg -q 'serialized suites' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must document serialized suites on TEST_CI_POLICY row"
+  exit 1
+fi
+
+if ! rg -q 'CI test counts' "$CATALOG"; then
+  echo "REGISTRY_CATALOG.md must document CI test counts on GOVERNANCE_METRICS row"
+  exit 1
+fi
+
+if ! rg -q 'CI test budgets' "$ENTROPY"; then
+  echo "ENTROPY_INVENTORY.md must list CI test budgets under enforcement coverage"
+  exit 1
+fi
+
+compile_metric="$(metric_value 'compile-excluded test suites')"
+runtime_metric="$(metric_value 'Runtime CI test skips')"
+serialized_metric="$(metric_value 'Serialized Swift Testing suites')"
+policy_compile="$(rg -o 'Compile-excluded suites: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
+policy_runtime="$(rg -o 'Runtime CI skips: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
+policy_serialized="$(rg -o 'Serialized suites: [0-9]+' "$ROOT/docs/architecture/TEST_CI_POLICY.md" | head -1 | rg -o '[0-9]+' || true)"
+[[ "$compile_metric" == "$policy_compile" && "$runtime_metric" == "$policy_runtime" && "$serialized_metric" == "$policy_serialized" ]] || {
+  echo "REGISTRY_CATALOG: GOVERNANCE_METRICS CI budgets (compile $compile_metric, runtime $runtime_metric, serialized $serialized_metric) != TEST_CI_POLICY ($policy_compile, $policy_runtime, $policy_serialized)"
+  exit 1
+}
+
+for script in audit_layout_ssot audit_spacing_scale audit_theme_test_isolation; do
+  if ! rg -q "${script}" "$SUMMARY"; then
+    echo "GOVERNANCE_SUMMARY.md must reference ${script}.sh (layout SSOT chain)"
+    exit 1
+  fi
+done
+
+for needle in 'SPACING_SCALE.md' 'TEST_CI_POLICY' '0005-metadata-and-theme-globals' 'GOVERNANCE_METRICS.md'; do
+  if ! rg -q "$needle" "$AGENTS"; then
+    echo "AGENTS.md must reference $needle (layout spacing SSOT; T-145)"
+    exit 1
+  fi
+done
+
+if ! rg -q '@Suite\(\.serialized\)' "$AGENTS"; then
+  echo "AGENTS.md must reference @Suite(.serialized) (CI test policy; T-158)"
+  exit 1
+fi
+
+if ! rg -q 'audit_theme_test_isolation' "$ARCH_MAP"; then
+  echo "ARCHITECTURE_MAP.md must reference audit_theme_test_isolation.sh for layout ownership"
+  exit 1
+fi
+
+if ! rg -q 'audit_ci_test_policy' "$ARCH_MAP"; then
+  echo "ARCHITECTURE_MAP.md must reference audit_ci_test_policy.sh for CI test isolation"
+  exit 1
+fi
+
+ADR0005="$ROOT/docs/architecture/adr/0005-metadata-and-theme-globals.md"
+if ! rg -q 'T-161' "$ADR0005"; then
+  echo "ADR 0005 must document ThemeLayoutTests scale token policy (T-161–T-164)"
+  exit 1
+fi
+
+echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog, unchecked $unchecked_catalog)."

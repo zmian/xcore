@@ -8,25 +8,38 @@ import Foundation
 internal import Contacts
 internal import MapKit
 
-// MARK: - Dot Syntax Support
+// MARK: - Live
 
-extension AddressSearchClient where Self == LiveAddressSearchClient {
+extension AddressSearchClient {
     /// Returns the live variant of `AddressSearchClient`.
     public static var live: Self {
-        .init()
+        let client = LiveAddressSearchClient()
+
+        return .init(
+            query: { try await client.query($0) },
+            updateQuery: { client.updateQuery($0, id: $1) },
+            resolve: { try await client.resolve($0) },
+            validate: { try await client.validate($0) },
+            observe: { client.observe(id: $0) }
+        )
     }
 }
 
 extension LiveAddressSearchClient {
+    private static let supportedRegionsStorage = LockIsolated([Locale.Region.unitedStates])
+
     /// A list of ISO country codes for supported regions (e.g., “US” or “GB”).
     ///
     /// If empty then all regions are supported.
-    nonisolated(unsafe) public static var supportedRegions = [Locale.Region.unitedStates]
+    public static var supportedRegions: [Locale.Region] {
+        get { supportedRegionsStorage.value }
+        set { supportedRegionsStorage.setValue(newValue) }
+    }
 }
 
 // MARK: - Implementation
 
-public final class LiveAddressSearchClient: AddressSearchClient {
+public final class LiveAddressSearchClient: @unchecked Sendable {
     private typealias L = Localized.PostalAddress
     private let delegates = LockIsolated([UUID: Delegate]())
 
@@ -154,8 +167,6 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             logLevel: .error
         )
 
-        #warning("Use stringDict to properly localize")
-
         if supportedRegions.count == 1, let code = supportedRegions.first {
             let isUSA = code == "US"
             let regionName = isUSA ? "U.S." : PostalAddress.countryName(isoCode: code) ?? code
@@ -173,15 +184,17 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 // MARK: - Delegate
 
 extension LiveAddressSearchClient {
-    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, Sendable {
-        nonisolated(unsafe) private let searchCompleter = MKLocalSearchCompleter()
+    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, @unchecked Sendable {
+        private let searchCompleter = LockIsolated(MKLocalSearchCompleter())
         private let onResults: @Sendable ([AddressSearchResult]) -> Void
 
         init(onResults: @escaping @Sendable ([AddressSearchResult]) -> Void) {
             self.onResults = onResults
             super.init()
-            searchCompleter.delegate = self
-            searchCompleter.resultTypes = .address
+            searchCompleter.withValue { completer in
+                completer.delegate = self
+                completer.resultTypes = .address
+            }
         }
 
         func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
@@ -193,12 +206,14 @@ extension LiveAddressSearchClient {
         }
 
         var query: String {
-            get { searchCompleter.queryFragment }
-            set { searchCompleter.queryFragment = newValue }
+            get { searchCompleter.withValue { $0.queryFragment } }
+            set {
+                searchCompleter.withValue { $0.queryFragment = newValue }
+            }
         }
 
         deinit {
-            searchCompleter.cancel()
+            searchCompleter.withValue { $0.cancel() }
         }
     }
 }

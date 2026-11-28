@@ -32,7 +32,8 @@ APP_PATH := $(DERIVED_DATA_PATH)/Build/Products/$(CONFIGURATION)-iphonesimulator
 XCODEBUILD_OUTPUT_FILTER := perl -ne 'next if /\[MT\] IDERunDestination: Supported platforms for the buildables in the current scheme is empty\.|\[MT\] IDETestOperationsObserverDebug:/; s/ on '\''[^'\'']+'\''// if /^(Test suite|Test case) /; print;'
 
 ifneq ($(strip $(CI)),)
-XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation
+XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation \
+	-test-timeouts-enabled YES -maximum-test-execution-time-allowance 300
 XCODEBUILD_BUILD_SETTINGS += OTHER_SWIFT_FLAGS="\$$(inherited) -DCI"
 RAW_XCODEBUILD := 1
 export SIMCTL_CHILD_CI := true
@@ -57,7 +58,7 @@ TEST_ONLY_ARG := -only-testing:$(TEST_ONLY)
 endif
 endif
 
-.PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check
+.PHONY: help _ensure_xcode clean build build-docc tests test run lint format format-check audit-architecture
 
 _ensure_xcode:
 	@test -d "$(DEVELOPER_DIR)" || (echo "Xcode not found at $(DEVELOPER_DIR)" && exit 1)
@@ -93,9 +94,14 @@ build-docc: _ensure_xcode ## Generate DocC static site output under DOCC_OUTPUT_
 		--hosting-base-path "xcore$(if $(DOCC_VERSION),/$(DOCC_VERSION),)"
 
 test: _ensure_xcode ## Run tests through the Example scheme
+ifneq ($(strip $(CI)),)
+	$(call xcodebuild_run,$(XCODEBUILD) test $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(XCODEBUILD_BUILD_SETTINGS))
+	@echo "Tests passed"
+else
 	@set -o pipefail; \
 	$(XCODEBUILD) test -quiet $(XCODEBUILD_FLAGS) -workspace "$(WORKSPACE)" -scheme "$(SCHEME)" -configuration "$(CONFIGURATION)" -derivedDataPath "$(DERIVED_DATA_PATH)" -destination "$(SIMULATOR_DESTINATION)" $(TEST_ONLY_ARG) $(XCODEBUILD_BUILD_SETTINGS) 2>&1 | $(XCODEBUILD_OUTPUT_FILTER) && \
 	echo "Tests passed"
+endif
 
 run: _ensure_xcode ## Build, install, and launch the app in the configured simulator
 	@xcrun simctl boot "$(SIMULATOR_NAME)" >/dev/null 2>&1 || true
@@ -114,3 +120,38 @@ format-check: ## Check SwiftFormat without changing files
 
 lint: ## Run SwiftLint
 	@swiftlint lint
+
+audit-architecture: ## Run architecture governance checks (no Xcode required)
+	@bash BuildTools/Scripts/audit_cocoa_component_index.sh
+	@bash BuildTools/Scripts/audit_cocoa_extensions_index.sh
+	@bash BuildTools/Scripts/audit_cocoa_supporting_index.sh
+	@bash BuildTools/Scripts/audit_helpers_index.sh
+	@bash BuildTools/Scripts/audit_swift_protocols_index.sh
+	@bash BuildTools/Scripts/audit_swift_property_wrappers_index.sh
+	@bash BuildTools/Scripts/audit_ci_test_policy.sh
+	@bash BuildTools/Scripts/audit_theme_test_isolation.sh
+	@bash BuildTools/Scripts/audit_extensions_index.sh
+	@bash BuildTools/Scripts/audit_component_index.sh
+	@bash BuildTools/Scripts/audit_swiftui_component_index.sh
+	@bash BuildTools/Scripts/audit_swiftui_extensions_index.sh
+	@bash BuildTools/Scripts/audit_dependency_registry.sh
+	@bash BuildTools/Scripts/audit_dependency_layout.sh
+	@bash BuildTools/Scripts/audit_dependency_keys.sh
+	@bash BuildTools/Scripts/audit_dependency_client_shapes.sh
+	@bash BuildTools/Scripts/audit_concurrency_inventory.sh
+	@bash BuildTools/Scripts/audit_unchecked_sendable_inventory.sh
+	@bash BuildTools/Scripts/audit_associated_object_keys.sh
+	@bash BuildTools/Scripts/audit_module_placement.sh
+	@bash BuildTools/Scripts/audit_layer_imports.sh
+	@bash BuildTools/Scripts/audit_compiler_warnings.sh
+	@bash BuildTools/Scripts/audit_layout_ssot.sh
+	@bash BuildTools/Scripts/audit_spacing_scale.sh
+	@bash BuildTools/Scripts/audit_formatting_defaults.sh
+	@bash BuildTools/Scripts/audit_date_legacy_format.sh
+	@bash BuildTools/Scripts/audit_coding_defaults.sh
+	@bash BuildTools/Scripts/audit_composite_registration.sh
+	@bash BuildTools/Scripts/audit_registry_catalog.sh
+	@bash BuildTools/Scripts/audit_governance_metrics.sh
+	@bash BuildTools/Scripts/audit_product_gates.sh
+	@bash BuildTools/Scripts/audit_unchecked_sendable_ci_holds.sh
+	@bash BuildTools/Scripts/audit_audit_index.sh

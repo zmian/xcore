@@ -41,6 +41,20 @@ and uses `Xcore.xcworkspace` + the `Example` scheme. That is the supported path.
 - For SwiftUI and concurrency warnings, follow the framework API contract; do not
   add unsafe workarounds.
 
+## Architecture governance
+
+Ongoing entropy reduction is tracked under `docs/architecture/` — start with
+`docs/architecture/GOVERNANCE_SUMMARY.md` and `docs/architecture/REGISTRY_CATALOG.md`.
+Registries: `DEPENDENCY_REGISTRY.md`, `COMPONENT_INDEX.md`, `SWIFTUI_COMPONENT_INDEX.md`.
+Before adding a `@Dependency` client, read `docs/architecture/adr/0002-dependency-client-template.md`.
+Concurrency: no `nonisolated(unsafe)` in `Sources/Xcore`; associated keys use `AssociatedObjectKey` (`adr/0006-concurrency-and-associated-keys.md`). New `@unchecked Sendable` requires `UNCHECKED_SENDABLE_INVENTORY.md` (`adr/0007-unchecked-sendable-inventory.md`). Do not re-apply macOS-failed reductions listed in `UNCHECKED_SENDABLE_CI_EVIDENCE.md` (`adr/0009-unchecked-sendable-ci-holds.md`).
+Layout spacing: `SPACING_SCALE.md` (`Theme.init` defaults `.s5`/`.s3`; parallel CI resets in `TEST_CI_POLICY.md`; `adr/0005-metadata-and-theme-globals.md`).
+CI tests: `TEST_CI_POLICY.md` (runtime skips, `#if !CI` live suites, `@Suite(.serialized)` catalog; headline counts in `GOVERNANCE_METRICS.md`).
+
+Verification without Xcode: `make audit-architecture` (**33** checks; see
+`docs/architecture/AUDIT_INDEX.md`). macOS CI needs Homebrew `ripgrep`; audit shell scripts
+target Bash 3.2 (no `mapfile` / `declare -A`).
+
 ## Fixed Decisions
 
 - Xcore is one Swift package target: `import Xcore`. Folders (`Swift/`,

@@ -9,8 +9,13 @@ import SwiftUI
 // MARK: - Default
 
 extension Theme {
+    private static let defaultStorage = LockIsolated(Theme.system)
+
     /// The default theme for the interface.
-    nonisolated(unsafe) public static var `default`: Theme = .system
+    public static var `default`: Theme {
+        get { defaultStorage.value }
+        set { defaultStorage.setValue(newValue) }
+    }
 }
 
 // MARK: - System

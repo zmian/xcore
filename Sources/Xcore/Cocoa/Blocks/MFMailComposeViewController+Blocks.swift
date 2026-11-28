@@ -38,20 +38,20 @@ extension MFMailComposeViewController {
     }
 
     private enum AssociatedKey {
-        nonisolated(unsafe) static var actionHandler = "actionHandler"
-        nonisolated(unsafe) static var shouldAutoDismiss = "shouldAutoDismiss"
+        static let actionHandler = AssociatedObjectKey()
+        static let shouldAutoDismiss = AssociatedObjectKey()
     }
 
     private var actionHandler: ClosureWrapper? {
-        get { associatedObject(&AssociatedKey.actionHandler) }
-        set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
+        get { associatedObject(AssociatedKey.actionHandler) }
+        set { setAssociatedObject(AssociatedKey.actionHandler, value: newValue) }
     }
 
     public var shouldAutoDismiss: Bool {
-        get { associatedObject(&AssociatedKey.shouldAutoDismiss, default: false) }
+        get { associatedObject(AssociatedKey.shouldAutoDismiss, default: false) }
         set {
             mailComposeDelegate = self
-            setAssociatedObject(&AssociatedKey.shouldAutoDismiss, value: newValue)
+            setAssociatedObject(AssociatedKey.shouldAutoDismiss, value: newValue)
         }
     }
 

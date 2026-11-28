@@ -6,8 +6,6 @@
 
 import Foundation
 
-#warning("FIXME: Now Pointfree's Shared lib can be used replace Pond")
-
 /// A protocol where the conforming types provide functionality for key value
 /// storage.
 ///
@@ -86,6 +84,7 @@ extension DependencyValues {
     private enum PondKey: DependencyKey {
         static let liveValue: Pond = .unimplemented
         static let testValue: Pond = .unimplemented
+        static let previewValue: Pond = .empty
     }
 
     /// Provide functionality for key value storage.

@@ -31,8 +31,8 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
     private var center: UNUserNotificationCenter { .current() }
     fileprivate let stream = AsyncPassthroughStream<Event>()
-    private var notificationTask: Task<Void, Never>?
-    private var currentAuthorizationStatus: AuthorizationStatus = .notDetermined
+    private let notificationTask = LockIsolated<Task<Void, Never>?>(nil)
+    private let currentAuthorizationStatus = LockIsolated(AuthorizationStatus.notDetermined)
 
     override init() {
         super.init()
@@ -41,12 +41,11 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
     }
 
     deinit {
-        notificationTask?.cancel()
-        notificationTask = nil
+        notificationTask.withValue { $0?.cancel() }
     }
 
     private func addObserver() {
-        notificationTask = Task {
+        notificationTask.setValue(Task {
             // On foreground, get authorization status in case user goes into the System
             // Settings and toggled the notifications settings.
             for await _ in NotificationCenter.async(UIApplication.willEnterForegroundNotification) {
@@ -55,7 +54,7 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
                 // toggles the notification settings in the system Settings.app).
                 _ = await authorizationStatus()
             }
-        }
+        })
     }
 
     @Sendable
@@ -77,8 +76,13 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
 
         // Send the status updates to the events stream if it's different then the last
         // one.
-        if status != currentAuthorizationStatus {
-            currentAuthorizationStatus = status
+        let changed = currentAuthorizationStatus.withValue { last in
+            guard status != last else { return false }
+            last = status
+            return true
+        }
+
+        if changed {
             stream.send(.changedAuthorization(status: status))
         }
 
@@ -119,21 +123,10 @@ private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
 
     @Sendable
     func openAppSettings() {
-        #warning("FIXME: Fix the open settings up. Uncommenting causes segmentation fault 11")
-//        typealias L = Localized.PushNotifications.OpenSystemSettings
-//
-//        Popup.show(title: L.title, message: L.message) { $isPresented in
-//            Button(L.buttonOpenSettings) {
-//                Dependency(\.openURL).wrappedValue(.settingsApp)
-//                isPresented = false
-//            }
-//            .buttonStyle(.primary)
-//
-//            Button.cancel {
-//                isPresented = false
-//            }
-//            .buttonStyle(.secondary)
-//        }
+        Task { @MainActor in
+            @Dependency(\.openURL) var openURL
+            await openURL(.notificationSettings)
+        }
     }
 
     private func registerForRemoteNotifications(_ register: Bool) {

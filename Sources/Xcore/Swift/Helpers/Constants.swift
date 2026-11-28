@@ -63,28 +63,39 @@ extension CGAffineTransform {
 
 extension CGFloat {
     /// Spacing with the default value of `4` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s1: Self = 4
+    public static let s1: Self = 4
     /// Spacing with the default value of `8` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s2: Self = 8
+    public static let s2: Self = 8
     /// Spacing with the default value of `12` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s3: Self = 12
+    ///
+    /// Matches the launch default for ``Theme/interItemHSpacing`` (`Theme.init` uses `.s3`).
+    /// See `docs/architecture/SPACING_SCALE.md` (enforced by `audit_spacing_scale.sh`).
+    public static let s3: Self = 12
     /// Spacing with the default value of `16` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s4: Self = 16
+    public static let s4: Self = 16
     /// Spacing with the default value of `20` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s5: Self = 20
+    ///
+    /// Matches the launch default for ``Theme/defaultSpacing`` (`Theme.init` uses `.s5`).
+    /// See `docs/architecture/SPACING_SCALE.md` (enforced by `audit_spacing_scale.sh`).
+    public static let s5: Self = 20
     /// Spacing with the default value of `24` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s6: Self = 24
+    public static let s6: Self = 24
     /// Spacing with the default value of `28` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s7: Self = 28
+    public static let s7: Self = 28
     /// Spacing with the default value of `32` at a normal dynamic type setting.
-    nonisolated(unsafe) public static var s8: Self = 32
+    public static let s8: Self = 32
 
-    /// The default spacing value at a normal dynamic type setting.
-    nonisolated(unsafe) public static var defaultSpacing: Self = .s5
+    /// Forwards to ``Theme/default``; prefer ``EnvironmentValues/theme`` in SwiftUI.
+    public static var defaultSpacing: Self {
+        get { Theme.defaultSpacing }
+        set { Theme.defaultSpacing = newValue }
+    }
 
-    /// The default spacing value at a normal dynamic type setting for inter items
-    /// in horizontal axis.
-    nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
+    /// Forwards to ``Theme/default``.
+    public static var interItemHSpacing: Self {
+        get { Theme.interItemHSpacing }
+        set { Theme.interItemHSpacing = newValue }
+    }
 
     /// Return true `1` pixel relative to the screen scale.
     public static var onePixel: Self {
@@ -95,8 +106,10 @@ extension CGFloat {
 // MARK: - EdgeInsets
 
 extension EdgeInsets {
-    /// The default insets for list content.
-    nonisolated(unsafe) public static var listRow = Self(.defaultSpacing)
+    /// The default insets for list content; forwards to ``Theme/listRowInsets``.
+    public static var listRow: Self {
+        Theme.listRowInsets
+    }
 }
 
 // MARK: - URL
@@ -123,7 +136,7 @@ extension URL {
 
 extension Character {
     /// The character used for masking strings.
-    nonisolated(unsafe) public static var mask: Self = "•"
+    public static let mask: Self = "•"
 }
 
 // MARK: - String
@@ -140,17 +153,17 @@ extension String {
 
 extension Int {
     @_disfavoredOverload
-    nonisolated(unsafe) public static var maxFractionDigits = 100
+    public static let maxFractionDigits = 100
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultFractionDigits = 2
+    public static let defaultFractionDigits = 2
 
     @_disfavoredOverload
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100
+    public static let defaultRandomUpperBound = 100
 }
 
 extension Double {
-    nonisolated(unsafe) public static var defaultRandomUpperBound = 100.0
+    public static let defaultRandomUpperBound = 100.0
 }
 
 extension RangeExpression where Self == ClosedRange<Int> {
@@ -186,7 +199,11 @@ public enum AppConstants {
         Device.userInterfaceIdiom == .pad ? 50 : 44
     }
 
-    nonisolated(unsafe) public static var cornerRadius: CGFloat = 15
+    /// Forwards to ``Theme/default``; prefer ``EnvironmentValues/theme`` in SwiftUI.
+    public static var cornerRadius: CGFloat {
+        get { Theme.cornerRadius }
+        set { Theme.cornerRadius = newValue }
+    }
 
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width

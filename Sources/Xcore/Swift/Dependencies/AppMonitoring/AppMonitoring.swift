@@ -254,19 +254,19 @@ extension AppMonitoring {
     public static var unimplemented: Self {
         .init(
             configure: {
-                reportIssue("\(Self.self).configure is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appMonitoring).configure"#)
             },
             setCollectionEnabled: { _ in
-                reportIssue("\(Self.self).setCollectionEnabled is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appMonitoring).setCollectionEnabled"#)
             },
             signin: { _ in
-                reportIssue("\(Self.self).signin is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appMonitoring).signin"#)
             },
             signout: {
-                reportIssue("\(Self.self).signout is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appMonitoring).signout"#)
             },
             log: { _, _, _, _ in
-                reportIssue("\(Self.self).log is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appMonitoring).log"#)
             },
             trace: {
                 UnimplementedAppTraceReporting(operationName: $0)

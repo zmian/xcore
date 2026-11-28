@@ -17,7 +17,7 @@ extension View {
     /// - Returns: A view that adds a border with the specified corner radius, width
     ///   and color to this view.
     public func border(
-        cornerRadius: CGFloat = AppConstants.cornerRadius,
+        cornerRadius: CGFloat = Theme.cornerRadius,
         lineWidth: CGFloat = .onePixel,
         color: Color? = nil
     ) -> some View {

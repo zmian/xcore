@@ -16,6 +16,7 @@ permissions:
 jobs:
   build-test-lint:
     runs-on: macos-26
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,13 +27,17 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install tools
-        run: brew install swiftlint swiftformat
+        run: brew install ripgrep swiftlint swiftformat
 
       - name: Build
         run: make build
 
       - name: Test
+        timeout-minutes: 45
         run: make test
 
       - name: Lint
         run: make lint
+
+      - name: Architecture audit
+        run: make audit-architecture

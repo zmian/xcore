@@ -1041,7 +1041,10 @@ struct DateTest {
 
     @Test
     func timeZone() {
-        #expect(Date.timeZoneOffset(calendar: .usEastern) == -4)
+        #expect(
+            Date.timeZoneOffset(calendar: .usEastern)
+                == Calendar.usEastern.timeZone.secondsFromGMT() / 3600
+        )
         #expect(Date.timeZoneOffset(calendar: .iso) == 0)
         #expect(Date.timeZoneOffset(calendar: .turkey) == 3)
     }

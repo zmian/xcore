@@ -36,10 +36,14 @@ import Combine
 /// ```
 public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
-    private var lastActiveTime = ElapsedTime()
     private let inactivityDuration: Duration
     private let storage = LockIsolated<Set<Value>>([])
-    private var appPhaseTask: Task<Void, Never>?
+    private struct SessionState {
+        var lastActiveTime = ElapsedTime()
+        var appPhaseTask: Task<Void, Never>?
+    }
+
+    private let sessionState = LockIsolated(SessionState())
 
     /// Creates an instance of `SessionAwareCache`.
     ///
@@ -51,7 +55,7 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     }
 
     deinit {
-        appPhaseTask?.cancel()
+        sessionState.withValue { $0.appPhaseTask?.cancel() }
     }
 
     /// Observes app lifecycle events to manage session activity.
@@ -60,18 +64,22 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     /// the app returns to the foreground, the last active time is checked. If the
     /// session has expired, the cached values are cleared.
     private func addAppPhaseObserver() {
-        appPhaseTask = Task {
-            for await appPhase in appPhase.receive.values {
-                switch appPhase {
-                    case .background:
-                        lastActiveTime.reset()
-                    case .willEnterForeground:
-                        if lastActiveTime.hasElapsed(inactivityDuration) {
-                            // Reset the cache for a new session
-                            storage.withValue { $0.removeAll() }
-                        }
-                    default:
-                        break
+        sessionState.withValue { state in
+            state.appPhaseTask = Task {
+                for await appPhase in appPhase.receive.values {
+                    switch appPhase {
+                        case .background:
+                            sessionState.withValue { $0.lastActiveTime.reset() }
+                        case .willEnterForeground:
+                            let expired = sessionState.withValue {
+                                $0.lastActiveTime.hasElapsed(inactivityDuration)
+                            }
+                            if expired {
+                                storage.withValue { $0.removeAll() }
+                            }
+                        default:
+                            break
+                    }
                 }
             }
         }
@@ -105,6 +113,6 @@ public final class SessionAwareCache<Value: Sendable & Hashable>: @unchecked Sen
     /// - Parameter value: A value to look for in the cache.
     /// - Returns: `true` if the value exists in the cache; otherwise, `false`.
     public func contains(_ value: Value) -> Bool {
-        storage.value.contains(value)
+        storage.withValue { $0.contains(value) }
     }
 }

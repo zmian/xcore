@@ -10,6 +10,13 @@ import Foundation
 
 struct FeatureFlagTests {
     @Test
+    func compositeInitDeduplicatesProvidersWithSameId() {
+        let deduped = CompositeFeatureFlagProvider([CustomFeatureFlag(), CustomFeatureFlag()])
+        let single = CompositeFeatureFlagProvider([CustomFeatureFlag()])
+        #expect(deduped.id == single.id)
+    }
+
+    @Test
     func getValue() {
         #expect(TestFeature.flag(.validBool).value(default: false) == true)
         #expect(TestFeature.flag(.invalidBool).value(default: false) == false)

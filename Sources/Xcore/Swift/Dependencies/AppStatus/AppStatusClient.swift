@@ -219,21 +219,21 @@ extension AppStatusClient {
     public static var unimplemented: Self {
         .init(
             receive: {
-                reportIssue("\(Self.self).receive is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appStatus).receive"#)
                 return .constant(.preparingLaunch)
             }(),
             sessionState: {
-                reportIssue("\(Self.self).sessionState is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appStatus).sessionState"#)
                 return .constant(.signedOut)
             }(),
             evaluate: {
-                reportIssue("\(Self.self).evaluate is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appStatus).evaluate"#)
             },
             changeSessionTo: { _ in
-                reportIssue("\(Self.self).changeSessionTo is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appStatus).changeSessionTo"#)
             },
             systemForceRefresh: {
-                reportIssue("\(Self.self).systemForceRefresh is unimplemented")
+                reportIssue(#"Unimplemented: @Dependency(\.appStatus).systemForceRefresh"#)
             }
         )
     }

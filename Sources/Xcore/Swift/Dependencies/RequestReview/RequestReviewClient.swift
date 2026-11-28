@@ -83,6 +83,7 @@ extension DependencyValues {
     private enum RequestReviewClientKey: DependencyKey {
         static let liveValue: RequestReviewClient = .live
         static let testValue: RequestReviewClient = .unimplemented
+        static let previewValue: RequestReviewClient = .noop
     }
 
     /// Provides functionality to request an App Store rating or review from the

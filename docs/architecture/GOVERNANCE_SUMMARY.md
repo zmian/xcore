@@ -1,0 +1,52 @@
+# Xcore architecture governance (agent quick start)
+
+**Branch / PR:** ongoing on `cursor/architecture-governance-825b` ([#153](https://github.com/zmian/xcore/pull/153)).
+
+## Before you edit
+
+1. Read [ADR 0002](./adr/0002-dependency-client-template.md) when adding `@Dependency` clients.
+2. Run `make audit-architecture` (**33** Linux-safe checks; see `AUDIT_INDEX.md`) before push.
+3. Headline budgets: [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md).
+4. Catalog of registries and inventories: [REGISTRY_CATALOG.md](./REGISTRY_CATALOG.md).
+5. Update [TASK_POOL.md](./TASK_POOL.md) for pending product decisions; do not block on them.
+
+## Single source of truth
+
+Production dependency keys: [DEPENDENCY_REGISTRY.md](./DEPENDENCY_REGISTRY.md) (14 keys).  
+Product gates index: [PRODUCT_GATES.md](./PRODUCT_GATES.md) (P-002, P-003; P-001 resolved).  
+Domain components: [COMPONENT_INDEX.md](./COMPONENT_INDEX.md) (14 Swift), [SWIFTUI_COMPONENT_INDEX.md](./SWIFTUI_COMPONENT_INDEX.md) (21 SwiftUI), [COCOA_COMPONENT_INDEX.md](./COCOA_COMPONENT_INDEX.md) (3 Cocoa).  
+Extensions: [EXTENSIONS_INDEX.md](./EXTENSIONS_INDEX.md) (4 folders, 24 root files); [COCOA_EXTENSIONS_INDEX.md](./COCOA_EXTENSIONS_INDEX.md); [SWIFTUI_EXTENSIONS_INDEX.md](./SWIFTUI_EXTENSIONS_INDEX.md); [COCOA_SUPPORTING_INDEX.md](./COCOA_SUPPORTING_INDEX.md); [SWIFT_PROTOCOLS_INDEX.md](./SWIFT_PROTOCOLS_INDEX.md); [SWIFT_PROPERTY_WRAPPERS_INDEX.md](./SWIFT_PROPERTY_WRAPPERS_INDEX.md). CI tests: [TEST_CI_POLICY.md](./TEST_CI_POLICY.md).
+
+## Rules enforced in CI
+
+| Rule | ADR |
+| --- | --- |
+| Dependency keys: `live` + `test` + `preview` when `noop` exists | 0001, 0002 |
+| Keys live under `Swift/Dependencies/` (except `Pond`) | 0003 |
+| `reportIssue` for unimplemented; no `IssueReporting` | 0003 |
+| Registration composites dedupe by `id` | 0004 + `audit_composite_registration.sh` |
+| Metadata: `UserInfoContainer`, `Theme` layout, `FeatureFlag.provider` | 0005 |
+| `Theme.cornerRadius` canonical; `AppConstants.cornerRadius` forwarder only | 0005 + `audit_layout_ssot.sh` |
+| Theme spacing: `Theme.init` uses `CGFloat.s5`/`.s3`; frozen `s1`…`s8` | 0005 + `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |
+| Parallel CI: Theme spacing reset + `@Suite(.serialized)` on `ThemeLayoutTests` | `TEST_CI_POLICY.md` + `audit_theme_test_isolation.sh` + `audit_ci_test_policy.sh` |
+| CI test budgets (runtime skips + serialized suites) | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` + `audit_governance_metrics.sh` |
+| Layer import allowlists | 0003 + `audit_layer_imports.sh` |
+| Headline metrics match inventories | `audit_governance_metrics.sh` |
+| Zero `nonisolated(unsafe)`; `AssociatedObjectKey` tokens | 0006 + `audit_concurrency_inventory.sh`, `audit_associated_object_keys.sh` |
+| `@unchecked Sendable` inventory parity | 0007 + `audit_unchecked_sendable_inventory.sh` |
+| macOS CI `@unchecked` holds | 0009 + `audit_unchecked_sendable_ci_holds.sh` |
+
+## Inventories
+
+- [GOVERNANCE_METRICS.md](./GOVERNANCE_METRICS.md) — enforced snapshot of headline budgets (inventories + CI test counts)
+- [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) — parallel implementations, `#warning` budget (0)
+- [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) — `nonisolated(unsafe)` budget (0)
+- [UNCHECKED_SENDABLE_INVENTORY.md](./UNCHECKED_SENDABLE_INVENTORY.md) — `@unchecked Sendable` budget (21)
+- [UNCHECKED_SENDABLE_CI_EVIDENCE.md](./UNCHECKED_SENDABLE_CI_EVIDENCE.md) — macOS CI failed reduction patterns
+- [SPACING_SCALE.md](./SPACING_SCALE.md) · [FORMATTING_DEFAULTS.md](./FORMATTING_DEFAULTS.md) · [CODING_DEFAULTS.md](./CODING_DEFAULTS.md)
+- [HELPERS_INDEX.md](./HELPERS_INDEX.md) · [LAYER_IMPORTS.md](./LAYER_IMPORTS.md)
+- [PROGRESS.md](./PROGRESS.md) — completed rounds
+
+## macOS verification
+
+`make build` · `make test` · `make lint` (Xcode required)

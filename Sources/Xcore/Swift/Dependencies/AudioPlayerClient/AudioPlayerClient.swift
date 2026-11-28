@@ -59,6 +59,7 @@ extension DependencyValues {
     private enum AudioPlayerClientKey: DependencyKey {
         static let liveValue: AudioPlayerClient = .live
         static let testValue: AudioPlayerClient = .unimplemented
+        static let previewValue: AudioPlayerClient = .noop
     }
 
     /// Provides functionality for playing audio on the device.

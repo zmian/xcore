@@ -7,7 +7,6 @@
 import Foundation
 
 public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
-    nonisolated(unsafe) public static var defaultEncodeAsString = false
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {
@@ -44,16 +43,24 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
 
 extension DecodingFormatStyle where Self == DoubleCodingFormatStyle {
     public static var double: Self {
-        .init(encodeAsString: Self.defaultEncodeAsString)
+        .init(encodeAsString: CodingFormatStyleDefaults.defaultEncodeAsString)
     }
 }
 
 extension EncodingFormatStyle where Self == DoubleCodingFormatStyle {
     public static var double: Self {
-        .init(encodeAsString: Self.defaultEncodeAsString)
+        .init(encodeAsString: CodingFormatStyleDefaults.defaultEncodeAsString)
     }
 
     public static func double(asString: Bool) -> Self {
         .init(encodeAsString: asString)
+    }
+}
+
+extension DoubleCodingFormatStyle {
+    /// Forwards to ``CodingFormatStyleDefaults/defaultEncodeAsString``.
+    public static var defaultEncodeAsString: Bool {
+        get { CodingFormatStyleDefaults.defaultEncodeAsString }
+        set { CodingFormatStyleDefaults.defaultEncodeAsString = newValue }
     }
 }

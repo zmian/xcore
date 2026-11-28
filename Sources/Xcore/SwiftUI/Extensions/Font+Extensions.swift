@@ -230,10 +230,15 @@ extension Font.TextStyle {
 // MARK: - Dynamic Type Overrides
 
 extension Font {
+    private static let preferredContentSizeCategoryStorage = LockIsolated<UIContentSizeCategory?>(nil)
+
     /// An optional property to set the preferred content size category.
     ///
     /// - Note: Setting this property disables dynamic type.
-    nonisolated(unsafe) public static var preferredContentSizeCategory: UIContentSizeCategory?
+    public static var preferredContentSizeCategory: UIContentSizeCategory? {
+        get { preferredContentSizeCategoryStorage.value }
+        set { preferredContentSizeCategoryStorage.setValue(newValue) }
+    }
 
     fileprivate static func compatibleWithTraitCollection() -> UITraitCollection? {
         preferredContentSizeCategory.map(UITraitCollection.init(preferredContentSizeCategory:))

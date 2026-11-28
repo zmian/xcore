@@ -360,8 +360,19 @@ extension Money {
     ///     $0.locale = .uk
     /// }
     /// ```
-    public final class Appearance: @unchecked Sendable, Appliable {
-        public var superscriptMinorUnitEnabled = true
+    public final class Appearance: Sendable, Appliable {
+        private struct State {
+            var superscriptMinorUnitEnabled = true
+            var currencySymbol = Locale.us.currencySymbol ?? "$"
+            var locale: Locale = .us
+        }
+
+        private let state = LockIsolated(State())
+
+        public var superscriptMinorUnitEnabled: Bool {
+            get { state.value.superscriptMinorUnitEnabled }
+            set { state.withValue { $0.superscriptMinorUnitEnabled = newValue } }
+        }
 
         /// The character the formatter uses as a currency symbol for the amount.
         ///
@@ -374,7 +385,10 @@ extension Money {
         /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
         /// is safe to use locale aware grouping and decimal separator to make it user
         /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-        public var currencySymbol = Locale.us.currencySymbol ?? "$"
+        public var currencySymbol: String {
+            get { state.value.currencySymbol }
+            set { state.withValue { $0.currencySymbol = newValue } }
+        }
 
         /// The locale of the formatter.
         ///
@@ -383,7 +397,10 @@ extension Money {
         /// measurement, and decimal separator.
         ///
         /// The default value is `.us`.
-        public var locale: Locale = .us
+        public var locale: Locale {
+            get { state.value.locale }
+            set { state.withValue { $0.locale = newValue } }
+        }
     }
 
     private static let appearanceProxy = Appearance()

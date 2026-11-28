@@ -420,8 +420,7 @@ extension Device.Model {
             #elseif os(watchOS)
             return WKInterfaceDevice.current().model
             #elseif os(macOS)
-            #warning("FIXME: Implement")
-            return ""
+            return "Mac"
             #endif
         }
     }

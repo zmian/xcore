@@ -77,6 +77,24 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
     /// The color for placeholder text in controls or text views.
     public var placeholderTextColor: Color
 
+    /// The default corner radius for controls and containers.
+    public var cornerRadius: CGFloat
+
+    /// The default spacing between sections and containers.
+    ///
+    /// ``Theme/init`` defaults this to ``CGFloat/s5``. See `docs/architecture/SPACING_SCALE.md`.
+    public var defaultSpacing: CGFloat
+
+    /// The default horizontal spacing between items in a row.
+    ///
+    /// ``Theme/init`` defaults this to ``CGFloat/s3``. See `docs/architecture/SPACING_SCALE.md`.
+    public var interItemHSpacing: CGFloat
+
+    /// The default insets applied to list rows (derived from ``defaultSpacing``).
+    public var listRowInsets: EdgeInsets {
+        EdgeInsets(defaultSpacing)
+    }
+
     // MARK: - Sentiment Color
 
     /// The color for representing positive sentiment.
@@ -160,6 +178,9 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         toggleColor: Color,
         linkColor: Color,
         placeholderTextColor: Color,
+        cornerRadius: CGFloat = 15,
+        defaultSpacing: CGFloat = .s5,
+        interItemHSpacing: CGFloat = .s3,
 
         // Sentiment
         positiveSentimentColor: Color,
@@ -199,6 +220,9 @@ public struct Theme: Sendable, Identifiable, MutableAppliable, UserInfoContainer
         self.toggleColor = toggleColor
         self.linkColor = linkColor
         self.placeholderTextColor = placeholderTextColor
+        self.cornerRadius = cornerRadius
+        self.defaultSpacing = defaultSpacing
+        self.interItemHSpacing = interItemHSpacing
 
         // Sentiment
         self.positiveSentimentColor = positiveSentimentColor

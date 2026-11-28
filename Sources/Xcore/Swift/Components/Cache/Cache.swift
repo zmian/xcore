@@ -22,14 +22,11 @@ import Foundation
 /// }
 /// cache["imageData"] = nil // removes cached entry
 /// ```
-public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
-    /// The underlying NSCache instance.
-    ///
-    /// `nonisolated(unsafe)` is valid here as add, remove, and query operations are
-    /// documented as [thread safe]:
+public final class Cache<Key: Sendable & Hashable, Value>: @unchecked Sendable {
+    /// The underlying NSCache instance (`NSCache` is [thread safe]).
     ///
     /// [thread safe]: https://developer.apple.com/documentation/foundation/nscache
-    nonisolated(unsafe) private let cache = NSCache<ReferenceBox<Key>, ReferenceBox<Value>>()
+    private let storage = NSCache<ReferenceBox<Key>, ReferenceBox<Value>>()
 
     /// A delegate wrapper that handles eviction callbacks.
     private let delegate: DelegateWrapper<Value>
@@ -40,20 +37,20 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     ///   be evicted or removed from the cache.
     public init(willEvictValue: (@Sendable (Value) -> Void)? = nil) {
         self.delegate = .init(willEvictValue: willEvictValue)
-        cache.delegate = delegate
+        storage.delegate = delegate
     }
 
     /// The name of the cache.
     ///
     /// The default value is an empty string ("").
     public var name: String {
-        get { cache.name }
-        set { cache.name = newValue }
+        get { storage.name }
+        set { storage.name = newValue }
     }
 
     /// Returns a Boolean value indicating whether the cache contains the value for
     /// the given key.
-    /// 
+    ///
     /// - Parameter key: The key to look up in the cache.
     /// - Returns: `true` if a value is associated with the key; otherwise, `false`.
     public func contains(_ key: Key) -> Bool {
@@ -61,27 +58,25 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     }
 
     public subscript(_ key: Key, cost cost: Int? = nil) -> Value? {
-        get { cache.object(forKey: ReferenceBox(key))?.value }
+        get { storage.object(forKey: ReferenceBox(key))?.value }
         set {
-            let key = ReferenceBox(key)
-
+            let keyBox = ReferenceBox(key)
             if let newValue {
-                let newValue = ReferenceBox(newValue)
-
+                let valueBox = ReferenceBox(newValue)
                 if let cost {
-                    cache.setObject(newValue, forKey: key, cost: cost)
+                    storage.setObject(valueBox, forKey: keyBox, cost: cost)
                 } else {
-                    cache.setObject(newValue, forKey: key)
+                    storage.setObject(valueBox, forKey: keyBox)
                 }
             } else {
-                cache.removeObject(forKey: key)
+                storage.removeObject(forKey: keyBox)
             }
         }
     }
 
     /// Empties the cache.
     public func removeAll() {
-        cache.removeAllObjects()
+        storage.removeAllObjects()
     }
 
     /// The maximum total cost that the cache can hold before it starts evicting
@@ -100,8 +95,8 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     /// in the cache could be evicted instantly, at a later point in time, or
     /// possibly never, all depending on the implementation details of the cache.
     public var totalCostLimit: Int {
-        get { cache.totalCostLimit }
-        set { cache.totalCostLimit = newValue }
+        get { storage.totalCostLimit }
+        set { storage.totalCostLimit = newValue }
     }
 
     /// The maximum number of values the cache should hold.
@@ -112,21 +107,21 @@ public final class Cache<Key: Sendable & Hashable, Value>: Sendable {
     /// cache could be evicted instantly, later, or possibly never, depending on the
     /// implementation details of the cache.
     public var countLimit: Int {
-        get { cache.countLimit }
-        set { cache.countLimit = newValue }
+        get { storage.countLimit }
+        set { storage.countLimit = newValue }
     }
 
     /// A Boolean property indicating whether the cache evicts values with discarded
     /// content.
     public var evictsValuesWithDiscardedContent: Bool {
-        get { cache.evictsObjectsWithDiscardedContent }
-        set { cache.evictsObjectsWithDiscardedContent = newValue }
+        get { storage.evictsObjectsWithDiscardedContent }
+        set { storage.evictsObjectsWithDiscardedContent = newValue }
     }
 }
 
 // MARK: - DelegateWrapper
 
-private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, Sendable {
+private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate, @unchecked Sendable {
     let willEvictValue: (@Sendable (Value) -> Void)?
 
     init(willEvictValue: (@Sendable (Value) -> Void)?) {

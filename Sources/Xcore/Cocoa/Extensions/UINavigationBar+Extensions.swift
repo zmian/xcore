@@ -9,14 +9,14 @@ import UIKit
 
 extension UINavigationBar {
     private enum AssociatedKey {
-        nonisolated(unsafe) static var isTransparent = "isTransparent"
+        static let isTransparent = AssociatedObjectKey()
     }
 
     @objc open var isTransparent: Bool {
-        get { associatedObject(&AssociatedKey.isTransparent, default: false) }
+        get { associatedObject(AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
-            setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
+            setAssociatedObject(AssociatedKey.isTransparent, value: newValue)
 
             guard newValue else {
                 setBackgroundImage(nil, for: .default)

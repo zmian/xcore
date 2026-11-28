@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Ensures SWIFTUI_COMPONENT_INDEX.md matches SwiftUI/Components domain folders.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+INDEX="$ROOT/docs/architecture/SWIFTUI_COMPONENT_INDEX.md"
+COMPONENTS="$ROOT/Sources/Xcore/SwiftUI/Components"
+
+live_count="$(find "$COMPONENTS" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
+doc_count="$(rg -o 'Total: [0-9]+' "$INDEX" | head -1 | rg -o '[0-9]+' || true)"
+
+if [[ -z "$doc_count" ]]; then
+  echo "Could not read Total from SWIFTUI_COMPONENT_INDEX.md"
+  exit 1
+fi
+
+if [[ "$live_count" != "$doc_count" ]]; then
+  echo "SwiftUI component index out of date: $live_count folder(s), index says $doc_count"
+  exit 1
+fi
+
+table_rows="$(rg '^\| `[^`]+` \|' "$INDEX" | wc -l | tr -d ' ')"
+if [[ "$table_rows" != "$doc_count" ]]; then
+  echo "SWIFTUI_COMPONENT_INDEX.md table has $table_rows rows, Total says $doc_count"
+  exit 1
+fi
+
+echo "SwiftUI component index audit passed ($live_count domains)."

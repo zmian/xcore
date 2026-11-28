@@ -25,6 +25,8 @@
 /// extension DependencyValues {
 ///     private enum MyEventClientKey: DependencyKey {
 ///         static let liveValue: MyEventClient = .live
+///         static let testValue: MyEventClient = .unimplemented
+///         static let previewValue: MyEventClient = .noop
 ///     }
 ///
 ///     var myEvent: MyEventClient {
@@ -84,9 +86,9 @@ extension EventsClient {
     public static var unimplemented: Self {
         .init(
             send: { _ in
-                reportIssue("\(Self.self).send is unimplemented")
+                reportIssue(#"Unimplemented: EventsClient.send"#)
             },
-            receive: .unimplemented("\(Self.self).receive")
+            receive: .unimplemented(#"Unimplemented: EventsClient.receive"#)
         )
     }
 

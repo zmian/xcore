@@ -15,19 +15,66 @@ import Foundation
 /// ```swift
 /// extension Timer {
 ///     private enum AssociatedKey {
-///         nonisolated(unsafe) static var pauseDate = "pauseDate"
+///         static let pauseDate = AssociatedObjectKey()
 ///     }
 ///
 ///     /// A property indicating the date when the timer was paused.
 ///     var pauseDate: Date? {
-///         get { associatedObject(&AssociatedKey.pauseDate) }
-///         set { setAssociatedObject(&AssociatedKey.pauseDate, value: newValue) }
+///         get { associatedObject(AssociatedKey.pauseDate) }
+///         set { setAssociatedObject(AssociatedKey.pauseDate, value: newValue) }
 ///     }
 /// }
 /// ```
 public protocol ExtensibleByAssociatedObject {}
 
+/// Stable associated-object token (`static let` only; no mutable `UInt8` globals).
+public struct AssociatedObjectKey: @unchecked Sendable {
+    fileprivate let pointer: UnsafeRawPointer
+
+    public init() {
+        let storage = UnsafeMutableRawPointer.allocate(
+            byteCount: 1,
+            alignment: MemoryLayout<UInt8>.alignment
+        )
+        pointer = UnsafeRawPointer(storage)
+    }
+}
+
 extension ExtensibleByAssociatedObject {
+    /// Returns the value associated with a given object for a given key.
+    public func associatedObject<Result>(_ key: AssociatedObjectKey) -> Result? {
+        objc_getAssociatedObject(self, key.pointer) as? Result
+    }
+
+    /// Returns the value associated with a given object for a given key.
+    public func associatedObject<Result>(
+        _ key: AssociatedObjectKey,
+        default defaultValue: @autoclosure () -> Result,
+        policy defaultValueAssociationPolicy: AssociationPolicy? = nil
+    ) -> Result {
+        if let value: Result = associatedObject(key) {
+            return value
+        }
+
+        let defaultValue = defaultValue()
+
+        if let associationPolicy = defaultValueAssociationPolicy {
+            setAssociatedObject(key, value: defaultValue, policy: associationPolicy)
+        }
+
+        return defaultValue
+    }
+
+    /// Sets an associated value for a given object using a given key and association policy.
+    public func setAssociatedObject<Result>(
+        _ key: AssociatedObjectKey,
+        value: Result?,
+        policy associationPolicy: AssociationPolicy = .strong
+    ) {
+        objc_setAssociatedObject(self, key.pointer, value, associationPolicy.rawValue)
+    }
+
+    // MARK: - UInt8 key (deprecated pattern)
     /// Returns the value associated with a given object for a given key.
     ///
     /// - Parameter key: The key for the association.

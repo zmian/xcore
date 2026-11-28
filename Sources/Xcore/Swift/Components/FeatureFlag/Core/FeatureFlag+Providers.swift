@@ -9,16 +9,21 @@ import Foundation
 // MARK: - Registration
 
 extension FeatureFlag {
-    /// The registered list of providers.
-    nonisolated(unsafe) private static var provider = CompositeFeatureFlagProvider([
-        ProcessInfoEnvironmentVariablesFeatureFlagProvider()
-    ])
+    private static let providerStorage = LockIsolated(
+        CompositeFeatureFlagProvider([
+            ProcessInfoEnvironmentVariablesFeatureFlagProvider()
+        ])
+    )
+
+    fileprivate static var provider: CompositeFeatureFlagProvider {
+        providerStorage.value
+    }
 
     /// Register the given provider if it's not already registered.
     ///
     /// - Note: This method ensures there are no duplicate providers.
     public static func register(_ provider: FeatureFlagProvider) {
-        self.provider.add(provider)
+        providerStorage.withValue { $0.add(provider) }
     }
 
     /// Register the given provider at the specified index if it's not already
@@ -26,12 +31,12 @@ extension FeatureFlag {
     ///
     /// - Note: This method ensures there are no duplicate providers.
     public static func register(_ provider: FeatureFlagProvider, at index: Int) {
-        self.provider.insert(provider, at: index)
+        providerStorage.withValue { $0.insert(provider, at: index) }
     }
 
     /// Unregister the provider with the given id.
     public static func unregister(id: String) {
-        self.provider.remove(id: id)
+        providerStorage.withValue { $0.remove(id: id) }
     }
 }
 

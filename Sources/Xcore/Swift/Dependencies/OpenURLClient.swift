@@ -100,6 +100,8 @@ extension OpenURLClient {
 extension DependencyValues {
     private enum OpenURLClientKey: DependencyKey {
         static let liveValue: OpenURLClient = .system
+        static let testValue: OpenURLClient = .unimplemented
+        static let previewValue: OpenURLClient = .noop
     }
 
     /// Provides functionality for opening a URL.

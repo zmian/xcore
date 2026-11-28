@@ -9,12 +9,13 @@ import Testing
 import Foundation
 @testable import Xcore
 
+#if !CI
 struct LiveAddressSearchClientTests {
     init() {
         LiveAddressSearchClient.supportedRegions = [.unitedStates]
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on live geocoder results."))
     func queensAddresses() async {
         // No Country
         await search("3818 Queens Blvd, Queens, NY 11101") { postalAddress in
@@ -75,7 +76,7 @@ struct LiveAddressSearchClientTests {
         }
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on live geocoder results."))
     func normalAddress() async {
         await search("529 Broadway, 10B, New York, NY 10012, United States") { postalAddress in
             #expect(postalAddress.street1 == "529 Broadway")
@@ -117,7 +118,7 @@ struct LiveAddressSearchClientTests {
         }
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on live geocoder results."))
     func nonUsaAddresses() async {
         await search("Carrera de San Jeronimo, 34, Madrid 28014") { postalAddress in
             #expect(postalAddress.street1 == "Carrera de San Jerónimo, 34")
@@ -212,7 +213,7 @@ struct LiveAddressSearchClientTests {
         }
     }
 
-    @Test
+    @Test(.disabled(if: TestEnvironment.isCI, "Depends on live geocoder results."))
     func addressWithUnit() async {
         await search("222 Jackson St, Unit 5, Brooklyn, NY 11211") { postalAddress in
             #expect(postalAddress.street1 == "222 Jackson St")
@@ -251,9 +252,11 @@ struct LiveAddressSearchClientTests {
         }
     }
 }
+#endif
 
 // MARK: - Helpers
 
+#if !CI
 extension LiveAddressSearchClientTests {
     private func search(
         _ query: String,
@@ -273,3 +276,4 @@ extension LiveAddressSearchClientTests {
         }
     }
 }
+#endif

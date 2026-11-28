@@ -27,16 +27,18 @@ public final class Device: ObservableObject, Sendable {
         current[keyPath: keyPath]
     }
 
-    nonisolated(unsafe) private var cancellable: AnyCancellable?
+    private let screenChangeSubscription = LockIsolated<AnyCancellable?>(nil)
 
     private init() {
         #if os(iOS)
-        cancellable = screen
-            .objectWillChange
-            .receive(on: .main)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
+        screenChangeSubscription.setValue(
+            screen
+                .objectWillChange
+                .receive(on: .main)
+                .sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+        )
         #endif
     }
 }
@@ -52,7 +54,6 @@ extension Device {
             #elseif os(watchOS)
             return WKInterfaceDevice.current().systemName
             #elseif os(macOS)
-            #warning("FIXME: Implement")
             return "macOS"
             #else
             return "Unknown"
