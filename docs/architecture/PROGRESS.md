@@ -301,6 +301,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **CI:** [#122](https://github.com/zmian/xcore/actions/runs/46114522166) — serialization did not fix 300s hang; touching `UIPasteboard.general` on the simulator runner appears unsafe here.
 - **Migrate:** Pasteboard default test only asserts production `testValue` via `withExpectedIssue` on `copy` (live pasteboard guard remains in `PasteboardClientTests.noopVariant`) (T-058).
 
+### Round 43 — green tests, audit needs `rg` on CI (#124)
+
+- **CI:** [#124](https://github.com/zmian/xcore/actions/runs/46116163691) — **Test** and **Lint** passed; **Architecture audit** failed (`rg: command not found` in index scripts).
+- **Migrate:** `brew install ripgrep` in CI workflow; restore `import Foundation` in defaults test (T-059).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

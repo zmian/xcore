@@ -27,7 +27,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install tools
-        run: brew install swiftlint swiftformat
+        run: brew install ripgrep swiftlint swiftformat
 
       - name: Build
         run: make build
