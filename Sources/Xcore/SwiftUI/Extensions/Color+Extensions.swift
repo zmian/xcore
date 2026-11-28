@@ -7,7 +7,12 @@
 import SwiftUI
 
 extension Color.RGBColorSpace {
-    nonisolated(unsafe) public static var `default`: Self = .sRGB
+    private static let defaultStorage = LockIsolated(Color.RGBColorSpace.sRGB)
+
+    public static var `default`: Self {
+        get { defaultStorage.value }
+        set { defaultStorage.setValue(newValue) }
+    }
 }
 
 // MARK: - Hex Support

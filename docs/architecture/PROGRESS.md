@@ -377,6 +377,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `CodingFormatStyleDefaults` + `Popup.Style` drop `nonisolated(unsafe)`; update `audit_coding_defaults.sh`; concurrency budget **30**.
 
+### Round 62 — global UI/format defaults (T-077)
+
+- **Migrate:** Theme, Calendar, Locale, Color RGB defaults → `LockIsolated`; concurrency budget **25** (T-077).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

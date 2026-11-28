@@ -21,7 +21,12 @@ extension Locale {
     /// let locale = Locale.numbers
     /// print(locale.identifier) // Example: "en_US"
     /// ```
-    nonisolated(unsafe) public static var numbers: Self = .current
+    private static let numbersStorage = LockIsolated(Locale.current)
+
+    public static var numbers: Self {
+        get { numbersStorage.value }
+        set { numbersStorage.setValue(newValue) }
+    }
 }
 
 // MARK: - Common Locales

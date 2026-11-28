@@ -7,11 +7,20 @@
 import Foundation
 
 extension Calendar: MutableAppliable {
+    private static let defaultStorage = LockIsolated(Calendar.current)
+    private static let defaultCodableStorage = LockIsolated(Calendar.iso)
+
     /// The default calendar, initially set to the `current` calendar.
-    nonisolated(unsafe) public static var `default`: Self = .current
+    public static var `default`: Self {
+        get { defaultStorage.value }
+        set { defaultStorage.setValue(newValue) }
+    }
 
     /// The default calendar used in ``DateCodingFormatStyle``.
-    nonisolated(unsafe) public static var defaultCodable: Self = .iso
+    public static var defaultCodable: Self {
+        get { defaultCodableStorage.value }
+        set { defaultCodableStorage.setValue(newValue) }
+    }
 
     /// Returns the `ISO` calendar with `en_US_POSIX` locale and `UTC` time zone.
     public static let iso = gregorian(timeZone: .utc, locale: .usPosix)

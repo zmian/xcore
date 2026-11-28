@@ -87,3 +87,4 @@ No independent code tasks queued; next entropy work is gated by **P-001–P-003*
 | T-074 | `Cache` NSCache → `LockIsolated` (concurrency 34→32) |
 | T-075 | `CodingFormatStyleDefaults` → `LockIsolated` + audit (concurrency 32→31) |
 | T-076 | `Popup.Style` transition box (concurrency 31→30) |
+| T-077 | Global Theme/Calendar/Locale/Color defaults → `LockIsolated` (30→25) |
