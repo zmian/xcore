@@ -45,21 +45,17 @@ extension CATransitionType {
 // MARK: - CAMediaTimingFunction
 
 extension CAMediaTimingFunction {
-    private final class Presets: @unchecked Sendable {
-        let `default` = CAMediaTimingFunction(name: .default)
-        let linear = CAMediaTimingFunction(name: .linear)
-        let easeIn = CAMediaTimingFunction(name: .easeIn)
-        let easeOut = CAMediaTimingFunction(name: .easeOut)
-        let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
-    }
+    private static let presetDefault = CAMediaTimingFunction(name: .default)
+    private static let presetLinear = CAMediaTimingFunction(name: .linear)
+    private static let presetEaseIn = CAMediaTimingFunction(name: .easeIn)
+    private static let presetEaseOut = CAMediaTimingFunction(name: .easeOut)
+    private static let presetEaseInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
 
-    private static let presets = Presets()
-
-    public static var `default`: CAMediaTimingFunction { presets.default }
-    public static var linear: CAMediaTimingFunction { presets.linear }
-    public static var easeIn: CAMediaTimingFunction { presets.easeIn }
-    public static var easeOut: CAMediaTimingFunction { presets.easeOut }
-    public static var easeInEaseOut: CAMediaTimingFunction { presets.easeInEaseOut }
+    public static var `default`: CAMediaTimingFunction { presetDefault }
+    public static var linear: CAMediaTimingFunction { presetLinear }
+    public static var easeIn: CAMediaTimingFunction { presetEaseIn }
+    public static var easeOut: CAMediaTimingFunction { presetEaseOut }
+    public static var easeInEaseOut: CAMediaTimingFunction { presetEaseInEaseOut }
 }
 
 // MARK: - CATransition

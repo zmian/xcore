@@ -94,3 +94,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-081 | ENTROPY + CONCURRENCY inventory doc sync |
 | T-082 | `UNCHECKED_SENDABLE_INVENTORY` + ADR 0007 + audit (28 audits, budget 20) |
 | T-083 | Drop `@unchecked` on composite fetcher, mock analytics, cancel token (20→16) |
+| T-084 | Timing presets + `SessionAwareCache` Sendable (16→14) |

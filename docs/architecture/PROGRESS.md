@@ -405,6 +405,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `ImageDownloaderCancelToken` (`@Sendable` cancel), `CompositeImageFetcher` + `MockAnalyticsProvider` → `Sendable` (`LockIsolated`). Budget **16**.
 
+### Round 69 — timing presets + session cache (T-084)
+
+- **Migrate:** `CAMediaTimingFunction` preset SSOT without wrapper class; `SessionAwareCache` → `Sendable`. Budget **14**.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

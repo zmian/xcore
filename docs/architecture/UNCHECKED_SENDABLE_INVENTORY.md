@@ -1,6 +1,6 @@
 # `@unchecked Sendable` inventory
 
-Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 16 annotations** (regenerate with `make audit-architecture`).
+Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 14 annotations** (regenerate with `make audit-architecture`).
 
 Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
 
@@ -26,13 +26,13 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | Location | Role |
 | --- | --- |
 | `Analytics.swift` | Open analytics hub |
-| `SessionAwareCache.swift` | Session-scoped cache |
 | `Money.swift` | `Appearance` styling box |
-| `CoreAnimation+Extensions.swift` | Timing-function preset cache |
 | `Popup.swift` | `TransitionStorage` (`AnyTransition`) |
 | `CodingFormatStyle+Formatter.swift` | `FormatterCodingFormatStyle` bridges `Formatter` |
 | `PondKey.swift` / `Pond+UserDefaults.swift` | Pond storage variants |
 
 **Resolved (Round 68):** `ImageDownloaderCancelToken` uses `@Sendable` closure; `CompositeImageFetcher` and `MockAnalyticsProvider` are `Sendable` via `LockIsolated` (T-083).
+
+**Resolved (Round 69):** `CAMediaTimingFunction` presets use frozen `static let`; `SessionAwareCache` is `Sendable` via `LockIsolated` session state (T-084).
 
 Regressions: `BuildTools/Scripts/audit_unchecked_sendable_inventory.sh` compares live count to the total above.
