@@ -38,13 +38,25 @@ for entry in "${required_pending[@]}"; do
     echo "$doc must reference $id"
     exit 1
   fi
-  if [[ "$id" == "P-003" ]] && ! rg -q 'UNCHECKED_SENDABLE' "$ARCH/$doc"; then
-    echo "APP_PHASE_CLIENT.md must link UNCHECKED_SENDABLE docs (concurrency vs P-003)"
-    exit 1
+  if [[ "$id" == "P-003" ]]; then
+    if ! rg -q 'UNCHECKED_SENDABLE' "$ARCH/$doc"; then
+      echo "APP_PHASE_CLIENT.md must link UNCHECKED_SENDABLE docs (concurrency vs P-003)"
+      exit 1
+    fi
+    if ! rg -q 'audit_product_gates' "$ARCH/$doc"; then
+      echo "APP_PHASE_CLIENT.md must reference audit_product_gates.sh"
+      exit 1
+    fi
   fi
-  if [[ "$id" == "P-002" ]] && ! rg -q 'ENTROPY_INVENTORY' "$ARCH/$doc"; then
-    echo "DATE_LEGACY_FORMAT.md must link ENTROPY_INVENTORY.md"
-    exit 1
+  if [[ "$id" == "P-002" ]]; then
+    if ! rg -q 'ENTROPY_INVENTORY' "$ARCH/$doc"; then
+      echo "DATE_LEGACY_FORMAT.md must link ENTROPY_INVENTORY.md"
+      exit 1
+    fi
+    if ! rg -q 'audit_date_legacy_format' "$ARCH/$doc"; then
+      echo "DATE_LEGACY_FORMAT.md must reference audit_date_legacy_format.sh"
+      exit 1
+    fi
   fi
 done
 

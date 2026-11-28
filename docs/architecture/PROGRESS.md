@@ -788,6 +788,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Document:** `APP_PHASE_CLIENT` separates `@unchecked` from P-003; entropy inventory row.
 - **Enforce:** `audit_product_gates.sh` SSOT cross-links.
+- **CI:** green `e0db33ac` ([run 46169284968](https://github.com/zmian/xcore/actions/runs/46169284968)).
+
+### Round 144 — Product gate SSOT enforcement links (T-167)
+
+- **Document:** P-002/P-003 enforcement sections (`audit_*` cross-refs).
+- **Enforce:** `audit_product_gates.sh` requires audit script mentions in gate docs.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

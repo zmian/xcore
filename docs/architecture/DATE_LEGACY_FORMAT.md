@@ -13,13 +13,20 @@ SSOT for `Date.LegacyFormatStyle` until product confirms removal.
 | `Date+Formatted.swift` | Single production call: relative `dateTime` + time component |
 | `Date+LegacyFormatStyle.swift` | Implementation (marked for eventual deletion in-source) |
 
-**Budget:** **1** `.legacy` formatting call site in `Sources/Xcore` outside `Date+LegacyFormatStyle.swift` (enforced by `audit_date_legacy_format.sh`).
+**Budget:** **1** `.legacy` formatting call site in `Sources/Xcore` outside `Date+LegacyFormatStyle.swift`.
 
-## Removal criteria (P-002)
+## Enforcement
 
-1. Confirm no downstream apps rely on `.legacy` or `Date.LegacyFormatStyle` directly.
-2. Replace relative+time path with a Foundation API that matches output, or accept behavior change.
-3. Delete `Date+LegacyFormatStyle.swift` and update `ENTROPY_INVENTORY` + this doc.
+- `audit_date_legacy_format.sh` — budgeted `.legacy` call sites + canonical `Date+Formatted.swift` path.
+- `audit_product_gates.sh` — `PRODUCT_GATES.md` P-002 row links this doc.
+
+## Product gate (P-002)
+
+Removal is allowed only when:
+
+1. No downstream apps rely on `.legacy` or `Date.LegacyFormatStyle` directly.
+2. The relative+time path is replaced with a Foundation API that matches output, or a behavior change is accepted.
+3. `Date+LegacyFormatStyle.swift` is deleted and `ENTROPY_INVENTORY` + this doc are updated.
 
 ## Related
 

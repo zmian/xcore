@@ -39,6 +39,7 @@ Switching `testValue` / `previewValue` to `.unimplemented` is allowed only when:
 
 - `audit_dependency_keys.sh` — requires `testValue` / `previewValue` `.live` and registry **P-003** row.
 - `audit_dependency_client_shapes.sh` — sole `EventsClient` typealias client.
+- `audit_product_gates.sh` — `PRODUCT_GATES.md` P-003 row links this doc.
 
 ## Related
 
