@@ -671,6 +671,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Verify:** `4d5c42b2` green — [run 46146574894](https://github.com/zmian/xcore/actions/runs/46146574894) (`build-test-lint` after T-142–T-143).
 
+### Round 122 — AGENTS layout SSOT (T-145)
+
+- **Document:** `AGENTS.md` points agents to spacing scale + parallel test policy.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.
