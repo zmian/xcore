@@ -60,6 +60,6 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 ## Commands
 
 ```bash
-make audit-architecture   # Linux-safe, 32 checks (includes audit index parity)
+make audit-architecture   # Linux-safe, 33 checks (includes audit index parity)
 make build && make test    # macOS / Xcode
 ```
