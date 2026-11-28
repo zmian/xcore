@@ -9,7 +9,7 @@ import UIKit
 
 extension UINavigationBar {
     private enum AssociatedKey {
-        nonisolated(unsafe) static var isTransparent = "isTransparent"
+        static var isTransparent: UInt8 = 0
     }
 
     @objc open var isTransparent: Bool {

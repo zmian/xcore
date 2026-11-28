@@ -1,31 +1,14 @@
 # Concurrency inventory (`nonisolated(unsafe)`)
 
-Snapshot for reducing concurrency entropy. **Total: 18 annotations** (regenerate with `make audit-architecture`).
+Snapshot for reducing concurrency entropy. **Total: 0 annotations** (regenerate with `make audit-architecture`).
 
 ## Global / configurable state (high locality impact)
 
 | Location | Role |
 | --- | --- |
-| `Constants.swift` | Spacing, layout, and formatting defaults |
+| `Constants.swift` | Spacing, layout, and formatting defaults (frozen `static let`) |
 
-**Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Future work: narrow public mutation surface or move to injected configuration.
-
-## Associated object keys (UIKit pattern)
-
-| Location |
-| --- |
-| `ExtensibleByAssociatedObject.swift` (documented pattern) |
-| `UINavigationBar+Extensions`, `UIImage+Fetcher`, `Timer+Extensions`, `ProcessInfo+Extensions`, gesture/mail blocks |
-
-**Intent:** Stable key strings for associated objects; low business semantics.
-
-## Test / mock doubles
-
-| Location |
-| --- |
-| `AnalyticsProvider+Mock.swift` |
-
-**Intent:** Test-only mutation without actor isolation; acceptable in mock types.
+**Intent:** Single source of truth for app-wide defaults; changes here affect many call sites by design. Mutable globals use `LockIsolated` (see resolved rounds below).
 
 **Resolved (Round 50):** `CompositeImageFetcher` uses `LockIsolated` for fetcher list (was `nonisolated(unsafe)`).
 
@@ -53,6 +36,8 @@ Snapshot for reducing concurrency entropy. **Total: 18 annotations** (regenerate
 
 **Resolved (Round 62):** Global defaults (`Theme.default`, `Calendar.default` / `defaultCodable`, `Locale.numbers`, `Color.RGBColorSpace.default`) use `LockIsolated` storage.
 
-**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets use a `@unchecked Sendable` cache (7 annotations removed).
+**Resolved (Round 63):** `UIFont.defaultAppTypeface` and `Font.preferredContentSizeCategory` use `LockIsolated`; `CAMediaTimingFunction` presets use a `@unchecked Sendable` cache.
+
+**Resolved (Round 64):** Associated-object keys use `UInt8` token `static var` (stable `inout` address without `nonisolated(unsafe)`); `MockAnalyticsProvider` state behind `LockIsolated`.
 
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.

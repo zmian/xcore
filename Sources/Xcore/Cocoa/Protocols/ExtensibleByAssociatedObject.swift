@@ -15,7 +15,7 @@ import Foundation
 /// ```swift
 /// extension Timer {
 ///     private enum AssociatedKey {
-///         nonisolated(unsafe) static var pauseDate = "pauseDate"
+///         static var pauseDate: UInt8 = 0
 ///     }
 ///
 ///     /// A property indicating the date when the timer was paused.

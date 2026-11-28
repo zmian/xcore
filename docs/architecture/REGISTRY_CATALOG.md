@@ -28,7 +28,7 @@ Single entry point for architecture artifacts on [PR #153](https://github.com/zm
 | Doc | Budget |
 | --- | --- |
 | [ENTROPY_INVENTORY.md](./ENTROPY_INVENTORY.md) | 0 `#warning`s in `Sources/Xcore` |
-| [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 18 `nonisolated(unsafe)` |
+| [CONCURRENCY_INVENTORY.md](./CONCURRENCY_INVENTORY.md) | 0 `nonisolated(unsafe)` |
 
 ## Process
 

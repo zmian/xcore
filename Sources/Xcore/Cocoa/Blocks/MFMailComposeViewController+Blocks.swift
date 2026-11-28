@@ -38,8 +38,8 @@ extension MFMailComposeViewController {
     }
 
     private enum AssociatedKey {
-        nonisolated(unsafe) static var actionHandler = "actionHandler"
-        nonisolated(unsafe) static var shouldAutoDismiss = "shouldAutoDismiss"
+        static var actionHandler: UInt8 = 0
+        static var shouldAutoDismiss: UInt8 = 0
     }
 
     private var actionHandler: ClosureWrapper? {

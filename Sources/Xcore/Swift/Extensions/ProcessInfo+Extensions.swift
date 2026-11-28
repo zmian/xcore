@@ -20,7 +20,7 @@ extension ProcessInfo {
 
 extension ProcessInfo {
     private enum AssociatedKey {
-        nonisolated(unsafe) static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
+        static var inMemoryEnvironmentStorage: UInt8 = 0
     }
 
     /// A dictionary storing in-memory environment values.

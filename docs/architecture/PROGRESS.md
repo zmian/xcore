@@ -385,6 +385,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** App typeface, content-size override, CAMediaTimingFunction presets; concurrency budget **18** (T-078).
 
+### Round 64 — zero `nonisolated(unsafe)` in Sources/Xcore (T-079)
+
+- **Migrate:** Associated-object keys → `UInt8` tokens; `MockAnalyticsProvider` → `LockIsolated` state; concurrency budget **0** (T-079).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

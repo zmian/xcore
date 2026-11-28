@@ -79,8 +79,8 @@ extension Timer {
 
 extension Timer {
     private enum AssociatedKey {
-        nonisolated(unsafe) static var pauseDate = "pauseDate"
-        nonisolated(unsafe) static var previousFireDate = "previousFireDate"
+        static var pauseDate: UInt8 = 0
+        static var previousFireDate: UInt8 = 0
     }
 
     /// A property indicating the date when the timer was paused.

@@ -18,7 +18,11 @@ doc_audits="$(expected_metric "Architecture audit scripts")"
   exit 1
 }
 
-unsafe_live="$(rg -c 'nonisolated\(unsafe\)' "$SOURCES" --glob '*.swift' 2>/dev/null | awk -F: '{s+=$2} END {print s+0}')"
+if rg -q 'nonisolated\(unsafe\)' "$SOURCES" --glob '*.swift' 2>/dev/null; then
+  unsafe_live="$(rg -c 'nonisolated\(unsafe\)' "$SOURCES" --glob '*.swift' | awk -F: '{s+=$2} END {print s+0}')"
+else
+  unsafe_live=0
+fi
 doc_unsafe="$(expected_metric 'nonisolated(unsafe) in Sources/Xcore')"
 [[ "$unsafe_live" == "$doc_unsafe" ]] || {
   echo "nonisolated(unsafe): live $unsafe_live, GOVERNANCE_METRICS $doc_unsafe"
