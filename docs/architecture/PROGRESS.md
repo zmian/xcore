@@ -667,6 +667,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_spacing_scale.sh` ties `s3`/`s5` to theme-owned defaults in `SPACING_SCALE.md`.
 - **Document:** `AUDIT_INDEX.md` layout audit descriptions.
 
+### Round 121 — macOS CI (T-144)
+
+- **Verify:** `4d5c42b2` green — [run 46146574894](https://github.com/zmian/xcore/actions/runs/46146574894) (`build-test-lint` after T-142–T-143).
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

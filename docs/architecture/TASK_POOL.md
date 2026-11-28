@@ -154,3 +154,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-141 | ADR 0005 docs: Theme init + parallel test spacing SSOT |
 | T-142 | GOVERNANCE_SUMMARY / ARCHITECTURE_MAP spacing audit sync |
 | T-143 | Spacing scale audit theme-default parity + AUDIT_INDEX |
+| T-144 | Green macOS CI on #153 (`4d5c42b2`, T-142–T-143) |
