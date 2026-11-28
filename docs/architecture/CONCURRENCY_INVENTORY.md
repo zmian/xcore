@@ -40,4 +40,6 @@ Snapshot for reducing concurrency entropy. **Total: 0 annotations** (regenerate 
 
 **Resolved (Round 64):** Associated-object keys use `UInt8` token `static var` (stable `inout` address without `nonisolated(unsafe)`); `MockAnalyticsProvider` state behind `LockIsolated`.
 
+**Enforcement (Round 65):** ADR 0006 documents the zero-`unsafe` budget, `LockIsolated` globals, and `UInt8` associated keys; `audit_associated_object_keys.sh` blocks regressions.
+
 Regressions: `BuildTools/Scripts/audit_concurrency_inventory.sh` compares live count to the total in this file's first paragraph.

@@ -91,3 +91,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-078 | UIFont/Font defaults + timing presets (25→18) |
 | T-079 | Associated keys + MockAnalyticsProvider (18→0) |
 | T-080 | ADR 0006 + `audit_associated_object_keys.sh` (27 audits) |
+| T-081 | ENTROPY + CONCURRENCY inventory doc sync |

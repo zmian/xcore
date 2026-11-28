@@ -393,6 +393,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Enforce:** `audit_associated_object_keys.sh`; **27** architecture audits; ADR 0006 documents LockIsolated + UInt8 key pattern.
 
+### Round 66 — entropy + concurrency doc sync (T-081)
+
+- **Docs:** `ENTROPY_INVENTORY.md` composite dedupe marked enforced; associated-key tooling listed; `CONCURRENCY_INVENTORY.md` ADR 0006 enforcement note.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
