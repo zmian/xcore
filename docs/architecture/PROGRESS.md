@@ -470,6 +470,11 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 ### Round 81 — ThemeLayoutTests isolation (T-101)
 
 - **Fix:** `spacingScaleMatchesDocumentation` resets `Theme` defaults (parallel test pollution).
+- **Verify:** macOS CI **green** on `1e1f7443` (build-test-lint).
+
+### Round 82 — Theme test isolation audit (T-102)
+
+- **Enforce:** `audit_theme_test_isolation.sh` + `TEST_CI_POLICY.md` global Theme SSOT section (**29** audits).
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

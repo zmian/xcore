@@ -13,6 +13,7 @@ Run from repo root: **`make audit-architecture`** (no Xcode). Wired in `.github/
 | `BuildTools/Scripts/audit_swift_protocols_index.sh` | `SWIFT_PROTOCOLS_INDEX.md` matches `Swift/Protocols/` file count. |
 | `BuildTools/Scripts/audit_swift_property_wrappers_index.sh` | `SWIFT_PROPERTY_WRAPPERS_INDEX.md` matches `Swift/PropertyWrappers/` file count. |
 | `BuildTools/Scripts/audit_ci_test_policy.sh` | `TEST_CI_POLICY.md` matches CI compile/runtime test guards in `Tests/`. |
+| `BuildTools/Scripts/audit_theme_test_isolation.sh` | `ThemeLayoutTests.spacingScaleMatchesDocumentation` resets Theme spacing SSOT (parallel CI). |
 | `BuildTools/Scripts/audit_extensions_index.sh` | `EXTENSIONS_INDEX.md` matches `Swift/Extensions/` folders and root file count. |
 | `BuildTools/Scripts/audit_component_index.sh` | `COMPONENT_INDEX.md` total matches `Swift/Components/` domain folders. |
 | `BuildTools/Scripts/audit_swiftui_component_index.sh` | `SWIFTUI_COMPONENT_INDEX.md` matches `SwiftUI/Components/` folders. |

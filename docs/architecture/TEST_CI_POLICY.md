@@ -17,6 +17,14 @@ Hosted macOS CI (`make test` with `-DCI`) must not run integration tests that de
 | --- | --- |
 | `Tests/XcoreTests/Clients/LiveAddressSearchClientTests.swift` | Live `AddressSearchClient` geocoding |
 
+## Global Theme SSOT (parallel tests)
+
+`Theme.defaultSpacing` and `Theme.interItemHSpacing` are process-wide SSOT values. Under parallel `make test`, another test can mutate them before `ThemeLayoutTests` runs.
+
+| File | Test | Guard |
+| --- | --- | --- |
+| `Tests/XcoreTests/Components/ThemeLayoutTests.swift` | `spacingScaleMatchesDocumentation` | Resets `Theme.defaultSpacing = 20` and `Theme.interItemHSpacing = 12` before `s1`…`s8` assertions (T-101). Enforced by `audit_theme_test_isolation.sh`. |
+
 ## Runtime skips
 
 | File | Test | Reason |

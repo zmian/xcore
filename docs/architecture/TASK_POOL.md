@@ -107,3 +107,10 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-094 | AudioPlayer + SessionCounter live Sendable CI |
 | T-095 | AssociatedObjectKey pointer cast |
 | T-096 | Cache, SessionAwareCache, Publisher.done CI |
+| T-097 | `LiveAudioClient` `NSLock` for `AVAudioPlayer` (LockIsolated capture) |
+| T-098 | `Cache` direct thread-safe `NSCache` |
+| T-099 | Regex `Box` + `AddressSearchResult` `NSLock` |
+| T-100 | File-scoped `RegexValidationPattern` |
+| T-101 | `ThemeLayoutTests` spacing scale reset (parallel CI) |
+| T-102 | `audit_theme_test_isolation.sh` + TEST_CI_POLICY (**29** audits) |
+| T-103 | Green macOS CI on #153 (`1e1f7443`, build-test-lint) |

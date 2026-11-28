@@ -19,7 +19,7 @@ Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before add
 | --- | --- |
 | `AddressSearchClient+Live.swift` | `Delegate` (`NSObject` + `MKLocalSearchCompleter`) |
 | `AddressSearchResult.swift` | `MKLocalSearchCompletion` in `LockIsolated` |
-| `AudioPlayerClient+Live.swift` | `LiveAudioClient` (`AVAudioPlayer` in `LockIsolated`) |
+| `AudioPlayerClient+Live.swift` | `LiveAudioClient` (`AVAudioPlayer` behind `NSLock`) |
 | `SessionCounterClient+Live.swift` | `LiveSessionCounterClient` (`@Dependency` + observation task) |
 | `PushNotificationsClient+Live.swift` | `NSObject` live client |
 | `PushNotificationsClient.swift` | `NotificationReceivedHandler` (non-Sendable closure storage) |
