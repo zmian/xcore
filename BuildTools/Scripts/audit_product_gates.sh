@@ -38,6 +38,14 @@ for entry in "${required_pending[@]}"; do
     echo "$doc must reference $id"
     exit 1
   fi
+  if [[ "$id" == "P-003" ]] && ! rg -q 'UNCHECKED_SENDABLE' "$ARCH/$doc"; then
+    echo "APP_PHASE_CLIENT.md must link UNCHECKED_SENDABLE docs (concurrency vs P-003)"
+    exit 1
+  fi
+  if [[ "$id" == "P-002" ]] && ! rg -q 'ENTROPY_INVENTORY' "$ARCH/$doc"; then
+    echo "DATE_LEGACY_FORMAT.md must link ENTROPY_INVENTORY.md"
+    exit 1
+  fi
 done
 
 for entry in "${required_resolved[@]}"; do

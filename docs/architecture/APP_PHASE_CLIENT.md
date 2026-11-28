@@ -23,6 +23,10 @@ SSOT for `AppPhaseClient` (`EventsClient<AppPhase>`) and its **live** dependency
 
 Defaulting to `.unimplemented` would force every suite to override `appPhase`, add noise to `DependencyKeyDefaultsTests`, and break stream semantics tests that expect delivery.
 
+## Concurrency (not P-003)
+
+`AppPhase` is `@unchecked Sendable` because cases carry UIKit launch-option payloads (`UNCHECKED_SENDABLE_INVENTORY.md`, `UNCHECKED_SENDABLE_ROADMAP.md`). **P-003** governs dependency `testValue` / `previewValue` only; removing `@unchecked` is a separate lever (payload redesign), not resolved by switching defaults to `.unimplemented`.
+
 ## Product gate (P-003)
 
 Switching `testValue` / `previewValue` to `.unimplemented` is allowed only when:

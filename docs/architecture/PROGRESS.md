@@ -782,6 +782,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **ADR:** layout parallel test + scale token consequences.
 - **Enforce:** `audit_registry_catalog.sh` ADR 0005 guard.
+- **CI:** green `ccb13b90` ([run 46167870354](https://github.com/zmian/xcore/actions/runs/46167870354)).
+
+### Round 143 — P-003 concurrency vs dependency gate (T-166)
+
+- **Document:** `APP_PHASE_CLIENT` separates `@unchecked` from P-003; entropy inventory row.
+- **Enforce:** `audit_product_gates.sh` SSOT cross-links.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 

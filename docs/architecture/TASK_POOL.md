@@ -176,3 +176,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-163 | Theme layout tests: scale #expect without bare points |
 | T-164 | `TEST_CI_POLICY` documents theme test spacing tokens |
 | T-165 | ADR 0005 theme layout test token policy |
+| T-166 | P-003 vs AppPhase `@unchecked` documentation |
