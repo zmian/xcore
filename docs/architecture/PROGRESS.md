@@ -459,6 +459,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `Cache` / `SessionAwareCache` `@unchecked`; NSCache via `withValue`; `done(_:)` cancel store. Budget **20**.
 
+### Round 78b — LiveAudioClient lock (T-097)
+
+- **Fix:** `NSLock` storage for `AVAudioPlayer` (avoid `@Sendable` `LockIsolated` capture).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
