@@ -2,7 +2,7 @@
 
 Living snapshot of deliberate Sendable erasure in `Sources/Xcore`. **Total: 21 annotations** (regenerate with `make audit-architecture`).
 
-Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006).
+Agents: prefer `LockIsolated`, frozen `static let`, or `ReferenceBox` before adding new `@unchecked Sendable`. Never combine with `nonisolated(unsafe)` (ADR 0006). Reduction queue: [UNCHECKED_SENDABLE_ROADMAP.md](./UNCHECKED_SENDABLE_ROADMAP.md).
 
 ## Canonical primitives (conditional conformance)
 

@@ -124,3 +124,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-111 | `PRODUCT_GATES.md` + `audit_product_gates.sh` (**32** audits) |
 | T-112 | ADR 0008 product gates + ENTROPY enforcement row |
 | T-113 | `AddressSearchResult` → `Sendable` struct (22→21 `@unchecked`) |
+| T-114 | `UNCHECKED_SENDABLE_ROADMAP` + inventory audit parity |
