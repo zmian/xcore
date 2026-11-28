@@ -264,6 +264,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Migrate:** `#if !CI` excludes `LiveAddressSearchClientTests` from CI binaries; skip `AppPhaseOperationTests.operationExecutesAfterDelay` on CI; `parallel-testing-enabled NO` + job/step timeouts in `ci.yml`.
 - **Verify:** `make audit-architecture` (local). Await green CI on push.
 
+### Round 37 — CI test policy (2026-11-27)
+
+- **Document:** `TEST_CI_POLICY.md` (compile `#if !CI` + 4 runtime skips).
+- **Enforce:** `audit_ci_test_policy.sh`; audits **25**.
+- **Verify:** `make audit-architecture`. Commit held until CI **#117** on `50e89757` completes (T-043).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

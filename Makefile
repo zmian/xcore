@@ -122,6 +122,7 @@ audit-architecture: ## Run architecture governance checks (no Xcode required)
 	@bash BuildTools/Scripts/audit_helpers_index.sh
 	@bash BuildTools/Scripts/audit_swift_protocols_index.sh
 	@bash BuildTools/Scripts/audit_swift_property_wrappers_index.sh
+	@bash BuildTools/Scripts/audit_ci_test_policy.sh
 	@bash BuildTools/Scripts/audit_extensions_index.sh
 	@bash BuildTools/Scripts/audit_component_index.sh
 	@bash BuildTools/Scripts/audit_swiftui_component_index.sh

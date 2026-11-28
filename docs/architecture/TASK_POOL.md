@@ -63,3 +63,4 @@ Tasks are independent unless marked **blocked by**. Status: `ready` | `in-progre
 | T-049 | `SWIFT_PROPERTY_WRAPPERS_INDEX` + audit; audits **24** (local; unpushed with Round 34) |
 | T-050 | Skip live `LiveAddressSearchClientTests` on CI (`4f4a493f`) |
 | T-051 | CI test hardening: `#if !CI` live address tests, phase timing skips, job timeouts |
+| T-052 | `TEST_CI_POLICY.md` + `audit_ci_test_policy.sh` (local; push after T-043) |
