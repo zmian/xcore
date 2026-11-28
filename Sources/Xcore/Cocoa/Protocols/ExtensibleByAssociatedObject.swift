@@ -28,7 +28,7 @@ import Foundation
 public protocol ExtensibleByAssociatedObject {}
 
 /// Stable associated-object token (`static let` only; no mutable `UInt8` globals).
-public struct AssociatedObjectKey: @unchecked Sendable {
+public struct AssociatedObjectKey: Sendable {
     fileprivate let pointer: UnsafeRawPointer
 
     public init() {

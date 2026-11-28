@@ -546,6 +546,12 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Migrate:** `LockIsolated<Set<AnyCancellable>>` replaces `DoneSubscriberCancellables`.
 - **Enforce:** `@unchecked` budget **19**.
+- **Verify:** macOS CI pending on `56e118d2`.
+
+### Round 96 — AssociatedObjectKey Sendable (T-118)
+
+- **Migrate:** `AssociatedObjectKey: Sendable` (stable `UnsafeRawPointer` token).
+- **Enforce:** `@unchecked` budget **18**.
 
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
