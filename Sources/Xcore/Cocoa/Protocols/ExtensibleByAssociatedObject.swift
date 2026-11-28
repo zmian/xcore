@@ -36,7 +36,7 @@ public struct AssociatedObjectKey: @unchecked Sendable {
             byteCount: 1,
             alignment: MemoryLayout<UInt8>.alignment
         )
-        pointer = storage
+        pointer = UnsafeRawPointer(storage)
     }
 }
 

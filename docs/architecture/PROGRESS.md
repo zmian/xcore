@@ -451,6 +451,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Fix:** `LiveAudioClient` / `LiveSessionCounterClient` `@unchecked Sendable`; AVAudioPlayer via `withValue`. Budget **16**.
 
+### Round 77b — AssociatedObjectKey pointer (T-095)
+
+- **Fix:** `UnsafeRawPointer(storage)` assignment (Swift 6 type check).
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).
