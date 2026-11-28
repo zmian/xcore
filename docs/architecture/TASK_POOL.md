@@ -92,3 +92,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-079 | Associated keys + MockAnalyticsProvider (18→0) |
 | T-080 | ADR 0006 + `audit_associated_object_keys.sh` (27 audits) |
 | T-081 | ENTROPY + CONCURRENCY inventory doc sync |
+| T-082 | `UNCHECKED_SENDABLE_INVENTORY` + ADR 0007 + audit (28 audits, budget 20) |

@@ -29,6 +29,17 @@ doc_unsafe="$(expected_metric 'nonisolated(unsafe) in Sources/Xcore')"
   exit 1
 }
 
+if rg -q '@unchecked Sendable' "$SOURCES" --glob '*.swift' 2>/dev/null; then
+  unchecked_live="$(rg -c '@unchecked Sendable' "$SOURCES" --glob '*.swift' | awk -F: '{s+=$2} END {print s+0}')"
+else
+  unchecked_live=0
+fi
+doc_unchecked="$(expected_metric '@unchecked Sendable in Sources/Xcore')"
+[[ "$unchecked_live" == "$doc_unchecked" ]] || {
+  echo "@unchecked Sendable: live $unchecked_live, GOVERNANCE_METRICS $doc_unchecked"
+  exit 1
+}
+
 warning_live=0
 if rg -q '#warning' "$SOURCES" --glob '*.swift' 2>/dev/null; then
   warning_live="$(rg -c '#warning' "$SOURCES" --glob '*.swift' | awk -F: '{s+=$2} END {print s+0}')"

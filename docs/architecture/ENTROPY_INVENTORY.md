@@ -24,7 +24,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Semantics | Locations | Canonical | Action |
 | --- | --- | --- | --- |
 | Unique-by-id registration | `CompositeFeatureFlagProvider`, `CompositeImageFetcher`, `Analytics` | `Collection.uniqued(\.id)` + guard on `add` | Enforced by `audit_composite_registration.sh` (ADR 0004) |
-| Event client | `EventsClient<Event>`, `AppPhaseClient` typealias | `EventsClient` | Document pattern (ADR 0004) |
+| Event client | `EventsClient<Event>`, `AppPhaseClient` typealias | `EventsClient` | `DEPENDENCY_REGISTRY.md` + ADR 0004 |
 | Address search client | Protocol + Live/Noop/Unimplemented | Protocol (for now) | P-001 |
 | Date formatting | Modern `FormatStyle` vs `Date.LegacyFormatStyle` | Modern APIs | P-002 |
 | Storage | `Pond` vs future Shared | Pond until migration | See tracked debt below |
@@ -52,6 +52,7 @@ Resolved (Round 13): removed stale Device macOS `#warning`s; `osName` / `family`
 | Module placement / unimplemented copy | `audit_module_placement.sh` |
 | Layer import allowlists | `audit_layer_imports.sh` |
 | `nonisolated(unsafe)` count | `audit_concurrency_inventory.sh` |
+| `@unchecked Sendable` count | `audit_unchecked_sendable_inventory.sh` (ADR 0007) |
 | Associated-object keys | `audit_associated_object_keys.sh` (ADR 0006) |
 | `#warning` count | `audit_compiler_warnings.sh` |
 | Layout / spacing | `audit_layout_ssot.sh`, `audit_spacing_scale.sh` |

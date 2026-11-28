@@ -137,6 +137,7 @@ audit-architecture: ## Run architecture governance checks (no Xcode required)
 	@bash BuildTools/Scripts/audit_dependency_layout.sh
 	@bash BuildTools/Scripts/audit_dependency_keys.sh
 	@bash BuildTools/Scripts/audit_concurrency_inventory.sh
+	@bash BuildTools/Scripts/audit_unchecked_sendable_inventory.sh
 	@bash BuildTools/Scripts/audit_associated_object_keys.sh
 	@bash BuildTools/Scripts/audit_module_placement.sh
 	@bash BuildTools/Scripts/audit_layer_imports.sh

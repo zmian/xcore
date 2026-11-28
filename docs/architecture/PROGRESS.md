@@ -397,6 +397,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 
 - **Docs:** `ENTROPY_INVENTORY.md` composite dedupe marked enforced; associated-key tooling listed; `CONCURRENCY_INVENTORY.md` ADR 0006 enforcement note.
 
+### Round 67 — `@unchecked Sendable` inventory (T-082)
+
+- **Enforce:** `UNCHECKED_SENDABLE_INVENTORY.md`, ADR 0007, `audit_unchecked_sendable_inventory.sh` (**28** audits); registry/metrics sync for 20 annotations.
+
 ## Next scheduled work (task pool excerpt)
 
 See [TASK_POOL.md](./TASK_POOL.md).

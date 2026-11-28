@@ -7,6 +7,7 @@ CATALOG="$ROOT/docs/architecture/REGISTRY_CATALOG.md"
 METRICS="$ROOT/docs/architecture/GOVERNANCE_METRICS.md"
 ENTROPY="$ROOT/docs/architecture/ENTROPY_INVENTORY.md"
 CONCURRENCY="$ROOT/docs/architecture/CONCURRENCY_INVENTORY.md"
+UNCHECKED="$ROOT/docs/architecture/UNCHECKED_SENDABLE_INVENTORY.md"
 
 metric_value() {
   awk -F'|' -v lbl="$1" 'index($2, lbl) > 0 {gsub(/^ +| +$/, "", $3); print $3; exit}' "$METRICS"
@@ -40,4 +41,18 @@ if [[ "$concurrency_catalog" != "$concurrency_metric" || "$concurrency_catalog" 
   exit 1
 fi
 
-echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog)."
+unchecked_catalog="$(awk -F'|' '/UNCHECKED_SENDABLE_INVENTORY/ {gsub(/^ +| +$/, "", $3); print $3; exit}' "$CATALOG" | rg -o '^[0-9]+' || true)"
+unchecked_metric="$(metric_value '@unchecked Sendable in Sources/Xcore')"
+unchecked_total="$(rg -o 'Total: [0-9]+' "$UNCHECKED" | head -1 | rg -o '[0-9]+' || true)"
+
+if [[ -z "$unchecked_catalog" || -z "$unchecked_metric" || -z "$unchecked_total" ]]; then
+  echo "Could not read @unchecked Sendable budgets from catalog, metrics, or UNCHECKED_SENDABLE_INVENTORY"
+  exit 1
+fi
+
+if [[ "$unchecked_catalog" != "$unchecked_metric" || "$unchecked_catalog" != "$unchecked_total" ]]; then
+  echo "REGISTRY_CATALOG @unchecked Sendable: catalog $unchecked_catalog, metrics $unchecked_metric, UNCHECKED $unchecked_total"
+  exit 1
+fi
+
+echo "Registry catalog inventory budgets passed (#warning $entropy_catalog, concurrency $concurrency_catalog, unchecked $unchecked_catalog)."
