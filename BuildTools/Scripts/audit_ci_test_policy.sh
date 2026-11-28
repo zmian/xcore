@@ -49,4 +49,14 @@ for audit_script in "$ROOT"/BuildTools/Scripts/audit_*.sh; do
   fi
 done
 
-echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI)."
+if ! rg -q 'resetThemeSpacingSSOTForParallelTesting' "$POLICY"; then
+  echo "TEST_CI_POLICY.md must document resetThemeSpacingSSOTForParallelTesting (parallel Theme SSOT)"
+  exit 1
+fi
+
+if ! rg -q 'audit_theme_test_isolation' "$POLICY"; then
+  echo "TEST_CI_POLICY.md must reference audit_theme_test_isolation.sh"
+  exit 1
+fi
+
+echo "CI test policy audit passed ($doc_runtime runtime skips, LiveAddress #if !CI, Theme reset documented)."

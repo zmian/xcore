@@ -680,6 +680,10 @@ Reduce architectural entropy across Xcore; converge toward single sources of tru
 - **Enforce:** `audit_registry_catalog.sh` guards `AGENTS.md` + full layout audit triple in `GOVERNANCE_SUMMARY`.
 - **Document:** `SPACING_SCALE.md` links full audit chain.
 
+### Round 124 — CI policy ↔ theme isolation (T-147)
+
+- **Enforce:** `audit_ci_test_policy.sh` requires Theme reset docs in `TEST_CI_POLICY.md`.
+
 ### Round 80 — Regex/MapKit LockIsolated capture (T-099)
 
 - **Fix:** `ValidationRule` regex `Box`; `AddressSearchResult` `NSLock` storage. Budget **21**.

@@ -157,3 +157,4 @@ Concurrency inventory is at **0** `nonisolated(unsafe)` (ADR 0006). Independent 
 | T-144 | Green macOS CI on #153 (`4d5c42b2`, T-142–T-143) |
 | T-145 | `AGENTS.md` layout spacing SSOT pointer |
 | T-146 | Registry audit guards AGENTS + layout audit triple |
+| T-147 | `audit_ci_test_policy` guards Theme parallel reset docs |
